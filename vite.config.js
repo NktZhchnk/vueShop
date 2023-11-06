@@ -8,6 +8,11 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  server: {
+    host: '0.0.0.0', // Здесь устанавливаем host
+    // другие настройки сервера
+  },
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
