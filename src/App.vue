@@ -21,7 +21,7 @@ const fn = () => {
 
 <template>
   <div>
-    <button @click="fn">3232</button>
+    <button @click="fn">323</button>
     <div v-for="item in store.data" :key="item.id">
       <h1>price: {{ item.price_item }}</h1>
       <h1>id: {{ item.id }}</h1>
