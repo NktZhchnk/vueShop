@@ -10,18 +10,24 @@ onMounted(async () => {
 
   // Теперь можно безопасно получить данные
   console.log(store.data[0]);
-});
 
+});
+const fn = () => {
+  console.log(store.data)
+}
 
 </script>
 
 
 <template>
-  <div v-for="item in store.data" :key="item.id">
-    <h1>price: {{ item.price_item }}</h1>
-    <h1>id: {{ item.id }}</h1>
-    <h1>q: {{ item.quan_item }}</h1>
-    <h1>name: {{ item.name_item }}</h1>
+  <div>
+    <button @click="fn">3232</button>
+    <div v-for="item in store.data" :key="item.id">
+      <h1>price: {{ item.price_item }}</h1>
+      <h1>id: {{ item.id }}</h1>
+      <h1>q: {{ item.quan_item }}</h1>
+      <h1>name: {{ item.name_item }}</h1>
+    </div>
   </div>
 </template>
 
