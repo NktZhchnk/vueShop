@@ -10,8 +10,11 @@ onMounted(async () => {
 
   // Теперь можно безопасно получить данные
   console.log(store.data[0]);
-
 });
+const getImagePath = (imageName) => {
+  // Возвращает полный путь к изображению на сервере
+  return `https://eseniabila.com.ua/images/${imageName}`;
+}
 const fn = () => {
   console.log(store.data)
 }
@@ -27,6 +30,7 @@ const fn = () => {
       <h1>id: {{ item.id }}</h1>
       <h1>q: {{ item.quan_item }}</h1>
       <h1>name: {{ item.name_item }}</h1>
+      <img alt="error" :src="getImagePath(item.image_item)" />
     </div>
   </div>
 </template>

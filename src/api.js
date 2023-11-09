@@ -1,6 +1,6 @@
 import mysql from 'mysql2';
 import express from 'express';
-
+import path from 'path';
 const app = express();
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -8,6 +8,8 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const connection = mysql.createConnection({
     host: '193.0.61.203',
