@@ -5,19 +5,23 @@ import axios from "axios";
 const priceItem = ref('');
 const nameItem = ref('');
 const quanItem = ref('');
-const submitForm = async () => {
-  try {
-    const response = await axios.post("https://eseniabila.com.ua/addItem", {
-      price: this.priceItem,
-      name: this.nameItem,
-      quantity: this.quanItem,
-    });
+const submitForm =  () => {
+  const formData = {
+    price: this.priceItem,
+    name: this.nameItem,
+    quantity: this.quanItem,
+  };
 
-    console.log("Успешно добавлено:", response.data);
-    // Обновите вашу локальную базу данных или выполните другие действия после успешного добавления на сервер
-  } catch (error) {
-    console.error("Ошибка добавления:", error);
-  }
+  // Используйте библиотеку axios или другую для выполнения запроса на сервер
+  // Пример с axios:
+  axios.post("https://eseniabila.com.ua:3000/addItem", formData)
+      .then(response => {
+        console.log(response.data);
+        // Обновите состояние вашего магазина или выполните другие действия по необходимости
+      })
+      .catch(error => {
+        console.error("Произошла ошибка при добавлении элемента:", error);
+      });
 }
 
 
