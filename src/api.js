@@ -9,6 +9,25 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.json());
+
+app.post("/addItem", (req, res) => {
+    const { price, name, quantity } = req.body;
+
+    // Предполагая, что ваша таблица в базе данных называется "product"
+    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item) VALUES (?, ?, ?)';
+
+    connection.query(sqlQuery, [name, price, quantity], (error, results, fields) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            res.status(200).json({ message: 'Элемент успешно добавлен' });
+        }
+    });
+});
+
+
 app.use('/images', express.static( '/var/www/vueShop/images'));
 
 const connection = mysql.createConnection({

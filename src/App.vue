@@ -1,6 +1,7 @@
 <script setup>
-import {onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
 import {useMyStore} from "@/store/store.js";
+import UiFormDBase from "@/components/UiFormDBase.vue";
 
 const store = useMyStore()
 
@@ -21,7 +22,7 @@ const fn = () => {
 
 <template>
   <div>
-    <button @click="fn">323</button>
+    <UiFormDBase></UiFormDBase>
     <div v-for="item in store.data" :key="item.id">
       <h1>price2: {{ item.price_item }}</h1>
       <h1>id: {{ item.id }}</h1>
