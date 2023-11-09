@@ -9,7 +9,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static( '/var/www/vueShop/images'));
 
 const connection = mysql.createConnection({
     host: '193.0.61.203',

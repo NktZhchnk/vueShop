@@ -14,6 +14,7 @@ onMounted(async () => {
 const getImagePath = (imageName) => {
   // Возвращает полный путь к изображению на сервере
   return `https://eseniabila.com.ua/images/${imageName}`;
+
 }
 const fn = () => {
   console.log(store.data)
