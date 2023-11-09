@@ -21,7 +21,7 @@ const connection = mysql.createConnection({
     database: 'products'
 });
 
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/', (req, res) => {
     // В этом примере отправляем статический HTML-файл
