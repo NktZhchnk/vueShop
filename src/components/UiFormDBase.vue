@@ -8,7 +8,7 @@ const quanItem = ref('');
 
 const submitForm = async () => {
   try {
-    const response = await axios.post('https://eseniabila.com.ua:3000/addItem', {
+    const response = await axios.post('https://eseniabila.com.ua/addItem', {
       price: priceItem.value,
       name: nameItem.value,
       quantity: quanItem.value,
