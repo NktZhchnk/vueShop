@@ -11,7 +11,7 @@ export const useMyStore = defineStore({
     actions: {
         fetchData() {
             // Здесь вы можете использовать Axios, Fetch API или другую библиотеку для получения данных с сервера
-            axios.get('https://eseniabila.com.ua/getProducts')
+            axios.get('http://193.0.61.203/getProducts')
                 .then(response => {
                     // Обработка данных и сохранение их в состоянии магазина
                     this.data = response.data;

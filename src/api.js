@@ -1,11 +1,6 @@
 import mysql from 'mysql2';
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url'; // добавлено
 
-
-const __filename = fileURLToPath(import.meta.url); // добавлено
-const __dirname = path.dirname(__filename);
 const app = express();
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -21,12 +16,6 @@ const connection = mysql.createConnection({
     database: 'products'
 });
 
-app.use(express.static(path.join(__dirname, '/')));
-
-app.get('/', (req, res) => {
-    // В этом примере отправляем статический HTML-файл
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
 
 app.get('/getProducts', (req, res) => {
     const sqlQuery = 'SELECT * FROM product';
