@@ -23,7 +23,7 @@ const connection = mysql.createConnection({
 
 app.get('/', (req, res) => {
     // В этом примере отправляем статический HTML-файл
-    res.sendFile(path.join(__dirname, 'path/to/your/index.html'));
+    res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 app.get('/getProducts', (req, res) => {
