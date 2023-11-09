@@ -1,39 +1,34 @@
 <script setup>
-import {ref} from "vue";
-import axios from "axios";
+import { ref } from 'vue';
+import axios from 'axios';
 
 const priceItem = ref('');
 const nameItem = ref('');
 const quanItem = ref('');
-const submitForm =  () => {
-  const formData = {
-    price: this.priceItem,
-    name: this.nameItem,
-    quantity: this.quanItem,
-  };
 
-  // Используйте библиотеку axios или другую для выполнения запроса на сервер
-  // Пример с axios:
-  axios.post("https://eseniabila.com.ua:3000/addItem", formData)
-      .then(response => {
-        console.log(response.data);
-        // Обновите состояние вашего магазина или выполните другие действия по необходимости
-      })
-      .catch(error => {
-        console.error("Произошла ошибка при добавлении элемента:", error);
-      });
+const submitForm = async () => {
+  try {
+    const response = await axios.post('https://eseniabila.com.ua:3000/addItem', {
+      price: priceItem.value,
+      name: nameItem.value,
+      quantity: quanItem.value,
+    });
+
+    console.log('Успешно добавлено:', response.data);
+    // Обновите вашу локальную базу данных или выполните другие действия после успешного добавления на сервер
+  } catch (error) {
+    console.error('Ошибка добавления:', error);
+  }
 }
-
-
 </script>
 
 <template>
   <div>
-    <form @submit="submitForm">
+    <form @submit.prevent="submitForm">
       <input placeholder="price" v-model="priceItem"/>
       <input placeholder="name" v-model="nameItem"/>
       <input placeholder="quan" v-model="quanItem"/>
-      <button>addd</button>
+      <button type="submit">Добавить</button>
     </form>
   </div>
 </template>

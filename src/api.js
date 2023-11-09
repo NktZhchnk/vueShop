@@ -17,9 +17,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.json());
-
-app.post("/addItem", (req, res) => {
+app.post('/addItem', (req, res) => {
     const { price, name, quantity } = req.body;
 
     // Предполагая, что ваша таблица в базе данных называется "product"
@@ -34,6 +32,7 @@ app.post("/addItem", (req, res) => {
         }
     });
 });
+
 
 
 app.use('/images', express.static( '/var/www/vueShop/images'));
