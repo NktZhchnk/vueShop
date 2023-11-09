@@ -23,7 +23,7 @@ const fn = () => {
   <div>
     <button @click="fn">323</button>
     <div v-for="item in store.data" :key="item.id">
-      <h1>price: {{ item.price_item }}</h1>
+      <h1>price2: {{ item.price_item }}</h1>
       <h1>id: {{ item.id }}</h1>
       <h1>q: {{ item.quan_item }}</h1>
       <h1>name: {{ item.name_item }}</h1>
