@@ -16,6 +16,11 @@ const connection = mysql.createConnection({
     database: 'products'
 });
 
+app.get('/', (req, res) => {
+    // В этом примере отправляем статический HTML-файл
+    res.sendFile(path.join(__dirname, 'path/to/your/index.html'));
+});
+
 app.get('/getProducts', (req, res) => {
     const sqlQuery = 'SELECT * FROM product';
     connection.query(sqlQuery, (error, results, fields) => {
