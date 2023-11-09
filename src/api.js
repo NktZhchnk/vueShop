@@ -2,6 +2,14 @@ import mysql from 'mysql2';
 import express from 'express';
 import path from 'path';
 const app = express();
+
+const connection = mysql.createConnection({
+    host: '193.0.61.203',
+    user: 'admin',
+    password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
+    database: 'products'
+});
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -30,12 +38,7 @@ app.post("/addItem", (req, res) => {
 
 app.use('/images', express.static( '/var/www/vueShop/images'));
 
-const connection = mysql.createConnection({
-    host: '193.0.61.203',
-    user: 'admin',
-    password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
-    database: 'products'
-});
+
 
 
 app.get('/getProducts', (req, res) => {
