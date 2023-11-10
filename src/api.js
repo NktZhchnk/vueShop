@@ -10,7 +10,6 @@ const connection = mysql.createConnection({
     password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
     database: 'products'
 });
-app.use(cors());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
