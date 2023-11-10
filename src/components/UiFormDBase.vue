@@ -12,7 +12,7 @@ const newProduct = ref({
 const addProduct = async () => {
   try {
     // Отправка данных на сервер
-    await axios.post('http://193.0.61.203/addProduct', newProduct.value);
+    await axios.post('https://eseniabila.com.ua/addProduct', newProduct.value);
 
     // Обновление списка продуктов после добавления
     // (вызов метода для обновления данных)
