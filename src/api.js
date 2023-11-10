@@ -47,6 +47,7 @@ app.post('/addProduct', (req, res) => {
             res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
             res.status(200).json({ message: 'Продукт успешно добавлен' });
+
         }
     });
 });

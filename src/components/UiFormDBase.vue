@@ -17,10 +17,11 @@ const addProduct = async () => {
     // Обновление списка продуктов после добавления
     // (вызов метода для обновления данных)
   } catch (error) {
+    console.log('j')
     console.error('Ошибка добавления продукта:', error);
   }
-
 };
+
 </script>
 
 <template>
