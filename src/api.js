@@ -1,5 +1,6 @@
 import mysql from 'mysql2';
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 const app = express();
 
@@ -9,6 +10,7 @@ const connection = mysql.createConnection({
     password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
     database: 'products'
 });
+app.use(cors());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

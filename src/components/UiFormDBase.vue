@@ -19,8 +19,9 @@ const submitForm = async () => {
   } catch (error) {
     console.error('Ошибка добавления:', error);
   }
-}
+};
 </script>
+
 
 <template>
   <div>
