@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 import express from 'express';
 import cors from 'cors';
-const logger = require('morgan');
+import logger from 'morgan';
 const app = express();
 
 
