@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 const app = express();
-
+app.use(cors());
 const connection = mysql.createConnection({
     host: '193.0.61.203',
     user: 'admin',
