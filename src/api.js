@@ -1,7 +1,11 @@
 import mysql from 'mysql2';
 import express from 'express';
 import cors from 'cors';
+const logger = require('morgan');
 const app = express();
+
+
+app.use(logger('dev'));
 app.use(cors());
 const connection = mysql.createConnection({
     host: '193.0.61.203',
@@ -29,9 +33,9 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
+
 app.post('/addProduct', (req, res) => {
-    console.log('req.body:', req.body);
-    console.log('req.body:');
+
     const { name_item, price_item, quan_item, image_item } = req.body;
 
     // Ваш SQL-запрос для добавления продукта

@@ -9,10 +9,10 @@ const newProduct = ref({
   image_item: 'product3.jpg',
 });
 
-const addProduct =  () => {
+const addProduct = async () => {
   try {
     // Отправка данных на сервер
-     axios.post('https://eseniabila.com.ua/addProduct', newProduct.value);
+    await axios.post('https://eseniabila.com.ua/addProduct', newProduct.value);
 
     // Обновление списка продуктов после добавления
     // (вызов метода для обновления данных)
