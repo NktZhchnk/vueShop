@@ -1,7 +1,6 @@
 import mysql from 'mysql2';
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 const app = express();
 app.use(cors());
 const connection = mysql.createConnection({
@@ -21,7 +20,7 @@ app.use('/images', express.static( '/var/www/vueShop/images'));
 
 app.get('/getProducts', (req, res) => {
     const sqlQuery = 'SELECT * FROM product';
-    connection.query(sqlQuery, (error, results, fields) => {
+    connection.query(sqlQuery, (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({ error: 'Ошибка выполнения запроса' });
@@ -31,12 +30,14 @@ app.get('/getProducts', (req, res) => {
     });
 });
 app.post('/addProduct', (req, res) => {
+    console.log('req.body:', req.body);
+    console.log('req.body:');
     const { name_item, price_item, quan_item, image_item } = req.body;
 
     // Ваш SQL-запрос для добавления продукта
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
 
-    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item], (error, results, fields) => {
+    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item], (error) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({ error: 'Ошибка добавления продукта' });
