@@ -19,18 +19,18 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/addItem', (req, res) => {
-    const { price, name, quantity } = req.body;
+app.post('/addProduct', (req, res) => {
+    const { name_item, price_item, quan_item, image_item } = req.body;
 
-    // Предполагая, что ваша таблица в базе данных называется "product"
-    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item) VALUES (?, ?, ?)';
+    // Ваш SQL-запрос для добавления продукта
+    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
 
-    connection.query(sqlQuery, [name, price, quantity], (error, results, fields) => {
+    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item], (error, results, fields) => {
         if (error) {
-            console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+            console.error('Ошибка добавления продукта:', error);
+            res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
-            res.status(200).json({ message: 'Элемент успешно добавлен' });
+            res.status(200).json({ message: 'Продукт успешно добавлен' });
         }
     });
 });
