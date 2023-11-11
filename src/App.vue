@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue';
 import {useMyStore} from "@/store/store.js";
 import UiFormDBase from "@/components/UiFormDBase.vue";
+import axios from "axios";
 
 const store = useMyStore()
 
@@ -13,8 +14,15 @@ onMounted(async () => {
   console.log(store.data[0]);
 });
 
-const fn = () => {
-  console.log(store.data)
+const fn = async (id) => {
+  try {
+    await axios.delete(`/deleteProduct/${id}`);
+    console.log(`Продукт с ID ${id} успешно удален`);
+    // После удаления обновите данные, если необходимо
+    await store.fetchData();
+  } catch (error) {
+    console.error(`Ошибка при удалении продукта с ID ${id}:`, error);
+  }
 }
 
 </script>
@@ -24,6 +32,7 @@ const fn = () => {
   <div>
     <UiFormDBase></UiFormDBase>
     <div v-for="item in store.data" :key="item.id">
+      <button @click="fn(item.id)">delete</button>
       <h1>price2: {{ item.price_item }}</h1>
       <h1>id: {{ item.id }}</h1>
       <h1>q: {{ item.quan_item }}</h1>
