@@ -16,7 +16,7 @@ onMounted(async () => {
 
 const fn = async (id) => {
   try {
-    await axios.delete(`/deleteProduct/${id}`);
+    await axios.delete(`https://eseniabila.com.ua/deleteProduct/${id}`);
     console.log(`Продукт с ID ${id} успешно удален`);
     // После удаления обновите данные, если необходимо
     await store.fetchData();
