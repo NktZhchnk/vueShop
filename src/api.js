@@ -5,12 +5,7 @@ import logger from 'morgan';
 
 const app = express();
 
-const corsOptions = {
-    origin: 'https://eseniabila.com.ua',
-    optionsSuccessStatus: 200, // некоторые браузеры поддерживают этот флаг
-};
-
-app.use(cors(corsOptions));
+app.use(cors)
 
 app.use(logger('dev'));
 
