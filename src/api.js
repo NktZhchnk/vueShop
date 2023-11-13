@@ -5,9 +5,15 @@ import logger from 'morgan';
 
 const app = express();
 
+const corsOptions = {
+    origin: 'https://eseniabila.com.ua',
+    optionsSuccessStatus: 200, // некоторые браузеры поддерживают этот флаг
+};
+
+app.use(cors(corsOptions));
 
 app.use(logger('dev'));
-app.use(cors());
+
 const connection = mysql.createConnection({
     host: '193.0.61.203',
     user: 'admin',
@@ -15,12 +21,7 @@ const connection = mysql.createConnection({
     database: 'products'
 });
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
+
 app.use('/images', express.static('/var/www/vueShop/images'));
 
 app.get('/getProducts', (req, res) => {
