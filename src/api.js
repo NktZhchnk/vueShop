@@ -5,23 +5,22 @@ import logger from 'morgan';
 
 const app = express();
 
-app.use(cors)
 
 app.use(logger('dev'));
-
+app.use(cors());
 const connection = mysql.createConnection({
     host: '193.0.61.203',
     user: 'admin',
     password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
     database: 'products'
 });
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
-
 app.use('/images', express.static('/var/www/vueShop/images'));
 
 app.get('/getProducts', (req, res) => {
@@ -35,25 +34,9 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
-// Добавьте этот маршрут перед app.listen
+app.delete('/deleteProduct', (req, res) => {
 
-app.delete('/deleteProduct/:id', (req, res) => {
-    const productId = req.params.id;
-
-    // Ваш SQL-запрос для удаления продукта
-    const sqlQuery = 'DELETE FROM product WHERE id = ?';
-
-    connection.query(sqlQuery, [productId], (error) => {
-        if (error) {
-            console.error('Ошибка удаления продукта:', error);
-            res.status(500).json({ error: 'Ошибка удаления продукта' });
-        } else {
-            res.status(200).json({ message: 'Продукт успешно удален' });
-        }
-    });
-});
-
-
+})
 app.post('/addProduct', (req, res) => {
 
     const {name_item, price_item, quan_item, image_item} = req.body;
