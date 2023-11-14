@@ -12,6 +12,7 @@ const newProduct = ref({
 const addProduct = async () => {
   try {
     // Отправка данных на сервер
+    console.log('h')
     await axios.post('https://eseniabila.com.ua/addProduct', newProduct.value);
 
     // Обновление списка продуктов после добавления

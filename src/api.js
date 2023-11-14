@@ -38,9 +38,9 @@ app.delete('/deleteProduct', (req, res) => {
 
 })
 app.post('/addProduct', (req, res) => {
-
+    console.log('1')
     const {name_item, price_item, quan_item, image_item} = req.body;
-
+    console.log('2')
     // Ваш SQL-запрос для добавления продукта
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
 
