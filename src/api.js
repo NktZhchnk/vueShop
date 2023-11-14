@@ -15,12 +15,8 @@ const connection = mysql.createConnection({
     database: 'products'
 });
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
+
+
 app.use('/images', express.static('/var/www/vueShop/images'));
 
 app.get('/getProducts', (req, res) => {
@@ -40,9 +36,9 @@ app.delete('/deleteProduct', (req, res) => {
 app.post('/addProduct', (req, res) => {
     console.log('1')
     const {name_item, price_item, quan_item, image_item} = req.body;
-    console.log('2')
+    console.log('4')
     // Ваш SQL-запрос для добавления продукта
-    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
+    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (name_item, price_item, quan_item, image_item)';
 
     connection.query(sqlQuery, [name_item, price_item, quan_item, image_item], (error) => {
         if (error) {
