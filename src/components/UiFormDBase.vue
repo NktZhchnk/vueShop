@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const newProduct = {
   name_item: "Название продукта",
-  price_item: 25.99,
+  price_item: 26,
   quan_item: 20,
   image_item: "новый_продукт.jpg"
 };
