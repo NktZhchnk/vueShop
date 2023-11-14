@@ -13,7 +13,13 @@ const addProduct = async () => {
   try {
     // Отправка данных на сервер
     console.log(newProduct.value)
-    await axios.post('https://eseniabila.com.ua/addProduct', newProduct.value);
+
+    await axios.post('https://eseniabila.com.ua/addProduct', {
+      name_item: newProduct.value.name_item,
+      price_item: newProduct.value.price_item,
+      quan_item: newProduct.value.quan_item,
+      image_item: newProduct.value.image_item
+    });
 
     // Обновление списка продуктов после добавления
     // (вызов метода для обновления данных)
