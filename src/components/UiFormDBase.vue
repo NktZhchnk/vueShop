@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-const newProduct = ref({
-  name_item: 'Eye',
-  price_item: 25,
-  quan_item: 5,
-  image_item: 'product3.jpg',
-});
+const newProduct = {
+  name_item: "Название продукта",
+  price_item: 25.99,
+  quan_item: 20,
+  image_item: "новый_продукт.jpg"
+};
 
 const addProduct = async () => {
   try {
