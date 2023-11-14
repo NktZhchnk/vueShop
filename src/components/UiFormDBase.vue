@@ -2,17 +2,17 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-const newProduct = {
-  name_item: "Название продукта",
-  price_item: 26,
-  quan_item: 20,
-  image_item: "новый_продукт.jpg"
-};
+const newProduct = ref({
+  name_item: 'Eye',
+  price_item: 25,
+  quan_item: 5,
+  image_item: 'product3.jpg',
+});
 
 const addProduct = async () => {
   try {
     // Отправка данных на сервер
-    console.log('h')
+    console.log(newProduct.value)
     await axios.post('https://eseniabila.com.ua/addProduct', newProduct.value);
 
     // Обновление списка продуктов после добавления
