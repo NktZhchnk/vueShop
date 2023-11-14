@@ -34,11 +34,11 @@ app.delete('/deleteProduct', (req, res) => {
 
 })
 app.post('/addProduct', (req, res) => {
-    console.log('1')
+    console.log('Получен POST запрос на /addProduct');
     const {name_item, price_item, quan_item, image_item} = req.body;
-    console.log('4')
+
     // Ваш SQL-запрос для добавления продукта
-    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (name_item, price_item, quan_item, image_item)';
+    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
 
     connection.query(sqlQuery, [name_item, price_item, quan_item, image_item], (error) => {
         if (error) {
