@@ -1,6 +1,7 @@
 import mysql from 'mysql2';
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import logger from 'morgan';
 
 const app = express();
