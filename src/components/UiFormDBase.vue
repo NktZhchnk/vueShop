@@ -10,7 +10,7 @@ const newData = {
 };
 
 const addProduct = () => {
-  axios.post('http://localhost/addProduct', newData)
+  axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
           console.log('Ответ сервера:', response.data);
         // Обработка успешного ответа
