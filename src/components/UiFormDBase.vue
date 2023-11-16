@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-
+import {useMyStore} from "@/store/store.js";
+const store = useMyStore()
 const newData = {
   name_item: 'pussy',
   price_item: 100, // цена продукта
@@ -14,6 +15,9 @@ const addProduct = () => {
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
           console.log('Ответ сервера:', response.data);
+        setTimeout(()=>{
+          store.fetchData()
+        }, 2000)
         // Обработка успешного ответа
       })
       .catch(error => {
