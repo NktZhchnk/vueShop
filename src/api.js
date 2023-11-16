@@ -8,6 +8,7 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(cors());
+app.use(bodyParser.json());
 const connection = mysql.createConnection({
     host: '193.0.61.203',
     user: 'admin',
@@ -30,8 +31,8 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
-app.delete('/deleteProduct/:productId', (req, res) => {
-    const productId = req.params.productId; // Получаем ID продукта для удаления
+app.delete('/deleteProduct/:id', (req, res) => {
+    const productId = req.params.id; // Получаем ID продукта для удаления
 
     const sqlQuery = 'DELETE FROM product WHERE id = ?'; // SQL-запрос для удаления продукта
 
@@ -43,8 +44,7 @@ app.delete('/deleteProduct/:productId', (req, res) => {
             if (result.affectedRows > 0) {
                 res.status(200).json({ message: 'Продукт успешно удален' });
             } else {
-                res.status(404).json({ error: 'Продукт не найден' });
-            }
+                res.status(404).json({ error: 'Продукт не найден' });}
         }
     });
 });
