@@ -10,7 +10,7 @@ const newData = {
 };
 
 const addProduct = () => {
-  axios.post('http://localhost:3000/addProduct', newData)
+  axios.post('http://localhost/addProduct', newData)
       .then(response => {
           console.log('Ответ сервера:', response.data);
         // Обработка успешного ответа
