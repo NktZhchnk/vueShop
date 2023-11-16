@@ -6,7 +6,8 @@ const newData = {
   name_item: 'pussy',
   price_item: 100, // цена продукта
   quan_item: 5,    // количество продукта
-  image_item: 'https://example.com/product.jpg' // ссылка на изображение продукта
+  image_item: 'https://example.com/product.jpg', // ссылка на изображение продукта
+  show_item: 1,
 };
 
 const addProduct = () => {
