@@ -45,15 +45,19 @@ app.delete('/deleteProduct/:id', (req, res) => {
             if (result.affectedRows > 0) {
                 res.status(200).json({ message: 'Продукт успешно удален' });
             } else {
-                res.status(404).json({ error: 'Продукт не найден' });}
+                res.status(404).json({ error: 'Продукт не найден' });
+            }
         }
     });
 });
 
-app.post('/addProduct', (req, res) => {
-    console.log('Получен POST запрос на /addProduct');
-    const {name_item, price_item, quan_item, image_item} = req.body;
 
+app.post('/addProduct', (req, res) => {
+    if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item) {
+        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
+    }
+
+    const { name_item, price_item, quan_item, image_item } = req.body;
     // Ваш SQL-запрос для добавления продукта
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
 
