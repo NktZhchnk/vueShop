@@ -52,25 +52,30 @@ app.delete('/deleteProduct/:id', (req, res) => {
 });
 
 
+
 app.post('/addProduct', (req, res) => {
+    // Проверяем наличие необходимых полей в запросе
     if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item) {
         return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
     }
 
+    // Деструктурируем данные о новом продукте из тела запроса
     const { name_item, price_item, quan_item, image_item } = req.body;
-    // Ваш SQL-запрос для добавления продукта
+    console.log('hysos')
+    // Ваш SQL-запрос для добавления продукта в базу данных
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item) VALUES (?, ?, ?, ?)';
 
+    // Выполняем запрос к базе данных для добавления продукта
     connection.query(sqlQuery, [name_item, price_item, quan_item, image_item], (error) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
-            res.status(500).json({error: 'Ошибка добавления продукта'});
+            res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
-            res.status(200).json({message: 'Продукт успешно добавлен'});
-
+            res.status(200).json({ message: 'Продукт успешно добавлен' });
         }
     });
 });
+
 
 app.listen(3000, () => {
     console.log('Сервер запущен на порту 3000');
