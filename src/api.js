@@ -56,7 +56,6 @@ app.post('/addProduct', (req, res) => {
     if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item) {
         return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
-
     // Деструктурируем данные о новом продукте из тела запроса
     const {name_item, price_item, quan_item, image_item, show_item} = req.body;
     // Ваш SQL-запрос для добавления продукта в базу данных
