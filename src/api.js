@@ -30,9 +30,25 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
-app.delete('/deleteProduct', (req, res) => {
+app.delete('/deleteProduct/:productId', (req, res) => {
+    const productId = req.params.productId; // Получаем ID продукта для удаления
 
-})
+    const sqlQuery = 'DELETE FROM product WHERE id = ?'; // SQL-запрос для удаления продукта
+
+    connection.query(sqlQuery, [productId], (error, result) => {
+        if (error) {
+            console.error('Ошибка удаления продукта:', error);
+            res.status(500).json({ error: 'Ошибка удаления продукта' });
+        } else {
+            if (result.affectedRows > 0) {
+                res.status(200).json({ message: 'Продукт успешно удален' });
+            } else {
+                res.status(404).json({ error: 'Продукт не найден' });
+            }
+        }
+    });
+});
+
 app.post('/addProduct', (req, res) => {
     console.log('Получен POST запрос на /addProduct');
     const {name_item, price_item, quan_item, image_item} = req.body;
