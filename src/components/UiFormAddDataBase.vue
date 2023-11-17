@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from 'axios';
-import { useMyStore } from "@/store/store.js";
+import {useMyStore} from "@/store/store.js";
 import Checkbox from "@/components/Checkbox.vue";
 
 const store = useMyStore();
@@ -12,8 +12,8 @@ const newData = {
   quan_item: 5,
   image_item: 'https://example.com/product.jpg',
   show_item: 1,
-  category_item: ref(null),
-  varieties_item: store.radioOptions,
+  category_item: null,
+  // varieties_item: store.radioOptions,
 };
 
 const addProduct = () => {
@@ -32,7 +32,11 @@ const addProduct = () => {
         console.error('Ошибка при отправке данных на сервер:', error);
         // Обработка ошибки
       });
+
 };
+const check = () => {
+  console.log(newData.category_item)
+}
 
 </script>
 
@@ -45,16 +49,29 @@ const addProduct = () => {
       <label for="productName">Название:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
-      <!-- Остальные поля ввода -->
+      <label for="productPrice">Цена:</label>
+      <input v-model="newData.price_item" type="number" id="productPrice" required>
 
-      <checkbox></checkbox>
-      <input v-model="newData.category_item" type="radio" id="option1" name="choice" value="item">
+      <label for="productQuantity">Количество:</label>
+      <input v-model="newData.quan_item" type="number" id="productQuantity" required>
+
+      <label for="productImage">Изображение:</label>
+      <input v-model="newData.image_item" type="text" id="productImage" required>
+
+<!--      <checkbox></checkbox>-->
+      <input v-model="newData.category_item"
+             type="radio"
+             id="option1"
+             name="choice"
+             value="item"
+      >
       <label for="option1">Вещи</label><br>
       <input v-model="newData.category_item" type="radio" id="option2" name="choice" value="cosmetics">
       <label for="option2">Косметика</label><br>
       <input v-model="newData.category_item" type="radio" id="option3" name="choice" value="accessories">
       <label for="option3">Принадлежности</label><br>
-      <h1>{{ newData.category_item.value }}</h1>
+      <h1>{{ newData.category_item }}</h1>
+      <button @click="check">check</button>
       <button type="submit">Добавить продукт</button>
 
     </form>
