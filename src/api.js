@@ -58,6 +58,8 @@ app.post('/addProduct', (req, res) => {
     }
     // Деструктурируем данные о новом продукте из тела запроса
     const {name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item} = req.body;
+    console.log('c', category_item)
+    console.log('v', varieties_item)
     // Ваш SQL-запрос для добавления продукта в базу данных
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
