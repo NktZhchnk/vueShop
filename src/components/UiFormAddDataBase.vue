@@ -2,13 +2,16 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import {useMyStore} from "@/store/store.js";
+import Checkbox from "@/components/Checkbox.vue";
 const store = useMyStore()
 const newData = {
-  name_item: 'pussy',
-  price_item: 100, // цена продукта
+  name_item: 'Шар',
+  price_item: 105, // цена продукта
   quan_item: 5,    // количество продукта
   image_item: 'https://example.com/product.jpg', // ссылка на изображение продукта
   show_item: 1,
+  category_item: ref(null),
+  varieties_item: store.radioOptions,
 };
 
 const addProduct = () => {
@@ -31,9 +34,9 @@ const addProduct = () => {
 <template>
   <div>
     <!-- Ваш текущий код отображения продуктов -->
-
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct">
+
       <label for="productName">Название:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
@@ -46,7 +49,16 @@ const addProduct = () => {
       <label for="productImage">Изображение:</label>
       <input v-model="newData.image_item" type="text" id="productImage" required>
 
+      <checkbox></checkbox>
+      <input v-model="newData.category_item" type="radio" id="option1" name="choice" value="item">
+      <label for="option1">Вещи</label><br>
+      <input v-model="newData.category_item" type="radio" id="option2" name="choice" value="cosmetics">
+      <label for="option2">Косметика</label><br>
+      <input v-model="newData.category_item" type="radio" id="option3" name="choice" value="accessories">
+      <label for="option3">Принадлежности</label><br>
+      <h1>{{newData.category_item}}</h1>
       <button type="submit">Добавить продукт</button>
+
     </form>
   </div>
 </template>

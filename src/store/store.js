@@ -7,6 +7,7 @@ export const useMyStore = defineStore({
     state: () => ({
         data: [],
         priceItem: null,
+        radioOptions: ref([]),
     }),
     actions: {
         fetchData() {

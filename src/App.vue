@@ -1,20 +1,19 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import {useMyStore} from "@/store/store.js";
-import UiFormDBase from "@/components/UiFormDBase.vue";
 import axios from "axios";
+import UiFormAddDataBase from "@/components/UiFormAddDataBase.vue";
+import UiFormRadioCategories from "@/components/UiFormRadioCategories.vue";
 
 const store = useMyStore()
 
 onMounted(async () => {
-  // Вызовите `fetchData` и дождитесь завершения запроса
   await store.fetchData();
-
-  // Теперь можно безопасно получить данные
-  console.log(store.data[0]);
 });
-
-const fn = async (id) => {
+const test = () => {
+  console.log(store.radioOptions)
+}
+const deleteProductInDataBase = async (id) => {
   try {
     await axios.delete(`https://eseniabila.com.ua/deleteProduct/${id}`);
     console.log(`Продукт с ID ${id} успешно удален`);
@@ -30,23 +29,30 @@ const fn = async (id) => {
 
 <template>
   <div>
-    <UiFormDBase></UiFormDBase>
-    <div v-for="item in store.data" :key="item.id" >
+    <UiFormAddDataBase></UiFormAddDataBase>
+    <button @click="test">click</button>
+    <UiFormRadioCategories></UiFormRadioCategories>
+    <div v-for="item in store.data" :key="item.id">
       <div v-if="item.show_item">
-      <button @click="fn(item.id)">delete</button>
-      <h1>price2: {{ item.price_item }}</h1>
-      <h1>id: {{ item.id }}</h1>
-      <h1>q: {{ item.quan_item }}</h1>
-      <h1>name: {{ item.name_item }}</h1>
-      <img alt="error" :src="'/images/' + item.image_item"/>
+        <button @click="deleteProductInDataBase(item.id)">delete</button>
+        <h1>price2: {{ item.price_item }}</h1>
+        <h1>id: {{ item.id }}</h1>
+        <h1>q: {{ item.quan_item }}</h1>
+        <h1>name: {{ item.name_item }}</h1>
+        <h1>categories:{{ item.category_item }}</h1>
+        <h1>show:{{ item.show_item }}</h1>
+        <div v-for="varieties in item.varieties_item">
+          <input type="radio" :value="varieties.item"/>
+        </div>
+        <img alt="error" :src="'/images/' + item.image_item"/>
       </div>
     </div>
   </div>
 </template>
 
-<style >
- img{
-   width: 200px;
-   height: 200px;
- }
+<style>
+img {
+  width: 200px;
+  height: 200px;
+}
 </style>
