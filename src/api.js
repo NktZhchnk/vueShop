@@ -63,7 +63,7 @@ app.post('/addProduct', (req, res) => {
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item) VALUES (?, ?, ?, ?, ?, ?)';
 
     // Выполняем запрос к базе данных для добавления продукта
-    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item], (error) => {
+    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item], (error) => {
 
         if (error) {
             console.error('Ошибка добавления продукта:', error);
