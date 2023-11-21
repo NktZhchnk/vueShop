@@ -54,10 +54,10 @@ app.delete('/deleteProduct/:id', (req, res) => {
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
     if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item || !req.body.varieties_item) {
-        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
     }
     // Деструктурируем данные о новом продукте из тела запроса
-    const {name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item} = req.body;
+    const { name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item } = req.body;
 
     // Ваш SQL-запрос для добавления продукта в базу данных
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -68,13 +68,14 @@ app.post('/addProduct', (req, res) => {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
-            const lastInsertedId = results[0].insertId; // Попробуйте так получить ID
-            console.log('h')
+            const lastInsertedId = results.insertId;
             console.log('Последний вставленный ID:', lastInsertedId);
+            console.log('h');
             res.status(200).json({ message: 'Продукт успешно добавлен', lastInsertedId });
         }
     });
 });
+
 
 
 app.listen(3000, () => {
