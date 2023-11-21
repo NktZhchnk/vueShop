@@ -65,6 +65,7 @@ app.post('/addProduct', (req, res) => {
 
     // Выполняем запрос к базе данных для добавления продукта
     connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item], (error) => {
+
         if (error) {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({error: 'Ошибка добавления продукта'});
@@ -72,6 +73,7 @@ app.post('/addProduct', (req, res) => {
             res.status(200).json({message: 'Продукт успешно добавлен'});
         }
     });
+
 });
 
 

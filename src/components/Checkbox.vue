@@ -33,7 +33,7 @@ export default {
 <template>
   <div>
     <label>Сколько радиокнопок вы хотите создать?</label>
-    <input type="number" v-model="numRadios" min="1">
+    <input type="number" v-model="numRadios" min="0">
     <button type="button" @click="createRadios">Создать радиокнопки</button>
     <div v-if="radioOptions.length">
       <div v-for="(option, index) in radioOptions" :key="index">

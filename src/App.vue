@@ -41,9 +41,8 @@ const deleteProductInDataBase = async (id) => {
         <h1>name: {{ item.name_item }}</h1>
         <h1>categories:{{ item.category_item }}</h1>
         <h1>show:{{ item.show_item }}</h1>
-        <div v-for="varieties in item.varieties_item">
-          <input type="radio" :value="varieties.item"/>
-        </div>
+        <input type="radio" :value="item.varieties_item"/>
+          <label>{{item.varieties_item}}</label>
         <img alt="error" :src="'/images/' + item.image_item"/>
       </div>
     </div>
