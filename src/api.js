@@ -69,6 +69,7 @@ app.post('/addProduct', (req, res) => {
             res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
             const lastInsertedId = results[0].insertId; // Попробуйте так получить ID
+            console.log('h')
             console.log('Последний вставленный ID:', lastInsertedId);
             res.status(200).json({ message: 'Продукт успешно добавлен', lastInsertedId });
         }
