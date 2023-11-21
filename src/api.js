@@ -54,25 +54,34 @@ app.delete('/deleteProduct/:id', (req, res) => {
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
     if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item || !req.body.varieties_item) {
-        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
     }
     // Деструктурируем данные о новом продукте из тела запроса
-    const {name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item} = req.body;
-    console.log('c', category_item)
-    console.log('v', varieties_item)
+    const { name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item } = req.body;
+
     // Ваш SQL-запрос для добавления продукта в базу данных
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
     // Выполняем запрос к базе данных для добавления продукта
-    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item], (error) => {
+    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item], (error, results) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
-            res.status(500).json({error: 'Ошибка добавления продукта'});
+            res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
-            res.status(200).json({message: 'Продукт успешно добавлен'});
+            // Получаем ID только что добавленного продукта
+            connection.query('SELECT LAST_INSERT_ID()', (err, result) => {
+                if (err) {
+                    console.error('Ошибка получения ID продукта:', err);
+                    res.status(500).json({ error: 'Ошибка получения ID продукта' });
+                } else {
+                    const lastInsertedId = result[0]['LAST_INSERT_ID()'];
+                    res.status(200).json({ message: 'Продукт успешно добавлен', lastInsertedId });
+                }
+            });
         }
     });
 });
+
 
 
 app.listen(3000, () => {
