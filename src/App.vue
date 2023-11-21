@@ -51,6 +51,10 @@ const deleteProductInDataBase = async (id) => {
 </template>
 
 <style>
+body{
+  background: rgba(0,0,0, 0.9);
+  color: white;
+}
 img {
   width: 200px;
   height: 200px;

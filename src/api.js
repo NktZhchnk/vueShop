@@ -61,17 +61,23 @@ app.post('/addProduct', (req, res) => {
 
     // Ваш SQL-запрос для добавления продукта в базу данных
     const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const sqlValues = [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item];
 
-    connection.query(sqlQuery, sqlValues, (error, results) => {
+    // Выполняем запрос к базе данных для добавления продукта
+    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item], (error, results) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({ error: 'Ошибка добавления продукта' });
         } else {
-            const lastInsertedId = results.insertId;
-            console.log('Последний вставленный ID:', lastInsertedId);
-            console.log('h');
-            res.status(200).json({ message: 'Продукт успешно добавлен', lastInsertedId });
+            // Получаем ID только что добавленного продукта
+            connection.query('SELECT LAST_INSERT_ID()', (err, result) => {
+                if (err) {
+                    console.error('Ошибка получения ID продукта:', err);
+                    res.status(500).json({ error: 'Ошибка получения ID продукта' });
+                } else {
+                    const lastInsertedId = result[0]['LAST_INSERT_ID()'];
+                    res.status(200).json({ message: 'Продукт успешно добавлен', lastInsertedId });
+                }
+            });
         }
     });
 });
