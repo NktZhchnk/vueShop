@@ -3,10 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import {useMyStore} from "@/store/store.js";
+
 
 const app = express();
-// const store = useMyStore()
+
 
 app.use(logger('dev'));
 app.use(cors());
