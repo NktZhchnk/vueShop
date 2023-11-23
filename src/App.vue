@@ -11,8 +11,12 @@ onMounted(async () => {
   await store.fetchData();
 });
 const test = () => {
+  store.getRadioPrice();
+
+  console.log(store.radioPrice)
   console.log(store.radioOptions)
 }
+
 const deleteProductInDataBase = async (id) => {
   try {
     await axios.delete(`https://eseniabila.com.ua/deleteProduct/${id}`);
@@ -42,7 +46,7 @@ const deleteProductInDataBase = async (id) => {
         <h1>categories:{{ item.category_item }}</h1>
         <h1>show:{{ item.show_item }}</h1>
         <input type="radio" :value="item.varieties_item"/>
-          <label>{{item.varieties_item}}</label>
+        <label>{{ item.varieties_item }}</label>
 
         <img alt="error" :src="'/images/' + item.image_item"/>
       </div>
@@ -51,10 +55,11 @@ const deleteProductInDataBase = async (id) => {
 </template>
 
 <style>
-body{
-  background: rgba(0,0,0, 0.9);
+body {
+  background: rgba(0, 0, 0, 0.9);
   color: white;
 }
+
 img {
   width: 200px;
   height: 200px;

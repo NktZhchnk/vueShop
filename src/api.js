@@ -3,9 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import {useMyStore} from "@/store/store.js";
 
 const app = express();
-
+// const store = useMyStore()
 
 app.use(logger('dev'));
 app.use(cors());
@@ -31,6 +32,8 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
+
+
 app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления
 
@@ -53,34 +56,26 @@ app.delete('/deleteProduct/:id', (req, res) => {
 
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
-    if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item || !req.body.varieties_item) {
-        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
+    if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item) {
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
     // Деструктурируем данные о новом продукте из тела запроса
-    const { name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item } = req.body;
-
+    const {name_item, price_item, quan_item, image_item, show_item, category_item} = req.body;
     // Ваш SQL-запрос для добавления продукта в базу данных
-    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item) VALUES (?, ?, ?, ?, ?, ?)';
 
     // Выполняем запрос к базе данных для добавления продукта
-    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, varieties_item], (error, results) => {
+    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item], (error) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
-            res.status(500).json({ error: 'Ошибка добавления продукта' });
+            res.status(500).json({error: 'Ошибка добавления продукта'});
         } else {
-            // Получаем ID только что добавленного продукта
-            connection.query('SELECT LAST_INSERT_ID()', (err, result) => {
-                if (err) {
-                    console.error('Ошибка получения ID продукта:', err);
-                    res.status(500).json({ error: 'Ошибка получения ID продукта' });
-                } else {
-                    const lastInsertedId = result[0]['LAST_INSERT_ID()'];
-                    res.status(200).json({ message: 'Продукт успешно добавлен', lastInsertedId });
-                }
-            });
+            res.status(200).json({message: 'Продукт успешно добавлен'});
         }
     });
+
 });
+
 
 
 

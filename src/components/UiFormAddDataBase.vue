@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from 'axios';
 import {useMyStore} from "@/store/store.js";
 import Checkbox from "@/components/Checkbox.vue";
+
 const store = useMyStore()
 const newData = {
   name_item: 'Шар',
@@ -11,14 +12,15 @@ const newData = {
   image_item: 'https://example.com/product.jpg', // ссылка на изображение продукта
   show_item: 1,
   category_item: ref(null),
-  varieties_item: store.radioOptions,
 };
 
 const addProduct = () => {
+  store.getRadioPrice();
+  console.log(newData)
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
         console.log('Ответ сервера:', response.data);
-        setTimeout(()=>{
+        setTimeout(() => {
           store.fetchData()
         }, 2000)
         // Обработка успешного ответа
@@ -56,7 +58,7 @@ const addProduct = () => {
       <label for="option2">Косметика</label><br>
       <input v-model="newData.category_item" type="radio" id="option3" name="choice" value="accessories">
       <label for="option3">Принадлежности</label><br>
-      <h1>{{newData.category_item}}</h1>
+      <h1>{{ newData.category_item }}</h1>
       <button type="submit">Добавить продукт</button>
 
     </form>
