@@ -36,32 +36,63 @@ const deleteProductInDataBase = async (id) => {
     <UiFormAddDataBase></UiFormAddDataBase>
     <button @click="test">click</button>
     <UiFormRadioCategories></UiFormRadioCategories>
-    <div v-for="item in store.data" :key="item.id">
-      <div v-if="item.show_item">
+    <div v-for="item in store.data" :key="item.id" class="product">
+      <div v-if="item.show_item" class="product-item">
         <button @click="deleteProductInDataBase(item.id)">delete</button>
-        <h1>price2: {{ item.price_item }}</h1>
-        <h1>id: {{ item.id }}</h1>
-        <h1>q: {{ item.quan_item }}</h1>
-        <h1>name: {{ item.name_item }}</h1>
-        <h1>categories:{{ item.category_item }}</h1>
-        <h1>show:{{ item.show_item }}</h1>
-        <input type="radio" :value="item.varieties_item"/>
-        <label>{{ item.varieties_item }}</label>
-
-        <img alt="error" :src="'/images/' + item.image_item"/>
+        <div class="product-info">
+          <h1>price2: {{ item.price_item }}</h1>
+          <h1>id: {{ item.id }}</h1>
+          <h1>q: {{ item.quan_item }}</h1>
+          <h1>name: {{ item.name_item }}</h1>
+          <h1>categories:{{ item.category_item }}</h1>
+          <h1>show:{{ item.show_item }}</h1>
+          <img alt="error" :src="'/images/' + item.image_item"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-body {
-  background: rgba(0, 0, 0, 0.9);
+<style scoped>
+/* Стили для кнопки */
+button {
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Стили для блока с продуктами */
+.product {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Стили для отдельного продукта */
+.product-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.product-info {
+  margin-bottom: 10px;
 }
 
 img {
-  width: 200px;
-  height: 200px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
 }
 </style>
+

@@ -39,17 +39,17 @@ const addProduct = () => {
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct">
 
-      <label for="productName">Название:</label>
-      <input v-model="newData.name_item" type="text" id="productName" required>
+        <label for="productName">Название:</label>
+        <input v-model="newData.name_item" type="text" id="productName" required>
 
-      <label for="productPrice">Цена:</label>
-      <input v-model="newData.price_item" type="number" id="productPrice" required>
+        <label for="productPrice">Цена:</label>
+        <input v-model="newData.price_item" type="number" id="productPrice" required>
 
-      <label for="productQuantity">Количество:</label>
-      <input v-model="newData.quan_item" type="number" id="productQuantity" required>
+        <label for="productQuantity">Количество:</label>
+        <input v-model="newData.quan_item" type="number" id="productQuantity" required>
 
-      <label for="productImage">Изображение:</label>
-      <input v-model="newData.image_item" type="text" id="productImage" required>
+        <label for="productImage">Изображение:</label>
+        <input v-model="newData.image_item" type="text" id="productImage" required>
 
       <checkbox></checkbox>
       <input v-model="newData.category_item" type="radio" id="option1" name="choice" value="item">
@@ -66,5 +66,44 @@ const addProduct = () => {
 </template>
 
 <style scoped>
+/* Стили для формы и ее элементов */
+form {
+  border: solid 2px black;
+  box-shadow: 1px 2px 10px black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
 
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
 </style>

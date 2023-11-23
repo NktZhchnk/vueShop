@@ -52,6 +52,7 @@ export default {
 
 <style scoped>
 /* Стили для улучшения внешнего вида */
+
 label {
   margin-right: 10px;
 }
