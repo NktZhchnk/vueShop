@@ -95,4 +95,3 @@ img {
   border-radius: 6px;
 }
 </style>
-
