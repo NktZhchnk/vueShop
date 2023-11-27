@@ -39,17 +39,17 @@ const addProduct = () => {
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct">
 
-        <label for="productName">Название:</label>
-        <input v-model="newData.name_item" type="text" id="productName" required>
+      <label for="productName">Название:</label>
+      <input v-model="newData.name_item" type="text" id="productName" required>
 
-        <label for="productPrice">Цена:</label>
-        <input v-model="newData.price_item" type="number" id="productPrice" required>
+      <label for="productPrice">Цена:</label>
+      <input v-model="newData.price_item" type="number" id="productPrice" required>
 
-        <label for="productQuantity">Количество:</label>
-        <input v-model="newData.quan_item" type="number" id="productQuantity" required>
+      <label for="productQuantity">Количество:</label>
+      <input v-model="newData.quan_item" type="number" id="productQuantity" required>
 
-        <label for="productImage">Изображение:</label>
-        <input v-model="newData.image_item" type="text" id="productImage" required>
+      <label for="productImage">Изображение:</label>
+      <input v-model="newData.image_item" type="text" id="productImage" required>
 
       <checkbox></checkbox>
       <input v-model="newData.category_item" type="radio" id="option1" name="choice" value="item">
