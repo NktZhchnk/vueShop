@@ -55,43 +55,5 @@ const deleteProductInDataBase = async (id) => {
 
 <style scoped>
 /* Стили для кнопки */
-button {
-  padding: 8px 16px;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Стили для блока с продуктами */
-.product {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-/* Стили для отдельного продукта */
-.product-item {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 6px;
-  text-align: center;
-  background-color: #f9f9f9;
-}
-
-.product-info {
-  margin-bottom: 10px;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
 </style>
