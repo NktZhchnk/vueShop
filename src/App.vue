@@ -13,7 +13,7 @@ onMounted(async () => {
 const test = () => {
   store.getRadioPrice();
 
-  console.log(store.radioPrice)
+
   console.log(store.radioOptions)
 }
 
