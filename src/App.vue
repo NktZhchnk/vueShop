@@ -28,6 +28,7 @@ const deleteProductInDataBase = async (id) => {
   }
 }
 
+
 </script>
 
 
