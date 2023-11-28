@@ -6,7 +6,7 @@ import Checkbox from "@/components/Checkbox.vue";
 
 const store = useMyStore()
 const newData = {
-  name_item: 'Шар',
+  name_item: 'Ша2р',
   price_item: 105, // цена продукта
   quan_item: 5,    // количество продукта
   image_item: 'https://example.com/product.jpg', // ссылка на изображение продукта
