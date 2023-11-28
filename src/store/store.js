@@ -1,14 +1,12 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import axios from "axios";
-import {response} from "express";
 
 
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
         data: [],
-        productVarieties: [],
         radioPrice: [],
         radioQuan: [],
         radioName: [],
@@ -34,10 +32,6 @@ export const useMyStore = defineStore({
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
                 });
-            // axios.get('https://eseniabila.com.ua/getProductVarieties')
-            //     .then(response =>{
-            //         this.productVarieties = response.data;
-            //     })
         },
         getRadioPrice(){
             this.radioPrice = this.radioOptions.map(item => item.price)
