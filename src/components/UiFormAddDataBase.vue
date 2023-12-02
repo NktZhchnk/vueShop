@@ -13,10 +13,24 @@ const newData = {
   show_item: 1,
   category_item: ref(null),
 };
+const product = store.productVarieties;
+
+const test2 = {
+  product_id: product.product_id,
+  variety_name: product.variety_name,
+  variety_quan: product.variety_quan,
+  variety_price: product.variety_price,
+}
+
+const test = () => {
+  store.getRadioPrice();
+
+  // Обращение к геттеру для получения актуальных данных
+  console.log(test2.product_id);
+};
 
 const addProduct = () => {
   store.getRadioPrice();
-  console.log(newData)
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
         console.log('Ответ сервера:', response.data);
@@ -26,9 +40,24 @@ const addProduct = () => {
         // Обработка успешного ответа
       })
       .catch(error => {
-        console.error('Ошибка при отправке данных на сервер:', error);
+        console.error('Ошибка при отправке данных на сервер Писос:', error);
         // Обработка ошибки
       });
+
+    axios.post('https://eseniabila.com.ua/addProductVarieties', store.productVarieties)
+        .then(response => {
+          console.log('Ответ сервера:', response.data);
+          setTimeout(() => {
+            store.fetchData()
+          }, 2000)
+          // Обработка успешного ответа
+        })
+        .catch(error => {
+          console.error('Ошибка при отправке данных на сервер Хуесос:', error);
+          // Обработка ошибки
+        });
+
+
 };
 
 </script>
@@ -38,7 +67,7 @@ const addProduct = () => {
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct">
-
+      <button type="button" @click="test">test</button>
       <label for="productName">Название:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
@@ -66,7 +95,8 @@ const addProduct = () => {
 </template>
 
 <style scoped>
-/* Стили для формы и ее элементов */
+
+
 form {
   border: solid 2px black;
   box-shadow: 1px 2px 10px black;

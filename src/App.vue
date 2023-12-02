@@ -11,10 +11,10 @@ onMounted(async () => {
   await store.fetchData();
 });
 const test = () => {
-  store.getRadioPrice();
-
+  store.getRadioPrice()
   console.log(store.radioPrice)
-  console.log(store.radioOptions)
+  console.log(store.radioName)
+  console.log(store.radioQuan)
 }
 
 const deleteProductInDataBase = async (id) => {

@@ -73,10 +73,33 @@ app.post('/addProduct', (req, res) => {
             res.status(200).json({message: 'Продукт успешно добавлен'});
         }
     });
-
 });
 
+app.post('/addProductVarieties', (req, res) => {
+    const { productIds, names, quantities, prices } = req.body;
 
+    // Проверяем наличие необходимых данных в теле запроса
+    if (!productIds || !names || !quantities || !prices) {
+        return res.status(400).json({ error: 'Отсутствуют необходимые данные в запросе' });
+    }
+
+    // Формирование SQL-запроса для вставки данных в таблицу
+    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price) VALUES ?`;
+
+    // Создание массива значений для вставки
+    const values = productIds.map((id, index) => [id, names[index], quantities[index], prices[index]]);
+
+    // Выполнение запроса к базе данных
+    connection.query(sqlQuery, [values], (error, results) => {
+        if (error) {
+            console.error('Ошибка вставки данных:', error);
+            res.status(500).json({ error: 'Ошибка вставки данных в таблицу' });
+        } else {
+            console.log('Данные успешно вставлены:', results);
+            res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
+        }
+    });
+})
 
 
 app.listen(3000, () => {

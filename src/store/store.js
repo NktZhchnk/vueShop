@@ -10,13 +10,11 @@ export const useMyStore = defineStore({
         radioPrice: [],
         radioQuan: [],
         radioName: [],
-        lastId: 0,
+        lastId: 2,
         priceItem: null,
         radioOptions: ref([]),
     }),
-    mutations:{
-
-    },
+    mutations: {},
     actions: {
         fetchData() {
             // Здесь вы можете использовать Axios, Fetch API или другую библиотеку для получения данных с сервера
@@ -33,10 +31,21 @@ export const useMyStore = defineStore({
                     console.error('Произошла ошибка:', error);
                 });
         },
-        getRadioPrice(){
+        getRadioPrice() {
+            console.log('test GetRadio')
             this.radioPrice = this.radioOptions.map(item => item.price)
             this.radioName = this.radioOptions.map(item => item.label)
             this.radioQuan = this.radioOptions.map(item => item.quantity)
         }
+    },
+    getters: {
+        productVarieties() {
+            return {
+                product_id: this.lastId,
+                variety_name: this.radioName,
+                variety_quan: this.radioQuan,
+                variety_price: this.radioPrice,
+            };
+        },
     },
 });
