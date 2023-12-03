@@ -57,7 +57,7 @@ app.delete('/deleteProduct/:id', (req, res) => {
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
     if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item) {
-        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+        return res.status(400).json({error: 'Отсутствуютfgf необходимые поля в запросе'});
     }
     // Деструктурируем данные о новом продукте из тела запроса
     const {name_item, price_item, quan_item, image_item, show_item, category_item} = req.body;
@@ -76,8 +76,9 @@ app.post('/addProduct', (req, res) => {
 });
 
 app.post('/addProductVarieties', (req, res) => {
+    console.log('Received request:', req.body); // Добавляем эту строку для вывода содержимого тела запроса в консоль
     if (!req.body || !req.body.product_id || !req.body.variety_name || !req.body.variety_quan || !req.body.variety_price) {
-        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
     }
     const { product_id, variety_name, variety_quan, variety_price } = req.body;
 

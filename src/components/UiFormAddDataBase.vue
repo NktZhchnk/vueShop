@@ -21,11 +21,12 @@ const data = ref({
   variety_price: []
 });
 const test2 = {
-  product_id: 100,
-  variety_name: 'hello',
-  variety_quan: 20,
-  variety_price: 25,
+  product_id: 122,
+  variety_name: 'gaga',
+  variety_quan: 53,
+  variety_price: 2
 };
+
 
 
 // watch(() => store.productVarieties, (newValue) => {
@@ -43,31 +44,36 @@ const test2 = {
 // };
 
 const addProduct = () => {
+  // store.getRadioPrice();
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
-        console.log('Ответ сервера (добавление продукта):', response.data);
+        console.log('Ответ сервера:', response.data);
+        setTimeout(() => {
+          store.fetchData()
+        }, 2000)
         // Обработка успешного ответа
       })
       .catch(error => {
-        console.error('Ошибка при отправке данных на сервер (добавление продукта):', error);
+        console.error('Ошибка при отправке данных на сервер Писос:', error);
         // Обработка ошибки
       });
-
   axios.post('https://eseniabila.com.ua/addProductVarieties', test2, {
     headers: {
       'Content-Type': 'application/json'
     }
   })
       .then(response => {
-        console.log('Ответ сервера (добавление вариации продукта):', response.data);
+        console.log('Ответ сервера:', response.data);
+        setTimeout(() => {
+          store.fetchData();
+        }, 2000);
         // Обработка успешного ответа
       })
       .catch(error => {
-        console.error('Ошибка при отправке данных на сервер (добавление вариации продукта):', error);
+        console.error('Ошибка при отправке данных на сервер:', error);
         // Обработка ошибки
       });
 };
-
 
 </script>
 
