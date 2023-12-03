@@ -56,6 +56,7 @@ app.delete('/deleteProduct/:id', (req, res) => {
 
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
+    console.log('Received request:', req.body);
     if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item) {
         return res.status(400).json({error: 'Отсутствуютfgf необходимые поля в запросе'});
     }

@@ -42,7 +42,7 @@ const test2 = {
 //   // Обращение к геттеру для получения актуальных данных
 //   console.log(data)
 // };
-
+console.log('Данные для отправки на сервер:', test2);
 const addProduct = () => {
   // store.getRadioPrice();
   axios.post('https://eseniabila.com.ua/addProduct', newData)
