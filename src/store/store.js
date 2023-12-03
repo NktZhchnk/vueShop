@@ -24,7 +24,7 @@ export const useMyStore = defineStore({
                     this.data = response.data;
                     const lastItem = this.data.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
                     this.lastId = lastItem.id
-                    console.log('в сторе вывожу ласт айди:', this.lastId)
+                    console.log('в сторе вывожу лст айди:', this.lastId)
                     this.priceItem = this.data[0].price_item;
                 })
                 .catch(error => {
