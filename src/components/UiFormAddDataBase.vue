@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 import axios from 'axios';
 import {useMyStore} from "@/store/store.js";
 import Checkbox from "@/components/Checkbox.vue";
@@ -13,52 +13,61 @@ const newData = {
   show_item: 1,
   category_item: ref(null),
 };
-const product = store.productVarieties;
 
+const data = ref({
+  product_id: null,
+  variety_name: [],
+  variety_quan: [],
+  variety_price: []
+});
 const test2 = {
-  product_id: product.product_id,
-  variety_name: product.variety_name,
-  variety_quan: product.variety_quan,
-  variety_price: product.variety_price,
-}
-
-const test = () => {
-  store.getRadioPrice();
-
-  // Обращение к геттеру для получения актуальных данных
-  console.log(test2.product_id);
+  product_id: 100,
+  variety_name: 'hello',
+  variety_quan: 20,
+  variety_price: 25,
 };
 
+
+// watch(() => store.productVarieties, (newValue) => {
+//   data.value.product_id = newValue.product_id;
+//   data.value.variety_name = newValue.variety_name;
+//   data.value.variety_quan = newValue.variety_quan;
+//   data.value.variety_price = newValue.variety_price;
+// });
+
+// const test = () => {
+//   store.getRadioPrice();
+//
+//   // Обращение к геттеру для получения актуальных данных
+//   console.log(data)
+// };
+
 const addProduct = () => {
-  store.getRadioPrice();
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
-        console.log('Ответ сервера:', response.data);
-        setTimeout(() => {
-          store.fetchData()
-        }, 2000)
+        console.log('Ответ сервера (добавление продукта):', response.data);
         // Обработка успешного ответа
       })
       .catch(error => {
-        console.error('Ошибка при отправке данных на сервер Писос:', error);
+        console.error('Ошибка при отправке данных на сервер (добавление продукта):', error);
         // Обработка ошибки
       });
 
-    axios.post('https://eseniabila.com.ua/addProductVarieties', store.productVarieties)
-        .then(response => {
-          console.log('Ответ сервера:', response.data);
-          setTimeout(() => {
-            store.fetchData()
-          }, 2000)
-          // Обработка успешного ответа
-        })
-        .catch(error => {
-          console.error('Ошибка при отправке данных на сервер Хуесос:', error);
-          // Обработка ошибки
-        });
-
-
+  axios.post('https://eseniabila.com.ua/addProductVarieties', test2, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      .then(response => {
+        console.log('Ответ сервера (добавление вариации продукта):', response.data);
+        // Обработка успешного ответа
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных на сервер (добавление вариации продукта):', error);
+        // Обработка ошибки
+      });
 };
+
 
 </script>
 

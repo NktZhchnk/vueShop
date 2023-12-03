@@ -7,7 +7,7 @@ import logger from 'morgan';
 
 const app = express();
 
-
+app.use(express.json());
 app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
@@ -76,21 +76,19 @@ app.post('/addProduct', (req, res) => {
 });
 
 app.post('/addProductVarieties', (req, res) => {
-    const { productIds, names, quantities, prices } = req.body;
-
-    // Проверяем наличие необходимых данных в теле запроса
-    if (!productIds || !names || !quantities || !prices) {
-        return res.status(400).json({ error: 'Отсутствуют необходимые данные в запросе' });
+    if (!req.body || !req.body.product_id || !req.body.variety_name || !req.body.variety_quan || !req.body.variety_price) {
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
+    const { product_id, variety_name, variety_quan, variety_price } = req.body;
 
-    // Формирование SQL-запроса для вставки данных в таблицу
-    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price) VALUES ?`;
+    // Подготовка SQL-запроса с placeholder'ами для значений
+    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price) VALUES (?, ?, ?, ?)`;
 
-    // Создание массива значений для вставки
-    const values = productIds.map((id, index) => [id, names[index], quantities[index], prices[index]]);
+    // Формирование массива значений для вставки в SQL-запрос
+    const values = [product_id, variety_name, variety_quan, variety_price];
 
-    // Выполнение запроса к базе данных
-    connection.query(sqlQuery, [values], (error, results) => {
+    // Выполнение запроса к базе данных с использованием значений
+    connection.query(sqlQuery, values, (error, results) => {
         if (error) {
             console.error('Ошибка вставки данных:', error);
             res.status(500).json({ error: 'Ошибка вставки данных в таблицу' });
@@ -99,7 +97,10 @@ app.post('/addProductVarieties', (req, res) => {
             res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
         }
     });
-})
+});
+
+
+
 
 
 app.listen(3000, () => {
