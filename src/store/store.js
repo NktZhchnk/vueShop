@@ -1,12 +1,10 @@
-import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import axios from "axios";
-
-
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
-        data: [],
+        products: [],
+        productVarieties: [],
         radioPrice: [],
         radioQuan: [],
         radioName: [],
@@ -21,11 +19,19 @@ export const useMyStore = defineStore({
             axios.get('https://eseniabila.com.ua/getProducts')
                 .then(response => {
                     // Обработка данных и сохранение их в состоянии магазина
-                    this.data = response.data;
-                    const lastItem = this.data.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
-                    this.lastId = lastItem.id
+                    this.products = response.data;
+                    const lastItem = this.products.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
+                    this.lastId = lastItem.id + 1
                     console.log('в сторе вывожу лст айди:', this.lastId)
-                    this.priceItem = this.data[0].price_item;
+                    this.priceItem = this.products[0].price_item;
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                });
+            axios.get('https://eseniabila.com.ua/getProductVarieties')
+                .then(response => {
+                    this.productVarieties = response.data
+                    console.log(this.productVarieties)
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
