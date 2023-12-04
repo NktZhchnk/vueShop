@@ -32,7 +32,6 @@ export default {
     const selectedOption = ref('');
 
     const createRadios = () => {
-      radioOptions.value = []; // Очищаем предыдущие радиокнопки
 
       for (let i = 0; i < numRadios.value; i++) {
         let optionLabel = '';

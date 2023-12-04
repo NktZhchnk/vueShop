@@ -14,37 +14,16 @@ const newData = {
   category_item: ref(null),
 };
 
-const data = ref({
-  product_id: null,
-  variety_name: [],
-  variety_quan: [],
-  variety_price: []
-});
-const test2 = {
-  product_id: 122,
-  variety_name: 'gaga',
-  variety_quan: 53,
-  variety_price: 2
-};
-
-
-
-// watch(() => store.productVarieties, (newValue) => {
-//   data.value.product_id = newValue.product_id;
-//   data.value.variety_name = newValue.variety_name;
-//   data.value.variety_quan = newValue.variety_quan;
-//   data.value.variety_price = newValue.variety_price;
-// });
-
-// const test = () => {
-//   store.getRadioPrice();
-//
-//   // Обращение к геттеру для получения актуальных данных
-//   console.log(data)
-// };
-console.log('Данные для отправки на сервер:', test2);
 const addProduct = () => {
-  // store.getRadioPrice();
+  store.getRadioPrice()
+  const data = {
+    product_id: store.lastId,
+    variety_name: store.radioName,
+    variety_quan: store.radioQuan,
+    variety_price: store.radioPrice,
+  };
+  console.log(data)
+
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
         console.log('Ответ сервера:', response.data);
@@ -57,7 +36,7 @@ const addProduct = () => {
         console.error('Ошибка при отправке данных на сервер Писос:', error);
         // Обработка ошибки
       });
-  axios.post('https://eseniabila.com.ua/addProductVarieties', test2, {
+  axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -82,7 +61,7 @@ const addProduct = () => {
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct">
-      <button type="button" @click="test">test2</button>
+      <button type="button" @click="data2">data2</button>
       <label for="productName">Название:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 

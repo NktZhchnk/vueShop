@@ -12,7 +12,7 @@ export const useMyStore = defineStore({
         radioName: [],
         lastId: 2,
         priceItem: null,
-        radioOptions: ref([]),
+        radioOptions: [],
     }),
     mutations: {},
     actions: {
@@ -32,20 +32,12 @@ export const useMyStore = defineStore({
                 });
         },
         getRadioPrice() {
+            console.log(this.radioOptions)
             console.log('test GetRadio')
+            console.log("получиние айдишника ласт" + this.lastId)
             this.radioPrice = this.radioOptions.map(item => item.price)
             this.radioName = this.radioOptions.map(item => item.label)
             this.radioQuan = this.radioOptions.map(item => item.quantity)
         }
-    },
-    getters: {
-        productVarieties() {
-            return {
-                product_id: this.lastId,
-                variety_name: this.radioName,
-                variety_quan: this.radioQuan,
-                variety_price: this.radioPrice,
-            };
-        },
     },
 });

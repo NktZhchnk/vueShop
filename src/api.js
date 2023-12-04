@@ -83,23 +83,34 @@ app.post('/addProductVarieties', (req, res) => {
     }
     const { product_id, variety_name, variety_quan, variety_price } = req.body;
 
-    // Подготовка SQL-запроса с placeholder'ами для значений
-    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price) VALUES (?, ?, ?, ?)`;
+    if (!Array.isArray(variety_name) || !Array.isArray(variety_quan) || !Array.isArray(variety_price)) {
+        return res.status(400).json({ error: 'Variety_name, variety_quan и variety_price должны быть массивами' });
+    }
 
-    // Формирование массива значений для вставки в SQL-запрос
-    const values = [product_id, variety_name, variety_quan, variety_price];
+    if (variety_name.length !== variety_quan.length || variety_name.length !== variety_price.length) {
+        return res.status(400).json({ error: 'Длины массивов не совпадают' });
+    }
+
+    // Подготовка SQL-запроса с placeholder'ами для значений
+    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price) VALUES ?`;
+
+    // Формирование массива массивов значений для вставки в SQL-запрос
+    const values = variety_name.map((_, index) => [product_id, variety_name[index], variety_quan[index], variety_price[index]]);
 
     // Выполнение запроса к базе данных с использованием значений
-    connection.query(sqlQuery, values, (error, results) => {
+    connection.query(sqlQuery, [values], (error, results) => {
         if (error) {
             console.error('Ошибка вставки данных:', error);
-            res.status(500).json({ error: 'Ошибка вставки данных в таблицу' });
+            return res.status(500).json({ error: error.message }); // Отображаем подробности ошибки
         } else {
             console.log('Данные успешно вставлены:', results);
-            res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
+            return res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
         }
     });
 });
+
+
+
 
 
 
