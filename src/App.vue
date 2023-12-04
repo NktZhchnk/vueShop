@@ -46,6 +46,14 @@ const deleteProductInDataBase = async (id) => {
           <h1>name: {{ item.name_item }}</h1>
           <h1>categories:{{ item.category_item }}</h1>
           <h1>show:{{ item.show_item }}</h1>
+          <div v-for="prod in store.productVarieties" :key="prod.id">
+            <div v-if="prod.product_id === item.id">
+              <h3>id:{{ prod.product_id }}</h3>
+              <h3>name:{{ prod.variety_name}}</h3>
+              <h3>price:{{ prod.variety_price}}</h3>
+             <h3> quan:{{ prod.variety_quan}}</h3>
+            </div>
+          </div>
           <img alt="error" :src="'/images/' + item.image_item"/>
         </div>
       </div>
