@@ -82,7 +82,7 @@ const addProduct = () => {
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct">
-      <button type="button" @click="test">test</button>
+      <button type="button" @click="test">test2</button>
       <label for="productName">Название:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
