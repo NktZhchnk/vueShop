@@ -1,8 +1,8 @@
 <template>
   <div>
-    <label>Сколько радиокнопок вы хотите создать?</label>
+    <label>Сколько категорий вы хотите создать?</label>
     <input type="number" v-model="numRadios" min="0">
-    <button type="button" @click="createRadios">Создать радиокнопки</button>
+    <button type="button" @click="createRadios">Создать категории</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
         <input type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
@@ -38,8 +38,6 @@ export default {
         let optionPrice = 0;
 
         // Обновленный способ ввода названия и цены через prompt
-        optionLabel = prompt(`Введите название для радиокнопки ${i + 1}:`) || `Option ${i + 1}`;
-        optionPrice = parseFloat(prompt(`Введите цену для радиокнопки ${optionLabel}:`)) || 0;
 
         radioOptions.push({
           label: optionLabel,

@@ -12,6 +12,7 @@ const newData = {
   image_item: 'https://example.com/product.jpg', // ссылка на изображение продукта
   show_item: 1,
   category_item: ref(null),
+  text_info: '',
 };
 
 const addProduct = () => {
@@ -81,7 +82,7 @@ const addProduct = () => {
       <label for="option2">Косметика</label><br>
       <input v-model="newData.category_item" type="radio" id="option3" name="choice" value="accessories">
       <label for="option3">Принадлежности</label><br>
-      <h1>{{ newData.category_item }}</h1>
+      <textarea v-model="newData.text_info" class="text-info" placeholder="Информация о продукте"></textarea>
       <button type="submit">Добавить продукт</button>
 
     </form>
@@ -105,7 +106,12 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
-
+.text-info{
+  box-shadow: 1px 1px 2px black;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 input[type="text"],
 input[type="number"] {
   padding: 8px;

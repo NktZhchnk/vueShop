@@ -48,7 +48,7 @@ const deleteProductInDataBase = async (id) => {
           <h1>show:{{ item.show_item }}</h1>
           <div v-for="prod in store.productVarieties" :key="prod.id">
             <div v-if="prod.product_id === item.id">
-              <h3>id:{{ prod.product_id }}</h3>
+              <h3>id_product:{{ prod.product_id }}</h3>
               <h3>name:{{ prod.variety_name}}</h3>
               <h3>price:{{ prod.variety_price}}</h3>
              <h3> quan:{{ prod.variety_quan}}</h3>
