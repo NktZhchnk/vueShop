@@ -9,7 +9,7 @@ onMounted(async () => {
   await store.AthData();
 });
 
-const showAuthA = ref(false);
+const showAuthA = ref(true);
 const showAuthB = ref(false);
 const username = ref('');
 const password = ref('');

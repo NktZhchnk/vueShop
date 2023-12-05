@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-
+require('dotenv').config()
 
 const app = express();
 
@@ -12,10 +12,10 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 const connection = mysql.createConnection({
-    host: '193.0.61.203',
-    user: 'admin',
-    password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
-    database: 'products'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 });
 
 
