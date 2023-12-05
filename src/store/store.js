@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import axios from "axios";
 import {ref} from "vue";
+
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
@@ -13,6 +14,8 @@ export const useMyStore = defineStore({
         priceItem: null,
         radioOptions: [],
         categoryItem: null,
+        adminLogin: '',
+        adminPassword: '',
     }),
     mutations: {},
     actions: {
@@ -41,6 +44,12 @@ export const useMyStore = defineStore({
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
                 });
+            axios.get('https://eseniabila.com.ua/getUsers')
+                .then(response =>{
+                    response.data.forEach((item)=>{
+                        console.log(item)
+                    })
+                })
         },
         getRadioPrice() {
             console.log(this.radioOptions)

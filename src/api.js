@@ -45,6 +45,17 @@ app.get('/getProductVarieties', (req, res) => {
     });
 });
 
+app.get('/getUsers', (req, res) => {
+    const sqlQuery = 'SELECT * FROM users';
+    connection.query(sqlQuery, (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления
