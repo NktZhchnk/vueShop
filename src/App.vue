@@ -55,7 +55,7 @@ const deleteProductInDataBase = async (id) => {
             </div>
           </div>
           <h1>Описание:{{item.text_info}}</h1>
-          <img alt="error" :src="'/images/' + item.image_item"/>
+          <img alt="error" :src="item.image_item"/>
         </div>
       </div>
     </div>
