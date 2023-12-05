@@ -1,8 +1,8 @@
 <template>
   <div>
-    <label>Сколько категорий вы хотите создать?</label>
+    <label>Сколько разновидностей вы хотите создать?</label>
     <input type="number" v-model="numRadios" min="0">
-    <button type="button" @click="createRadios">Создать категории</button>
+    <button type="button" @click="createRadios">Создать разновидности</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
         <input type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">

@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import axios from "axios";
+import {ref} from "vue";
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
@@ -11,9 +12,13 @@ export const useMyStore = defineStore({
         lastId: 2,
         priceItem: null,
         radioOptions: [],
+        categoryItem: null,
     }),
     mutations: {},
     actions: {
+        updateCategoryItem(newValue) {
+            this.categoryItem = newValue
+        },
         fetchData() {
             // Здесь вы можете использовать Axios, Fetch API или другую библиотеку для получения данных с сервера
             axios.get('https://eseniabila.com.ua/getProducts')
