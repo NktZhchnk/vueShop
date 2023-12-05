@@ -26,7 +26,7 @@ const login = () => {
   } else {
     console.log(store.adminPassword)
     console.log(store.adminLogin)
-    console.log('Неверные учетные данные');
+    console.log('Неверные учетные данныеу');
   }
 };
 </script>
