@@ -14,7 +14,7 @@ export const useMyStore = defineStore({
         priceItem: null,
         radioOptions: [],
         categoryItem: null,
-        adminLogin: '',
+        adminLogin: '3',
         adminPassword: '',
     }),
     mutations: {},
@@ -44,10 +44,13 @@ export const useMyStore = defineStore({
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
                 });
+        },
+        AthData(){
             axios.get('https://eseniabila.com.ua/getUsers')
                 .then(response =>{
                     response.data.forEach((item)=>{
-                        console.log(item)
+                        this.adminPassword = item.password
+                        this.adminLogin = item.login
                     })
                 })
         },
