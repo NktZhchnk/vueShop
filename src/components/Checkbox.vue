@@ -1,8 +1,8 @@
 <template>
   <div>
-    <label>Сколько разновидностей вы хотите создать?</label>
-    <input type="number" v-model="numRadios" min="0">
-    <button type="button" @click="createRadios">Создать разновидности</button>
+    <label v-if="checkShow">Сколько разновидностей вы хотите создать?</label>
+    <input v-if="checkShow" type="number" v-model="numRadios" min="0">
+    <button v-if="checkShow" type="button" @click="createRadios">Создать разновидности</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
         <input type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
@@ -30,9 +30,10 @@ export default {
     const numRadios = ref(0);
     const radioOptions = store.radioOptions; // Используем ref для отслеживания изменений
     const selectedOption = ref('');
+    let checkShow = ref(true);
 
     const createRadios = () => {
-
+      checkShow.value = false;
       for (let i = 0; i < numRadios.value; i++) {
         let optionLabel = '';
         let optionPrice = 0;
@@ -52,6 +53,7 @@ export default {
       radioOptions,
       selectedOption,
       createRadios,
+      checkShow,
     };
   },
 };
