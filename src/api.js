@@ -163,6 +163,34 @@ app.post('/addProductVarieties', (req, res) => {
     });
 });
 
+app.post('/addProductImg', (req, res) => {
+    console.log('Received request:', req.body); // Добавляем эту строку для вывода содержимого тела запроса в консоль
+    if (!req.body || !req.body.product_id || !req.body.img) {
+        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
+    }
+    const {img, product_id} = req.body;
+
+    if (!Array.isArray(img)) {
+        return res.status(400).json({ error: 'Variety_name, variety_quan и variety_price должны быть массивами' });
+    }
+
+    // Подготовка SQL-запроса с placeholder'ами для значений
+    const sqlQuery = `INSERT INTO img_product (img, product_id) VALUES ?`;
+
+    // Формирование массива массивов значений для вставки в SQL-запрос
+    const values = img.map((_, index) => [img[index], product_id]);
+
+    // Выполнение запроса к базе данных с использованием значений
+    connection.query(sqlQuery, [values], (error, results) => {
+        if (error) {
+            console.error('Ошибка вставки данных:', error);
+            return res.status(500).json({ error: error.message }); // Отображаем подробности ошибки
+        } else {
+            console.log('Данные успешно вставлены:', results);
+            return res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
+        }
+    });
+});
 
 
 app.listen(3000, () => {

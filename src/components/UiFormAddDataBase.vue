@@ -6,11 +6,12 @@ import Checkbox from "@/components/Checkbox.vue";
 import AddCategories from "@/components/AddCategories.vue";
 
 const store = useMyStore()
+
 const newData = {
   name_item: 'Шар',
   price_item: 105, // цена продукта
   quan_item: 5,    // количество продукта
-  image_item: 'https://example.com/product.jpg', // ссылка на изображение продукта
+  image_item: '', // ссылка на изображение продукта
   show_item: 1,
   category_item: null,
   text_info: '',
@@ -19,6 +20,16 @@ const newData = {
 watch(() => store.categoryItem, (newValue, oldValue) => {
   newData.category_item = newValue;
 });
+let imageInputs = ref([]); // Массив для хранения полей ввода ссылок на изображения
+let imageLinks = []; // Массив для хранения ссылок на изображения
+let imageQuantity = ref(0); // Количество изображений, которые пользователь хочет добавить
+let showBtnImg = true;
+// Функция для добавления полей ввода ссылок на изображения
+const inputImages = () => {
+  imageInputs.value = new Array(imageQuantity.value).fill('');
+  imageLinks = new Array(imageQuantity.value).fill('');
+  showBtnImg = false;
+};
 const addProduct = () => {
   store.getRadioPrice()
   const data = {
@@ -27,6 +38,10 @@ const addProduct = () => {
     variety_quan: store.radioQuan,
     variety_price: store.radioPrice,
   };
+  const dataImg = {
+    img: imageLinks,
+    product_id: store.lastId,
+  }
   console.log(data)
 
   axios.post('https://eseniabila.com.ua/addProduct', newData)
@@ -48,9 +63,19 @@ const addProduct = () => {
   })
       .then(response => {
         console.log('Ответ сервера:', response.data);
-        setTimeout(() => {
-          store.fetchData();
-        }, 2000);
+        // Обработка успешного ответа
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных на сервер:', error);
+        // Обработка ошибки
+      });
+  axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      .then(response => {
+        console.log('Ответ сервера:', response.data);
         // Обработка успешного ответа
       })
       .catch(error => {
@@ -58,10 +83,8 @@ const addProduct = () => {
         // Обработка ошибки
       });
 };
-const test = () =>{
-  console.log(
-      newData
-  )
+const test = () => {
+  console.log(imageLinks)
 }
 </script>
 
@@ -80,8 +103,18 @@ const test = () =>{
       <label for="productQuantity">Кільскість:</label>
       <input v-model="newData.quan_item" type="number" id="productQuantity" required>
 
-      <label for="productImage">Зображення:</label>
-      <input v-model="newData.image_item" type="text" id="productImage" required>
+      <!-- Добавление поля для ввода количества изображений -->
+      <label for="imageQuantity" v-if="showBtnImg">Количество изображений:</label>
+      <input v-model="imageQuantity" v-if="showBtnImg" type="number" id="imageQuantity" required>
+
+      <!-- Кнопка для запуска процесса ввода ссылок на изображения -->
+      <button @click="inputImages" v-if="showBtnImg">Добавить изображения</button>
+
+      <!-- Поля для ввода ссылок на изображения -->
+      <div v-for="(image, index) in imageInputs" :key="index">
+        <label :for="'productImage' + index">Зображення {{ index + 1 }}:</label>
+        <input v-model="imageLinks[index]" :id="'productImage' + index" type="text" required>
+      </div>
 
       <checkbox></checkbox>
 
@@ -112,12 +145,14 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
-.text-info{
+
+.text-info {
   box-shadow: 1px 1px 2px black;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
 }
+
 input[type="text"],
 input[type="number"] {
   padding: 8px;
