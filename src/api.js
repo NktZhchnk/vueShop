@@ -3,7 +3,9 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-require('dotenv').config()
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
