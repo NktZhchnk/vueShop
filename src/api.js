@@ -71,41 +71,53 @@ app.delete('/deleteProduct/:id', (req, res) => {
             return;
         }
 
+        const deleteImgProductQuery = 'DELETE FROM img_product WHERE product_id = ?';
         const deleteProductVarietiesQuery = 'DELETE FROM product_varieties WHERE product_id = ?';
         const deleteProductQuery = 'DELETE FROM product WHERE id = ?';
 
-        // Удаление записей из product_varieties, связанных с данным продуктом
-        connection.query(deleteProductVarietiesQuery, [productId], function(error, result) {
+        // Удаление связанных записей из img_product
+        connection.query(deleteImgProductQuery, [productId], function(error, result) {
             if (error) {
-                console.error('Ошибка удаления вариантов продукта:', error);
+                console.error('Ошибка удаления изображений продукта:', error);
                 return connection.rollback(function() {
                     res.status(500).json({ error: 'Ошибка удаления продукта' });
                 });
             }
 
-            // Удаление основного продукта
-            connection.query(deleteProductQuery, [productId], function(error, result) {
+            // Затем удаляем записи из product_varieties
+            connection.query(deleteProductVarietiesQuery, [productId], function(error, result) {
                 if (error) {
-                    console.error('Ошибка удаления основного продукта:', error);
+                    console.error('Ошибка удаления вариантов продукта:', error);
                     return connection.rollback(function() {
                         res.status(500).json({ error: 'Ошибка удаления продукта' });
                     });
                 }
 
-                connection.commit(function(err) {
-                    if (err) {
-                        console.error('Ошибка подтверждения транзакции:', err);
+                // Удаляем основной продукт
+                connection.query(deleteProductQuery, [productId], function(error, result) {
+                    if (error) {
+                        console.error('Ошибка удаления основного продукта:', error);
                         return connection.rollback(function() {
                             res.status(500).json({ error: 'Ошибка удаления продукта' });
                         });
                     }
 
-                    res.status(200).json({ message: 'Продукт и его варианты успешно удалены' });
+                    connection.commit(function(err) {
+                        if (err) {
+                            console.error('Ошибка подтверждения транзакции:', err);
+                            return connection.rollback(function() {
+                                res.status(500).json({ error: 'Ошибка удаления продукта' });
+                            });
+                        }
+
+                        res.status(200).json({ message: 'Продукт и его связанные записи успешно удалены' });
+                    });
                 });
             });
         });
     });
 });
+
 
 
 app.post('/addProduct', (req, res) => {
