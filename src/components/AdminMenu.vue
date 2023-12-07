@@ -5,7 +5,9 @@ import axios from "axios";
 import UiFormAddDataBase from "@/components/UiFormAddDataBase.vue";
 import UiFormRadioCategories from "@/components/UiFormRadioCategories.vue";
 
+
 const store = useMyStore()
+
 
 onMounted(async () => {
   await store.fetchData();
@@ -28,6 +30,7 @@ const deleteProductInDataBase = async (id) => {
   }
 }
 
+
 </script>
 
 <template>
@@ -39,10 +42,8 @@ const deleteProductInDataBase = async (id) => {
       <div v-if="item.show_item" class="product-item">
         <button @click="deleteProductInDataBase(item.id)">delete</button>
         <div class="product-info">
-          <div class="image-gallery">
-            <template v-for="image in store.productImg.filter(img => img.product_id === item.id)" :key="image.id">
-              <img :src="image.img" alt="Product Image" class="product-image"/>
-            </template>
+          <div v-for="image in store.productImg.filter(img => img.product_id === item.id)" :key="image.id">
+            <img :src="image.img" alt="Product Image" class="product-image"/>
           </div>
           <h1>price2: {{ item.price_item }}</h1>
           <h1>id: {{ item.id }}</h1>
