@@ -41,7 +41,7 @@ const deleteProductInDataBase = async (id) => {
         <div class="product-info">
           <div class="image-gallery">
             <template v-for="image in store.productImg.filter(img => img.product_id === item.id)" :key="image.id">
-              <img :src="image.url" alt="Product Image" class="product-image"/>
+              <img :src="image.img" alt="Product Image" class="product-image"/>
             </template>
           </div>
           <h1>price2: {{ item.price_item }}</h1>
