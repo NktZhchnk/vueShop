@@ -123,16 +123,16 @@ app.delete('/deleteProduct/:id', (req, res) => {
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
     console.log('Received request:', req.body);
-    if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.image_item || !req.body.show_item || !req.body.category_item || !req.body.text_info) {
+    if (!req.body || !req.body.name_item || !req.body.price_item || !req.body.quan_item || !req.body.show_item || !req.body.category_item || !req.body.text_info) {
         return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
     // Деструктурируем данные о новом продукте из тела запроса
-    const {name_item, price_item, quan_item, image_item, show_item, category_item, text_info} = req.body;
+    const {name_item, price_item, quan_item, show_item, category_item, text_info} = req.body;
     // Ваш SQL-запрос для добавления продукта в базу данных
-    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, image_item, show_item, category_item, text_info) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const sqlQuery = 'INSERT INTO product (name_item, price_item, quan_item, show_item, category_item, text_info) VALUES (?, ?, ?, ?, ?, ?)';
 
     // Выполняем запрос к базе данных для добавления продукта
-    connection.query(sqlQuery, [name_item, price_item, quan_item, image_item, show_item, category_item, text_info], (error) => {
+    connection.query(sqlQuery, [name_item, price_item, quan_item, show_item, category_item, text_info], (error) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({error: 'Ошибка добавления продукта'});
