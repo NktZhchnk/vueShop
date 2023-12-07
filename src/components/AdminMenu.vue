@@ -1,17 +1,17 @@
 <script setup>
-import {onMounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
 import UiFormAddDataBase from "@/components/UiFormAddDataBase.vue";
 import UiFormRadioCategories from "@/components/UiFormRadioCategories.vue";
 
-
 const store = useMyStore()
-
 
 onMounted(async () => {
   await store.fetchData();
 });
+
+
 const test = () => {
   store.getRadioPrice()
   console.log(store.radioPrice)
@@ -19,6 +19,21 @@ const test = () => {
   console.log(store.radioQuan)
 }
 
+const currentIndex = ref(0);
+
+const itemImages = (itemId) => {
+  return store.productImg.filter(img => img.product_id === itemId).map(img => img.img);
+};
+
+const previousSlide = (item) => {
+  const imagesCount = itemImages(item).length;
+  currentIndex.value = (currentIndex.value - 1 + imagesCount) % imagesCount;
+};
+
+const nextSlide = (item) => {
+  const imagesCount = itemImages(item).length;
+  currentIndex.value = (currentIndex.value + 1) % imagesCount;
+};
 const deleteProductInDataBase = async (id) => {
   try {
     await axios.delete(`https://eseniabila.com.ua/deleteProduct/${id}`);
@@ -42,8 +57,17 @@ const deleteProductInDataBase = async (id) => {
       <div v-if="item.show_item" class="product-item">
         <button @click="deleteProductInDataBase(item.id)">delete</button>
         <div class="product-info">
-          <div v-for="image in store.productImg.filter(img => img.product_id === item.id)" :key="image.id">
-            <img :src="image.img" alt="Product Image" class="product-image"/>
+          <div class="slider" v-if="itemImages(item.id).length > 1">
+            <div class="slides-container" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+              <div v-for="(image, index) in itemImages(item.id)" :key="index" class="slide-item">
+                <img :src="image" alt="Product Image" class="product-image"/>
+              </div>
+            </div>
+            <button @click="previousSlide(item.id)">Previous</button>
+            <button @click="nextSlide(item.id)">Next</button>
+          </div>
+          <div v-else>
+            <img v-if="itemImages(item.id).length === 1" :src="itemImages(item.id)[0]" alt="Product Image" class="product-image"/>
           </div>
           <h1>price2: {{ item.price_item }}</h1>
           <h1>id: {{ item.id }}</h1>
@@ -60,15 +84,27 @@ const deleteProductInDataBase = async (id) => {
             </div>
           </div>
           <h1>Описание:{{ item.text_info }}</h1>
-          <img alt="error" :src="item.image_item"/>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
 <style scoped>
-/* Стили для кнопки */
+.slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.slides-container {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.slide-item {
+  flex: 0 0 100%;
+}
 button {
   padding: 8px 16px;
   margin-bottom: 10px;
