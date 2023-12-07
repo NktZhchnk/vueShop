@@ -39,6 +39,11 @@ const deleteProductInDataBase = async (id) => {
       <div v-if="item.show_item" class="product-item">
         <button @click="deleteProductInDataBase(item.id)">delete</button>
         <div class="product-info">
+          <div class="image-gallery">
+            <template v-for="image in store.productImg.filter(img => img.product_id === item.id)" :key="image.id">
+              <img :src="image.url" alt="Product Image" class="product-image"/>
+            </template>
+          </div>
           <h1>price2: {{ item.price_item }}</h1>
           <h1>id: {{ item.id }}</h1>
           <h1>q: {{ item.quan_item }}</h1>
@@ -48,12 +53,12 @@ const deleteProductInDataBase = async (id) => {
           <div v-for="prod in store.productVarieties" :key="prod.id">
             <div v-if="prod.product_id === item.id">
               <h3>id_product:{{ prod.product_id }}</h3>
-              <h3>name:{{ prod.variety_name}}</h3>
-              <h3>price:{{ prod.variety_price}}</h3>
-              <h3> quan:{{ prod.variety_quan}}</h3>
+              <h3>name:{{ prod.variety_name }}</h3>
+              <h3>price:{{ prod.variety_price }}</h3>
+              <h3> quan:{{ prod.variety_quan }}</h3>
             </div>
           </div>
-          <h1>Описание:{{item.text_info}}</h1>
+          <h1>Описание:{{ item.text_info }}</h1>
           <img alt="error" :src="item.image_item"/>
         </div>
       </div>
