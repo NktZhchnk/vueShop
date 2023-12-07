@@ -33,8 +33,6 @@ const login = () => {
 
 <template>
   <div>
-    <img src="https://drive.google.com/file/d/1Q-Aq4dhWb9EFSTVLbSbDdV87iqaB2OA7/view">
-    <img src="https://drive.google.com/file/d/13qIMcpQ-mwX-RP_VwckEiIO7Pd_xRv9_/view?usp=drive_link">
     <button @click="showAuth">login</button>
     <div class="auth-admin" v-if="showAuthB">
       <input v-model="username" placeholder="Имя пользователя" />
