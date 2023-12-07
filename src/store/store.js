@@ -14,7 +14,8 @@ export const useMyStore = defineStore({
         priceItem: null,
         radioOptions: [],
         categoryItem: null,
-        adminLogin: '3',
+        productImg: [],
+        adminLogin: '',
         adminPassword: '',
     }),
     mutations: {},
@@ -44,11 +45,19 @@ export const useMyStore = defineStore({
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
                 });
+            axios.get('https://eseniabila.com.ua/getProductImg')
+                .then(response => {
+                    this.productImg = response.data
+                    console.log('Img:'+ this.productImg)
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                });
         },
-        AthData(){
+        AthData() {
             axios.get('https://eseniabila.com.ua/getUsers')
-                .then(response =>{
-                    response.data.forEach((item)=>{
+                .then(response => {
+                    response.data.forEach((item) => {
                         this.adminPassword = item.password
                         this.adminLogin = item.login
                     })

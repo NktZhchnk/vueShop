@@ -48,6 +48,18 @@ app.get('/getProductVarieties', (req, res) => {
     });
 });
 
+app.get('/getProductImg', (req, res) => {
+    const sqlQuery = 'SELECT * FROM img_product';
+    connection.query(sqlQuery, (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 app.get('/getUsers', (req, res) => {
     const sqlQuery = 'SELECT * FROM users';
     connection.query(sqlQuery, (error, results) => {
