@@ -38,7 +38,24 @@ watch(localCategoryItem, (newValue, oldValue) => {
 </template>
 
 <style scoped>
-  input{
-    margin-bottom: 10px;
-  }
+/* Стили для радио-кнопок */
+input[type="radio"] {
+  margin-right: 5px;
+  transform: scale(1.5); /* Увеличиваем размер радио-кнопок */
+}
+
+/* Стили для меток радио-кнопок */
+label {
+  display: inline-block;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333; /* Цвет текста */
+}
+
+/* Стили для выбранной радио-кнопки */
+input[type="radio"]:checked + label {
+  font-weight: bold; /* Жирный шрифт для выбранной метки */
+  color: #007bff; /* Цвет текста для выбранной метки */
+}
 </style>

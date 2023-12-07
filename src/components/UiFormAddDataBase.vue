@@ -25,9 +25,17 @@ let imageQuantity = ref(0); // Количество изображений, ко
 let showBtnImg = true;
 // Функция для добавления полей ввода ссылок на изображения
 const inputImages = () => {
-  imageInputs.value = new Array(imageQuantity.value).fill('');
-  imageLinks = new Array(imageQuantity.value).fill('');
-  showBtnImg = false;
+  if (imageQuantity.value >= 1) {
+    imageInputs.value = new Array(imageQuantity.value).fill('');
+    imageLinks = new Array(imageQuantity.value).fill('');
+    showBtnImg = false;
+  } else {
+    const inpImg = document.querySelector('.inpImg')
+    inpImg.style.border = "3px solid red"
+    setTimeout(() => {
+      inpImg.style.border = "1px solid gray"
+    }, 2000)
+  }
 };
 const addProduct = () => {
   store.getRadioPrice()
@@ -91,8 +99,9 @@ const test = () => {
   <div>
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
-    <form @submit.prevent="addProduct">
-      <button type="button" @click="test">test</button>
+    <form @submit.prevent="addProduct" class="product-form">
+      <button type="button" @click="test" class="test-button">test</button>
+
       <label for="productName">Назва:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
@@ -103,26 +112,26 @@ const test = () => {
       <input v-model="newData.quan_item" type="number" id="productQuantity" required>
 
       <!-- Добавление поля для ввода количества изображений -->
-      <label for="imageQuantity" v-if="showBtnImg">Количество изображений:</label>
-      <input v-model="imageQuantity" v-if="showBtnImg" type="number" id="imageQuantity" required>
+      <label for="imageQuantity" v-if="showBtnImg" class="image-quantity-label">Количество изображений:</label>
+      <input v-model="imageQuantity" v-if="showBtnImg" type="number" id="imageQuantity" required
+             class="image-quantity-input">
 
       <!-- Кнопка для запуска процесса ввода ссылок на изображения -->
-      <button @click="inputImages" v-if="showBtnImg">Добавить изображения</button>
+      <button @click="inputImages" v-if="showBtnImg" class="inpImg">Добавить изображения</button>
+
 
       <!-- Поля для ввода ссылок на изображения -->
-      <div v-for="(image, index) in imageInputs" :key="index">
-        <label :for="'productImage' + index">Зображення {{ index + 1 }}:</label>
-        <input v-model="imageLinks[index]" :id="'productImage' + index" type="text" required>
+      <div v-for="(image, index) in imageInputs" :key="index" class="image-input-container">
+        <label :for="'productImage' + index" class="image-label">Зображення {{ index + 1 }}:</label>
+        <input v-model="imageLinks[index]" :id="'productImage' + index" type="text" required class="image-input">
       </div>
 
       <checkbox></checkbox>
 
-
       <add-categories></add-categories>
 
       <textarea v-model="newData.text_info" class="text-info" placeholder="Информация о продукте"></textarea>
-      <button type="submit">Добавить продукт</button>
-
+      <button type="submit" class="add-product-button">Добавить продукт</button>
     </form>
   </div>
 </template>
@@ -144,7 +153,16 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
-
+.inpImg{
+  height: 30px;
+  border-radius: 5px;
+  background: rgba(255,30,30, 0.1);
+  border: 1px solid black;
+}
+.inpImg:hover{
+  background: rgba(255,30,30, 0.3);
+  font-size: 18px;
+}
 .text-info {
   box-shadow: 1px 1px 2px black;
   border-radius: 5px;
@@ -174,6 +192,42 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+.product-form {
+  border: 2px solid black;
+  box-shadow: 1px 2px 10px black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Стили для отдельных элементов формы */
+
+.test-button {
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ... остальные стили для остальных элементов формы ... */
+
+.add-product-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-product-button:hover {
   background-color: #0056b3;
 }
 </style>

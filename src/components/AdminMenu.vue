@@ -55,7 +55,7 @@ const deleteProductInDataBase = async (id) => {
     <UiFormRadioCategories></UiFormRadioCategories>
     <div v-for="item in store.products" :key="item.id" class="product">
       <div v-if="item.show_item" class="product-item">
-        <button @click="deleteProductInDataBase(item.id)">delete</button>
+<!--        <button @click="deleteProductInDataBase(item.id)">delete</button>-->
         <div class="product-info">
           <div class="slider" v-if="itemImages(item.id).length > 1">
             <div class="slides-container" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
@@ -63,8 +63,8 @@ const deleteProductInDataBase = async (id) => {
                 <img :src="image" alt="Product Image" class="product-image"/>
               </div>
             </div>
-            <button @click="previousSlide(item.id)">Previous</button>
-            <button @click="nextSlide(item.id)">Next</button>
+            <button class="btnSlideLeft" @click="previousSlide(item.id)">Previous</button>
+            <button class="btnSlideRight" @click="nextSlide(item.id)">Next</button>
           </div>
           <div v-else>
             <img v-if="itemImages(item.id).length === 1" :src="itemImages(item.id)[0]" alt="Product Image" class="product-image"/>
@@ -115,10 +115,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
 /* Стили для блока с продуктами */
 .product {
   display: grid;
@@ -144,4 +140,5 @@ img {
   height: auto;
   border-radius: 6px;
 }
+
 </style>

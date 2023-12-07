@@ -1,7 +1,7 @@
 <template>
   <div>
     <label v-if="checkShow">Сколько разновидностей вы хотите создать?</label>
-    <input v-if="checkShow" type="number" v-model="numRadios" min="0">
+    <input v-if="checkShow" class="inpCheck" type="number" v-model="numRadios" min="0">
     <button v-if="checkShow" type="button" @click="createRadios">Создать разновидности</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
@@ -15,14 +15,13 @@
         <br>
       </div>
     </div>
-
     <p>Выбранная опция: {{ selectedOption }}</p>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useMyStore } from "@/store/store.js";
+import {ref} from 'vue';
+import {useMyStore} from "@/store/store.js";
 
 export default {
   setup() {
@@ -30,21 +29,30 @@ export default {
     const numRadios = ref(0);
     const radioOptions = store.radioOptions; // Используем ref для отслеживания изменений
     const selectedOption = ref('');
+
     let checkShow = ref(true);
 
     const createRadios = () => {
-      checkShow.value = false;
-      for (let i = 0; i < numRadios.value; i++) {
-        let optionLabel = '';
-        let optionPrice = 0;
+      if (numRadios.value >= 1) {
+        checkShow.value = false;
+        for (let i = 0; i < numRadios.value; i++) {
+          let optionLabel = '';
+          let optionPrice = 0;
 
-        // Обновленный способ ввода названия и цены через prompt
+          // Обновленный способ ввода названия и цены через prompt
 
-        radioOptions.push({
-          label: optionLabel,
-          price: optionPrice,
-          quantity: 0,
-        });
+          radioOptions.push({
+            label: optionLabel,
+            price: optionPrice,
+            quantity: 0,
+          });
+        }
+      }else{
+        const inpCheck = document.querySelector('.inpCheck')
+        inpCheck.style.border = "3px solid red"
+        setTimeout(()=>{
+          inpCheck.style.border = "1px solid gray"
+        },2000)
       }
     };
 
@@ -60,7 +68,31 @@ export default {
 </script>
 
 <style scoped>
-/* Стили для улучшения внешнего вида */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.inpCheck {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
 
 .options-container {
   margin-top: 20px;
@@ -70,13 +102,9 @@ export default {
   margin-bottom: 10px;
 }
 
-.option-label {
-  font-weight: bold;
-}
-
 .input-field {
-  margin-left: 10px;
   padding: 5px;
+  margin-right: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
