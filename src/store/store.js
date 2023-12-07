@@ -40,7 +40,7 @@ export const useMyStore = defineStore({
             axios.get('https://eseniabila.com.ua/getProductVarieties')
                 .then(response => {
                     this.productVarieties = response.data
-                    console.log(this.productVarieties)
+                    console.log('product', this.productVarieties)
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
@@ -48,7 +48,7 @@ export const useMyStore = defineStore({
             axios.get('https://eseniabila.com.ua/getProductImg')
                 .then(response => {
                     this.productImg = response.data
-                    console.log('Img:'+ this.productImg)
+                    console.log('Img:', this.productImg)
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
