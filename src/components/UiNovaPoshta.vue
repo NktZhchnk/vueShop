@@ -12,8 +12,9 @@
     <div v-if="infoPoshta.length">
       <label for="searchQuery">Введите адрес или номер отделения:</label>
       <input placeholder="Введите адрес или номер отделения" v-model="searchQuery" @input="searchWarehouses"/>
-      <ul class="warehouse-list">
-        <li v-for="(place, index) in displayedWarehouses" :key="index" class="warehouse-item">
+      <ul v-if="showListPoshta" class="warehouse-list">
+        <li  @click="checkInfoPoshta(place.Description)" v-for="(place, index) in displayedWarehouses" :key="index"
+            class="warehouse-item">
           {{ place.Description }} ({{ place.DescriptionRu }})
         </li>
       </ul>
@@ -24,15 +25,26 @@
 
 <script setup>
 import axios from "axios";
-import { ref, computed } from "vue";
+import {ref, computed} from "vue";
+import {useMyStore} from "@/store/store.js";
+
+const store = useMyStore()
+
+
 
 const apiKey = '770afdf2b97510753a2e96d099d53e1a';
-const apiUrl = 'https://api.novaposhta.ua/v2.0/json/';
+const apiUrl = 'https://api.novaposhta.ua/v2.0/json/';las
 
+let showListPoshta = false;
 const infoPoshta = ref([]);
 const searchQuery = ref('');
-const selectedCity = ref('');
+const selectedCity = ref('Запорожье');
 const cities = ref([]); // Список доступных городов
+const checkInfoPoshta = (item) =>{
+  showListPoshta = false
+  searchQuery.value = item
+  store.updatePoshtaInfo(item)
+}
 
 // Получение списка доступных городов
 axios.post(apiUrl, {apiKey, modelName: 'Address', calledMethod: 'getCities', methodProperties: {}})
@@ -63,6 +75,7 @@ const getWarehouses = () => {
 };
 
 const searchWarehouses = () => {
+  showListPoshta = true
   filteredWarehouses.value = infoPoshta.value.filter(warehouse =>
       warehouse.Description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       warehouse.DescriptionRu.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -79,7 +92,7 @@ const filteredWarehouses = computed(() => {
 });
 
 const displayedWarehouses = computed(() => {
-  return filteredWarehouses.value.slice(0, 20);
+  return filteredWarehouses.value.slice(0, 5);
 });
 </script>
 
@@ -93,6 +106,9 @@ label {
   font-weight: bold;
 }
 
+.warehouse-item:hover{
+ background: #eeecec;
+}
 input {
   margin-bottom: 10px;
   padding: 8px;

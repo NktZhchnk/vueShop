@@ -13,10 +13,7 @@ onMounted(async () => {
 
 
 const test = () => {
-  store.getRadioPrice()
-  console.log(store.radioPrice)
-  console.log(store.radioName)
-  console.log(store.radioQuan)
+  console.log(store.addProductsInAdmin.poshtaInfo)
 }
 
 const currentIndex = ref(0);

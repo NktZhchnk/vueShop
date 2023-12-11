@@ -17,9 +17,18 @@ export const useMyStore = defineStore({
         productImg: [],
         adminLogin: '',
         adminPassword: '',
+        addProductsInAdmin:{
+            poshtaInfo: '1',
+        }
     }),
     mutations: {},
     actions: {
+        updatePoshtaInfo(item) {
+            console.log(this.addProductsInAdmin.poshtaInfo )
+            this.addProductsInAdmin.poshtaInfo = item;
+            console.log(this.addProductsInAdmin.poshtaInfo )
+        },
+
         updateCategoryItem(newValue) {
             this.categoryItem = newValue
         },
@@ -70,6 +79,7 @@ export const useMyStore = defineStore({
             this.radioPrice = this.radioOptions.map(item => item.price)
             this.radioName = this.radioOptions.map(item => item.label)
             this.radioQuan = this.radioOptions.map(item => item.quantity)
-        }
+        },
+
     },
 });
