@@ -33,7 +33,7 @@ const store = useMyStore()
 
 
 const apiKey = '770afdf2b97510753a2e96d099d53e1a';
-const apiUrl = 'https://api.novaposhta.ua/v2.0/json/';las
+const apiUrl = 'https://api.novaposhta.ua/v2.0/json/';
 
 let showListPoshta = false;
 const infoPoshta = ref([]);
