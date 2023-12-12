@@ -13,8 +13,12 @@
 
 <style scoped>
 .main-cart{
-  background: red;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: greenyellow;
+  border-radius: 50%;
+  width: 11%;
   height: 5%;
 }
 </style>

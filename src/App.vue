@@ -15,7 +15,8 @@ const showCart = false;
 <style scoped>
 .cart{
   position: fixed;
-  bottom: 20%;
+  left: 85%;
+  bottom: 2%;
 }
 </style>
 
