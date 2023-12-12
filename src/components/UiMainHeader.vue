@@ -5,7 +5,7 @@
 <template>
   <div class="main-header">
     <div class="div-menu">
-      <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 448 512">
+      <svg xmlns="http://www.w3.org/2000/svg" height="34" width="36" viewBox="0 0 448 512">
         <path fill="#ffffff"
               d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
       </svg>
@@ -13,8 +13,14 @@
     <div class="div-img">
       <img class="img-header" src="../../images/header.jpg"/>
     </div>
+    <div class="div-text">
+      <h1>Esenia</h1>
+    </div>
+    <div class="div-catalog">
+      <h1>Catalog</h1>
+    </div>
     <div class="div-inp">
-      <input style="height: 30px" placeholder="Я шукаю..."/>
+      <input class="inp-search" style="height: 30px" placeholder="Я шукаю..."/>
     </div>
     <div class="main-cart">
       <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512">
@@ -26,6 +32,16 @@
 </template>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/roboto');
+
+@media screen and (max-width: 1200px) {
+  .div-text{
+    display: none;
+  }
+  .div-catalog{
+    display: none;
+  }
+}
 .main-header {
   width: 100%;
   height: 7.3%;
@@ -68,5 +84,66 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.div-text{
+  color: white;
+  margin-left: 2%;
+}
+.div-catalog{
+  color: white;
+  margin-left: 5%;
+}
+h1{
+  margin-block-start: 0.50em;
+  margin-block-end: 0.50em;
+  font-family: 'Roboto Black', sans-serif;
+}
+.inp-search{
+  width: 100%;
+  padding: 5px;
+}
+@media screen and (min-width: 650px) {
+  .img-header{
+    width: 65%;
+  }
+}
+@media screen and (min-width: 900px) {
+
+  .img-header{
+    width: 55%;
+  }
+  .inp-search{
+    width: 90%;
+  }
+  .div-inp{
+    width: 70%;
+  }
+  .main-cart{
+    width: 10%;
+  }
+}
+@media screen and (min-width: 1200px) {
+
+  .img-header{
+    width: 50%;
+  }
+  .div-inp{
+    width: 80%;
+  }
+  .inp-search{
+    width: 80%;
+  }
+}
+@media screen and (min-width: 1600px) {
+
+  .div-img{
+    width: 5%;
+  }
+  .inp-search{
+    width: 90%;
+  }
+  .img-header{
+    width: 90%;
+  }
 }
 </style>
