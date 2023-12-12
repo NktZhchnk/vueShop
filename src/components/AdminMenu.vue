@@ -48,7 +48,6 @@ const deleteProductInDataBase = async (id) => {
 <template>
   <div>
     <UiFormAddDataBase></UiFormAddDataBase>
-    <button @click="test">click</button>
     <UiFormRadioCategories></UiFormRadioCategories>
     <div v-for="item in store.products" :key="item.id" class="product">
       <div v-if="item.show_item" class="product-item">

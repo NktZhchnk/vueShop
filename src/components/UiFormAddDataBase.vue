@@ -90,9 +90,8 @@ const addProduct = () => {
         // Обработка ошибки
       });
 };
-const test = () => {
-  console.log(imageLinks)
-}
+
+
 </script>
 
 <template>
@@ -100,7 +99,6 @@ const test = () => {
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct" class="product-form">
-      <button type="button" @click="test" class="test-button">test</button>
 
       <label for="productName">Назва:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
