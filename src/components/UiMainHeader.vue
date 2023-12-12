@@ -28,7 +28,7 @@
 <style scoped>
 .main-header {
   width: 100%;
-  height: 7%;
+  height: 7.3%;
   background: #221f1f;;
   display: flex;
 }
