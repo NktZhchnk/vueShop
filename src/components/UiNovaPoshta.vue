@@ -38,7 +38,7 @@ const apiUrl = 'https://api.novaposhta.ua/v2.0/json/';
 let showListPoshta = false;
 const infoPoshta = ref([]);
 const searchQuery = ref('');
-const selectedCity = ref('Запорожье');
+const selectedCity = ref('');
 const cities = ref([]); // Список доступных городов
 const checkInfoPoshta = (item) =>{
   showListPoshta = false
