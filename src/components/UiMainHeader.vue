@@ -48,7 +48,11 @@
   background: #221f1f;;
   display: flex;
 }
-
+@media screen and (min-height: 700px) {
+  .main-header{
+    height: 65px;
+  }
+}
 .img-header {
   border-radius: 50%;
   width: 80%;
