@@ -48,7 +48,7 @@
   background: #221f1f;;
   display: flex;
 }
-@media screen and (min-height: 700px) {
+@media screen and (max-height: 700px) {
   .main-header{
     height: 65px;
   }
