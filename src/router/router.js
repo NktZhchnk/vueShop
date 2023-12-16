@@ -1,18 +1,26 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import App from "@/App.vue";
 import UiCartItems from "@/components/UiCartItems.vue";
+import UiMainHeader from "@/components/UiMainHeader.vue";
+import AdminMenu from "@/components/AdminMenu.vue";
 
 
 
 const routes = [
     {
-        path: '/',
-        component: App
+        name: 'AdminMenu',
+        path: '/adminMenu',
+        component: AdminMenu,
     },
     {
+        name: 'Cart',
         path: '/cart',
         component: UiCartItems
-    }
+    }, {
+        name: 'Header',
+        path: '/header',
+        component: UiMainHeader
+    },
 ];
 
 const router = createRouter({

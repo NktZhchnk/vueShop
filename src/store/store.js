@@ -17,6 +17,7 @@ export const useMyStore = defineStore({
         productImg: [],
         adminLogin: '',
         adminPassword: '',
+        isOpenMenu: false,
         addProductsInAdmin:{
             poshtaInfo: '1',
         }
@@ -28,7 +29,9 @@ export const useMyStore = defineStore({
             this.addProductsInAdmin.poshtaInfo = item;
             console.log(this.addProductsInAdmin.poshtaInfo )
         },
-
+        swapOpenMenu(item) {
+            this.isOpenMenu = !this.isOpenMenu
+        },
         updateCategoryItem(newValue) {
             this.categoryItem = newValue
         },

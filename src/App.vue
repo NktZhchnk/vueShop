@@ -4,59 +4,62 @@ import UiNovaPoshta from "@/components/UiNovaPoshta.vue";
 import UiCartItems from "@/components/UiCartItems.vue";
 import axios from "axios";
 import UiMainHeader from "@/components/UiMainHeader.vue";
+import UiSlideMenu from "@/components/UiSlideMenu.vue";
+import {useMyStore} from "@/store/store.js";
 
-const showCart = false;
-
-
-const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
-const cityId = '29713'; // Идентификатор конкретного города
-
-const apiUrl = `https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id?city_id=${cityId}`;
-
-axios.get(apiUrl, {
-  headers: {
-    'Authorization': `Bearer ${bearerToken}`,
-    'Accept': 'application/json'
-  }
-})
-    .then(response => {
-      console.log('Ответ сервера:', response.data);
-      // Обработка полученных данных
-    })
-    .catch(error => {
-      console.error('Произошла ошибка:', error);
-    });
-
+const store = useMyStore()
 
 </script>
 
 <template>
   <div>
-    <ui-main-header class="main-header"></ui-main-header>
-    <router-view></router-view>
-    <div>
-
+    <ui-slide-menu class="slide-menu-left"></ui-slide-menu>
+    <div class="show-page" @click="store.swapOpenMenu()" v-if="store.isOpenMenu"></div>
+    <div class="div-header">
+      <!-- Выводим хедер за пределами router-view -->
+      <ui-main-header class="main-header"></ui-main-header>
     </div>
-
+    <div class="div-body">
+      <!-- Отображаем содержимое страницы внутри router-view -->
+      .
+      <router-view></router-view>
+    </div>
   </div>
-
 </template>
 
-<style scoped>
+<style>
 body {
   padding: 0;
   margin: 0;
 }
+.show-page{
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+}
+.slide-menu-left{
 
+  z-index: 34;
+}
 html {
   padding: 0;
   margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .main-header {
   z-index: 1;
   padding: 0;
-  position: fixed;
+  margin: 0;
+  position: absolute;
+}
+.div-body{
+  position: relative;
+  top: 65px;
+  height: 1000px;
 }
 </style>
 
