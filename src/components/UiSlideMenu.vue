@@ -42,8 +42,9 @@ const store = useMyStore()
 }
 
 .img-header {
-  height: 60px;
-  width: 60px;
+  margin-left: 4px;
+  height: 90%;
+  width: 90%;
   border-radius: 50%;
 }
 
@@ -58,18 +59,17 @@ const store = useMyStore()
   transform: translateX(-100%);
   transition: transform 0.4s ease;
 }
-.rout-header-text{
+
+.rout-header-text {
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none; /* Убирает подчеркивание ссылки */
   color: white; /* Задайте цвет текста, который вы хотите использовать */
 }
-@media screen and (max-width: 370px) {
-.main-menu{
-  width: 100%;
-}
-}
+
 .div-exit-menu {
   width: 20%;
   display: flex;
@@ -83,7 +83,7 @@ const store = useMyStore()
   justify-content: space-between;
   color: white;
   background: rgba(0, 0, 0, 1);
-  height: 7%;
+  height: 65px;
   box-shadow: 2px 2px 5px black;
 }
 
@@ -94,5 +94,16 @@ const store = useMyStore()
 .div-body {
   height: 95%;
   background: white;
+}
+
+@media screen and (max-width: 370px) {
+  .main-menu {
+    width: 100%;
+  }
+}
+@media screen and (max-height: 200px) {
+  .div-header{
+    height: 65px;
+  }
 }
 </style>
