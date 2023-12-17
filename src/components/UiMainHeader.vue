@@ -78,6 +78,9 @@ const swap = () => {
   .main-header {
     height: 65px;
   }
+  .img-a{
+    height: 100%;
+  }
 }
 
 .custom-link {

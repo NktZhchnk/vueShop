@@ -106,8 +106,6 @@ const store = useMyStore()
   .div-header{
     height: 65px;
   }
-  .img-a{
-    height: 100%;
-  }
+
 }
 </style>
