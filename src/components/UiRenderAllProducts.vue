@@ -87,16 +87,56 @@ const getByIdProduct = (id) => {
   <!--      </div>-->
   <!--    </div>-->
   <!--  </div>-->
-  <div>
-    <ul>
-      <li v-for="item in store.products" :key="item.id">
-        <router-link @click="getByIdProduct(item.id)" :to="'/product/' + item.id">{{ item.name_item }}</router-link>
-      </li>
-    </ul>
+  <div class="style-products">
+    <div v-for="item in store.products" :key="item.id" class="style-product">
+      <router-link @click="getByIdProduct(item.id)" :to="'/product/' + item.id">
+        <div>
+          <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
+        </div>
+        <div class="div-name-product">
+          {{ item.name_item }}
+        </div>
+        <div class="div-price-product">
+          {{item.price_item}} ₴
+        </div>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.style-products {
+  display: flex;
+  height: 100%;
+}
+
+.img{
+  width: 120px;
+  height: 170px;
+}
+.div-name-product{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.div-price-product{
+  margin-top: 10px;
+}
+.style-product {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+  transition: transform 0.3s ease;
+}
+.style-product:hover{
+  transform: scale(1.05);
+}
+
 .slider {
   position: relative;
   overflow: hidden;

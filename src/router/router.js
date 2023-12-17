@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import App from "@/App.vue";
 import UiCartItems from "@/components/UiCartItems.vue";
 import UiMainHeader from "@/components/UiMainHeader.vue";
-import AdminMenu from "@/components/AdminMenu.vue";
+import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import UiRenderAllProducts from "@/components/UiRenderAllProducts.vue";
 

@@ -221,6 +221,9 @@ h1 {
   .img-header {
     width: 90%;
   }
+  .div-inp{
+    margin: 0;
+  }
 }
 
 

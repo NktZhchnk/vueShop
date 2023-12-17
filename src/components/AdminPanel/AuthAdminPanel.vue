@@ -1,6 +1,6 @@
 <script setup>
 import { useMyStore } from "@/store/store.js";
-import AdminMenu from "@/components/AdminMenu.vue";
+import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import {onMounted, ref, watch} from "vue";
 
 const store = useMyStore();

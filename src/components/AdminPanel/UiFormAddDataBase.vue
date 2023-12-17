@@ -2,8 +2,8 @@
 import {ref, watch} from 'vue';
 import axios from 'axios';
 import {useMyStore} from "@/store/store.js";
-import Checkbox from "@/components/Checkbox.vue";
-import AddCategories from "@/components/AddCategories.vue";
+import Checkbox from "@/components/AdminPanel/Checkbox.vue";
+import AddCategories from "@/components/AdminPanel/AddCategories.vue";
 
 const store = useMyStore()
 

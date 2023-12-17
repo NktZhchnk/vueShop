@@ -2,8 +2,8 @@
 import {computed, onMounted, ref} from 'vue';
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
-import UiFormAddDataBase from "@/components/UiFormAddDataBase.vue";
-import UiFormRadioCategories from "@/components/UiFormRadioCategories.vue";
+import UiFormAddDataBase from "@/components/AdminPanel/UiFormAddDataBase.vue";
+import UiFormRadioCategories from "@/components/AdminPanel/UiFormRadioCategories.vue";
 
 const store = useMyStore()
 
