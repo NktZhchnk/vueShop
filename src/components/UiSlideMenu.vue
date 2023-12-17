@@ -85,7 +85,7 @@ const store = useMyStore()
   padding: 5px;
   background: rgba(0, 0, 0, 1);
   height: 55px;
-  box-shadow: 2px 2px 5px black;
+
 }
 
 .slide-in {
@@ -105,6 +105,9 @@ const store = useMyStore()
 @media screen and (max-height: 200px) {
   .div-header{
     height: 65px;
+  }
+  .img-a{
+    height: 100%;
   }
 }
 </style>
