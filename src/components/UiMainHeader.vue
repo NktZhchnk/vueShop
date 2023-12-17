@@ -197,7 +197,7 @@ h1 {
   }
 
   .img-header {
-    width: 80%;
+    width: 70%;
   }
 
   .div-inp {
@@ -208,6 +208,18 @@ h1 {
 @media screen and (max-width: 700px) {
   .div-catalog {
     display: none;
+  }
+  .img-header {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .div-catalog {
+    display: none;
+  }
+  .img-header {
+    width: 90%;
   }
 }
 
