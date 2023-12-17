@@ -6,6 +6,7 @@ export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
         products: [],
+        productById: [],
         productVarieties: [],
         radioPrice: [],
         radioQuan: [],

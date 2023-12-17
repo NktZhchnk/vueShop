@@ -41,9 +41,10 @@ const deleteProductInDataBase = async (id) => {
 const getByIdProduct = (id) => {
   axios.get(`https://eseniabila.com.ua/getProductById/${id}`)
       .then(response => {
-        const productData = response.data; // Данные о товаре с указанным ID
+        // Данные о товаре с указанным ID
         // Обработка полученных данных о товаре
-        console.log('Информация о товаре:', productData);
+        store.productById = response.data
+        console.log('Информация о товаре:', response.data);
       })
       .catch(error => {
         console.error('Ошибка при получении данных о товаре:', error);

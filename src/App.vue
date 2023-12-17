@@ -8,7 +8,9 @@ import UiSlideMenu from "@/components/UiSlideMenu.vue";
 import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore()
-
+const test = () =>{
+  console.log(store.productById)
+}
 </script>
 
 <template>
@@ -20,6 +22,7 @@ const store = useMyStore()
       <ui-main-header class="main-header"></ui-main-header>
     </div>
     <div class="div-body">
+      <button @click="test">4141</button>
       <!-- Отображаем содержимое страницы внутри router-view -->
       .Здесь будет основной товар
       <router-view></router-view>
@@ -35,8 +38,9 @@ body {
 .show-page{
   position: absolute;
   width: 100%;
-  z-index: 2;
   height: 100%;
+  z-index: 2;
+
   background: rgba(0,0,0,0.3);
 }
 .slide-menu-left{
@@ -60,7 +64,7 @@ html {
 }
 .div-body{
   position: relative;
-  height: 1000px;
+  height: 100%;
 }
 </style>
 
