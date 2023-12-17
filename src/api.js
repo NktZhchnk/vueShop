@@ -35,6 +35,23 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
+app.get('/getProductById/:id', (req, res) => {
+    const productId = req.params.id; // Получаем ID товара из параметра запроса
+
+    const sqlQuery = 'SELECT * FROM product WHERE id = ?'; // SQL-запрос для выборки товара по его ID
+    connection.query(sqlQuery, [productId], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            if (results.length === 0) {
+                res.status(404).json({ message: 'Товар не найден' }); // Если товар не найден, отправляем ошибку 404
+            } else {
+                res.json(results[0]); // Отправляем найденный товар в качестве ответа (если товар найден)
+            }
+        }
+    });
+});
 
 app.get('/getProductVarieties', (req, res) => {
     const sqlQuery = 'SELECT * FROM product_varieties';
