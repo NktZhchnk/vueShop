@@ -21,13 +21,13 @@ const store = useMyStore()
     </div>
     <div class="div-body">
       <!-- Отображаем содержимое страницы внутри router-view -->
-      .
+      .Здесь будет основной товар
       <router-view></router-view>
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 body {
   padding: 0;
   margin: 0;
@@ -40,8 +40,7 @@ body {
   background: rgba(0,0,0,0.3);
 }
 .slide-menu-left{
-
-  z-index: 34;
+  z-index: 4;
 }
 html {
   padding: 0;
@@ -56,9 +55,11 @@ html {
   margin: 0;
   position: absolute;
 }
+.div-header{
+  height: 77px;
+}
 .div-body{
   position: relative;
-  top: 65px;
   height: 1000px;
 }
 </style>

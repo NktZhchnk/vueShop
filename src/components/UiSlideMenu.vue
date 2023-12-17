@@ -21,6 +21,7 @@ const store = useMyStore()
         </div>
       </div>
       <div class="div-body">
+        Здесь будет навигация сайта
       </div>
     </div>
   </div>
@@ -35,14 +36,13 @@ const store = useMyStore()
 }
 
 .main-text-header {
-  margin-left: 9px;
+  margin-left: 30px;
   margin-block-start: 0.50em;
   margin-block-end: 0.50em;
   font-family: 'Roboto Black', sans-serif;
 }
 
 .img-header {
-  margin-left: 4px;
   height: 90%;
   width: 90%;
   border-radius: 50%;
@@ -56,7 +56,7 @@ const store = useMyStore()
   top: 0;
   left: 0;
   border-right: 1px solid black;
-  transform: translateX(-100%);
+  transform: translateX(-105%);
   transition: transform 0.4s ease;
 }
 
@@ -82,8 +82,9 @@ const store = useMyStore()
   display: flex;
   justify-content: space-between;
   color: white;
+  padding: 5px;
   background: rgba(0, 0, 0, 1);
-  height: 65px;
+  height: 55px;
   box-shadow: 2px 2px 5px black;
 }
 

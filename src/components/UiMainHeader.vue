@@ -14,7 +14,7 @@ const swap = () => {
   <div class="main-header">
     <div class="div-menu">
       <div class="div-menu-child" style="width: 50%" @click="swap">
-        <svg xmlns="http://www.w3.org/2000/svg"  height="34" width="36" viewBox="0 0 448 512">
+        <svg xmlns="http://www.w3.org/2000/svg" height="34" width="36" viewBox="0 0 448 512">
           <path fill="#ffffff"
                 d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
         </svg>
@@ -22,7 +22,7 @@ const swap = () => {
     </div>
 
     <div class="div-img">
-      <router-link to="/">
+      <router-link class="img-a" to="/">
         <img class="img-header" src="../../images/header.jpg"/>
       </router-link>
     </div>
@@ -58,10 +58,17 @@ const swap = () => {
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/roboto');
 
+.img-a {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .main-header {
   width: 100%;
-  height: 7.3%;
+  height: 65px;
   background: #221f1f;;
   display: flex;
   box-shadow: 2px 2px 5px black;
@@ -77,6 +84,8 @@ const swap = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
   text-decoration: none; /* Убирает подчеркивание ссылки */
   color: white; /* Задайте цвет текста, который вы хотите использовать */
 }
@@ -109,11 +118,13 @@ const swap = () => {
   align-items: center;
   justify-content: center;
 }
-.div-menu-child{
+
+.div-menu-child {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .main-cart {
   height: 100%;
   width: 20%;
@@ -136,7 +147,6 @@ const swap = () => {
 }
 
 .div-catalog {
-
   color: white;
   margin-left: 5%;
 }

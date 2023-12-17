@@ -4,7 +4,7 @@
 
 <template>
   <div class="main-cart">
-    <h1>Корзина</h1>
+    <h1>Корзина, хранение товара</h1>
   </div>
 </template>
 
