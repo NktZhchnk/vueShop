@@ -97,7 +97,7 @@ const getByIdProduct = (id) => {
           {{ item.name_item }}
         </div>
         <div class="div-price-product">
-          {{item.price_item}} ₴
+          {{ item.price_item }} ₴
         </div>
       </router-link>
     </div>
@@ -107,35 +107,49 @@ const getByIdProduct = (id) => {
 <style scoped>
 .style-products {
   display: flex;
+  flex-wrap: wrap;
   height: 100%;
 }
 
-.img{
+.img {
+  width: 140px;
+  height: 190px;
+}
+
+.div-name-product {
+  word-wrap: break-word;
   width: 120px;
-  height: 170px;
 }
-.div-name-product{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-.div-price-product{
+
+.div-price-product {
   margin-top: 10px;
 }
+
 .style-product {
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
   margin-top: 10px;
   margin-left: 10px;
-  height: 100%;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   transition: transform 0.3s ease;
 }
-.style-product:hover{
+
+.style-product:hover {
   transform: scale(1.05);
 }
+
+@media screen and (max-width: 600px) {
+  .style-product{
+    margin-left: 20px;
+  }
+  .img{
+    width: 150px;
+    height: 210px;
+  }
+}
+
+
 
 .slider {
   position: relative;
