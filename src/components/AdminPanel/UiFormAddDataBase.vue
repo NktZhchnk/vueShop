@@ -8,10 +8,10 @@ import AddCategories from "@/components/AdminPanel/AddCategories.vue";
 const store = useMyStore()
 
 const newData = {
-  name_item: '0',
-  price_item: 0, // цена продукта
-  quan_item: 0,    // количество продукта
-  show_item: 0,
+  name_item: 'Шар',
+  price_item: 105, // цена продукта
+  quan_item: 5,    // количество продукта
+  show_item: 1,
   category_item: null,
   text_info: '',
 };
