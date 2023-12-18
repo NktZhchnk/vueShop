@@ -123,6 +123,7 @@ const getByIdProduct = (id) => {
 .div-price-product {
   margin-top: 10px;
 }
+
 .style-products {
   display: flex;
   flex-wrap: wrap;
@@ -130,6 +131,7 @@ const getByIdProduct = (id) => {
   padding-right: 15px;
   justify-content: space-around;
 }
+
 .style-product {
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
@@ -146,42 +148,48 @@ const getByIdProduct = (id) => {
 }
 
 
-
 @media screen and (max-width: 340px) {
-  .img{
+  .img {
     width: 100%;
     height: 190px;
   }
-  .style-product{
+
+  .style-product {
     width: 37%;
   }
-  .style-products{
+
+  .style-products {
     display: flex;
     margin-left: 0px;
     padding-right: 15px;
     justify-content: space-between;
   }
 }
+
 @media screen and (max-width: 400px) {
-  .style-product{
+  .style-product {
     width: 35%;
-  };
-  .style-products{
+  }
+
+  .style-products {
     padding-right: 15px;
     margin-left: 15px;
     display: flex;
     justify-content: space-between;
   }
 }
+
 @media screen and (min-width: 400px) {
-  .img{
+  .img {
     width: 130px;
     height: 200px;
   }
-  .style-product{
+
+  .style-product {
     width: 152px;
   }
-  .style-products{
+
+  .style-products {
     margin-left: 10px;
     padding-right: 20px;
     display: flex;
@@ -190,14 +198,16 @@ const getByIdProduct = (id) => {
 }
 
 @media screen and (min-width: 450px) {
-  .img{
+  .img {
     width: 130px;
     height: 200px;
   }
-  .style-product{
+
+  .style-product {
     width: 152px;
   }
-  .style-products{
+
+  .style-products {
     margin-left: 30px;
     padding-right: 45px;
     display: flex;
@@ -206,7 +216,7 @@ const getByIdProduct = (id) => {
 }
 
 @media screen and (max-width: 600px) {
-  .img{
+  .img {
     width: 150px;
     height: 210px;
   }
