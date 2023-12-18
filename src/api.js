@@ -5,10 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import axios from "axios";
-import {useMyStore} from "../src/store/store.js";
-
 dotenv.config();
-const store = useMyStore()
 
 const app = express();
 
@@ -17,47 +14,13 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
-const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
-const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
-const cityId = "29713";
-const districtId = "412";
-const regionId = "286";
-const postIndex = "03026";
-
-// Формирование параметров запроса
-const params = {
-    city_id: cityId,
-    district_id: districtId,
-    region_id: regionId,
-    postIndex: postIndex
-};
-
-// Выполнение GET-запроса с помощью Axios на сервере
-axios.get(apiUrl, {
-    headers: {
-        'Authorization': `Bearer ${bearerToken}`,
-        'Accept': 'application/json'
-    },
-    params: params
-})
-    .then(response => {
-        // Обработка полученных данных
-        console.log('Ответ сервера:', response.data);
-        store.test = response.data
-        // Здесь вы можете обработать полученные данные в соответствии с вашими потребностями
-    })
-    .catch(error => {
-        // Обработка ошибок
-        console.error('Произошла ошибка:', error);
-    });
-
-
 const connection = mysql.createConnection({
     host: '193.0.61.203',
     user: 'admin',
     password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
     database: 'products',
 });
+
 
 
 app.use('/images', express.static('/var/www/vueShop/images'));
@@ -73,6 +36,43 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
+
+const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
+const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
+const cityId = "29713";
+const districtId = "412";
+const regionId = "286";
+const postIndex = "03026";
+
+// Формування параметрів запиту
+const params = {
+    city_id: cityId,
+    district_id: districtId,
+    region_id: regionId,
+    postIndex: postIndex
+};
+
+// Роут для отримання даних від сервера "www.ukrposhta.ua"
+app.get('/getUkrPoshtaData', async (req, res) => {
+    try {
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${bearerToken}`,
+                'Accept': 'application/json'
+            },
+            params: params
+        });
+
+        // Обробка отриманих даних та їх повернення як відповідь
+        res.status(200).json(response.data);
+    } catch (error) {
+        // Обробка помилок
+        console.error('Произошла ошибка:', error);
+        res.status(500).json({ error: 'Помилка при отриманні даних від сервера UkrPoshta' });
+    }
+});
+
+
 app.get('/getProductById/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID товара из параметра запроса
 

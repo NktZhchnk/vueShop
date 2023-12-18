@@ -11,6 +11,17 @@ const store = useMyStore()
 const test = () =>{
   console.log(store.test)
 }
+// Приклад виклику API-шляху з фронтенду (Vue.js)
+axios.get('/getUkrPoshtaData')
+    .then(response => {
+      // Обробка отриманих даних з сервера
+      console.log('Ответ сервера UkrPoshta:', response.data);
+      // Далі можна використовувати ці дані на фронтенді за необхідністю
+    })
+    .catch(error => {
+      // Обробка помилок
+      console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
+    });
 
 </script>
 
