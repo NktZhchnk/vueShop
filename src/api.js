@@ -4,8 +4,11 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
+import axios from "axios";
+import {useMyStore} from "../src/store/store.js";
 
 dotenv.config();
+const store = useMyStore()
 
 const app = express();
 
@@ -13,6 +16,41 @@ app.use(express.json());
 app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
+
+const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
+const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
+const cityId = "29713";
+const districtId = "412";
+const regionId = "286";
+const postIndex = "03026";
+
+// Формирование параметров запроса
+const params = {
+    city_id: cityId,
+    district_id: districtId,
+    region_id: regionId,
+    postIndex: postIndex
+};
+
+// Выполнение GET-запроса с помощью Axios на сервере
+axios.get(apiUrl, {
+    headers: {
+        'Authorization': `Bearer ${bearerToken}`,
+        'Accept': 'application/json'
+    },
+    params: params
+})
+    .then(response => {
+        // Обработка полученных данных
+        console.log('Ответ сервера:', response.data);
+        store.test = response.data
+        // Здесь вы можете обработать полученные данные в соответствии с вашими потребностями
+    })
+    .catch(error => {
+        // Обработка ошибок
+        console.error('Произошла ошибка:', error);
+    });
+
 
 const connection = mysql.createConnection({
     host: '193.0.61.203',

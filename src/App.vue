@@ -9,8 +9,9 @@ import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore()
 const test = () =>{
-  console.log(store.productById)
+  console.log(store.test)
 }
+
 </script>
 
 <template>

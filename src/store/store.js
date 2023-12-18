@@ -5,6 +5,7 @@ import {ref} from "vue";
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
+        test: [],
         products: [],
         productById: [],
         productVarieties: [],

@@ -129,7 +129,7 @@ const getByIdProduct = (id) => {
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 15px;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   transition: transform 0.3s ease;

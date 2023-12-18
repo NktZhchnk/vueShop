@@ -13,9 +13,11 @@ import {faUserSecret} from "@fortawesome/free-solid-svg-icons";
 
 const app = createApp(App)
 
+app.use(createPinia())
+
 library.add(faUserSecret)
+app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
-app.use(createPinia())
-app.component('font-awesome-icon', FontAwesomeIcon)
+
 app.mount('#app')
