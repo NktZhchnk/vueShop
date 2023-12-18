@@ -34,7 +34,7 @@ axios.get('/getUkrPoshtaData')
       <ui-main-header class="main-header"></ui-main-header>
     </div>
     <div class="div-body">
-      <button @click="test">4141</button>
+      <button @click="test">gfdgdfgfd</button>
       <!-- Отображаем содержимое страницы внутри router-view -->
       .Здесь будет основной товар
       <router-view></router-view>
@@ -48,11 +48,10 @@ body {
   margin: 0;
 }
 .show-page{
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   z-index: 2;
-
   background: rgba(0,0,0,0.3);
 }
 .slide-menu-left{
@@ -66,10 +65,10 @@ html {
 }
 
 .main-header {
+  position: fixed;
   z-index: 1;
   padding: 0;
   margin: 0;
-  position: absolute;
 }
 .div-header{
   height: 77px;

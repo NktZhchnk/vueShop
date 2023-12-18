@@ -50,9 +50,9 @@ const store = useMyStore()
 
 .main-menu {
   background: white;
-  position: absolute;
+  position: fixed;
   width: 320px;
-  height: 100%;
+  height: 98.7%;
   top: 0;
   left: 0;
   border-right: 1px solid black;

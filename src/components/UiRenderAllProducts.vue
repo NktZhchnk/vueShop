@@ -106,11 +106,7 @@ const getByIdProduct = (id) => {
 </template>
 
 <style scoped>
-.style-products {
-  display: flex;
-  flex-wrap: wrap;
-  height: 100%;
-}
+
 
 .img {
   width: 140px;
@@ -119,16 +115,25 @@ const getByIdProduct = (id) => {
 
 .div-name-product {
   word-wrap: break-word;
-  width: 120px;
+  height: 55px;
+  overflow: hidden;
+  width: 100%;
 }
 
 .div-price-product {
   margin-top: 10px;
 }
-
+.style-products {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  padding-right: 15px;
+  justify-content: space-around;
+}
 .style-product {
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
+  width: 142px;
   margin-top: 10px;
   margin-left: 15px;
   border-radius: 5px;
@@ -140,17 +145,72 @@ const getByIdProduct = (id) => {
   transform: scale(1.05);
 }
 
-@media screen and (max-width: 600px) {
-  .style-product{
-    margin-left: 20px;
+
+
+@media screen and (max-width: 340px) {
+  .img{
+    width: 100%;
+    height: 190px;
   }
+  .style-product{
+    width: 37%;
+  }
+  .style-products{
+    display: flex;
+    margin-left: 0px;
+    padding-right: 15px;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 400px) {
+  .style-product{
+    width: 35%;
+  };
+  .style-products{
+    padding-right: 15px;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media screen and (min-width: 400px) {
+  .img{
+    width: 130px;
+    height: 200px;
+  }
+  .style-product{
+    width: 152px;
+  }
+  .style-products{
+    margin-left: 10px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .img{
+    width: 130px;
+    height: 200px;
+  }
+  .style-product{
+    width: 152px;
+  }
+  .style-products{
+    margin-left: 30px;
+    padding-right: 45px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 600px) {
   .img{
     width: 150px;
     height: 210px;
   }
 }
-
-
 
 .slider {
   position: relative;
