@@ -7,6 +7,9 @@ import UiFormRadioCategories from "@/components/AdminPanel/UiFormRadioCategories
 
 const store = useMyStore()
 
+onMounted(async () => {
+  await store.fetchData();
+});
 
 
 </script>

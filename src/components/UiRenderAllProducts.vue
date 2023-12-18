@@ -4,6 +4,7 @@ import axios from "axios";
 import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore()
+
 onMounted(async () => {
   await store.fetchData();
 });
