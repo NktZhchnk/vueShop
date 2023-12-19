@@ -95,170 +95,74 @@ const deleteProductInDataBase = async (id) => {
 </template>
 
 <style scoped>
-
-
-.img {
-  width: 140px;
-  height: 190px;
+/* Общие стили для всех элементов */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
 }
 
-.div-name-product {
-  word-wrap: break-word;
-  height: 55px;
-  overflow: hidden;
-  width: 100%;
-}
-
-.div-price-product {
-  margin-top: 10px;
-}
-
+/* Стили для контейнера товаров */
 .style-products {
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
-  padding-right: 15px;
   justify-content: space-around;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
+/* Стили для карточек товаров */
 .style-product {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  width: 142px;
-  margin-top: 15px;
-  margin-left: 15px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  transition: transform 0.3s ease;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  width: 300px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .style-product:hover {
   transform: scale(1.05);
 }
 
-
-@media screen and (max-width: 340px) {
-  .img {
-    width: 100%;
-    height: 190px;
-  }
-
-  .style-product {
-    width: 37%;
-  }
-
-  .style-products {
-    display: flex;
-    margin-left: 0px;
-    padding-right: 15px;
-    justify-content: space-between;
-  }
+/* Стили для изображения товара */
+.img {
+  width: 100%;
+  height: 200px; /* Высота изображения (можно изменить по необходимости) */
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-@media screen and (max-width: 400px) {
-  .style-product {
-    width: 35%;
-  }
-
-  .style-products {
-    padding-right: 15px;
-    margin-left: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
+/* Стили для контента товара */
+.div-name-product,
+.div-price-product {
+  padding: 15px 20px;
 }
 
-@media screen and (min-width: 400px) {
-  .img {
-    width: 130px;
-    height: 200px;
-  }
-
-  .style-product {
-    width: 152px;
-  }
-
-  .style-products {
-    margin-left: 10px;
-    padding-right: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-}
-
-@media screen and (min-width: 450px) {
-  .img {
-    width: 100%;
-    height: 200px;
-  }
-
-  .style-product {
-    width: 152px;
-  }
-
-  .style-products {
-    margin-left: 30px;
-    padding-right: 45px;
-    display: flex;
-    justify-content: space-between;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .img {
-    width: 150px;
-    height: 210px;
-  }
-}
-
-.slider {
-  position: relative;
-  overflow: hidden;
-}
-
-.slides-container {
-  display: flex;
-  transition: transform 0.3s ease;
-}
-
-.slide-item {
-  flex: 0 0 100%;
-}
-
-button {
-  padding: 8px 16px;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Стили для блока с продуктами */
-.product {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-/* Стили для отдельного продукта */
-.product-item {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 6px;
-  text-align: center;
-  background-color: #f9f9f9;
-}
-
-.product-info {
+/* Стили для названия товара */
+.div-name-product {
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
+/* Стили для цены товара */
+.div-price-product {
+  font-size: 16px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .style-products {
+    padding: 10px;
+  }
+  .style-product {
+    width: calc(50% - 40px);
+    margin: 10px;
+  }
 }
 
 </style>

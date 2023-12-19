@@ -78,7 +78,10 @@ console.log(varieties.value)
                                         alt="Product Image" class="product-image"/></div>
     </div>
     <div v-if="getVarieties">
-      <h1>{{getVarieties.variety_name}}</h1>
+      <div v-for="item in getVarieties" :key="item.id">
+        <p>nameVarieties:{{ item.variety_name }}</p>
+        <p>varietyPrice:{{ item.variety_price }}</p>
+      </div>
     </div>
     <button>Add to Cart</button>
 
@@ -88,6 +91,70 @@ console.log(varieties.value)
 </template>
 
 <style>
+/* Общие стили */
+.product-details {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
 
+.product-details h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product-details p {
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.product-details .image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.product-details .product-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.product-details button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-details button:hover {
+  background-color: #45a049;
+}
+
+/* Дополнительные стили для визуализации загрузки */
+.product-details > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #777;
+}
+
+.product-details > div p {
+  margin: 0;
+}
 </style>
 
