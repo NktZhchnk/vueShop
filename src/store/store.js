@@ -7,7 +7,11 @@ export const useMyStore = defineStore({
     state: () => ({
         test: [],
         products: [],
-        productById: [],
+        productById: {
+            id: [],
+            img: [],
+            varieties: [],
+        },
         productVarieties: [],
         radioPrice: [],
         radioQuan: [],

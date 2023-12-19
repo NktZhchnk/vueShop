@@ -9,7 +9,7 @@ import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore()
 const test = () =>{
-  console.log(store.test)
+  console.log(store.productById)
 }
 // Приклад виклику API-шляху з фронтенду (Vue.js)
 axios.get('/getUkrPoshtaData')

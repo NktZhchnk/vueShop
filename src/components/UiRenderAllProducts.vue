@@ -39,18 +39,7 @@ const deleteProductInDataBase = async (id) => {
     console.error(`Ошибка при удалении продукта с ID ${id}:`, error);
   }
 }
-const getByIdProduct = (id) => {
-  axios.get(`https://eseniabila.com.ua/getProductById/${id}`)
-      .then(response => {
-        // Данные о товаре с указанным ID
-        // Обработка полученных данных о товаре
-        store.productById = response.data
-        console.log('Информация о товаре:', response.data);
-      })
-      .catch(error => {
-        console.error('Ошибка при получении данных о товаре:', error);
-      });
-}
+
 </script>
 
 <template>
@@ -90,7 +79,7 @@ const getByIdProduct = (id) => {
   <!--  </div>-->
   <div class="style-products">
     <div v-for="item in store.products" :key="item.id" class="style-product">
-      <router-link @click="getByIdProduct(item.id)" :to="'/product/' + item.id">
+      <router-link :to="'/product/' + item.id">
         <div>
           <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
         </div>
@@ -136,7 +125,7 @@ const getByIdProduct = (id) => {
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
   width: 142px;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 15px;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -199,7 +188,7 @@ const getByIdProduct = (id) => {
 
 @media screen and (min-width: 450px) {
   .img {
-    width: 130px;
+    width: 100%;
     height: 200px;
   }
 

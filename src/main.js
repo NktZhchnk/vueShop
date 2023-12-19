@@ -10,7 +10,6 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faUserSecret} from "@fortawesome/free-solid-svg-icons";
 
 
-
 const app = createApp(App)
 
 app.use(createPinia())
