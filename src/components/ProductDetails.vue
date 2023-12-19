@@ -69,18 +69,21 @@ console.log(varieties.value)
 </script>
 
 <template>
-  <div v-if="getProductById" class="product-details"><h1>{{ getProductById.name_item }}</h1>
+  <div v-if="getProductById" class="product-details">
+    <h1>{{ getProductById.name_item }}</h1>
     <p>Price: {{ getProductById.price_item }}</p>
     <p>{{ getProductById.text_info }}</p>
     <div v-if="getImages.length > 0"><h3>Product Images:</h3>
       <div class="image-container"><img v-for="(image, index) in getImages" :key="index" :src="image.img"
                                         alt="Product Image" class="product-image"/></div>
     </div>
+    <div v-if="getVarieties">
+      <h1>{{getVarieties.variety_name}}</h1>
+    </div>
     <button>Add to Cart</button>
+
   </div>
-  <div v-if="getVarieties">
-    {{getVarieties.variety_name}}
-  </div>
+
   <div v-else><p>Loading...</p></div>
 </template>
 
