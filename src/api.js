@@ -37,6 +37,25 @@ app.get('/getProducts', (req, res) => {
     });
 });
 
+app.get('/getProductsCategory', (req, res) => {
+    const category = req.query.category; // Получение категории из запроса
+
+    if (!category) {
+        res.status(400).json({error: 'Категория не указана'});
+        return;
+    }
+
+    const sqlQuery = 'SELECT * FROM product WHERE category_item = ?'; // Запрос с фильтрацией по категории
+    connection.query(sqlQuery, [category], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
 const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
 const cityId = "29713";

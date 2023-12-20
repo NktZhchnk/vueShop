@@ -1,20 +1,40 @@
 <script setup>
+import axios from "axios";
+import {ref} from 'vue'
+const images = [
+  {srcImg: "../../images/box200.jpg", value: '1'},
+  {srcImg: "../../images/box400.jpg", value: '2'},
+  {srcImg: "../../images/box600.jpg", value: '3'},
+  {srcImg: "../../images/box1000.jpg", value: 'box1000'},
+  {srcImg: "../../images/cosmeticAccessories.jpg", value: '5'},
+  {srcImg: "../../images/decorativeCosmetic.jpg", value: '6'},
+  {srcImg: "../../images/carecosmetic.jpg", value: '7'},
+  {srcImg: "../../images/cosmetic.jpg", value: '8'},
+  {srcImg: "../../images/firm.jpg", value: '9'},
+  {srcImg: "../../images/shadow.jpg", value: '10'},
+  {srcImg: "../../images/hair.jpg", value: '11'},
+]
+const productsCategory = ref([])
+const handleImageClick = async (category) => {
+  try {
+    const response = await axios.get(`https://eseniabila.com.ua/getProducts?category=${category}`);
+    if (response.data) {
+      productsCategory.value = response.data;
+      console.log(response.data)
+    }
+  } catch (error) {
+    console.error('Ошибка при получении данных о товаре:', error);
+  }
+};
+
 
 </script>
 
 <template>
   <div class="main-div">
-    <div><img src="../../images/box200.jpg"></div>
-    <div><img src="../../images/box400.jpg"></div>
-    <div><img src="../../images/box600.jpg"></div>
-    <div><img src="../../images/box1000.jpg"></div>
-    <div><img src="../../images/cosmeticAccessories.jpg"></div>
-    <div><img src="../../images/decorativeCosmetic.jpg"></div>
-    <div><img src="../../images/carecosmetic.jpg"></div>
-    <div><img src="../../images/cosmetic.jpg"></div>
-    <div><img src="../../images/firm.jpg"></div>
-    <div><img src="../../images/shadow.jpg"></div>
-    <div><img src="../../images/hair.jpg"></div>
+    <div v-for="(image, index) in images" :key="index" @click="handleImageClick(image.value)">
+      <img :src="image.srcImg" alt="Image"/>
+    </div>
   </div>
 </template>
 
@@ -53,10 +73,12 @@ img:hover {
     width: 100%;
     flex-direction: row;
   }
-  div{
+
+  div {
     width: calc(50% - 20px);
     margin-bottom: 0px;
   }
+
   img {
     width: calc(100% - 20px);
     margin-bottom: 0px;
