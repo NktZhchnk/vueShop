@@ -74,7 +74,7 @@ html {
   color: white;
   display: none;
   background: rgba(0,0,0,0.9);
-  box-shadow: 2px 2px 10px gray;
+  box-shadow: 2px 3px 10px gray;
   border-radius: 20px;
 }
 .div-catalog:hover{
