@@ -5,6 +5,7 @@ import UiMainHeader from "@/components/UiMainHeader.vue";
 import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import UiRenderAllProducts from "@/components/UiRenderAllProducts.vue";
+import UiCatalog from "@/components/AdminPanel/UiCatalog.vue";
 
 
 const routes = [
@@ -18,6 +19,12 @@ const routes = [
         path: '/adminMenu',
         component: AdminMenu,
     },
+    {
+        name: 'Catalog',
+        path: '/catalog',
+        component: UiCatalog,
+    },
+
     {
         name: 'Cart',
         path: '/cart',
