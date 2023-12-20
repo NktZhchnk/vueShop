@@ -87,7 +87,7 @@ console.log(varieties.value)
 
   </div>
 
-  <div v-else><p>Loading...</p></div>
+  <div v-else><p>Loading...2</p></div>
 </template>
 
 <style>

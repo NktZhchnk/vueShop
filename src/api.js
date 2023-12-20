@@ -41,7 +41,7 @@ app.get('/getProductsCategory', (req, res) => {
     const category = req.query.category; // Получение категории из запроса
 
     if (!category) {
-        res.status(400).json({error: 'Категория не указана'});
+        res.status(400).json({ error: 'Категория не указана' });
         return;
     }
 
@@ -49,9 +49,9 @@ app.get('/getProductsCategory', (req, res) => {
     connection.query(sqlQuery, [category], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({error: 'Ошибка выполнения запроса'});
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
         } else {
-            res.json(results);
+            res.json(results); // Отправка результатов в формате JSON
         }
     });
 });

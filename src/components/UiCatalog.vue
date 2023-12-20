@@ -1,6 +1,9 @@
 <script setup>
 import axios from "axios";
 import {ref} from 'vue'
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const images = [
   {srcImg: "../../images/box200.jpg", value: '1'},
   {srcImg: "../../images/box400.jpg", value: '2'},
@@ -20,7 +23,10 @@ const handleImageClick = async (category) => {
     const response = await axios.get(`https://eseniabila.com.ua/getProducts?category=${category}`);
     if (response.data) {
       productsCategory.value = response.data;
-      console.log(response.data)
+      console.log(response.data);
+
+      // Пример программного перехода на маршрут
+      router.push(`/image/${category}`);
     }
   } catch (error) {
     console.error('Ошибка при получении данных о товаре:', error);
@@ -33,7 +39,9 @@ const handleImageClick = async (category) => {
 <template>
   <div class="main-div">
     <div v-for="(image, index) in images" :key="index" @click="handleImageClick(image.value)">
-      <img :src="image.srcImg" alt="Image"/>
+      <router-link :to="'/image/' + image.value">
+        <img :src="image.srcImg" alt="Image"/>
+      </router-link>
     </div>
   </div>
 </template>

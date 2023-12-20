@@ -6,6 +6,7 @@ import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import UiRenderAllProducts from "@/components/UiRenderAllProducts.vue";
 import UiCatalog from "@/components/UiCatalog.vue";
+import UiRenderProductsCategory from "@/components/UiRenderProductsCategory.vue";
 
 
 const routes = [
@@ -38,6 +39,12 @@ const routes = [
         path: '/product/:id',
         name: 'ProductDetails',
         component: ProductDetails,
+        props: true
+    },
+    {
+        path: '/image/:category',
+        name: 'UiRenderProductsCategory',
+        component: UiRenderProductsCategory,
         props: true
     }
 ];
