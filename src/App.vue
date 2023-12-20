@@ -35,7 +35,7 @@ axios.get('/getUkrPoshtaData')
     </div>
     <div class="div-body">
       <!-- Отображаем содержимое страницы внутри router-view -->
-      <div class="div-catalog" style="background: black">
+      <div class="div-catalog">
         <router-link to="/catalog" class="custom-link"><h1>Catalog</h1>
           <svg style="margin-left: 10px" xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512">
             <path fill="#ffffff"
@@ -68,10 +68,18 @@ html {
   margin: 0;
   width: 100%;
   height: 100%;
+
 }
 .div-catalog {
   color: white;
   display: none;
+  background: rgba(0,0,0,0.9);
+  box-shadow: 2px 2px 10px gray;
+  border-radius: 20px;
+}
+.div-catalog:hover{
+  transform: scale(1.05);
+  border-radius: 45px;
 }
 .custom-link {
   display: flex;

@@ -78,7 +78,6 @@ const deleteProductInDataBase = async (id) => {
   <!--    </div>-->
   <!--  </div>-->
   <div class="style-products">
-
     <div v-for="item in store.products" :key="item.id" class="style-product">
       <router-link :to="'/product/' + item.id">
         <div style="height: 200px">
@@ -98,6 +97,7 @@ const deleteProductInDataBase = async (id) => {
 
 <style scoped>
   /* Общие стили для всех элементов */
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -110,6 +110,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+
   padding: 20px;
   margin: 0 auto;
   max-width: 1200px;
