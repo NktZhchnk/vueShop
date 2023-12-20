@@ -4,17 +4,17 @@
 
 <template>
   <div class="main-div">
-    <div><img src="../../../images/box200.jpg"></div>
-    <div><img src="../../../images/box400.jpg"></div>
-    <div><img src="../../../images/box600.jpg"></div>
-    <div><img src="../../../images/box1000.jpg"></div>
-    <div><img src="../../../images/cosmeticAccessories.jpg"></div>
-    <div><img src="../../../images/decorativeCosmetic.jpg"></div>
-    <div><img src="../../../images/carecosmetic.jpg"></div>
-    <div><img src="../../../images/cosmetic.jpg"></div>
-    <div><img src="../../../images/firm.jpg"></div>
-    <div><img src="../../../images/shadow.jpg"></div>
-    <div><img src="../../../images/hair.jpg"></div>
+    <div><img src="../../images/box200.jpg"></div>
+    <div><img src="../../images/box400.jpg"></div>
+    <div><img src="../../images/box600.jpg"></div>
+    <div><img src="../../images/box1000.jpg"></div>
+    <div><img src="../../images/cosmeticAccessories.jpg"></div>
+    <div><img src="../../images/decorativeCosmetic.jpg"></div>
+    <div><img src="../../images/carecosmetic.jpg"></div>
+    <div><img src="../../images/cosmetic.jpg"></div>
+    <div><img src="../../images/firm.jpg"></div>
+    <div><img src="../../images/shadow.jpg"></div>
+    <div><img src="../../images/hair.jpg"></div>
   </div>
 </template>
 

@@ -5,7 +5,7 @@ import UiMainHeader from "@/components/UiMainHeader.vue";
 import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
 import UiRenderAllProducts from "@/components/UiRenderAllProducts.vue";
-import UiCatalog from "@/components/AdminPanel/UiCatalog.vue";
+import UiCatalog from "@/components/UiCatalog.vue";
 
 
 const routes = [

@@ -80,7 +80,7 @@ const deleteProductInDataBase = async (id) => {
   <div class="style-products">
     <div v-for="item in store.products" :key="item.id" class="style-product">
       <router-link :to="'/product/' + item.id">
-        <div>
+        <div style="height: 200px">
           <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
         </div>
         <div class="div-name-product">
@@ -94,8 +94,9 @@ const deleteProductInDataBase = async (id) => {
   </div>
 </template>
 
+
 <style scoped>
-/* Общие стили для всех элементов */
+  /* Общие стили для всех элементов */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -130,8 +131,7 @@ body {
 /* Стили для изображения товара */
 .img {
   width: 100%;
-  height: 200px; /* Высота изображения (можно изменить по необходимости) */
-  object-fit: cover;
+  height: 100%; /* Высота изображения (можно изменить по необходимости) */
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
@@ -146,7 +146,10 @@ body {
 .div-name-product {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  word-wrap: break-word;
+  height: 25px;
+  overflow: hidden;
+
 }
 
 /* Стили для цены товара */
