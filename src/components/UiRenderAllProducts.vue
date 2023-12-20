@@ -78,6 +78,7 @@ const deleteProductInDataBase = async (id) => {
   <!--    </div>-->
   <!--  </div>-->
   <div class="style-products">
+
     <div v-for="item in store.products" :key="item.id" class="style-product">
       <router-link :to="'/product/' + item.id">
         <div style="height: 200px">

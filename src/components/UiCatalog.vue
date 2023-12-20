@@ -1,44 +1,24 @@
 <script setup>
-import axios from "axios";
-import {ref} from 'vue'
-import { useRouter } from 'vue-router';
-const router = useRouter();
-
 const images = [
-  {srcImg: "../../images/box200.jpg", value: '1'},
-  {srcImg: "../../images/box400.jpg", value: '2'},
-  {srcImg: "../../images/box600.jpg", value: '3'},
+  {srcImg: "../../images/box200.jpg", value: 'box200-395'},
+  {srcImg: "../../images/box400.jpg", value: 'box400-595'},
+  {srcImg: "../../images/box600.jpg", value: 'box600-995'},
   {srcImg: "../../images/box1000.jpg", value: 'box1000'},
-  {srcImg: "../../images/cosmeticAccessories.jpg", value: '5'},
-  {srcImg: "../../images/decorativeCosmetic.jpg", value: '6'},
-  {srcImg: "../../images/carecosmetic.jpg", value: '7'},
-  {srcImg: "../../images/cosmetic.jpg", value: '8'},
-  {srcImg: "../../images/firm.jpg", value: '9'},
-  {srcImg: "../../images/shadow.jpg", value: '10'},
-  {srcImg: "../../images/hair.jpg", value: '11'},
+  {srcImg: "../../images/accessories.jpg", value: 'accessories'},
+  {srcImg: "../../images/decorativeCosmetic.jpg", value: 'decorativeCosmetics'},
+  {srcImg: "../../images/careCosmetic.jpg", value: 'careCosmetics'},
+  {srcImg: "../../images/cosmeticAccessories.jpg", value: 'cosmeticAccessories'},
+  {srcImg: "../../images/brandSets.jpg", value: 'brandSets'},
+  {srcImg: "../../images/shadowPalettes.jpg", value: 'shadowPalettes'},
+  {srcImg: "../../images/everythingForHair.jpg", value: 'everythingForHair'},
 ]
-const productsCategory = ref([])
-const handleImageClick = async (category) => {
-  try {
-    const response = await axios.get(`https://eseniabila.com.ua/getProducts?category=${category}`);
-    if (response.data) {
-      productsCategory.value = response.data;
-      console.log(response.data);
-
-      // Пример программного перехода на маршрут
-      router.push(`/image/${category}`);
-    }
-  } catch (error) {
-    console.error('Ошибка при получении данных о товаре:', error);
-  }
-};
 
 
 </script>
 
 <template>
   <div class="main-div">
-    <div v-for="(image, index) in images" :key="index" @click="handleImageClick(image.value)">
+    <div v-for="(image, index) in images" :key="index">
       <router-link :to="'/image/' + image.value">
         <img :src="image.srcImg" alt="Image"/>
       </router-link>
