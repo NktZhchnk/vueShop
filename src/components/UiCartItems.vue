@@ -101,21 +101,18 @@ onMounted(loadCartProducts);
 .div-body {
   padding: 20px;
   display: flex;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+  overflow: auto; /* Добавляем прокрутку, если элементы не помещаются */
   gap: 20px;
 }
 
-.product-item {
-  width: 175px;
-  height: 60%;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
 
+.product-item {
+  width: calc(33% - 20px); /* Установка ширины элемента в половину контейнера с учетом отступов */
+  margin-bottom: 20px; /* Отступ снизу между элементами */
+}
 .product-image {
-  width: 175px;
-  height: 200px;
+  width: 99%;
   display: block;
   border-radius: 8px 8px 0 0;
 }
