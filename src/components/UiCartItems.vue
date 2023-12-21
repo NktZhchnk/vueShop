@@ -35,8 +35,8 @@ onMounted(loadCartProducts);
       <div v-for="item in store.cartProducts" :key="item.id" class="product-item">
         <img :src="item.images.img" alt="Product Image" class="product-image">
         <div class="product-details">
-          <h1>{{ item.product.name_item }}</h1>
-          <p>Name:{{ item.selectedVariety.variety_name }}</p>
+          <h1 class="text-name">Name:{{ item.product.name_item }}</h1>
+          <p>variety:{{ item.selectedVariety.variety_name }}</p>
           <p>Price:{{ item.product.price_item }}</p>
         </div>
       </div>
@@ -81,7 +81,14 @@ onMounted(loadCartProducts);
   margin: 0;
   font-size: 1.2em;
 }
+.text-name{
+  font-size: 18px;
+  font-weight: bold;
+  word-wrap: break-word;
+  height: 40px;
+  overflow: hidden;
 
+}
 .div-header h1 {
   margin: 0;
   cursor: pointer;
@@ -89,20 +96,22 @@ onMounted(loadCartProducts);
 
 .div-body {
   padding: 20px;
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
 
 .product-item {
+  width: 23%;
+  height: 60%;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .product-image {
-  width: 100%;
-  height: auto;
+  width: 175px;
+  height: 200px;
   display: block;
   border-radius: 8px 8px 0 0;
 }
