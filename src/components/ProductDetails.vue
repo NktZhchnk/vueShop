@@ -12,6 +12,7 @@ const store = useMyStore();
 const product = ref(null); // Создаем реактивную переменную для информации о продукте
 const images = ref([]); // Создаем реактивную переменную для изображений
 const varieties = ref([]);
+const selectedVariety = ref(null);
 
 // Функция для получения информации о продукте и изображений
 const getProductDetails = async () => {
@@ -64,7 +65,26 @@ const getVarieties = computed(() => {
   return varieties.value;
 });
 
-console.log(varieties.value)
+
+// Функция для добавления товара в корзину
+const addToCart = () => {
+  if (selectedVariety.value && product.value && images.value.length > 0) {
+    const newCartProduct = {
+      selectedVariety: selectedVariety.value,
+      product: product.value,
+      images: images.value[0]
+    };
+
+    // Добавление нового товара в массив корзины
+    store.cartProducts.push(newCartProduct);
+
+    // Сохранение обновленной корзины в sessionStorage
+    sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
+    console.log('Товар добавлен в корзину:', newCartProduct);
+  } else {
+    console.warn('Пожалуйста, выберите вариант товара перед добавлением в корзину.');
+  }
+};
 
 </script>
 
@@ -77,14 +97,23 @@ console.log(varieties.value)
       <div class="image-container"><img v-for="(image, index) in getImages" :key="index" :src="image.img"
                                         alt="Product Image" class="product-image"/></div>
     </div>
+
     <div v-if="getVarieties">
+      <h3>Varieties:</h3>
       <div v-for="item in getVarieties" :key="item.id">
-        <p>nameVarieties:{{ item.variety_name }}</p>
-        <p>varietyPrice:{{ item.variety_price }}</p>
+        <label>
+          <input
+              type="radio"
+              :value="item"
+              v-model="selectedVariety"
+              name="variety"
+          />
+          <span>{{ item.variety_name }} - {{ item.variety_price }}</span>
+        </label>
       </div>
     </div>
-    <button>Add to Cart</button>
 
+    <button @click="addToCart">Add to Cart</button>
   </div>
 
   <div v-else><p>Loading...2</p></div>

@@ -6,6 +6,7 @@ export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
         test: [],
+        cartProducts: [],
         products: [],
         productById: {
             id: [],
@@ -24,19 +25,39 @@ export const useMyStore = defineStore({
         adminLogin: '',
         adminPassword: '',
         isOpenMenu: false,
-        addProductsInAdmin:{
+        isOpenCart: false,
+        isOpenShowPage: false,
+        checkCart: false,
+        addProductsInAdmin: {
             poshtaInfo: '1',
         }
     }),
     mutations: {},
     actions: {
         updatePoshtaInfo(item) {
-            console.log(this.addProductsInAdmin.poshtaInfo )
+            console.log(this.addProductsInAdmin.poshtaInfo)
             this.addProductsInAdmin.poshtaInfo = item;
-            console.log(this.addProductsInAdmin.poshtaInfo )
+            console.log(this.addProductsInAdmin.poshtaInfo)
         },
-        swapOpenMenu(item) {
+        swapOpenMenu() {
             this.isOpenMenu = !this.isOpenMenu
+            this.isOpenCart = false
+            this.checkCart = false
+            this.isOpenShowPage = !this.isOpenShowPage
+        },
+        swapOpenCart() {
+            this.checkCart = true;
+            setTimeout(() => {
+                this.isOpenCart = !this.isOpenCart
+                this.isOpenMenu = false
+                this.isOpenShowPage = !this.isOpenShowPage
+            }, 40)
+        },
+        swapShowPage() {
+            this.isOpenMenu = false
+            this.isOpenCart = false
+            this.isOpenShowPage = false
+            this.checkCart = false
         },
         updateCategoryItem(newValue) {
             this.categoryItem = newValue

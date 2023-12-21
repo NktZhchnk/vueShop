@@ -25,12 +25,7 @@ const routes = [
         path: '/catalog',
         component: UiCatalog,
     },
-
     {
-        name: 'Cart',
-        path: '/cart',
-        component: UiCartItems
-    }, {
         name: 'Header',
         path: '/header',
         component: UiMainHeader

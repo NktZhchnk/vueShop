@@ -1,4 +1,5 @@
 <script setup>
+
 const images = [
   {srcImg: "../../images/box200.jpg", value: 'box200-395'},
   {srcImg: "../../images/box400.jpg", value: 'box400-595'},

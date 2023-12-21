@@ -27,8 +27,9 @@ axios.get('/getUkrPoshtaData')
 
 <template>
   <div>
-    <ui-slide-menu class="slide-menu-left"></ui-slide-menu>
-    <div class="show-page" @click="store.swapOpenMenu()" v-if="store.isOpenMenu"></div>
+    <ui-slide-menu class="slide-menu-left" ></ui-slide-menu>
+    <ui-cart-items v-if="store.checkCart"></ui-cart-items>
+    <div class="show-page" @click="store.swapShowPage()" v-if="store.isOpenShowPage"></div>
     <div class="div-header">
       <!-- Выводим хедер за пределами router-view -->
       <ui-main-header class="main-header"></ui-main-header>
@@ -52,6 +53,7 @@ axios.get('/getUkrPoshtaData')
 body {
   padding: 0;
   margin: 0;
+  user-select: none;
 }
 .show-page{
   position: fixed;
@@ -63,6 +65,7 @@ body {
 .slide-menu-left{
   z-index: 4;
 }
+
 html {
   padding: 0;
   margin: 0;
