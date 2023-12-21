@@ -1,6 +1,6 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
-import { onMounted } from 'vue';
+import {computed, onMounted} from 'vue';
 
 const store = useMyStore()
 const loadCartProducts = () => {
@@ -10,7 +10,17 @@ const loadCartProducts = () => {
     console.log('Загружена корзина товаров:', store.cartProducts);
   }
 };
-
+const allPriceCart = computed(() => {
+  // Получаем все цены товаров из store.cartProducts и складываем их
+  return store.cartProducts.reduce((totalPrice, cartItem) => {
+    // Проверяем, есть ли у товара цена и является ли она числом
+    if (cartItem.product && cartItem.product.price_item && !isNaN(cartItem.product.price_item)) {
+      // Если условие выполняется, добавляем цену товара к общей стоимости
+      return totalPrice + parseFloat(cartItem.product.price_item);
+    }
+    return totalPrice;
+  }, 0); // Начальное значение общей стоимости равно 0
+});
 
 onMounted(loadCartProducts);
 </script>
@@ -26,12 +36,14 @@ onMounted(loadCartProducts);
         <img :src="item.images.img" alt="Product Image" class="product-image">
         <div class="product-details">
           <h1>{{ item.product.name_item }}</h1>
-          <p>{{ item.selectedVariety.variety_name }}</p>
+          <p>Name:{{ item.selectedVariety.variety_name }}</p>
+          <p>Price:{{ item.product.price_item }}</p>
         </div>
       </div>
     </div>
     <div class="div-footer">
       <div class="cart-receipt">
+        <p>price:{{allPriceCart}}</p>
         <button class="button-green">Оформить Заказ</button>
       </div>
     </div>
@@ -124,6 +136,7 @@ onMounted(loadCartProducts);
   padding: 10px 20px;
   color: #fff;
   cursor: pointer;
+  margin-left: 20px;
 }
 
 .button-green:hover {
