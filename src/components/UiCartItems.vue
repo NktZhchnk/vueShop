@@ -108,13 +108,16 @@ onMounted(loadCartProducts);
 
 
 .product-item {
-  width: calc(33% - 20px); /* Установка ширины элемента в половину контейнера с учетом отступов */
+  width: calc(50% - 20px); /* Установка ширины элемента в половину контейнера с учетом отступов */
   margin-bottom: 20px; /* Отступ снизу между элементами */
+  border: 1px solid gray;
+  box-shadow: 3px 3px 5px gray;
+  border-radius: 20px;
 }
 .product-image {
-  width: 99%;
+  width: 100%;
   display: block;
-  border-radius: 8px 8px 0 0;
+  border-radius: 20px 20px 0 0;
 }
 
 .product-details {
