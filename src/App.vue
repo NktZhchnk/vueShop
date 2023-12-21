@@ -49,8 +49,14 @@ axios.get('/getUkrPoshtaData')
     </div>
   </div>
 </template>
+<style>
 
+body {
+  overflow-y: scroll; /* Показывать вертикальный скроллбар всегда */
+}
+</style>
 <style scoped>
+
 body {
   padding: 0;
   margin: 0;
