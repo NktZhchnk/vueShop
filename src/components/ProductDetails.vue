@@ -90,25 +90,31 @@ const addToCart = () => {
 
 <template>
   <div v-if="getProductById" class="product-details">
-    <h1>{{ getProductById.name_item }}</h1>
+
+      <h1>{{ getProductById.name_item }}</h1>
+
     <p>Price: {{ getProductById.price_item }}</p>
     <p>{{ getProductById.text_info }}</p>
-    <div v-if="getImages.length > 0"><h3>Product Images:</h3>
-      <div class="image-container"><img v-for="(image, index) in getImages" :key="index" :src="image.img"
-                                        alt="Product Image" class="product-image"/></div>
+
+    <div v-if="getImages.length > 0" class="image-container">
+      <h3>Product Images:</h3>
+      <div class="image-wrapper">
+        <img v-for="(image, index) in getImages" :key="index" :src="image.img" alt="Product Image"
+             class="product-image"/>
+      </div>
     </div>
 
     <div v-if="getVarieties">
       <h3>Varieties:</h3>
-      <div v-for="item in getVarieties" :key="item.id">
-        <label>
+      <div class="varieties-wrapper">
+        <label v-for="item in getVarieties" :key="item.id" class="variety-item">
           <input
               type="radio"
               :value="item"
               v-model="selectedVariety"
               name="variety"
           />
-          <span>{{ item.variety_name }} - {{ item.variety_price }}</span>
+          <span>Name: {{ item.variety_name }} - Price: {{ item.variety_price }}</span>
         </label>
       </div>
     </div>
@@ -116,18 +122,19 @@ const addToCart = () => {
     <button @click="addToCart">Add to Cart</button>
   </div>
 
-  <div v-else><p>Loading...2</p></div>
+  <div v-else>
+    <p>Loading...</p>
+  </div>
 </template>
 
-<style>
+<style scoped>
 /* Общие стили */
 .product-details {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 100%;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .product-details h1 {
@@ -137,39 +144,60 @@ const addToCart = () => {
 }
 
 .product-details p {
-  color: #666;
+  color: #555;
   margin-bottom: 8px;
 }
 
-.product-details .image-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 10px;
+.image-container {
   margin-top: 15px;
 }
 
-.product-details .product-image {
-  width: 150px;
-  height: 150px;
+.image-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid #ddd;
 }
 
+.varieties-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+h1{
+  font-size: 18px;
+  font-weight: bold;
+  word-wrap: break-word;
+  height: 60px;
+  overflow: hidden;
+}
+.variety-item {
+  margin-bottom: 10px;
+}
+
 .product-details button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
-  background-color: #4CAF50;
+  background-color: #ff8c6a;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .product-details button:hover {
-  background-color: #45a049;
+  background-color: #ff5a3c;
 }
 
 /* Дополнительные стили для визуализации загрузки */
@@ -177,13 +205,26 @@ const addToCart = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  min-height: 200px;
   font-size: 18px;
   color: #777;
 }
 
 .product-details > div p {
   margin: 0;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (min-width: 768px) {
+  .product-details {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .product-image {
+    width: 150px;
+    height: 150px;
+  }
 }
 </style>
 

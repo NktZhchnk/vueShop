@@ -23,6 +23,7 @@ axios.get('/getUkrPoshtaData')
       console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
     });
 
+
 </script>
 
 <template>
