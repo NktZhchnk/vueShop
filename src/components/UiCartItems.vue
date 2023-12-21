@@ -59,14 +59,18 @@ onMounted(loadCartProducts);
   top: 50%;
   transform: translate(-50%, -50%) scale(0.7);
   transition: transform 0.3s ease, opacity 0.3s ease;
-  width: 60%;
-  max-width: 800px;
+  width: 800px;
   height: 70%;
   overflow-y: auto;
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
+@media (max-width: 800px){
+  .div-main{
+    width: 100%;
+    height: 100%;
+  }
+}
 .div-header {
   border-radius: 10px 10px 0 0;
   padding: 20px;
@@ -102,7 +106,7 @@ onMounted(loadCartProducts);
 }
 
 .product-item {
-  width: 23%;
+  width: 175px;
   height: 60%;
   border-radius: 8px;
   overflow: hidden;
