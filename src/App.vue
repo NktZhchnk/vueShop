@@ -1,6 +1,4 @@
 <script setup>
-import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
-import UiNovaPoshta from "@/components/Poshta/UiNovaPoshta.vue";
 import UiCartItems from "@/components/UiCartItems.vue";
 import axios from "axios";
 import UiMainHeader from "@/components/UiMainHeader.vue";

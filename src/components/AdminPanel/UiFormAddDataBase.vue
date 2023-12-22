@@ -16,7 +16,7 @@ const newData = {
   text_info: '',
 };
 
-watch(() => store.categoryItem, (newValue, oldValue) => {
+watch(() => store.categoryItem, (newValue) => {
   newData.category_item = newValue;
 });
 let imageInputs = ref([]); // Массив для хранения полей ввода ссылок на изображения

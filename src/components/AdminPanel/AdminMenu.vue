@@ -1,7 +1,7 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue';
+import { onMounted, } from 'vue';
 import {useMyStore} from "@/store/store.js";
-import axios from "axios";
+
 import UiFormAddDataBase from "@/components/AdminPanel/UiFormAddDataBase.vue";
 import UiFormRadioCategories from "@/components/AdminPanel/UiFormRadioCategories.vue";
 

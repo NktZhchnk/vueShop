@@ -1,7 +1,4 @@
 <script setup>
-
-import UiSlideMenu from "@/components/UiSlideMenu.vue";
-import {ref, watch} from 'vue'
 import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore()
@@ -26,7 +23,7 @@ const swapCart = () =>{
 
     <div class="div-img">
       <router-link class="img-a" to="/">
-        <img class="img-header" src="../../images/header.jpg"/>
+        <img class="img-header" alt="error" src="../../images/header.jpg"/>
       </router-link>
     </div>
 

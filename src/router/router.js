@@ -7,6 +7,7 @@ import ProductDetails from "@/components/ProductDetails.vue";
 import UiRenderAllProducts from "@/components/UiRenderAllProducts.vue";
 import UiCatalog from "@/components/UiCatalog.vue";
 import UiRenderProductsCategory from "@/components/UiRenderProductsCategory.vue";
+import UiConfirmationOrder from "@/components/UiConfirmationOrder.vue";
 
 
 const routes = [
@@ -15,6 +16,12 @@ const routes = [
         path: '/',
         component: UiRenderAllProducts,
     },
+    {
+        name: 'UiConfirmationOrder',
+        path: '/uiConfirmationOrder',
+        component: UiConfirmationOrder,
+    },
+
     {
         name: 'AdminMenu',
         path: '/adminMenu',

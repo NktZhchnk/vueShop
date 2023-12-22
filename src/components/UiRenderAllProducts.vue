@@ -10,10 +10,6 @@ onMounted(async () => {
 });
 
 
-const test = () => {
-  console.log(store.addProductsInAdmin.poshtaInfo)
-}
-
 const currentIndex = ref(0);
 
 const itemImages = (itemId) => {

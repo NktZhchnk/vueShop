@@ -36,7 +36,7 @@ onMounted(() => {
     <div v-for="item in productsCategory" :key="item.id" class="style-product">
       <router-link :to="'/product/' + item.id">
         <div style="height: 200px">
-          <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
+          <img alt="error" class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
         </div>
         <div class="div-name-product">
           {{ item.name_item }}

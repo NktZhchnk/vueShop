@@ -44,7 +44,9 @@ onMounted(loadCartProducts);
     <div class="div-footer">
       <div class="cart-receipt">
         <p>price:{{allPriceCart}}</p>
-        <button class="button-green">Оформить Заказ</button>
+        <router-link to="/uiConfirmationOrder">
+          <button @click="store.swapShowPage()" class="button-green">Оформить Заказ</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -71,6 +73,7 @@ onMounted(loadCartProducts);
     height: 100%;
   }
 }
+
 .div-header {
   border-radius: 10px 10px 0 0;
   padding: 20px;
@@ -154,6 +157,11 @@ onMounted(loadCartProducts);
 
 .button-green:hover {
   background-color: #008c3f;
+}
+@media (min-width: 800px){
+  .product-item {
+    width: calc(33% - 20px); /* Установка ширины элемента в половину контейнера с учетом отступов */
+  }
 }
 </style>
 

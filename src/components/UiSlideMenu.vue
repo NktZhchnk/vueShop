@@ -12,7 +12,7 @@ const store = useMyStore()
       <div class="div-header">
         <div class="div-header-text">
           <router-link class="rout-header-text" @click="store.swapOpenMenu()" to="/">
-            <img class="img-header" src="../../images/header.jpg"/>
+            <img alt="error" class="img-header" src="../../images/header.jpg"/>
             <h1 class="main-text-header">Esenia</h1>
           </router-link>
         </div>

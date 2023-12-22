@@ -14,7 +14,7 @@
       <input placeholder="Введите адрес или номер отделения" v-model="searchQuery" @input="searchWarehouses"/>
       <ul v-if="showListPoshta" class="warehouse-list">
         <li  @click="checkInfoPoshta(place.Description)" v-for="(place, index) in displayedWarehouses" :key="index"
-            class="warehouse-item">
+             class="warehouse-item">
           {{ place.Description }} ({{ place.DescriptionRu }})
         </li>
       </ul>
@@ -107,7 +107,7 @@ label {
 }
 
 .warehouse-item:hover{
- background: #eeecec;
+  background: #eeecec;
 }
 input {
   margin-bottom: 10px;

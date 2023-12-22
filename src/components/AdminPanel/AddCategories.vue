@@ -5,7 +5,7 @@ import { useMyStore } from "@/store/store.js";
 const store = useMyStore();
 const localCategoryItem = ref(null);
 
-watch(localCategoryItem, (newValue, oldValue) => {
+watch(localCategoryItem, (newValue) => {
   store.updateCategoryItem(newValue); // Предположим, что у вас есть метод обновления в хранилище
 }, { deep: true });
 </script>

@@ -65,12 +65,12 @@ img:hover {
 
   div {
     width: calc(50% - 20px);
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   img {
     width: calc(100% - 20px);
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 }
 </style>
