@@ -40,7 +40,7 @@ const getProductDetails = async () => {
       varieties.value = response.data;
     }
   } catch (error) {
-    console.error('Ошибка при получении данных о картинках:', error);
+    console.error('Ошибка при получении данных о вариациях:', error);
   }
 };
 
@@ -68,7 +68,7 @@ const getVarieties = computed(() => {
 
 // Функция для добавления товара в корзину
 const addToCart = () => {
-  if (selectedVariety.value && product.value && images.value.length > 0) {
+  if (selectedVariety.value || product.value && images.value.length > 0) {
     const newCartProduct = {
       selectedVariety: selectedVariety.value,
       product: product.value,

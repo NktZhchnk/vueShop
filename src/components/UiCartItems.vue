@@ -11,17 +11,17 @@ const loadCartProducts = () => {
   }
 };
 
-const allPriceCart = computed(() => {
-  // Получаем все цены товаров из store.cartProducts и складываем их
-  return store.cartProducts.reduce((totalPrice, cartItem) => {
-    // Проверяем, есть ли у товара цена и является ли она числом
-    if (cartItem.product && cartItem.product.price_item && !isNaN(cartItem.product.price_item)) {
-      // Если условие выполняется, добавляем цену товара к общей стоимости
-      return totalPrice + parseFloat(cartItem.product.price_item);
-    }
-    return totalPrice;
-  }, 0); // Начальное значение общей стоимости равно 0
-});
+// const allPriceCart = computed(() => {
+//   // Получаем все цены товаров из store.cartProducts и складываем их
+//   return store.cartProducts.reduce((totalPrice, cartItem) => {
+//     // Проверяем, есть ли у товара цена и является ли она числом
+//     if (cartItem.product && cartItem.product.price_item && !isNaN(cartItem.product.price_item)) {
+//       // Если условие выполняется, добавляем цену товара к общей стоимости
+//       return totalPrice + parseFloat(cartItem.product.price_item);
+//     }
+//     return totalPrice;
+//   }, 0); // Начальное значение общей стоимости равно 0
+// });
 
 onMounted(loadCartProducts);
 </script>
@@ -37,14 +37,15 @@ onMounted(loadCartProducts);
         <img :src="item.images.img" alt="Product Image" class="product-image">
         <div class="product-details">
           <h1 class="text-name">Name:{{ item.product.name_item }}</h1>
-          <p>variety:{{ item.selectedVariety.variety_name }}</p>
+          <p v-if="item.selectedVariety">variety:{{ item.selectedVariety.variety_name }}</p>
+          <p v-if="item.selectedVariety">variety-price:{{ item.selectedVariety.variety_price }}</p>
           <p>Price:{{ item.product.price_item }}</p>
         </div>
       </div>
     </div>
     <div class="div-footer">
       <div class="cart-receipt">
-        <p>price:{{allPriceCart}}</p>
+        <p>price:{{0}}</p>
         <router-link to="/uiConfirmationOrder">
           <button @click="store.swapShowPage()" class="button-green">Оформить Заказ</button>
         </router-link>
@@ -67,12 +68,6 @@ onMounted(loadCartProducts);
   overflow-y: auto;
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-@media (max-width: 800px){
-  .div-main{
-    width: 100%;
-    height: 100%;
-  }
 }
 
 .div-header {
@@ -109,7 +104,6 @@ onMounted(loadCartProducts);
   overflow: auto; /* Добавляем прокрутку, если элементы не помещаются */
   gap: 20px;
 }
-
 
 .product-item {
   width: calc(50% - 20px); /* Установка ширины элемента в половину контейнера с учетом отступов */
@@ -159,6 +153,19 @@ onMounted(loadCartProducts);
 .button-green:hover {
   background-color: #008c3f;
 }
+
+@media (max-width: 800px){
+  .div-main{
+    width: 100%;
+    border-radius: 0;
+    height: 100%;
+  }
+  .div-header{
+    border-radius: 0;
+
+  }
+}
+
 @media (min-width: 800px){
   .product-item {
     width: calc(33% - 20px); /* Установка ширины элемента в половину контейнера с учетом отступов */

@@ -131,16 +131,26 @@ app.get('/getImgById/:id', (req, res) => {
 app.get('/getVarietiesById/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID товара из параметра запроса
 
-    const sqlQuery = 'SELECT * FROM product_varieties WHERE product_id = ?'; // SQL-запрос для выборки изображений по product_id
-    connection.query(sqlQuery, [productId], (error, results) => {
+    const checkIfExistsQuery = 'SELECT COUNT(*) AS count FROM product_varieties WHERE product_id = ?'; // SQL-запрос для проверки существования product_id
+    connection.query(checkIfExistsQuery, [productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({ error: 'Ошибка выполнения запроса' });
         } else {
-            if (results.length === 0) {
-                res.status(404).json({ message: 'Изображения не найдены' });
+            const count = results[0].count;
+
+            if (count === 0) {
+                res.status(404).json({ message: 'Товары с указанным ID не найдены' });
             } else {
-                res.json(results); // Отправляем найденные изображения в качестве ответа
+                const sqlQuery = 'SELECT * FROM product_varieties WHERE product_id = ?'; // SQL-запрос для выборки изображений по product_id
+                connection.query(sqlQuery, [productId], (error, results) => {
+                    if (error) {
+                        console.error('Ошибка выполнения запроса:', error);
+                        res.status(500).json({ error: 'Ошибка выполнения запроса' });
+                    } else {
+                        res.json(results); // Отправляем найденные изображения в качестве ответа
+                    }
+                });
             }
         }
     });
