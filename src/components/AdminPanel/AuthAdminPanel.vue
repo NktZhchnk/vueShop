@@ -61,6 +61,12 @@ const login = () => {
   align-items: center;
   box-shadow: 2px 2px 5px black;
 }
+@media (max-width: 600px) {
+  .div-auth-admin{
+    left: 120%;
+  }
+
+}
 h1 {
   font-size: 30px;
   margin: 0;
