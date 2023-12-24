@@ -2,62 +2,79 @@
 import { useMyStore } from "@/store/store.js";
 import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import {onMounted, ref} from "vue";
-
+import router from "@/router/router.js";
 const store = useMyStore();
 
 onMounted(async () => {
   await store.AthData();
 });
 
-const showAuthA = ref(true);
-const showAuthB = ref(false);
 const username = ref('');
 const password = ref('');
 console.log(store.adminLogin);
 
 const showAuth = () => {
-  showAuthB.value = !showAuthB.value;
+  store.swapOpenAuth()
 };
 
 const login = () => {
   if (username.value === store.adminLogin && password.value === store.adminPassword) {
-    showAuthA.value = true;
-    showAuthB.value = false;
+    store.showCheckAuth.showAuthA = true;
+    store.showCheckAuth.showAuthB = false;
+    store.swapShowPage()
+    router.push('/adminMenu')
   } else {
     console.log(store.adminPassword)
     console.log(store.adminLogin)
-    console.log('Неверные учетные данныеу');
+    console.log('Неверные учетные данные');
   }
 };
 </script>
 
 <template>
-  <div>
+  <div class="div-main">
     <button @click="showAuth">login</button>
-    <div class="auth-admin" v-if="showAuthB">
+    <div class="div-auth-admin" v-if="store.showCheckAuth.showAuthB">
+      <h1>Авторизація</h1>
       <input v-model="username" placeholder="Имя пользователя" />
       <input v-model="password" placeholder="Пароль" type="password" />
       <button @click="login">Войти</button>
     </div>
-    <admin-menu v-if="showAuthA"></admin-menu>
   </div>
 </template>
 
 <style scoped>
 /* Стили для вашего компонента */
-.auth-admin {
+.div-main{
+}
+.div-auth-admin {
+  position: absolute;
+  top: 38%;
+  border-radius: 5px;
+  height: 200px;
+  width: 300px;
+  left: 330%;
+  background: white;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  box-shadow: 2px 2px 5px black;
 }
-
+h1 {
+  font-size: 30px;
+  margin: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  font-family: 'Roboto Black', sans-serif;
+}
 input {
-  margin-bottom: 10px;
+  margin-top: 10px;
   padding: 8px;
 }
 
 button {
+  margin-top: 10px;
   padding: 8px 16px;
   background-color: #007bff;
   color: #fff;

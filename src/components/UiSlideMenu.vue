@@ -1,5 +1,6 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
+import AuthAdminPanel from "@/components/AdminPanel/AuthAdminPanel.vue";
 
 
 const store = useMyStore()
@@ -21,7 +22,12 @@ const store = useMyStore()
         </div>
       </div>
       <div class="div-body">
-        Здесь будет навигация сайта
+        <p>Здесь будет навигация сайта2</p>
+      </div>
+      <div class="div-footer">
+        <br/>
+        <AuthAdminPanel></AuthAdminPanel>
+        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>
       </div>
     </div>
   </div>
@@ -47,12 +53,33 @@ const store = useMyStore()
   width: 90%;
   border-radius: 50%;
 }
+.div-footer{
+  height: 64px;
+  border-top: 1px solid gray;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.div-body {
+  height: 84%;
+  background: white;
+  padding: 10px;
+}
 
+.div-header {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  padding: 5px;
+  background: rgba(0, 0, 0, 1);
+  height: 55px;
+}
 .main-menu {
   background: white;
   position: fixed;
   width: 320px;
-  height: 98.7%;
+  height: 100%;
   top: 0;
   left: 0;
   border-right: 1px solid black;
@@ -78,24 +105,13 @@ const store = useMyStore()
   cursor: pointer;
 }
 
-.div-header {
-  display: flex;
-  justify-content: space-between;
-  color: white;
-  padding: 5px;
-  background: rgba(0, 0, 0, 1);
-  height: 55px;
 
-}
 
 .slide-in {
   transform: translateX(0);
 }
 
-.div-body {
-  height: 95%;
-  background: white;
-}
+
 
 @media screen and (max-width: 370px) {
   .main-menu {

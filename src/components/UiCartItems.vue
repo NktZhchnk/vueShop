@@ -11,17 +11,24 @@ const loadCartProducts = () => {
   }
 };
 
-// const allPriceCart = computed(() => {
-//   // Получаем все цены товаров из store.cartProducts и складываем их
-//   return store.cartProducts.reduce((totalPrice, cartItem) => {
-//     // Проверяем, есть ли у товара цена и является ли она числом
-//     if (cartItem.product && cartItem.product.price_item && !isNaN(cartItem.product.price_item)) {
-//       // Если условие выполняется, добавляем цену товара к общей стоимости
-//       return totalPrice + parseFloat(cartItem.product.price_item);
-//     }
-//     return totalPrice;
-//   }, 0); // Начальное значение общей стоимости равно 0
-// });
+const allPriceCart = computed(() => {
+  // Получаем все цены товаров из store.cartProducts и складываем их
+  return store.cartProducts.reduce((totalPrice, cartItem) => {
+    let itemPrice = 0; // Инициализируем цену товара
+
+    // Проверяем, есть ли у товара выбранная вариация и у нее есть variety_price
+    if (cartItem.selectedVariety && cartItem.selectedVariety.variety_price) {
+      itemPrice = parseFloat(cartItem.selectedVariety.variety_price);
+    } else if (cartItem.product && cartItem.product.price_item && !isNaN(cartItem.product.price_item)) {
+      // Если нет variety_price, но есть price_item у товара, используем его
+      itemPrice = parseFloat(cartItem.product.price_item);
+    }
+
+    // Добавляем цену товара к общей стоимости
+    return totalPrice + itemPrice;
+  }, 0); // Начальное значение общей стоимости равно 0
+});
+
 
 onMounted(loadCartProducts);
 </script>
@@ -45,7 +52,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="div-footer">
       <div class="cart-receipt">
-        <p>price:{{0}}</p>
+        <p>price:{{allPriceCart}}</p>
         <router-link to="/uiConfirmationOrder">
           <button @click="store.swapShowPage()" class="button-green">Оформить Заказ</button>
         </router-link>
@@ -114,6 +121,7 @@ onMounted(loadCartProducts);
 }
 .product-image {
   width: 100%;
+  height: 250px;
   display: block;
   border-radius: 20px 20px 0 0;
 }
@@ -163,6 +171,11 @@ onMounted(loadCartProducts);
   .div-header{
     border-radius: 0;
 
+  }
+}
+@media (max-width: 450px){
+  .product-image{
+    height: 200px;
   }
 }
 

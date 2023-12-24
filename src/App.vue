@@ -117,6 +117,7 @@ h1 {
 }
 
 .main-header {
+  position: fixed;
   z-index: 1;
 }
 

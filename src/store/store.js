@@ -30,34 +30,43 @@ export const useMyStore = defineStore({
         checkCart: false,
         addProductsInAdmin: {
             poshtaInfo: '1',
+        },
+        showCheckAuth: {
+            showAuthA: false,
+            showAuthB: false,
         }
     }),
     mutations: {},
     actions: {
         updatePoshtaInfo(item) {
-            console.log(this.addProductsInAdmin.poshtaInfo)
+            console.log(this.addProductsInAdmin.poshtaInfo);
             this.addProductsInAdmin.poshtaInfo = item;
-            console.log(this.addProductsInAdmin.poshtaInfo)
+            console.log(this.addProductsInAdmin.poshtaInfo);
         },
         swapOpenMenu() {
-            this.isOpenMenu = !this.isOpenMenu
-            this.isOpenCart = false
-            this.checkCart = false
-            this.isOpenShowPage = !this.isOpenShowPage
+            this.isOpenMenu = !this.isOpenMenu;
+            this.isOpenCart = false;
+            this.checkCart = false;
+            this.isOpenShowPage = !this.isOpenShowPage;
         },
         swapOpenCart() {
             this.checkCart = true;
             setTimeout(() => {
-                this.isOpenCart = !this.isOpenCart
-                this.isOpenMenu = false
-                this.isOpenShowPage = !this.isOpenShowPage
+                this.isOpenCart = !this.isOpenCart;
+                this.isOpenMenu = false;
+                this.isOpenShowPage = !this.isOpenShowPage;
             }, 40)
         },
+        swapOpenAuth() {
+            this.showCheckAuth.showAuthB = !this.showCheckAuth.showAuthB;
+            this.isOpenMenu = false;
+        },
         swapShowPage() {
-            this.isOpenMenu = false
-            this.isOpenCart = false
-            this.isOpenShowPage = false
-            this.checkCart = false
+            this.isOpenMenu = false;
+            this.isOpenCart = false;
+            this.isOpenShowPage = false;
+            this.showCheckAuth.showAuthB = false;
+            this.checkCart = false;
         },
         updateCategoryItem(newValue) {
             this.categoryItem = newValue

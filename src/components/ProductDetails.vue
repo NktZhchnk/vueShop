@@ -40,7 +40,8 @@ const getProductDetails = async () => {
       varieties.value = response.data;
     }
   } catch (error) {
-    console.error('Ошибка при получении данных о вариациях:', error);
+    console.log(varieties.value)
+    return;
   }
 };
 
@@ -77,7 +78,6 @@ const addToCart = () => {
 
     // Добавление нового товара в массив корзины
     store.cartProducts.push(newCartProduct);
-
     // Сохранение обновленной корзины в sessionStorage
     sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
     console.log('Товар добавлен в корзину:', newCartProduct);
@@ -91,7 +91,7 @@ const addToCart = () => {
 <template>
   <div v-if="getProductById" class="product-details">
 
-      <h1>{{ getProductById.name_item }}</h1>
+    <h1>{{ getProductById.name_item }}</h1>
 
     <p>Price: {{ getProductById.price_item }}</p>
     <p>{{ getProductById.text_info }}</p>
@@ -104,7 +104,7 @@ const addToCart = () => {
       </div>
     </div>
 
-    <div v-if="getVarieties">
+    <div v-if="getVarieties.length > 0">
       <h3>Varieties:</h3>
       <div class="varieties-wrapper">
         <label v-for="item in getVarieties" :key="item.id" class="variety-item">
