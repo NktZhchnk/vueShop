@@ -10,6 +10,7 @@ const loadCartProducts = () => {
     console.log('Загружена корзина товаров:', store.cartProducts);
   }
 };
+
 const allPriceCart = computed(() => {
   // Получаем все цены товаров из store.cartProducts и складываем их
   return store.cartProducts.reduce((totalPrice, cartItem) => {
