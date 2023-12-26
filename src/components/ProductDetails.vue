@@ -4,6 +4,13 @@ import {ref, computed, watch} from 'vue';
 import {useRoute} from 'vue-router';
 import axios from "axios";
 
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {EffectCube, Pagination, Navigation} from "swiper/modules";
+
+
+import "swiper/css"
+import "swiper/css/bundle"
+
 const route = useRoute();
 const productId = ref(route.params.id); // Используем реактивную переменную
 
@@ -70,19 +77,24 @@ const getVarieties = computed(() => {
 // Функция для добавления товара в корзину
 const addToCart = () => {
   if (selectedVariety.value || product.value && images.value.length > 0) {
-    const newCartProduct = {
-      selectedVariety: selectedVariety.value,
-      product: product.value,
-      images: images.value[0]
-    };
+    if (selectedVariety.value !== {} && selectedVariety.value !== null) {
+      const newCartProduct = {
+        selectedVariety: selectedVariety.value,
+        product: product.value,
+        images: images.value[0]
+      };
 
-    // Добавление нового товара в массив корзины
-    store.cartProducts.push(newCartProduct);
-    // Сохранение обновленной корзины в sessionStorage
-    sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
-    console.log('Товар добавлен в корзину:', newCartProduct);
+      // Добавление нового товара в массив корзины
+      store.cartProducts.push(newCartProduct);
+      // Сохранение обновленной корзины в sessionStorage
+      sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
+      console.log('Товар добавлен в корзину:', newCartProduct);
+    } else {
+      alert('Пожалуйста, выберите вариант товара перед добавлением в корзину.')
+    }
+
   } else {
-    console.warn('Пожалуйста, выберите вариант товара перед добавлением в корзину.');
+    console.warn('Ошибка в imag or product');
   }
 };
 
@@ -96,12 +108,38 @@ const addToCart = () => {
     <p>Price: {{ getProductById.price_item }}</p>
     <p>{{ getProductById.text_info }}</p>
 
-    <div v-if="getImages.length > 0" class="image-container">
-      <h3>Product Images:</h3>
-      <div class="image-wrapper">
-        <img v-for="(image, index) in getImages" :key="index" :src="image.img" alt="Product Image"
-             class="product-image"/>
-      </div>
+    <!--    <div v-if="getImages.length > 0" class="image-container">-->
+    <!--      <h3>Product Images:</h3>-->
+    <!--      <div class="image-wrapper">-->
+    <!--        <img v-for="(image, index) in getImages" :key="index" :src="image.img" alt="Product Image"-->
+    <!--             class="product-image"/>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <div v-if="getImages.length > 0">
+      <Swiper
+          :modules="[EffectCube, Pagination, Navigation]"
+          effect="cube"
+          :grab-cursor="true"
+          :loop="true"
+          :cube-effect="{
+              shadow: true,
+              slideShadows: true,
+              shadowOffset: 20,
+              shadowScale: 0.94,
+            }"
+          :navigation="{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }"
+          :pagination="true"
+      >
+        <SwiperSlide v-for="(image, index) in getImages" :key="index">
+          <img :src="image.img" alt="error"/>
+        </SwiperSlide>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </Swiper>
     </div>
 
     <div v-if="getVarieties.length > 0">
@@ -129,6 +167,35 @@ const addToCart = () => {
 
 <style scoped>
 /* Общие стили */
+.swiper {
+  width: 400px;
+  height: 400px;
+
+}
+.swiper-pagination{
+
+}
+.swiper-button-prev, .swiper-button-next{
+  color: rgba(94, 3, 107, 0.4);
+  position: absolute;
+  top: 6%;
+  width: 17px;
+  border-radius: 50%;
+  bottom: 0;
+  height: 100%;
+}
+.swiper-button-prev{
+  right: 20%;
+
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+}
+
+
+
 .product-details {
   max-width: 100%;
   padding: 20px;
@@ -171,13 +238,15 @@ const addToCart = () => {
   display: flex;
   flex-direction: column;
 }
-h1{
+
+h1 {
   font-size: 18px;
   font-weight: bold;
   word-wrap: break-word;
-  height: 60px;
+  height: 58px;
   overflow: hidden;
 }
+
 .variety-item {
   margin-bottom: 10px;
 }
@@ -226,5 +295,28 @@ h1{
     height: 150px;
   }
 }
+
+@media (max-width: 600px) {
+  .swiper {
+    width: calc(90% - 60px);
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 500px) {
+  .swiper {
+    width: calc(90% - 60px);
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .swiper {
+    width: calc(100% - 40px);
+    max-height: 250px;
+  }
+}
+
+
 </style>
 

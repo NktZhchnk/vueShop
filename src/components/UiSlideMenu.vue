@@ -116,12 +116,15 @@ const store = useMyStore()
 @media screen and (max-width: 370px) {
   .main-menu {
     width: 100%;
+    overflow: auto;
   }
 }
 @media screen and (max-height: 200px) {
   .div-header{
     height: 65px;
   }
-
+  .div-footer{
+    height: 64px;
+  }
 }
 </style>

@@ -59,7 +59,7 @@ img:hover {
 @media (max-width: 768px) {
   .main-div {
     padding: 10px;
-    width: 100%;
+    width: 93%;
     flex-direction: row;
   }
 
@@ -69,7 +69,7 @@ img:hover {
   }
 
   img {
-    width: calc(100% - 20px);
+    width: calc(100%);
     margin-bottom: 0;
   }
 }

@@ -5,6 +5,15 @@ import UiMainHeader from "@/components/UiMainHeader.vue";
 import UiSlideMenu from "@/components/UiSlideMenu.vue";
 import {useMyStore} from "@/store/store.js";
 
+
+
+const masPhoto = [
+    'https://i.pinimg.com/236x/e1/ec/65/e1ec65ecd163bb9fa20db65d489cbbc7.jpg',
+    'https://i.pinimg.com/236x/bc/e5/07/bce50779d90e9c94a1b90f35e58799a4.jpg',
+    'https://i.pinimg.com/236x/7d/5c/ac/7d5cac6c662584b12286dad3fa73eabf.jpg',
+    'https://i.pinimg.com/236x/7b/85/3f/7b853f9c08f20a7a72f08c1aeb43bfc4.jpg',
+    'https://i.pinimg.com/564x/9a/a8/92/9aa8923cea3a829531dbb9ce6548379a.jpg',
+];
 const store = useMyStore()
 const test = () => {
   console.log(store.products)
@@ -20,7 +29,6 @@ axios.get('/getUkrPoshtaData')
       // Обробка помилок
       console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
     });
-
 
 </script>
 
@@ -44,6 +52,7 @@ axios.get('/getUkrPoshtaData')
           </svg>
         </router-link>
       </div>
+
       <router-view></router-view>
     </div>
   </div>
@@ -55,6 +64,7 @@ body {
 }
 </style>
 <style scoped>
+
 html {
   padding: 0;
   margin: 0;
@@ -89,10 +99,7 @@ body {
   border-radius: 20px;
 }
 
-.div-catalog:hover {
-  transform: scale(1.05);
-  border-radius: 45px;
-}
+
 
 .custom-link {
   display: flex;

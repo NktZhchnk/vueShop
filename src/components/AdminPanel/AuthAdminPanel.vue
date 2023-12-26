@@ -46,6 +46,7 @@ const login = () => {
 <style scoped>
 /* Стили для вашего компонента */
 .div-main{
+
 }
 .div-auth-admin {
   position: absolute;
