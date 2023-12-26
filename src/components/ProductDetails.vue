@@ -103,11 +103,6 @@ const addToCart = () => {
 <template>
   <div v-if="getProductById" class="product-details">
 
-    <h1>{{ getProductById.name_item }}</h1>
-
-    <p>Price: {{ getProductById.price_item }}</p>
-    <p>{{ getProductById.text_info }}</p>
-
     <!--    <div v-if="getImages.length > 0" class="image-container">-->
     <!--      <h3>Product Images:</h3>-->
     <!--      <div class="image-wrapper">-->
@@ -141,6 +136,15 @@ const addToCart = () => {
         <div class="swiper-button-next"></div>
       </Swiper>
     </div>
+    <div class="div-name-product">
+      <h1>{{ getProductById.name_item }}</h1>
+    </div>
+    <div class="text-info-product">
+      <p>{{ getProductById.text_info }}</p>
+    </div>
+    <div class="price-product">
+      <p>Price: {{ getProductById.price_item }}</p>
+    </div>
 
     <div v-if="getVarieties.length > 0">
       <h3>Varieties:</h3>
@@ -170,12 +174,13 @@ const addToCart = () => {
 .swiper {
   width: 400px;
   height: 400px;
+}
+
+.swiper-pagination {
 
 }
-.swiper-pagination{
 
-}
-.swiper-button-prev, .swiper-button-next{
+.swiper-button-prev, .swiper-button-next {
   color: rgba(194, 194, 194, 0.8);
   position: absolute;
   top: 6%;
@@ -185,7 +190,7 @@ const addToCart = () => {
   height: 100%;
 }
 
-.swiper-button-prev{
+.swiper-button-prev {
   right: 20%;
 
 }
@@ -194,7 +199,6 @@ const addToCart = () => {
   width: 100%;
   height: 100%;
 }
-
 
 
 .product-details {
@@ -216,24 +220,6 @@ const addToCart = () => {
   margin-bottom: 8px;
 }
 
-.image-container {
-  margin-top: 15px;
-}
-
-.image-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.product-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
 
 .varieties-wrapper {
   display: flex;
@@ -271,18 +257,7 @@ h1 {
 }
 
 /* Дополнительные стили для визуализации загрузки */
-.product-details > div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  font-size: 18px;
-  color: #777;
-}
 
-.product-details > div p {
-  margin: 0;
-}
 
 /* Медиа-запросы для адаптивности */
 @media (min-width: 768px) {
@@ -290,6 +265,7 @@ h1 {
     max-width: 600px;
     margin: 0 auto;
   }
+
   .product-image {
     width: 150px;
     height: 150px;
@@ -302,10 +278,15 @@ h1 {
     width: calc(90% - 60px);
     max-height: 350px;
   }
-  .swiper-button-prev, .swiper-button-next{
+
+  .swiper-button-prev,
+  .swiper-button-next {
     display: none;
   }
+
+
 }
+
 
 @media (max-width: 500px) {
   .swiper {
@@ -316,8 +297,8 @@ h1 {
 
 @media (max-width: 400px) {
   .swiper {
-    width: calc(100% - 40px);
-    max-height: 250px;
+    width: 100%;
+    max-height: 280px;
   }
 }
 
