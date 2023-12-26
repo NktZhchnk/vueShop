@@ -176,7 +176,7 @@ const addToCart = () => {
 
 }
 .swiper-button-prev, .swiper-button-next{
-  color: rgba(94, 3, 107, 0.4);
+  color: rgba(194, 194, 194, 0.8);
   position: absolute;
   top: 6%;
   width: 17px;
@@ -184,6 +184,7 @@ const addToCart = () => {
   bottom: 0;
   height: 100%;
 }
+
 .swiper-button-prev{
   right: 20%;
 
@@ -289,11 +290,11 @@ h1 {
     max-width: 600px;
     margin: 0 auto;
   }
-
   .product-image {
     width: 150px;
     height: 150px;
   }
+
 }
 
 @media (max-width: 600px) {
@@ -301,12 +302,15 @@ h1 {
     width: calc(90% - 60px);
     max-height: 350px;
   }
+  .swiper-button-prev, .swiper-button-next{
+    display: none;
+  }
 }
 
 @media (max-width: 500px) {
   .swiper {
     width: calc(90% - 60px);
-    max-height: 300px;
+    max-height: 350px;
   }
 }
 
