@@ -18,10 +18,10 @@ const allPriceCart = computed(() => {
 
     // Проверяем, есть ли у товара выбранная вариация и у нее есть variety_price
     if (cartItem.selectedVariety && cartItem.selectedVariety.variety_price) {
-      itemPrice = parseFloat(cartItem.selectedVariety.variety_price);
+      itemPrice = parseFloat(cartItem.selectedVariety.variety_price * cartItem.countProduct);
     } else if (cartItem.product && cartItem.product.price_item && !isNaN(cartItem.product.price_item)) {
       // Если нет variety_price, но есть price_item у товара, используем его
-      itemPrice = parseFloat(cartItem.product.price_item);
+      itemPrice = parseFloat(cartItem.product.price_item * cartItem.countProduct);
     }
 
     // Добавляем цену товара к общей стоимости
@@ -53,16 +53,18 @@ onMounted(loadCartProducts);
         <img :src="item.images.img" alt="Product Image" class="product-image">
         <div class="product-details">
           <h1 class="text-name">Name:{{ item.product.name_item }}</h1>
-          <p v-if="item.selectedVariety">variety: {{ item.selectedVariety.variety_name }} </p>
+          <p v-if="item.selectedVariety">variety: {{ item.selectedVariety.variety_name }} '''''' Quan: {{item.countProduct}} </p>
+
           <div
-              style="display: block;margin-block-start: 3.2em; margin-block-end: 3.2em;margin-inline-start: 0;margin-inline-end: 0;"
+              style="display: block;"
               v-if="item.selectedVariety === null"
           >
+            <p>Quan: {{item.countProduct}}</p>
           </div>
           <div style=" width: 100%; display: flex; justify-content: space-between; align-items: center">
-            <p v-if="item.selectedVariety">Ціна: {{ item.selectedVariety.variety_price }} ₴</p>
+            <p v-if="item.selectedVariety">Ціна: {{ item.selectedVariety.variety_price * item.countProduct}} ₴</p>
 
-            <p v-if="item.selectedVariety === null">Ціна: {{ item.product.price_item }} ₴</p>
+            <p v-if="item.selectedVariety === null">Ціна: {{ item.product.price_item * item.countProduct}} ₴</p>
             <svg @click="removeProduct(index)" class="icon-trash" xmlns="http://www.w3.org/2000/svg" height="28"
                  width="26" viewBox="0 0 448 512">
               <path

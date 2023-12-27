@@ -20,7 +20,7 @@ const product = ref(null); // Создаем реактивную перемен
 const images = ref([]); // Создаем реактивную переменную для изображений
 const varieties = ref([]);
 const selectedVariety = ref(null);
-let countProduct = ref(0)
+let countProduct = ref(1)
 
 // Функция для получения информации о продукте и изображений
 const getProductDetails = async () => {
@@ -48,7 +48,6 @@ const getProductDetails = async () => {
       varieties.value = response.data;
     }
   } catch (error) {
-    console.log(varieties.value)
     return;
   }
 };
@@ -77,15 +76,14 @@ const getVarieties = computed(() => {
 
 // Функция для добавления товара в корзину
 const addToCart = () => {
-  if (selectedVariety.value || product.value && images.value.length > 0) {
-    if (selectedVariety.value !== {} && selectedVariety.value !== null) {
+  if (varieties.value || product.value && images.value.length > 0) {
+    if (varieties.value.length === 0 ||  selectedVariety.value !== null) {
       const newCartProduct = {
         selectedVariety: selectedVariety.value,
         product: product.value,
         images: images.value[0],
         countProduct: countProduct.value,
       };
-
       // Добавление нового товара в массив корзины
       store.cartProducts.push(newCartProduct);
       // Сохранение обновленной корзины в sessionStorage
@@ -100,18 +98,21 @@ const addToCart = () => {
   }
 };
 const decrementCountProduct = () =>{
-  if(countProduct.value !== 0){
+  if(countProduct.value !== 1){
     countProduct.value--
   }else{
     return
   }
+}
+const test = ()=>{
+  console.log(varieties.value)
 }
 store.getCartItems()
 </script>
 
 <template>
   <div v-if="getProductById" class="product-details">
-
+    <button @click="test">2424</button>
     <!--    <div v-if="getImages.length > 0" class="image-container">-->
     <!--      <h3>Product Images:</h3>-->
     <!--      <div class="image-wrapper">-->
@@ -146,10 +147,10 @@ store.getCartItems()
       </Swiper>
     </div>
     <div class="div-name-product">
-      <h1>{{ getProductById.name_item }}</h1>
+      <h1 style="overflow-wrap: break-word;height: 40px">{{ getProductById.name_item }}</h1>
     </div>
     <div class="text-info-product">
-      <p>{{ getProductById.text_info }}</p>
+      <p style="overflow-wrap: break-word">{{ getProductById.text_info }}</p>
     </div>
 
 
@@ -183,8 +184,11 @@ store.getCartItems()
       <div>
         <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
       </div>
-      <div class="price-product">
-        Price: {{ getProductById.price_item }} ₴
+      <div class="price-product" v-if="selectedVariety === null">
+        Price: {{ getProductById.price_item * countProduct }} ₴
+      </div>
+      <div class="price-product" v-if="selectedVariety !== null">
+        Price: {{ selectedVariety.variety_price * countProduct }} ₴
       </div>
     </div>
     <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
@@ -200,7 +204,7 @@ store.getCartItems()
 .swiper {
   width: 400px;
   height: 400px;
-
+  z-index: 1;
 }
 
 .div-counter {
@@ -237,6 +241,7 @@ store.getCartItems()
   width: 100%;
   height: 100%;
   border-radius: 5px;
+  z-index: 1;
 }
 
 .price-product {
@@ -360,7 +365,6 @@ store.getCartItems()
   text-transform: uppercase;
   font-size: 18px;
   font-weight: 900;
-
   transition: .3s;
 }
 
