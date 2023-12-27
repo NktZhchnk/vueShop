@@ -1,5 +1,9 @@
 <script setup>
 
+import {useMyStore} from "@/store/store.js";
+
+const store = useMyStore()
+
 const images = [
   {srcImg: "../../images/box200.jpg", value: 'box200-395'},
   {srcImg: "../../images/box400.jpg", value: 'box400-595'},
@@ -14,6 +18,7 @@ const images = [
   {srcImg: "../../images/everythingForHair.jpg", value: 'everythingForHair'},
 ]
 
+store.getCartItems()
 
 </script>
 

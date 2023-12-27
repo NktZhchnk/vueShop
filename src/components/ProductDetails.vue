@@ -20,6 +20,7 @@ const product = ref(null); // Создаем реактивную перемен
 const images = ref([]); // Создаем реактивную переменную для изображений
 const varieties = ref([]);
 const selectedVariety = ref(null);
+let countProduct = ref(0)
 
 // Функция для получения информации о продукте и изображений
 const getProductDetails = async () => {
@@ -81,7 +82,8 @@ const addToCart = () => {
       const newCartProduct = {
         selectedVariety: selectedVariety.value,
         product: product.value,
-        images: images.value[0]
+        images: images.value[0],
+        countProduct: countProduct.value,
       };
 
       // Добавление нового товара в массив корзины
@@ -97,7 +99,14 @@ const addToCart = () => {
     console.warn('Ошибка в imag or product');
   }
 };
-
+const decrementCountProduct = () =>{
+  if(countProduct.value !== 0){
+    countProduct.value--
+  }else{
+    return
+  }
+}
+store.getCartItems()
 </script>
 
 <template>
@@ -142,26 +151,42 @@ const addToCart = () => {
     <div class="text-info-product">
       <p>{{ getProductById.text_info }}</p>
     </div>
-    <div class="price-product">
-      <p>Price: {{ getProductById.price_item }}</p>
-    </div>
+
 
     <div v-if="getVarieties.length > 0">
-      <h3>Varieties:</h3>
+      <h3 style="display: flex; justify-content: center">Варіанти:</h3>
       <div class="varieties-wrapper">
-        <label v-for="item in getVarieties" :key="item.id" class="variety-item">
+        <label v-for="item in getVarieties" :key="item.id" class="rad-label">
           <input
               type="radio"
               :value="item"
               v-model="selectedVariety"
-              name="variety"
+              class="rad-input"
+              name="rad"
           />
-          <span>Name: {{ item.variety_name }} - Price: {{ item.variety_price }}</span>
+          <div class="rad-design"></div>
+          <div class="rad-text">{{ item.variety_name }} - {{ item.variety_price }} ₴</div>
         </label>
       </div>
     </div>
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <div class="div-counter">
+        <div>
+          <button @click="decrementCountProduct" style="margin: 0">-</button>
 
-    <button @click="addToCart">Add to Cart</button>
+        </div>
+        <div style=""><h3>Кількість:{{ countProduct }}</h3></div>
+        <div>
+          <button @click="countProduct++" style="margin: 0;">+</button>
+        </div>
+      </div>
+      <div>
+        <button style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
+      </div>
+      <div class="price-product">
+        Price: {{ getProductById.price_item }} ₴
+      </div>
+    </div>
   </div>
 
   <div v-else>
@@ -171,13 +196,26 @@ const addToCart = () => {
 
 <style scoped>
 /* Общие стили */
+
 .swiper {
   width: 400px;
   height: 400px;
+
 }
 
-.swiper-pagination {
+.div-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 5px gray;
+  height: 41.77px;
+  margin-top: 20px
+}
 
+.div-name-product {
+  margin-top: 50px;
 }
 
 .swiper-button-prev, .swiper-button-next {
@@ -198,8 +236,23 @@ const addToCart = () => {
 .swiper-slide img {
   width: 100%;
   height: 100%;
+  border-radius: 5px;
 }
 
+.price-product {
+  background-color: #ff8c6a;
+  border-radius: 5px;
+  margin-top: 20px;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  box-shadow: 2px 2px 5px gray;
+  height: 41.77px
+}
 
 .product-details {
   max-width: 100%;
@@ -220,24 +273,6 @@ const addToCart = () => {
   margin-bottom: 8px;
 }
 
-
-.varieties-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-h1 {
-  font-size: 18px;
-  font-weight: bold;
-  word-wrap: break-word;
-  height: 58px;
-  overflow: hidden;
-}
-
-.variety-item {
-  margin-bottom: 10px;
-}
-
 .product-details button {
   padding: 12px 24px;
   font-size: 16px;
@@ -256,7 +291,82 @@ h1 {
   background-color: #ff5a3c;
 }
 
-/* Дополнительные стили для визуализации загрузки */
+/* Общие стили varieties */
+
+.varieties-wrapper {
+  display: grid;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Open Sans', sans-serif;
+}
+
+.rad-label {
+  display: flex;
+  align-items: center;
+
+  border-radius: 100px;
+  padding: 14px 16px;
+  margin: 5px 0;
+
+  cursor: pointer;
+  transition: .3s;
+}
+
+.rad-label:hover,
+.rad-label:focus-within {
+  background: hsla(0, 0%, 80%, .14);
+}
+
+.rad-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+.rad-design {
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+
+  background: linear-gradient(to right bottom, hsl(154, 97%, 62%), hsl(225, 97%, 62%));
+  position: relative;
+}
+
+.rad-design::before {
+  content: '';
+
+  display: inline-block;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+
+  background: hsl(0, 0%, 90%);
+  transform: scale(1.1);
+  transition: .3s;
+}
+
+.rad-input:checked + .rad-design::before {
+  transform: scale(0);
+}
+
+.rad-text {
+  color: hsl(0, 0%, 60%);
+  margin-left: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 900;
+
+  transition: .3s;
+}
+
+.rad-input:checked ~ .rad-text {
+  color: hsl(0, 0%, 40%);
+}
 
 
 /* Медиа-запросы для адаптивности */
@@ -264,6 +374,8 @@ h1 {
   .product-details {
     max-width: 600px;
     margin: 0 auto;
+    margin-top: 30px;
+
   }
 
   .product-image {

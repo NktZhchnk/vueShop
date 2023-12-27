@@ -22,44 +22,44 @@ onMounted(loadCartProducts);
 <template>
   <div style="box-sizing: border-box">
     <div style="width: 1000px">
-    <div class="div-header">
-      <h1>
-        Оформлення замовлення
-      </h1>
-    </div>
-    <div class="div-body">
-      <div>
-        <h3>Ваші контактні дані</h3>
-        <label>Мобільний телефон</label>
-        <input v-model="telephone" placeholder="+380963567893"/>
-        <label>Призвище</label>
-        <input v-model="lastName" placeholder="Прізвище"/>
-        <label>Ім'я</label>
-        <input v-model="firstname" placeholder="Ім'я"/>
-        <label>По-батькові</label>
-        <input v-model="surname" placeholder="По-батькові"/>
+      <div class="div-header">
+        <h1>
+          Оформлення замовлення
+        </h1>
+      </div>
+      <div class="div-body">
+        <div>
+          <h3>Ваші контактні дані</h3>
+          <label>Мобільний телефон</label>
+          <input v-model="telephone" placeholder="+380963567893"/>
+          <label>Призвище</label>
+          <input v-model="lastName" placeholder="Прізвище"/>
+          <label>Ім'я</label>
+          <input v-model="firstname" placeholder="Ім'я"/>
+          <label>По-батькові</label>
+          <input v-model="surname" placeholder="По-батькові"/>
+        </div>
+        <div>
+          <UiPoshta></UiPoshta>
+        </div>
       </div>
       <div>
-        <UiPoshta></UiPoshta>
+        <h2>Замовлення</h2>
+        <div class="div-product" v-for="item in store.cartProducts" :key="item.id">
+          <img :src="item.images.img"/>
+          {{ item.product.name_item }}
+          {{ item.product.price_item }}
+        </div>
+        <div class="div-button">
+          <button @click="store.swapOpenCart()">Редагувати товари</button>
+        </div>
       </div>
-    </div>
-    <div>
-      <h2>Замовлення</h2>
-      <div class="div-product" v-for="item in store.cartProducts" :key="item.id">
-        <img :src="item.images.img"/>
-        {{item.product.name_item}}
-        {{item.product.price_item}}
-      </div>
-      <div class="div-button">
-        <button @click="store.swapOpenCart()">Редагувати товари</button>
-      </div>
-    </div>
     </div>
     <div class="div-addForm">
-        <h2>Разом</h2>
-        <h4>{{store.cartProducts.length}} Товару на суму ???</h4>
-        <h4>Вартість доставки згідно з тарифами перевізника</h4>
-        <button>підтвердити замовлення</button>
+      <h2>Разом</h2>
+      <h4>{{ store.cartProducts.length }} Товару на суму ???</h4>
+      <h4>Вартість доставки згідно з тарифами перевізника</h4>
+      <button>підтвердити замовлення</button>
     </div>
   </div>
 </template>
@@ -71,22 +71,26 @@ onMounted(loadCartProducts);
   padding: 20px;
   border-bottom: 1px solid #ddd;
 }
-.div-product{
+
+.div-product {
   margin-top: 10px;
   border-radius: 10px;
   border: 1px solid gray;
   padding: 15px;
   display: flex;
 }
-img{
+
+img {
   height: 150px;
   width: 100px;
 }
+
 .div-header h1 {
   margin: 0;
   font-size: 1.5em;
 }
-.div-addForm{
+
+.div-addForm {
   border: 1px solid gray;
   width: 400px;
   height: 100%;
@@ -95,6 +99,7 @@ img{
   border-radius: 8px;
   border: 1px solid #e9e9e9;
 }
+
 .div-body {
   display: flex;
   flex-wrap: wrap;
@@ -144,15 +149,18 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.div-button{
+
+.div-button {
   display: flex;
   justify-content: end;
   margin: 10px;
 }
+
 button:hover {
   background-color: #0083b0;
 }
-input{
+
+input {
   border-radius: 5px;
   border: 1px solid gray;
   padding: 10px;

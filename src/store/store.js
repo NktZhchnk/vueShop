@@ -101,6 +101,14 @@ export const useMyStore = defineStore({
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
                 });
+            this.getCartItems()
+        },
+        getCartItems(){
+            const savedCartProducts = sessionStorage.getItem('cartProducts');
+            if (savedCartProducts) {
+                this.cartProducts = JSON.parse(savedCartProducts);
+                console.log('Загружена корзина товаров:', this.cartProducts);
+            }
         },
         AthData() {
             axios.get('https://eseniabila.com.ua/getUsers')

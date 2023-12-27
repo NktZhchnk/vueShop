@@ -75,7 +75,7 @@ const deleteProductInDataBase = async (id) => {
   <!--  </div>-->
   <div class="style-products">
     <div v-for="item in store.products" :key="item.id" class="style-product">
-      <router-link :to="'/product/' + item.id">
+      <router-link class="custom-link" :to="'/product/' + item.id">
         <div style="height: 200px">
           <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
         </div>
@@ -92,7 +92,7 @@ const deleteProductInDataBase = async (id) => {
 
 
 <style scoped>
-  /* Общие стили для всех элементов */
+/* Общие стили для всех элементов */
 
 body {
   font-family: Arial, sans-serif;
@@ -140,6 +140,11 @@ body {
   padding: 15px 20px;
 }
 
+.custom-link {
+  text-decoration: none; /* Убирает подчеркивание ссылки */
+  color: black; /* Задайте цвет текста, который вы хотите использовать */
+}
+
 /* Стили для названия товара */
 .div-name-product {
   font-size: 18px;
@@ -160,13 +165,15 @@ body {
   .style-products {
     padding: 0px;
   }
+
   .style-product {
     width: calc(50% - 40px);
     margin: 0px;
     margin-top: 10px;
   }
-  .img{
-    height:100% ;
+
+  .img {
+    height: 100%;
   }
 }
 
