@@ -104,15 +104,12 @@ const decrementCountProduct = () =>{
     return
   }
 }
-const test = ()=>{
-  console.log(varieties.value)
-}
+
 store.getCartItems()
 </script>
 
 <template>
   <div v-if="getProductById" class="product-details">
-    <button @click="test">2424</button>
     <!--    <div v-if="getImages.length > 0" class="image-container">-->
     <!--      <h3>Product Images:</h3>-->
     <!--      <div class="image-wrapper">-->

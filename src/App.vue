@@ -125,7 +125,7 @@ h1 {
 
 .main-header {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
 }
 
 .div-header {
