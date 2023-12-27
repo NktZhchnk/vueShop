@@ -181,14 +181,14 @@ store.getCartItems()
         </div>
       </div>
       <div>
-        <button style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
+        <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
       </div>
       <div class="price-product">
         Price: {{ getProductById.price_item }} ₴
       </div>
     </div>
+    <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
   </div>
-
   <div v-else>
     <p>Loading...</p>
   </div>
@@ -368,6 +368,12 @@ store.getCartItems()
   color: hsl(0, 0%, 40%);
 }
 
+.btn-add-cart-pc{
+  display: none;
+}
+.btn-add-cart-tel{
+  display: block;
+}
 
 /* Медиа-запросы для адаптивности */
 @media (min-width: 768px) {
@@ -399,7 +405,14 @@ store.getCartItems()
 
 }
 
-
+@media (max-width: 540px) {
+  .btn-add-cart-tel{
+    display: none;
+  }
+  .btn-add-cart-pc{
+    display: block
+  }
+}
 @media (max-width: 500px) {
   .swiper {
     width: calc(90% - 60px);
