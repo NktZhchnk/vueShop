@@ -66,9 +66,6 @@ const postIndex = "03026";
 // Формування параметрів запиту
 const params = {
     city_id: cityId,
-    district_id: districtId,
-    region_id: regionId,
-    postIndex: postIndex
 };
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
