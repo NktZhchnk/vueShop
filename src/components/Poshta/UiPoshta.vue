@@ -13,7 +13,7 @@
     <div v-if="infoPoshta.length">
       <input type="radio" id="newPost" value="newPost" v-model="selectedPostType">
       <label for="newPost">Новая Почта</label>
-      <input style="margin-left: 100px" type="radio" id="ukrPost" value="ukrPost" v-model="selectedPostType">
+      <input style="margin-left: 10px" type="radio" id="ukrPost" value="ukrPost" v-model="selectedPostType">
       <label for="ukrPost">Укрпочта</label>
     </div>
 
