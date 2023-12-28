@@ -1,7 +1,7 @@
 <script setup>
 import axios from "axios";
-
-let ukrRegion = null;
+import {ref} from "vue"
+let ukrRegion = ref(null);
 
 axios.get('/getUkrPoshtaData')
     .then(response => {
@@ -18,7 +18,7 @@ axios.get('/getUkrPoshtaRegion')
     .then(response => {
       // Обробка отриманих даних з сервера
       console.log('Ответ сервера UkrPoshtaRegion:', response.data);
-      ukrRegion = response.data
+      ukrRegion.value = response.data
       // Далі можна використовувати ці дані на фронтенді за необхідністю
     })
     .catch(error => {
