@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
+import UiUkrPoshta from "@/components/Poshta/UiUkrPoshta.vue";
 
 const store = useMyStore()
 let telephone = ref('');
@@ -40,7 +41,8 @@ onMounted(loadCartProducts);
           <input v-model="surname" placeholder="По-батькові"/>
         </div>
         <div>
-          <UiPoshta></UiPoshta>
+          <UiUkrPoshta></UiUkrPoshta>
+<!--          <UiPoshta></UiPoshta>-->
         </div>
       </div>
       <div>
