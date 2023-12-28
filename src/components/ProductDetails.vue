@@ -423,7 +423,7 @@ store.getCartItems()
 
 @media (max-width: 400px) {
   .swiper {
-    width: 100%;
+    width: 90%;
     max-height: 280px;
   }
 }
