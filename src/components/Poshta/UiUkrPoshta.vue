@@ -26,7 +26,7 @@ axios.get('/getUkrPoshtaRegion')
       console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
     });
 
-console.log(ukrRegion)
+console.log(ukrRegion.value)
 </script>
 
 <template>
