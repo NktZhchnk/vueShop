@@ -1,7 +1,7 @@
 <template>
   <div class="div-container">
     <div>
-      <label for="cityInput">Введите населенный пункт:</label>
+      <label for="cityInput">Введіть населений пункт::</label>
       <input id="cityInput" type="text" v-model="selectedCity" @input="getWarehouses" list="cities">
       <datalist id="cities">
         <option v-for="(city, index) in cities" :value="city.Description" :key="index">
@@ -12,14 +12,14 @@
 
     <div style="display: flex;  align-items: center" v-if="infoPoshta.length">
       <input type="radio" id="newPost" value="newPost" v-model="selectedPostType">
-      <label style="margin-bottom: 0" for="newPost">Новая Почта</label>
+      <label style="margin-bottom: 0" for="newPost">Нова Пошта</label>
       <input style="margin-left: 20px" type="radio" id="ukrPost" value="ukrPost" v-model="selectedPostType">
-      <label style="margin-bottom: 0" for="ukrPost">Укрпочта</label>
+      <label style="margin-bottom: 0" for="ukrPost">Укрпошта</label>
     </div>
 
     <div v-if="selectedPostType === 'newPost'">
-      <label for="searchQuery">Введите адрес или номер отделения:</label>
-      <input type="text" placeholder="Введите адрес или номер отделения" v-model="searchQuery" @input="searchWarehouses"/>
+      <label for="searchQuery">Введіть адресу або номер відділення:</label>
+      <input type="text" placeholder="Введіть адресу або номер відділення" v-model="searchQuery" @input="searchWarehouses"/>
       <ul v-if="showListPoshta" class="warehouse-list">
         <li @click="checkInfoPoshta(place.Description)" v-for="(place, index) in displayedWarehouses" :key="index"
             class="warehouse-item">
@@ -29,7 +29,7 @@
     </div>
 
     <div v-if="selectedPostType === 'ukrPost'">
-      <label for="postIndex">Введите почтовый индекс:</label>
+      <label for="postIndex">Введіть поштовий індекс:</label>
       <input placeholder="11111" id="postIndex" type="number" v-model="postIndex">
     </div>
   </div>

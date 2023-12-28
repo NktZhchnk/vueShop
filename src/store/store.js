@@ -5,7 +5,7 @@ import {ref} from "vue";
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
-        test: [],
+        allPriceProducts: null,
         cartProducts: [],
         products: [],
         productById: {
@@ -50,7 +50,7 @@ export const useMyStore = defineStore({
             this.isOpenShowPage = !this.isOpenShowPage;
         },
         swapOpenCart() {
-            this.checkCart = true;
+            this.checkCart = !this.checkCart;
             setTimeout(() => {
                 this.isOpenCart = !this.isOpenCart;
                 this.isOpenMenu = false;

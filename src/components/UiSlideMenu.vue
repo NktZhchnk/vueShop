@@ -53,7 +53,8 @@ const store = useMyStore()
   width: 90%;
   border-radius: 50%;
 }
-.div-footer{
+
+.div-footer {
   height: 64px;
   border-top: 1px solid gray;
   background: white;
@@ -61,6 +62,7 @@ const store = useMyStore()
   justify-content: center;
   align-items: center;
 }
+
 .div-body {
   height: 84%;
   background: white;
@@ -75,6 +77,7 @@ const store = useMyStore()
   background: rgba(0, 0, 0, 1);
   height: 55px;
 }
+
 .main-menu {
   background: white;
   position: fixed;
@@ -106,11 +109,9 @@ const store = useMyStore()
 }
 
 
-
 .slide-in {
   transform: translateX(0);
 }
-
 
 
 @media screen and (max-width: 370px) {
@@ -119,11 +120,13 @@ const store = useMyStore()
     overflow: auto;
   }
 }
+
 @media screen and (max-height: 200px) {
-  .div-header{
+  .div-header {
     height: 65px;
   }
-  .div-footer{
+
+  .div-footer {
     height: 64px;
   }
 }

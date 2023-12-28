@@ -27,7 +27,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="body">
       <div class="contact-info">
-        <h3>Ваші контактні дані</h3>
+        <h3 style="font-size: 22px">Ваші контактні дані</h3>
         <div class="input-group">
           <label>Мобільний телефон</label>
           <input v-model="telephone" placeholder="+380963567893"/>
@@ -55,8 +55,9 @@ onMounted(loadCartProducts);
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts" :key="item.id">
           <img style="border-radius: 5px" :src="item.images.img"/>
           <div class="product-details">
-            <span style=" word-break: break-word; height: 60px; ">{{ item.product.name_item }}</span>
-            <span>Ціна {{ item.product.price_item }} ₴</span>
+            <span style=" word-break: break-word; height: 58px;  overflow: hidden">{{ item.product.name_item }}</span>
+            <span>Кількість: {{item.countProduct}}</span>
+            <span style="margin-top: 10px">Ціна {{ item.product.price_item * item.countProduct}} ₴</span>
           </div>
         </div>
       </div>
@@ -66,7 +67,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="order-total">
       <h2>Разом</h2>
-      <h4>{{ store.cartProducts.length }} Товару на суму ???</h4>
+      <h4>{{ store.cartProducts.length }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
       <h4>Вартість доставки згідно з тарифами перевізника</h4>
       <button>Підтвердити замовлення</button>
     </div>
@@ -116,7 +117,7 @@ onMounted(loadCartProducts);
 
 /* Стили для полей ввода */
 .input-group {
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 label {
@@ -172,14 +173,14 @@ input {
   width: 100%;
   border: none;
   border-radius: 5px;
-  background-color: #00a0e4;
+  background-color: #fdd8b4;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .edit-cart-button button:hover {
-  background-color: #0083b0;
+  background-color: #fdd8b4;
 }
 
 /* Стили для блока суммарной информации по заказу */
@@ -204,14 +205,14 @@ input {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #00a0e4;
-  color: white;
+  background-color: #fcc79f;
+  color: black;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .order-summary button:hover {
-  background-color: #0083b0;
+  background-color: #f8a86d;
 }
 
 .order-total {
@@ -239,8 +240,8 @@ input {
   padding: 12px 24px;
   border: none;
   border-radius: 5px;
-  background-color: #00a0e4;
-  color: white;
+  background-color: #fcc79f;
+  color: black;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 1.1em;
@@ -248,7 +249,7 @@ input {
 }
 
 .order-total button:hover {
-  background-color: #0083b0;
+  background-color: #f8a86d;
 }
 
 /* Медиа-запросы для адаптивности */

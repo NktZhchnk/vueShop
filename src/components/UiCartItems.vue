@@ -23,7 +23,7 @@ const allPriceCart = computed(() => {
       // Если нет variety_price, но есть price_item у товара, используем его
       itemPrice = parseFloat(cartItem.product.price_item * cartItem.countProduct);
     }
-
+      store.allPriceProducts = totalPrice + itemPrice;
     // Добавляем цену товара к общей стоимости
     return totalPrice + itemPrice;
   }, 0); // Начальное значение общей стоимости равно 0

@@ -182,10 +182,10 @@ store.getCartItems()
         <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
       </div>
       <div class="price-product" v-if="selectedVariety === null">
-        Price: {{ getProductById.price_item * countProduct }} ₴
+        Ціна: {{ getProductById.price_item * countProduct }} ₴
       </div>
       <div class="price-product" v-if="selectedVariety !== null">
-        Price: {{ selectedVariety.variety_price * countProduct }} ₴
+        Ціна: {{ selectedVariety.variety_price * countProduct }} ₴
       </div>
     </div>
     <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
@@ -242,11 +242,11 @@ store.getCartItems()
 }
 
 .price-product {
-  background-color: #ff8c6a;
+  background-color: #f8bba9;
   border-radius: 5px;
   margin-top: 20px;
-  color: white;
-  font-size: 18px;
+  color: darkred;
+  font-size: 22px;
   display: flex;
   justify-content: center;
   align-items: center;

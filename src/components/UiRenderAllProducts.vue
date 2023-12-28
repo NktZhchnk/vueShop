@@ -83,7 +83,7 @@ const deleteProductInDataBase = async (id) => {
           {{ item.name_item }}
         </div>
         <div class="div-price-product">
-          {{ item.price_item }} ₴
+          Ціна: {{ item.price_item }} ₴
         </div>
       </router-link>
     </div>
