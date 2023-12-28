@@ -83,7 +83,7 @@ const paramsRegion = {
     city_ua: cityUa,
     city_ru: cityRu,
 };
-const apiUrlCity = 'https://www.ukrposhta.ua/address-classifier-ws//get_regions_by_city_ua';
+const apiUrlCity = 'https://www.ukrposhta.ua/address-classifier-ws//get_cities_by_city_ua';
 const cityName = "";
 
 // Формування параметрів запиту
