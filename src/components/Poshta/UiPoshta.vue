@@ -10,11 +10,11 @@
       </datalist>
     </div>
 
-    <div v-if="infoPoshta.length">
+    <div style="display: flex;  align-items: center" v-if="infoPoshta.length">
       <input type="radio" id="newPost" value="newPost" v-model="selectedPostType">
-      <label for="newPost">Новая Почта</label>
-      <input style="margin-left: 10px" type="radio" id="ukrPost" value="ukrPost" v-model="selectedPostType">
-      <label for="ukrPost">Укрпочта</label>
+      <label style="margin-bottom: 0" for="newPost">Новая Почта</label>
+      <input style="margin-left: 20px" type="radio" id="ukrPost" value="ukrPost" v-model="selectedPostType">
+      <label style="margin-bottom: 0" for="ukrPost">Укрпочта</label>
     </div>
 
     <div v-if="selectedPostType === 'newPost'">
