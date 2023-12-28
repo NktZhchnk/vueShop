@@ -173,7 +173,7 @@ store.getCartItems()
           <button @click="decrementCountProduct" style="margin: 0">-</button>
 
         </div>
-        <div style=""><h3>Кількість:{{ countProduct }}</h3></div>
+        <div style="padding-left: 5px; padding-right: 5px"><h3>Кількість: {{ countProduct }}</h3></div>
         <div>
           <button @click="countProduct++" style="margin: 0;">+</button>
         </div>

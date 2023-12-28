@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
 });
 
 
-
+const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
 app.use('/images', express.static('/var/www/vueShop/images'));
 
 app.get('/getProducts', (req, res) => {
@@ -56,20 +56,15 @@ app.get('/getProductsCategory', (req, res) => {
     });
 });
 
-const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
-const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
-const cityId = "29713";
-const districtId = "412";
-const regionId = "286";
-const postIndex = "03026";
 
-// Формування параметрів запиту
+const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
+const cityId = "69000"; // Замените на ваш реальный идентификатор города
+
+// Формируем параметры запроса, передавая только city_id
 const params = {
-    city_id: cityId,
-    district_id: districtId,
-    region_id: regionId,
-    postIndex: postIndex
+    city_id: cityId
 };
+
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
 app.get('/getUkrPoshtaData', async (req, res) => {
@@ -82,12 +77,10 @@ app.get('/getUkrPoshtaData', async (req, res) => {
             params: params
         });
 
-        // Обробка отриманих даних та їх повернення як відповідь
-        res.status(200).json(response.data);
+        // Обработка полученных данных
+        console.log(response.data); // Результат запроса
     } catch (error) {
-        // Обробка помилок
         console.error('Произошла ошибка:', error);
-        res.status(500).json({ error: 'Помилка при отриманні даних від сервера UkrPoshta' });
     }
 });
 
