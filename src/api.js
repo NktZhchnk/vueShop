@@ -57,18 +57,30 @@ app.get('/getProductsCategory', (req, res) => {
 });
 
 
-const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
-const cityId = "";
-const districtId = "";
-const regionId = "286";
-const postIndex = "";
+// const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
+// const cityId = "";
+// const districtId = "";
+// const regionId = "286";
+// const postIndex = "";
+//
+// // Формування параметрів запиту
+// const params = {
+//     city_id: cityId,
+//     district_id: districtId,
+//     region_id: regionId,
+//     postIndex: postIndex
+// };
+const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws//get_regions_by_region_ua';
+const regionName = "";
+const cityUa = "";
+const cityRu = "Киев";
+
 
 // Формування параметрів запиту
 const params = {
-    city_id: cityId,
-    district_id: districtId,
-    region_id: regionId,
-    postIndex: postIndex
+    region_name: regionName,
+    city_ua: cityUa,
+    city_ru: cityRu,
 };
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
