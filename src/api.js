@@ -88,7 +88,7 @@ const cityName = "";
 
 // Формування параметрів запиту
 const paramsCity = {
-    city_ua: cityName,
+    city_name: cityName,
 };
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
