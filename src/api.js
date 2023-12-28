@@ -70,18 +70,19 @@ const params = {
     region_id: regionId,
     postIndex: postIndex
 };
-// const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws//get_regions_by_region_ua';
-// const regionName = "";
-// const cityUa = "";
-// const cityRu = "Киев";
-//
-//
-// // Формування параметрів запиту
-// const params = {
-//     region_name: regionName,
-//     city_ua: cityUa,
-//     city_ru: cityRu,
-// };
+
+const apiUrlRegion = 'https://www.ukrposhta.ua/address-classifier-ws//get_regions_by_region_ua';
+const regionName = "";
+const cityUa = "";
+const cityRu = "";
+
+
+// Формування параметрів запиту
+const paramsRegion = {
+    region_name: regionName,
+    city_ua: cityUa,
+    city_ru: cityRu,
+};
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
 app.get('/getUkrPoshtaData', async (req, res) => {
@@ -92,6 +93,24 @@ app.get('/getUkrPoshtaData', async (req, res) => {
                 'Accept': 'application/json'
             },
             params: params
+        });
+
+        // Обробка отриманих даних та їх повернення як відповідь
+        res.status(200).json(response.data);
+    } catch (error) {
+        // Обробка помилок
+        console.error('Произошла ошибка:', error);
+        res.status(500).json({ error: 'Помилка при отриманні даних від сервера UkrPoshta' });
+    }
+});
+app.get('/getUkrPoshtaRegion', async (req, res) => {
+    try {
+        const response = await axios.get(apiUrlRegion, {
+            headers: {
+                'Authorization': `Bearer ${bearerToken}`,
+                'Accept': 'application/json'
+            },
+            params: paramsRegion
         });
 
         // Обробка отриманих даних та їх повернення як відповідь

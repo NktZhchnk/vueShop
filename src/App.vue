@@ -29,6 +29,16 @@ axios.get('/getUkrPoshtaData')
       // Обробка помилок
       console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
     });
+axios.get('/getUkrPoshtaRegion')
+    .then(response => {
+      // Обробка отриманих даних з сервера
+      console.log('Ответ сервера UkrPoshtaRegion:', response.data);
+      // Далі можна використовувати ці дані на фронтенді за необхідністю
+    })
+    .catch(error => {
+      // Обробка помилок
+      console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
+    });
 
 </script>
 
