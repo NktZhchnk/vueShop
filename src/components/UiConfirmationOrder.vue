@@ -41,8 +41,8 @@ onMounted(loadCartProducts);
           <input v-model="surname" placeholder="По-батькові"/>
         </div>
         <div>
-          <UiUkrPoshta></UiUkrPoshta>
-<!--          <UiPoshta></UiPoshta>-->
+<!--          <UiUkrPoshta></UiUkrPoshta>-->
+          <UiPoshta></UiPoshta>
         </div>
       </div>
       <div>
