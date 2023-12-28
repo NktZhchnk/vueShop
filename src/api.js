@@ -72,25 +72,10 @@ const params = {
 };
 
 const apiUrlRegion = 'https://www.ukrposhta.ua/address-classifier-ws//get_regions_by_region_ua';
-// const regionName = "";
-// const cityUa = "";
-// const cityRu = "";
-//
-//
-// // Формування параметрів запиту
-// const paramsRegion = {
-//     region_name: regionName,
-//     city_ua: cityUa,
-//     city_ru: cityRu,
-// };
 const apiUrlCity = 'https://www.ukrposhta.ua/address-classifier-ws//get_cities_by_city_ua';
-const cityName = "";
+
 
 // Формування параметрів запиту
-const paramsCity = {
-    city_name: cityName,
-
-};
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
 app.get('/getUkrPoshtaData', async (req, res) => {
@@ -136,7 +121,6 @@ app.get('/getUkrPoshtaCity', async (req, res) => {
                 'Authorization': `Bearer ${bearerToken}`,
                 'Accept': 'application/json'
             },
-            params: paramsCity
         });
 
         // Обробка отриманих даних та їх повернення як відповідь
