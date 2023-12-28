@@ -58,7 +58,7 @@ app.get('/getProductsCategory', (req, res) => {
 
 
 const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
-const cityId = "29713";
+const cityId = "2667";
 const districtId = "412";
 const regionId = "286";
 const postIndex = "03026";
