@@ -21,128 +21,186 @@ onMounted(loadCartProducts);
 </script>
 
 <template>
-  <div style="box-sizing: border-box">
-    <div style="width: 1000px">
-      <div class="div-header">
-        <h1>
-          Оформлення замовлення
-        </h1>
-      </div>
-      <div class="div-body">
-        <div>
-          <h3>Ваші контактні дані</h3>
+  <div class="container">
+    <div class="header">
+      <h1>Оформлення замовлення</h1>
+    </div>
+    <div class="body">
+      <div class="contact-info">
+        <h3>Ваші контактні дані</h3>
+        <div class="input-group">
           <label>Мобільний телефон</label>
           <input v-model="telephone" placeholder="+380963567893"/>
+        </div>
+        <div class="input-group">
           <label>Призвище</label>
           <input v-model="lastName" placeholder="Прізвище"/>
+        </div>
+        <div class="input-group">
           <label>Ім'я</label>
           <input v-model="firstname" placeholder="Ім'я"/>
+        </div>
+        <div class="input-group">
           <label>По-батькові</label>
           <input v-model="surname" placeholder="По-батькові"/>
         </div>
-        <div>
-<!--          <UiUkrPoshta></UiUkrPoshta>-->
-          <UiPoshta></UiPoshta>
-        </div>
       </div>
-      <div>
-        <h2>Замовлення</h2>
-        <div class="div-product" v-for="item in store.cartProducts" :key="item.id">
-          <img :src="item.images.img"/>
-          {{ item.product.name_item }}
-          {{ item.product.price_item }}
-        </div>
-        <div class="div-button">
-          <button @click="store.swapOpenCart()">Редагувати товари</button>
-        </div>
+      <div class="delivery-info">
+        <UiPoshta></UiPoshta>
       </div>
     </div>
-    <div class="div-addForm">
+    <div class="order-summary">
+      <h2>Замовлення</h2>
+      <div class="product-list">
+        <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts" :key="item.id">
+          <img style="border-radius: 5px" :src="item.images.img"/>
+          <div class="product-details">
+            <span style=" word-break: break-word; height: 60px; ">{{ item.product.name_item }}</span>
+            <span>Ціна {{ item.product.price_item }} ₴</span>
+          </div>
+        </div>
+      </div>
+      <div class="edit-cart-button">
+        <button @click="store.swapOpenCart()">Редагувати товари</button>
+      </div>
+    </div>
+    <div class="order-total">
       <h2>Разом</h2>
       <h4>{{ store.cartProducts.length }} Товару на суму ???</h4>
       <h4>Вартість доставки згідно з тарифами перевізника</h4>
-      <button>підтвердити замовлення</button>
+      <button>Підтвердити замовлення</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Стили для контейнера */
-.div-header {
-  background-color: #f2f2f2;
+/* Общие стили */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
-.div-product {
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid gray;
-  padding: 15px;
-  display: flex;
+/* Стили для заголовка */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-img {
-  height: 150px;
-  width: 100px;
-}
-
-.div-header h1 {
+.header h1 {
+  font-size: 1.8em;
   margin: 0;
-  font-size: 1.5em;
 }
 
-.div-addForm {
-  border: 1px solid gray;
-  width: 400px;
-  height: 100%;
-  padding: calc(4px * 4);
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  border: 1px solid #e9e9e9;
-}
-
-.div-body {
+/* Стили для блоков контактной информации и доставки */
+.body {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 20px;
 }
 
-.div-body div {
-  flex: 1 1 50%; /* При ширине экрана больше 800px каждый блок будет занимать половину */
+.contact-info,
+.delivery-info {
+  flex: 1 1 50%;
 }
 
-.div-body h3 {
+.contact-info h3,
+.delivery-info h3 {
   font-size: 1.2em;
   margin-bottom: 10px;
 }
 
-/* Стили для формы */
-input[type="text"] {
-  width: calc(100% - 20px); /* Вычитаем отступы для учета полей padding */
-  padding: 10px;
+/* Стили для полей ввода */
+.input-group {
   margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
-input[type="text"]:focus {
-  outline: none;
-  border-color: #00a0e4;
 }
 
 label {
   font-weight: bold;
-  margin-top: 20px;
   display: block;
-  font-size: 0.9em;
-  color: #444;
+  margin-bottom: 5px;
 }
 
-button {
-  margin-top: 10px;
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+/* Стили для списка товаров */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.product-item img {
+  max-width: 100px;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Стили для кнопки редактирования корзины */
+.edit-cart-button {
+  text-align: center;
+
+  margin-top: 15px;
+}
+
+.edit-cart-button button {
+  padding: 10px 20px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: #00a0e4;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-cart-button button:hover {
+  background-color: #0083b0;
+}
+
+/* Стили для блока суммарной информации по заказу */
+.order-summary {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  margin-top: 20px;
+}
+
+.order-summary h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.order-summary h4 {
+  margin-bottom: 10px;
+}
+
+.order-summary button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -152,25 +210,56 @@ button {
   transition: background-color 0.3s ease;
 }
 
-.div-button {
-  display: flex;
-  justify-content: end;
-  margin: 10px;
-}
-
-button:hover {
+.order-summary button:hover {
   background-color: #0083b0;
 }
 
-input {
+.order-total {
+  border: 1px solid #ddd;
   border-radius: 5px;
-  border: 1px solid gray;
-  padding: 10px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  margin-top: 20px;
+  text-align: center;
 }
 
-@media (max-width: 800px) {
-  .div-body div {
-    flex: 1 1 100%; /* При ширине экрана меньше 800px каждый блок будет занимать 100% */
+.order-total h2 {
+  margin-top: 0;
+  font-size: 1.8em;
+  color: #333;
+}
+
+.order-total h4 {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  color: #777;
+}
+
+.order-total button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  background-color: #00a0e4;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  text-transform: uppercase;
+}
+
+.order-total button:hover {
+  background-color: #0083b0;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 960px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .contact-info,
+  .delivery-info {
+    flex: 1 1 100%;
   }
 }
-</style>>
+</style>

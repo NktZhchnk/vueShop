@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="div-container">
     <div>
       <label for="cityInput">Введите населенный пункт:</label>
       <input id="cityInput" type="text" v-model="selectedCity" @input="getWarehouses" list="cities">
@@ -112,7 +112,8 @@ const displayedWarehouses = computed(() => {
 
 <style scoped>
 .container {
-  margin: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: start;
@@ -133,7 +134,7 @@ input[type="text"], input[type="number"]{
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
-  max-width: 450px;
+
   box-sizing: border-box;
   margin-bottom: 10px;
 }
@@ -176,8 +177,69 @@ input[type="radio"]{
 @media screen and (min-width: 768px) {
   .container {
     max-width: 600px;
+    padding: 0;
   }
 
   /* Дополнительные стили для больших экранов */
+}
+
+@media screen and (min-width: 768px) {
+
+  label {
+    font-size: 18px; /* Увеличение размера текста меток */
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: 100%; /* Уменьшение ширины полей ввода для большего пространства */
+    max-width: 100%;
+    /* Центрирование и увеличение отступа снизу */
+  }
+
+  /* Убираем стили ограничения высоты списка на больших экранах */
+  .warehouse-list {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  /* Увеличиваем размер шрифта и отступы в списке */
+  .warehouse-item {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .container {
+    margin: 10px; /* Уменьшаем отступы для маленьких экранов */
+    padding: 0;
+  }
+
+  label {
+    font-size: 14px; /* Уменьшаем размер текста меток */
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: 100%; /* Растягиваем поля ввода на всю ширину экрана */
+    max-width: 100%;
+    margin: 0 0 8px; /* Уменьшаем отступ снизу */
+  }
+
+  /* Уменьшаем высоту списка для лучшей видимости на маленьких экранах */
+  .warehouse-list {
+    max-height: 150px;
+  }
+
+  /* Уменьшаем размер шрифта и отступы в списке */
+  .warehouse-item {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  /* Располагаем радио-кнопки в столбец на маленьких экранах */
+  input[type="radio"] {
+    display: block;
+    margin: 8px 0;
+  }
 }
 </style>
