@@ -2,6 +2,7 @@
 import axios from "axios";
 import {ref, onMounted} from "vue"
 let ukrRegion = ref(null);
+let ukrCity = ref(null);
 
 axios.get('/getUkrPoshtaData')
     .then(response => {
@@ -18,6 +19,13 @@ onMounted(async () => {
   try {
     const response = await axios.get('/getUkrPoshtaRegion');
     ukrRegion.value = response.data;
+    console.log('Ответ сервера UkrPoshtaRegion:', response.data);
+  } catch (error) {
+    console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
+  }
+  try {
+    const response = await axios.get('/getUkrPoshtaCity');
+    ukrCity.value = response.data;
     console.log('Ответ сервера UkrPoshtaRegion:', response.data);
   } catch (error) {
     console.error('Произошла ошибка при запросе на сервер UkrPoshta:', error);
