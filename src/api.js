@@ -58,12 +58,13 @@ app.get('/getProductsCategory', (req, res) => {
 
 
 const apiUrl = 'https://www.ukrposhta.ua/address-classifier-ws/get_postoffices_by_city_id';
-const cityId = "29713";
+
+const regionId = "286";
 
 
 // Формування параметрів запиту
 const params = {
-    city_id: cityId,
+    region_id: regionId
 };
 
 // Роут для отримання даних від сервера "www.ukrposhta.ua"
