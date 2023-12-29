@@ -307,7 +307,7 @@ app.post('/addProduct', (req, res) => {
 });
 
 app.post('/addOrders', (req, res) => {
-    if (!req.body || !req.body.order_date || !req.body.telephone || !req.body.last_name || !req.body.first_name || !req.body.middle_name || !req.body.total_price) {
+    if (!req.body || !req.body.order_date || !req.body.telephone || !req.body.last_name || !req.body.first_name || !req.body.middle_name) {
         return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
     const {
