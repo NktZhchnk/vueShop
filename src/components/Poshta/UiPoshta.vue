@@ -1,7 +1,7 @@
 <template>
   <div class="div-container">
     <div>
-      <label for="cityInput">Введіть населений пункт::</label>
+      <label for="cityInput">Введіть населений пункт:</label>
       <input id="cityInput" type="text" v-model="selectedCity" @input="getWarehouses" list="cities">
       <datalist id="cities">
         <option v-for="(city, index) in cities" :value="city.Description" :key="index">
@@ -19,7 +19,8 @@
 
     <div v-if="selectedPostType === 'newPost'">
       <label for="searchQuery">Введіть адресу або номер відділення:</label>
-      <input type="text" placeholder="Введіть адресу або номер відділення" v-model="searchQuery" @input="searchWarehouses"/>
+      <input type="text" placeholder="Введіть адресу або номер відділення" v-model="searchQuery"
+             @input="searchWarehouses"/>
       <ul v-if="showListPoshta" class="warehouse-list">
         <li @click="checkInfoPoshta(place.Description)" v-for="(place, index) in displayedWarehouses" :key="index"
             class="warehouse-item">
@@ -39,7 +40,7 @@
 
 <script setup>
 import axios from "axios";
-import {ref, computed} from "vue";
+import {ref, computed, watch} from "vue";
 import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore()
@@ -54,6 +55,20 @@ const searchQuery = ref('');
 const selectedCity = ref('');
 const cities = ref([]); // Список доступных городов
 let selectedPostType = ref(null);
+let postIndex = ref(null);
+
+watch([postIndex, searchQuery, selectedCity], ([newPostIndex, newSearchQuery, newSelectedCity]) => {
+  store.selectPoshta.cities = newSelectedCity
+  store.selectPoshta.searchQuery = newSearchQuery
+  store.selectPoshta.postIndex = newPostIndex
+  if (selectedPostType.value === 'newPost') {
+    postIndex.value = null
+  } else if (selectedPostType.value === 'ukrPost') {
+    searchQuery.value = ''
+  } else {
+    return
+  }
+});
 const checkInfoPoshta = (item) => {
   showListPoshta = false
   searchQuery.value = item
@@ -128,7 +143,7 @@ label {
   font-size: 16px;
 }
 
-input[type="text"], input[type="number"]{
+input[type="text"], input[type="number"] {
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -169,7 +184,7 @@ input[type="text"], input[type="number"]{
 }
 
 /* Стили для радио-кнопок */
-input[type="radio"]{
+input[type="radio"] {
   margin: 15px;
 }
 
@@ -208,6 +223,7 @@ input[type="radio"]{
     font-size: 16px;
   }
 }
+
 @media screen and (max-width: 767px) {
   .container {
     margin: 10px; /* Уменьшаем отступы для маленьких экранов */

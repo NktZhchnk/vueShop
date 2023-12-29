@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import axios from "axios";
+
 dotenv.config();
 
 const app = express();
@@ -41,7 +42,7 @@ app.get('/getProductsCategory', (req, res) => {
     const category = req.query.category; // Получение категории из запроса
 
     if (!category) {
-        res.status(400).json({ error: 'Категория не указана' });
+        res.status(400).json({error: 'Категория не указана'});
         return;
     }
 
@@ -49,7 +50,7 @@ app.get('/getProductsCategory', (req, res) => {
     connection.query(sqlQuery, [category], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
         } else {
             res.json(results); // Отправка результатов в формате JSON
         }
@@ -93,7 +94,7 @@ app.get('/getUkrPoshtaData', async (req, res) => {
     } catch (error) {
         // Обробка помилок
         console.error('Произошла ошибка:', error);
-        res.status(500).json({ error: 'Помилка при отриманні даних від сервера UkrPoshta' });
+        res.status(500).json({error: 'Помилка при отриманні даних від сервера UkrPoshta'});
     }
 });
 app.get('/getUkrPoshtaRegion', async (req, res) => {
@@ -111,7 +112,7 @@ app.get('/getUkrPoshtaRegion', async (req, res) => {
     } catch (error) {
         // Обробка помилок
         console.error('Произошла ошибка:', error);
-        res.status(500).json({ error: 'Помилка при отриманні даних від сервера UkrPoshta' });
+        res.status(500).json({error: 'Помилка при отриманні даних від сервера UkrPoshta'});
     }
 });
 app.get('/getUkrPoshtaCity', async (req, res) => {
@@ -128,7 +129,7 @@ app.get('/getUkrPoshtaCity', async (req, res) => {
     } catch (error) {
         // Обробка помилок
         console.error('Произошла ошибка:', error);
-        res.status(500).json({ error: 'Помилка при отриманні даних від сервера UkrPoshta' });
+        res.status(500).json({error: 'Помилка при отриманні даних від сервера UkrPoshta'});
     }
 });
 
@@ -140,10 +141,10 @@ app.get('/getProductById/:id', (req, res) => {
     connection.query(sqlQuery, [productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
         } else {
             if (results.length === 0) {
-                res.status(404).json({ message: 'Товар не найден' }); // Если товар не найден, отправляем ошибку 404
+                res.status(404).json({message: 'Товар не найден'}); // Если товар не найден, отправляем ошибку 404
             } else {
                 res.json(results[0]); // Отправляем найденный товар в качестве ответа (если товар найден)
             }
@@ -158,10 +159,10 @@ app.get('/getImgById/:id', (req, res) => {
     connection.query(sqlQuery, [productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
         } else {
             if (results.length === 0) {
-                res.status(404).json({ message: 'Изображения не найдены' });
+                res.status(404).json({message: 'Изображения не найдены'});
             } else {
                 res.json(results); // Отправляем найденные изображения в качестве ответа
             }
@@ -176,10 +177,10 @@ app.get('/getVarietiesById/:id', (req, res) => {
     connection.query(sqlQuery, [productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
         } else {
             if (results.length === 0) {
-                res.status(404).json({ message: 'Вариации не найдены' });
+                res.status(404).json({message: 'Вариации не найдены'});
             } else {
                 res.json(results); // Отправляем найденные вариации в качестве ответа
             }
@@ -228,10 +229,10 @@ app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления
 
     // Начинаем транзакцию
-    connection.beginTransaction(function(err) {
+    connection.beginTransaction(function (err) {
         if (err) {
             console.error('Ошибка начала транзакции:', err);
-            res.status(500).json({ error: 'Ошибка удаления продукта' });
+            res.status(500).json({error: 'Ошибка удаления продукта'});
             return;
         }
 
@@ -240,48 +241,47 @@ app.delete('/deleteProduct/:id', (req, res) => {
         const deleteProductQuery = 'DELETE FROM product WHERE id = ?';
 
         // Удаление связанных записей из img_product
-        connection.query(deleteImgProductQuery, [productId], function(error, result) {
+        connection.query(deleteImgProductQuery, [productId], function (error, result) {
             if (error) {
                 console.error('Ошибка удаления изображений продукта:', error);
-                return connection.rollback(function() {
-                    res.status(500).json({ error: 'Ошибка удаления продукта' });
+                return connection.rollback(function () {
+                    res.status(500).json({error: 'Ошибка удаления продукта'});
                 });
             }
 
             // Затем удаляем записи из product_varieties
-            connection.query(deleteProductVarietiesQuery, [productId], function(error, result) {
+            connection.query(deleteProductVarietiesQuery, [productId], function (error, result) {
                 if (error) {
                     console.error('Ошибка удаления вариантов продукта:', error);
-                    return connection.rollback(function() {
-                        res.status(500).json({ error: 'Ошибка удаления продукта' });
+                    return connection.rollback(function () {
+                        res.status(500).json({error: 'Ошибка удаления продукта'});
                     });
                 }
 
                 // Удаляем основной продукт
-                connection.query(deleteProductQuery, [productId], function(error, result) {
+                connection.query(deleteProductQuery, [productId], function (error, result) {
                     if (error) {
                         console.error('Ошибка удаления основного продукта:', error);
-                        return connection.rollback(function() {
-                            res.status(500).json({ error: 'Ошибка удаления продукта' });
+                        return connection.rollback(function () {
+                            res.status(500).json({error: 'Ошибка удаления продукта'});
                         });
                     }
 
-                    connection.commit(function(err) {
+                    connection.commit(function (err) {
                         if (err) {
                             console.error('Ошибка подтверждения транзакции:', err);
-                            return connection.rollback(function() {
-                                res.status(500).json({ error: 'Ошибка удаления продукта' });
+                            return connection.rollback(function () {
+                                res.status(500).json({error: 'Ошибка удаления продукта'});
                             });
                         }
 
-                        res.status(200).json({ message: 'Продукт и его связанные записи успешно удалены' });
+                        res.status(200).json({message: 'Продукт и его связанные записи успешно удалены'});
                     });
                 });
             });
         });
     });
 });
-
 
 
 app.post('/addProduct', (req, res) => {
@@ -306,23 +306,53 @@ app.post('/addProduct', (req, res) => {
     });
 });
 
+app.post('/addOrders', (req, res) => {
+    if (!req.body || !req.body.order_date || !req.body.telephone || !req.body.last_name || !req.body.first_name || !req.body.middle_name || !req.body.total_price) {
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+    }
+    const {
+        order_date,
+        telephone,
+        last_name,
+        first_name,
+        middle_name,
+        comment,
+        city,
+        address,
+        postal_code,
+        total_price,
+        complete
+    } = req.body;
+    const sqlQuery = 'INSERT INTO orders (order_date, telephone, last_name, first_name, middle_name, comment, city, address, postal_code, total_price, complete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    connection.query(sqlQuery, [order_date, telephone, last_name, first_name, middle_name, comment, city, address, postal_code, total_price, complete], (error) => {
+        if (error) {
+            console.error('Ошибка добавления продукта:', error);
+            res.status(500).json({error: 'Ошибка добавления продукта'});
+        } else {
+            res.status(200).json({message: 'Продукт успешно добавлен'});
+        }
+    });
+})
+
+
 app.post('/addProductVarieties', (req, res) => {
     console.log('Received request:', req.body); // Добавляем эту строку для вывода содержимого тела запроса в консоль
     if (!req.body || !req.body.product_id || !req.body.variety_name || !req.body.variety_quan || !req.body.variety_price) {
-        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
-    const { product_id, variety_name, variety_quan, variety_price } = req.body;
+    const {product_id, variety_name, variety_quan, variety_price} = req.body;
 
     if (!Array.isArray(variety_name) || !Array.isArray(variety_quan) || !Array.isArray(variety_price)) {
-        return res.status(400).json({ error: 'Variety_name, variety_quan и variety_price должны быть массивами' });
+        return res.status(400).json({error: 'Variety_name, variety_quan и variety_price должны быть массивами'});
     }
 
     if (variety_name.length !== variety_quan.length || variety_name.length !== variety_price.length) {
-        return res.status(400).json({ error: 'Длины массивов не совпадают' });
+        return res.status(400).json({error: 'Длины массивов не совпадают'});
     }
 
     // Подготовка SQL-запроса с placeholder'ами для значений
-    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price) VALUES ?`;
+    const sqlQuery = `INSERT INTO product_varieties (product_id, variety_name, variety_quan, variety_price)
+                      VALUES ?`;
 
     // Формирование массива массивов значений для вставки в SQL-запрос
     const values = variety_name.map((_, index) => [product_id, variety_name[index], variety_quan[index], variety_price[index]]);
@@ -331,10 +361,10 @@ app.post('/addProductVarieties', (req, res) => {
     connection.query(sqlQuery, [values], (error, results) => {
         if (error) {
             console.error('Ошибка вставки данных:', error);
-            return res.status(500).json({ error: error.message }); // Отображаем подробности ошибки
+            return res.status(500).json({error: error.message}); // Отображаем подробности ошибки
         } else {
             console.log('Данные успешно вставлены:', results);
-            return res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
+            return res.status(200).json({message: 'Данные успешно добавлены в таблицу'});
         }
     });
 });
@@ -342,16 +372,17 @@ app.post('/addProductVarieties', (req, res) => {
 app.post('/addProductImg', (req, res) => {
     console.log('Received request:', req.body); // Добавляем эту строку для вывода содержимого тела запроса в консоль
     if (!req.body || !req.body.product_id || !req.body.img) {
-        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
     const {img, product_id} = req.body;
 
     if (!Array.isArray(img)) {
-        return res.status(400).json({ error: 'Variety_name, variety_quan и variety_price должны быть массивами' });
+        return res.status(400).json({error: 'Variety_name, variety_quan и variety_price должны быть массивами'});
     }
 
     // Подготовка SQL-запроса с placeholder'ами для значений
-    const sqlQuery = `INSERT INTO img_product (img, product_id) VALUES ?`;
+    const sqlQuery = `INSERT INTO img_product (img, product_id)
+                      VALUES ?`;
 
     // Формирование массива массивов значений для вставки в SQL-запрос
     const values = img.map((_, index) => [img[index], product_id]);
@@ -360,10 +391,10 @@ app.post('/addProductImg', (req, res) => {
     connection.query(sqlQuery, [values], (error, results) => {
         if (error) {
             console.error('Ошибка вставки данных:', error);
-            return res.status(500).json({ error: error.message }); // Отображаем подробности ошибки
+            return res.status(500).json({error: error.message}); // Отображаем подробности ошибки
         } else {
             console.log('Данные успешно вставлены:', results);
-            return res.status(200).json({ message: 'Данные успешно добавлены в таблицу' });
+            return res.status(200).json({message: 'Данные успешно добавлены в таблицу'});
         }
     });
 });

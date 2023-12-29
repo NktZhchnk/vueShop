@@ -13,6 +13,11 @@ export const useMyStore = defineStore({
             img: [],
             varieties: [],
         },
+        selectPoshta:{
+            postIndex: null,
+            cities: '',
+            searchQuery: null,
+        },
         productVarieties: [],
         radioPrice: [],
         radioQuan: [],
@@ -103,7 +108,7 @@ export const useMyStore = defineStore({
                 });
             this.getCartItems()
         },
-        getCartItems(){
+        getCartItems() {
             const savedCartProducts = sessionStorage.getItem('cartProducts');
             if (savedCartProducts) {
                 this.cartProducts = JSON.parse(savedCartProducts);

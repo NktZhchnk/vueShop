@@ -77,7 +77,7 @@ const getVarieties = computed(() => {
 // Функция для добавления товара в корзину
 const addToCart = () => {
   if (varieties.value || product.value && images.value.length > 0) {
-    if (varieties.value.length === 0 ||  selectedVariety.value !== null) {
+    if (varieties.value.length === 0 || selectedVariety.value !== null) {
       const newCartProduct = {
         selectedVariety: selectedVariety.value,
         product: product.value,
@@ -97,10 +97,10 @@ const addToCart = () => {
     console.warn('Ошибка в imag or product');
   }
 };
-const decrementCountProduct = () =>{
-  if(countProduct.value !== 1){
+const decrementCountProduct = () => {
+  if (countProduct.value !== 1) {
     countProduct.value--
-  }else{
+  } else {
     return
   }
 }
@@ -173,13 +173,15 @@ store.getCartItems()
           <button @click="decrementCountProduct" style="margin: 0">-</button>
 
         </div>
-        <div style="padding-left: 5px; padding-right: 5px"><h3>Кількість: {{ countProduct }}</h3></div>
+        <label>Кількість:</label>
+        <div style="padding-left: 5px; padding-right: 5px"><h3 style="">{{ countProduct }}</h3></div>
         <div>
           <button @click="countProduct++" style="margin: 0;">+</button>
         </div>
       </div>
       <div>
-        <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
+        <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик
+        </button>
       </div>
       <div class="price-product" v-if="selectedVariety === null">
         Ціна: {{ getProductById.price_item * countProduct }} ₴
@@ -242,7 +244,7 @@ store.getCartItems()
 }
 
 .price-product {
-  background-color: #f8bba9;
+  background-color: #f8a971;
   border-radius: 5px;
   margin-top: 20px;
   color: darkred;
@@ -278,7 +280,7 @@ store.getCartItems()
 .product-details button {
   padding: 12px 24px;
   font-size: 16px;
-  background-color: #ff8c6a;
+  background-color: #f8a971;
   color: white;
   border: none;
   border-radius: 5px;
@@ -290,7 +292,7 @@ store.getCartItems()
 }
 
 .product-details button:hover {
-  background-color: #ff5a3c;
+  background-color: #fa8e42;
 }
 
 /* Общие стили varieties */
@@ -333,14 +335,12 @@ store.getCartItems()
   width: 22px;
   height: 22px;
   border-radius: 100px;
-
   background: linear-gradient(to right bottom, hsl(154, 97%, 62%), hsl(225, 97%, 62%));
   position: relative;
 }
 
 .rad-design::before {
   content: '';
-
   display: inline-block;
   width: inherit;
   height: inherit;
@@ -369,10 +369,11 @@ store.getCartItems()
   color: hsl(0, 0%, 40%);
 }
 
-.btn-add-cart-pc{
+.btn-add-cart-pc {
   display: none;
 }
-.btn-add-cart-tel{
+
+.btn-add-cart-tel {
   display: block;
 }
 
@@ -382,7 +383,6 @@ store.getCartItems()
     max-width: 600px;
     margin: 0 auto;
     margin-top: 30px;
-
   }
 
   .product-image {
@@ -406,14 +406,19 @@ store.getCartItems()
 
 }
 
-@media (max-width: 540px) {
-  .btn-add-cart-tel{
+@media (max-width: 590px) {
+  .btn-add-cart-tel {
     display: none;
   }
-  .btn-add-cart-pc{
+
+  .btn-add-cart-pc {
     display: block
   }
+  .price-product{
+    font-size: 16px;
+  }
 }
+
 @media (max-width: 500px) {
   .swiper {
     width: calc(90% - 60px);
