@@ -3,6 +3,7 @@ import {onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
 import UiUkrPoshta from "@/components/Poshta/UiUkrPoshta.vue";
+import axios from "axios";
 
 const store = useMyStore()
 let telephone = ref('');
@@ -44,7 +45,19 @@ const addOrders = () =>{
     complete: false,
   }
 
-
+  axios.post('https://eseniabila.com.ua/addOrders', order, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      .then(response => {
+        console.log('Ответ сервера:', response.data);
+        // Обработка успешного ответа
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных на сервер:', error);
+        // Обработка ошибки
+      });
 }
 onMounted(loadCartProducts);
 </script>
