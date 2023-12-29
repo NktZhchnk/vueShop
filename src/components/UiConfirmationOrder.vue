@@ -42,7 +42,7 @@ const addOrders = () =>{
     address: store.selectPoshta.searchQuery,
     postal_code: store.selectPoshta.postIndex,
     total_price: store.allPriceProducts,
-    complete: false,
+    complete: true,
   }
 
   axios.post('https://eseniabila.com.ua/addOrders', order, {
