@@ -30,34 +30,79 @@ const validateText = () => {
   firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
   surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
 }
-const addOrders = () =>{
-  let order = {
-    order_date: new Date(),
-    telephone: telephone.value,
-    last_name: lastName.value,
-    first_name: firstname.value,
-    middle_name: surname.value,
-    comment: comment.value,
-    city: store.selectPoshta.cities,
-    address: store.selectPoshta.searchQuery,
-    postal_code: store.selectPoshta.postIndex,
-    total_price: store.allPriceProducts,
-    complete: true,
-  }
+const addOrders = () => {
+  if (store.cartProducts.length === 0) {
+    if (
+        telephone.value !== '' &&
+        lastName.value !== '' &&
+        firstname.value !== '' &&
+        surname.value !== '' &&
+        comment.value !== '' &&
+        store.selectPoshta.cities !== '' &&
+        store.selectPoshta.searchQuery !== '' &&
+        store.selectPoshta.postIndex !== ''
+    ) {
+      // Если все поля заполнены, формируем заказ и отправляем данные
+      let order = {
+        order_date: new Date(),
+        telephone: telephone.value,
+        last_name: lastName.value,
+        first_name: firstname.value,
+        middle_name: surname.value,
+        comment: comment.value,
+        city: store.selectPoshta.cities,
+        address: store.selectPoshta.searchQuery,
+        postal_code: store.selectPoshta.postIndex,
+        total_price: store.allPriceProducts,
+        complete: true,
+      };
 
-  axios.post('https://eseniabila.com.ua/addOrders', order, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
-        // Обработка успешного ответа
+      // Отправка данных на сервер
+      axios.post('https://eseniabila.com.ua/addOrders', order, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер:', error);
-        // Обработка ошибки
-      });
+          .then(response => {
+            console.log('Ответ сервера:', response.data);
+            // Обработка успешного ответа
+          })
+          .catch(error => {
+            console.error('Ошибка при отправке данных на сервер:', error);
+            // Обработка ошибки
+          });
+    } else {
+      // Если какое-то поле не заполнено, добавляем класс error для подсветки
+      if (telephone.value === '') {
+        fnRedBorder('.inp-telephone')
+      }
+      if (firstname.value === '') {
+        fnRedBorder('.inp-firstName')
+      }
+      if (lastName.value === '') {
+        fnRedBorder('.inp-lastName')
+      }
+      if (surname.value === '') {
+        fnRedBorder('.inp-surname')
+      }
+      if(store.selectPoshta.cities === ''){
+        return
+      }
+      if(store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === ''){
+        return;
+      }
+      console.log('Не все поля заполнены');
+    }
+  } else {
+    console.log('error')
+  }
+}
+const fnRedBorder = (item) => {
+  const inp = document.querySelector(item)
+  inp.style.border = "1px solid red";
+  setTimeout(() => {
+    inp.style.border = "1px solid gray";
+  }, 2000)
 }
 onMounted(loadCartProducts);
 </script>
@@ -72,22 +117,22 @@ onMounted(loadCartProducts);
         <h3 style="font-size: 22px">Ваші контактні дані</h3>
         <div class="input-group">
           <label>Мобільний телефон</label>
-          <input @input="validateTelephone" v-model="telephone" placeholder="0963567893"/>
+          <input class="inp-telephone" @input="validateTelephone" v-model="telephone" placeholder="0963567893"/>
         </div>
         <div class="input-group">
           <label>Призвище</label>
-          <input v-model="lastName" @input="validateText" placeholder="Прізвище"/>
+          <input class="inp-lastName" v-model="lastName" @input="validateText" placeholder="Прізвище"/>
         </div>
         <div class="input-group">
           <label>Ім'я</label>
-          <input v-model="firstname" @input="validateText" placeholder="Ім'я"/>
+          <input class="inp-firstName" v-model="firstname" @input="validateText" placeholder="Ім'я"/>
         </div>
         <div class="input-group">
           <label>По-батькові</label>
-          <input v-model="surname" @input="validateText" placeholder="По-батькові"/>
+          <input class="inp-surname" v-model="surname" @input="validateText" placeholder="По-батькові"/>
         </div>
         <div class="input-group">
-          <label>Коментерій</label>
+          <label>Коментерій(за бажанням)</label>
           <input v-model="comment" placeholder="Коментерій"/>
         </div>
       </div>
@@ -133,6 +178,10 @@ onMounted(loadCartProducts);
   box-sizing: border-box;
   font-family: Arial, sans-serif;
   color: #333;
+}
+
+.error {
+  border: 1px solid red;
 }
 
 /* Стили для заголовка */
