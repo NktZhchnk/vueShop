@@ -123,6 +123,7 @@ const addOrders = () => {
       console.log('Не все поля заполнены');
     }
   } else {
+    console.log('Ошибка')
     fnRedBorder('.order-summary')
   }
 }
