@@ -18,11 +18,13 @@ export const useMyStore = defineStore({
             cities: '',
             searchQuery: null,
         },
+        orders: [],
         productVarieties: [],
         radioPrice: [],
         radioQuan: [],
         radioName: [],
         lastId: 2,
+        lastIdOrders: 2,
         priceItem: null,
         radioOptions: [],
         categoryItem: null,
@@ -86,6 +88,17 @@ export const useMyStore = defineStore({
                     this.lastId = lastItem.id + 1
                     console.log('в сторе вывожу лст айди:', this.lastId)
                     this.priceItem = this.products[0].price_item;
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                });
+            axios.get('https://eseniabila.com.ua/getOrders')
+                .then(response => {
+                    // Обработка данных и сохранение их в состоянии магазина
+                    this.orders = response.data;
+                    const lastItem = this.orders.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
+                    this.lastIdOrders = lastItem.id + 1
+                    console.log('в сторе вывожу лст айди:', this.lastIdOrders)
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);

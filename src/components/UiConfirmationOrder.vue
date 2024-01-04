@@ -2,7 +2,6 @@
 import {onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
-import UiUkrPoshta from "@/components/Poshta/UiUkrPoshta.vue";
 import axios from "axios";
 
 const store = useMyStore()
@@ -31,7 +30,7 @@ const validateText = () => {
   surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
 }
 const addOrders = () => {
-  if (store.cartProducts.length === 0) {
+  if (store.cartProducts.length !== 0) {
     if (
         telephone.value !== '' &&
         lastName.value !== '' &&
@@ -57,6 +56,13 @@ const addOrders = () => {
         complete: true,
       };
 
+      let order_item = {
+        quantity: store.cartProducts.countProduct,
+        image_url: store.cartProducts.images.img,
+        price: store.cartProducts.product.price_item,
+        variety_price: store.cartProducts.selectedVariety.variety_price,
+      }
+      console.log(order_item)
       // Отправка данных на сервер
       axios.post('https://eseniabila.com.ua/addOrders', order, {
         headers: {
@@ -71,6 +77,29 @@ const addOrders = () => {
             console.error('Ошибка при отправке данных на сервер:', error);
             // Обработка ошибки
           });
+      store.cartProducts.forEach((cartProduct) => {
+        let orderItem ={
+          order_id: store.lastIdOrders,
+          quantity: cartProduct.countProduct,
+          image_url: cartProduct.images.img,
+          price: cartProduct.product.price_item,
+          variety_price: cartProduct.selectedVariety.variety_price,
+        };
+        axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => {
+              console.log('Ответ сервера:', response.data);
+              // Обработка успешного ответа
+            })
+            .catch(error => {
+              console.error('Ошибка при отправке данных на сервер:', error);
+              // Обработка ошибки
+            });
+      });
+
     } else {
       // Если какое-то поле не заполнено, добавляем класс error для подсветки
       if (telephone.value === '') {
@@ -85,16 +114,16 @@ const addOrders = () => {
       if (surname.value === '') {
         fnRedBorder('.inp-surname')
       }
-      if(store.selectPoshta.cities === ''){
+      if (store.selectPoshta.cities === '') {
         return
       }
-      if(store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === ''){
+      if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
         return;
       }
       console.log('Не все поля заполнены');
     }
   } else {
-    console.log('error')
+    fnRedBorder('.order-summary')
   }
 }
 const fnRedBorder = (item) => {
@@ -104,6 +133,7 @@ const fnRedBorder = (item) => {
     inp.style.border = "1px solid gray";
   }, 2000)
 }
+
 onMounted(loadCartProducts);
 </script>
 
@@ -143,7 +173,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="order-summary">
       <h2>Замовлення</h2>
-      <button @click="console.log(store.selectPoshta)">test</button>
+      <button @click="test">test</button>
       <div class="product-list">
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
              :key="item.id">
@@ -250,7 +280,8 @@ input {
 }
 
 .product-item img {
-  max-width: 100px;
+  width: 150px;
+  height: 150px;
 }
 
 .product-details {

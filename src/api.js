@@ -37,6 +37,17 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
+app.get('/getOrders', (req, res) => {
+    const sqlQuery = 'SELECT * FROM orders';
+    connection.query(sqlQuery, (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 app.get('/getProductsCategory', (req, res) => {
     const category = req.query.category; // Получение категории из запроса
@@ -305,7 +316,21 @@ app.post('/addProduct', (req, res) => {
         }
     });
 });
-
+app.post('/addItemOrders', (req, res) => {
+    if (!req.body || !req.body.quantity || !req.body.image_url) {
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+    }
+    const {order_id, quantity, image_url, price, variety_price} = req.body;
+    const sqlQuery = 'INSERT INTO order_items (order_id, quantity, image_url, price, variety_price) VALUES (?, ?, ?, ?, ?)';
+    connection.query(sqlQuery, [order_id, quantity, image_url, price, variety_price], (error) => {
+        if (error) {
+            console.error('Ошибка добавления продукта:', error);
+            res.status(500).json({error: 'Ошибка добавления продукта'});
+        } else {
+            res.status(200).json({message: 'Продукт успешно добавлен'});
+        }
+    });
+})
 app.post('/addOrders', (req, res) => {
     if (!req.body || !req.body.order_date || !req.body.telephone || !req.body.last_name || !req.body.first_name || !req.body.middle_name) {
         return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
