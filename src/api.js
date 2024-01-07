@@ -320,9 +320,9 @@ app.post('/addItemOrders', (req, res) => {
     if (!req.body || !req.body.quantity || !req.body.image_url) {
         return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
-    const {order_id, quantity, image_url, price, variety_price} = req.body;
-    const sqlQuery = 'INSERT INTO order_items (order_id, quantity, image_url, price, variety_price) VALUES (?, ?, ?, ?, ?)';
-    connection.query(sqlQuery, [order_id, quantity, image_url, price, variety_price], (error) => {
+    const {order_id, quantity, image_url, price, variety_price, item_name, variety_name} = req.body;
+    const sqlQuery = 'INSERT INTO order_items (order_id, quantity, image_url, price, variety_price, item_name, variety_name) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    connection.query(sqlQuery, [order_id, quantity, image_url, price, variety_price, item_name, variety_name], (error) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({error: 'Ошибка добавления продукта'});

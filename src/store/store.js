@@ -13,7 +13,7 @@ export const useMyStore = defineStore({
             img: [],
             varieties: [],
         },
-        selectPoshta:{
+        selectPoshta: {
             postIndex: null,
             cities: '',
             searchQuery: null,
@@ -92,17 +92,7 @@ export const useMyStore = defineStore({
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
                 });
-            axios.get('https://eseniabila.com.ua/getOrders')
-                .then(response => {
-                    // Обработка данных и сохранение их в состоянии магазина
-                    this.orders = response.data;
-                    const lastItem = this.orders.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
-                    this.lastIdOrders = lastItem.id + 1
-                    console.log('в сторе вывожу лст айди:', this.lastIdOrders)
-                })
-                .catch(error => {
-                    console.error('Произошла ошибка:', error);
-                });
+            this.getOrders();
             axios.get('https://eseniabila.com.ua/getProductVarieties')
                 .then(response => {
                     this.productVarieties = response.data
@@ -120,6 +110,19 @@ export const useMyStore = defineStore({
                     console.error('Произошла ошибка:', error);
                 });
             this.getCartItems()
+        },
+        getOrders(){
+            axios.get('https://eseniabila.com.ua/getOrders')
+                .then(response => {
+                    // Обработка данных и сохранение их в состоянии магазина
+                    this.orders = response.data;
+                    const lastItem = this.orders.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
+                    this.lastIdOrders = lastItem.id + 1
+                    console.log('в сторе вывожу лст айди:', this.lastIdOrders)
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                });
         },
         getCartItems() {
             const savedCartProducts = sessionStorage.getItem('cartProducts');

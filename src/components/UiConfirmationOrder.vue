@@ -36,9 +36,8 @@ const addOrders = () => {
         lastName.value !== '' &&
         firstname.value !== '' &&
         surname.value !== '' &&
-        comment.value !== '' &&
         store.selectPoshta.cities !== '' &&
-        store.selectPoshta.searchQuery !== '' &&
+        store.selectPoshta.searchQuery !== '' ||
         store.selectPoshta.postIndex !== ''
     ) {
       // Если все поля заполнены, формируем заказ и отправляем данные
@@ -55,14 +54,6 @@ const addOrders = () => {
         total_price: store.allPriceProducts,
         complete: true,
       };
-
-      let order_item = {
-        quantity: store.cartProducts.countProduct,
-        image_url: store.cartProducts.images.img,
-        price: store.cartProducts.product.price_item,
-        variety_price: store.cartProducts.selectedVariety.variety_price,
-      }
-      console.log(order_item)
       // Отправка данных на сервер
       axios.post('https://eseniabila.com.ua/addOrders', order, {
         headers: {
@@ -83,8 +74,11 @@ const addOrders = () => {
           quantity: cartProduct.countProduct,
           image_url: cartProduct.images.img,
           price: cartProduct.product.price_item,
-          variety_price: cartProduct.selectedVariety.variety_price,
+          variety_price: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_price : null,
+          item_name: cartProduct.product.name_item,
+          variety_name: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_name : null,
         };
+        console.log(orderItem)
         axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
           headers: {
             'Content-Type': 'application/json'
@@ -135,7 +129,7 @@ const fnRedBorder = (item) => {
   }, 2000)
 }
 
-onMounted(loadCartProducts);
+onMounted(loadCartProducts, store.getOrders());
 </script>
 
 <template>
@@ -174,7 +168,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="order-summary">
       <h2>Замовлення</h2>
-      <button @click="test">test</button>
+      <button @click="console.log(store.cartProducts)">test</button>
       <div class="product-list">
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
              :key="item.id">

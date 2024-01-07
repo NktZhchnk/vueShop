@@ -30,7 +30,6 @@ const store = useMyStore()
           </svg>
         </router-link>
       </div>
-
       <router-view></router-view>
     </div>
   </div>

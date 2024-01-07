@@ -14,7 +14,6 @@ import AuthAdminPanel from "@/components/AdminPanel/AuthAdminPanel.vue";
 
 
 const routes = [
-
     {
         name: 'RenderProducts',
         path: '/',
@@ -30,7 +29,6 @@ const routes = [
         path: '/adminMenu',
         component: AdminMenu,
     },
-
     {
         name: 'Catalog',
         path: '/catalog',
