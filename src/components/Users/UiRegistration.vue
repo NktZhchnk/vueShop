@@ -4,7 +4,7 @@
     <input type="text" v-model="username" placeholder="Username" class="input-field">
     <input type="text" v-model="firstname" placeholder="First Name" class="input-field">
     <input type="text" v-model="lastname" placeholder="Last Name" class="input-field">
-    <input type="number" v-model="telephone" placeholder="number" class="input-field">
+    <input type="text" v-model="phoneNumber" placeholder="number" class="input-field">
     <input type="password" v-model="password" placeholder="Password" class="input-field">
     <input type="password" v-model="confirmPassword" placeholder="Confirm Password" class="input-field">
 
@@ -22,7 +22,7 @@ export default {
     const confirmPassword = ref('');
     const firstname = ref('');
     const lastname = ref('');
-    const telephone = ref(0);
+    const phoneNumber = ref('');
 
     const registerUser = async () => {
       if (password.value !== confirmPassword.value) {
@@ -37,7 +37,7 @@ export default {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            phone_number: telephone.value,
+            phone_number: phoneNumber.value,
             login: username.value,
             password: password.value,
             first_name: firstname.value,
@@ -59,6 +59,7 @@ export default {
     return {
       username,
       password,
+      phoneNumber,
       confirmPassword,
       firstname,
       lastname,
