@@ -294,7 +294,23 @@ app.delete('/deleteProduct/:id', (req, res) => {
     });
 });
 
+app.post('/addUsers', (req, res) => {
+    if (!req.body || !req.body.phone_number || !req.body.login || !req.body.password || !req.body.first_name || !req.body.last_name) {
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+    }
+    const {phone_number, login, password, first_name, last_name} = req.body;
+    const sqlQuery = 'INSERT INTO users (phone_number, login, password, first_name, last_name) VALUES (?,?,?,?,?)'
 
+    connection.query(sqlQuery, [phone_number, login, password, first_name, last_name], (error) => {
+            if (error) {
+                console.error('Ошибка добавления продукта:', error);
+                res.status(500).json({error: 'Ошибка добавления продукта'});
+            } else {
+                res.status(200).json({message: 'Продукт успешно добавлен'});
+            }
+        }
+    )
+})
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
     console.log('Received request:', req.body);

@@ -4,6 +4,7 @@ import axios from "axios";
 import UiMainHeader from "@/components/UiMainHeader.vue";
 import UiSlideMenu from "@/components/UiSlideMenu.vue";
 import {useMyStore} from "@/store/store.js";
+import UiRegistration from "@/components/Users/UiRegistration.vue";
 
 
 const store = useMyStore()
@@ -30,7 +31,9 @@ const store = useMyStore()
           </svg>
         </router-link>
       </div>
-      <router-view></router-view>
+      gdgd
+      <UiRegistration></UiRegistration>
+<!--      <router-view></router-view>-->
     </div>
   </div>
 </template>
