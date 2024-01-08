@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import axios from "axios";
+import bcrypt from "bcrypt"
 
 dotenv.config();
 
@@ -298,19 +299,23 @@ app.post('/addUsers', (req, res) => {
     if (!req.body || !req.body.phone_number || !req.body.login || !req.body.password || !req.body.first_name || !req.body.last_name) {
         return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
-    const {phone_number, login, password, first_name, last_name} = req.body;
-    const sqlQuery = 'INSERT INTO users (phone_number, login, password, first_name, last_name) VALUES (?,?,?,?,?)'
 
-    connection.query(sqlQuery, [phone_number, login, password, first_name, last_name], (error) => {
-            if (error) {
-                console.error('Ошибка добавления продукта:', error);
-                res.status(500).json({error: 'Ошибка добавления продукта'});
-            } else {
-                res.status(200).json({message: 'Продукт успешно добавлен'});
-            }
+    const { phone_number, login, password, first_name, last_name } = req.body;
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, salt); // Хешируем пароль
+
+    const sqlQuery = 'INSERT INTO users (phone_number, login, password, first_name, last_name) VALUES (?,?,?,?,?)';
+    connection.query(sqlQuery, [phone_number, login, hashedPassword, first_name, last_name], (error) => {
+        if (error) {
+            console.error('Ошибка добавления пользователя:', error);
+            res.status(500).json({ error: 'Ошибка добавления пользователя' });
+        } else {
+            res.status(200).json({ message: 'Пользователь успешно добавлен' });
         }
-    )
-})
+    });
+});
+
 app.post('/addProduct', (req, res) => {
     // Проверяем наличие необходимых полей в запросе
     console.log('Received request:', req.body);
