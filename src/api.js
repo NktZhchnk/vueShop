@@ -356,7 +356,6 @@ const jwtSecret = 'your_jwt_secret'; // Секретный ключ для по�
 
 export function generateJwtToken(userId, username) {
     const token = jwt.sign({ userId, username }, jwtSecret, { expiresIn: '1h' }); // Подписывание токена
-
     return token;
 }
 
