@@ -5,9 +5,6 @@ import {onMounted, ref} from "vue";
 import router from "@/router/router.js";
 const store = useMyStore();
 
-onMounted(async () => {
-  await store.AthData();
-});
 
 const username = ref('');
 const password = ref('');
