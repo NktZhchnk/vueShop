@@ -27,7 +27,14 @@ const loginUser = async () => {
 
     if (response.ok) {
       const data = await response.json();
-      // Обработка успешного входа
+      // Сохранение токена в localStorage после успешного входа
+      localStorage.setItem('accessToken', data.accessToken);
+
+      // Пример вывода токена в консоль (для проверки)
+      console.log('Токен сохранен в localStorage:', data.accessToken);
+
+      // Здесь вы можете выполнить другие действия после успешной аутентификации,
+      // например, перенаправление пользователя на другую страницу
       console.log('Успешный вход', data);
     } else {
       // Обработка ошибок входа
