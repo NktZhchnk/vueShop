@@ -35,6 +35,7 @@ const store = useMyStore()
       gdgd
       <UiRegistration></UiRegistration>
       <UiAuth></UiAuth>
+      <router-link to="/adminMenu">adadadad</router-link>
 <!--      <router-view></router-view>-->
     </div>
   </div>
