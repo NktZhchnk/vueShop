@@ -316,6 +316,49 @@ app.post('/addUsers', (req, res) => {
     });
 });
 
+app.post('/login', (req, res) => {
+    const { login, password } = req.body;
+
+    if (!login || !password) {
+        return res.status(400).json({ error: 'Отсутствует логин или пароль' });
+    }
+
+    const sqlQuery = 'SELECT * FROM users WHERE login = ?';
+    connection.query(sqlQuery, [login], (error, results) => {
+        if (error) {
+            console.error('Ошибка запроса пользователя:', error);
+            res.status(500).json({ error: 'Ошибка запроса пользователя' });
+        } else {
+            if (results.length === 0) {
+                return res.status(401).json({ error: 'Неверные учетные данные' });
+            }
+
+            const user = results[0];
+            const passwordMatch = bcrypt.compareSync(password, user.password);
+
+            if (!passwordMatch) {
+                return res.status(401).json({ error: 'Неверные учетные данные' });
+            }
+
+            // Генерация JWT токена
+            const jwtToken = generateJwtToken(user.id, user.login); // Функция генерации JWT токена
+
+            // Отправка токена на клиент
+            res.status(200).json({ token: jwtToken });
+        }
+    });
+});
+
+// Функция для генерации JWT токена (пример)
+import jwt from 'jsonwebtoken'; // Импорт модуля jsonwebtoken
+
+const jwtSecret = 'your_jwt_secret'; // Секретный ключ для подписи токена (замените на свой секретный ключ)
+
+export function generateJwtToken(userId, username) {
+    const token = jwt.sign({ userId, username }, jwtSecret, { expiresIn: '1h' }); // Подписывание токена
+
+    return token;
+}
 
 
 app.post('/addProduct', (req, res) => {
