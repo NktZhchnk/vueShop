@@ -320,44 +320,39 @@ app.post('/login', (req, res) => {
     const { login, password } = req.body;
 
     if (!login || !password) {
-        return res.status(400).json({ error: 'Отсутствует логин или пароль' });
+        return res.status(400).json({ error: 'Отсутствует логин или пароль в запросе' });
     }
 
     const sqlQuery = 'SELECT * FROM users WHERE login = ?';
     connection.query(sqlQuery, [login], (error, results) => {
         if (error) {
-            console.error('Ошибка запроса пользователя:', error);
-            res.status(500).json({ error: 'Ошибка запроса пользователя' });
+            console.error('Ошибка при поиске пользователя:', error);
+            res.status(500).json({ error: 'Ошибка при поиске пользователя' });
         } else {
             if (results.length === 0) {
-                return res.status(401).json({ error: 'Неверные учетные данные' });
+                res.status(404).json({ error: 'Пользователь не найден' });
+            } else {
+                const hashedPassword = results[0].password;
+
+                bcrypt.compare(password, hashedPassword, (bcryptError, bcryptResult) => {
+                    if (bcryptError) {
+                        console.error('Ошибка сравнения паролей:', bcryptError);
+                        res.status(500).json({ error: 'Ошибка сравнения паролей' });
+                    } else {
+                        if (bcryptResult) {
+                            // Пароль совпадает, пользователь аутентифицирован успешно
+                            res.status(200).json({ message: 'Успешная аутентификация' });
+                        } else {
+                            // Неправильный пароль
+                            res.status(401).json({ error: 'Неправильный пароль' });
+                        }
+                    }
+                });
             }
-
-            const user = results[0];
-            const passwordMatch = bcrypt.compareSync(password, user.password);
-
-            if (!passwordMatch) {
-                return res.status(401).json({ error: 'Неверные учетные данные' });
-            }
-
-            // Генерация JWT токена
-            const jwtToken = generateJwtToken(user.id, user.login); // Функция генерации JWT токена
-
-            // Отправка токена на клиент
-            res.status(200).json({ token: jwtToken });
         }
     });
 });
 
-// Функция для генерации JWT токена (пример)
-import jwt from 'jsonwebtoken'; // Импорт модуля jsonwebtoken
-
-const jwtSecret = 'your_jwt_secret'; // Секретный ключ для подписи токена (замените на свой секретный ключ)
-
-export function generateJwtToken(userId, username) {
-    const token = jwt.sign({ userId, username }, jwtSecret, { expiresIn: '1h' }); // Подписывание токена
-    return token;
-}
 
 
 app.post('/addProduct', (req, res) => {
