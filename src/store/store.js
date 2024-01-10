@@ -131,15 +131,7 @@ export const useMyStore = defineStore({
                 console.log('Загружена корзина товаров:', this.cartProducts);
             }
         },
-        AthData() {
-            axios.get('https://eseniabila.com.ua/getUsers')
-                .then(response => {
-                    response.data.forEach((item) => {
-                        this.adminPassword = item.password
-                        this.adminLogin = item.login
-                    })
-                })
-        },
+
         getRadioPrice() {
             console.log(this.radioOptions)
             console.log('test GetRadio')
