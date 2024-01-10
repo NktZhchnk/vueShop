@@ -297,25 +297,44 @@ app.delete('/deleteProduct/:id', (req, res) => {
 });
 
 app.post('/addUsers', (req, res) => {
-    if (!req.body || !req.body.phone_number || !req.body.login || !req.body.password || !req.body.first_name || !req.body.last_name) {
-        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
+    const { phone_number, login, password, first_name, last_name } = req.body;
+
+    if (!phone_number || !login || !password || !first_name || !last_name) {
+        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
     }
 
-    const { phone_number, login, password, first_name, last_name } = req.body;
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = bcrypt.hashSync(password, salt); // Хешируем пароль
-
-    const sqlQuery = 'INSERT INTO users (phone_number, login, password, first_name, last_name) VALUES (?,?,?,?,?)';
-    connection.query(sqlQuery, [phone_number, login, hashedPassword, first_name, last_name], (error) => {
-        if (error) {
-            console.error('Ошибка добавления пользователя:', error);
-            res.status(500).json({ error: 'Ошибка добавления пользователя' });
-        } else {
-            res.status(200).json({ message: 'Пользователь успешно добавлен' });
+    // Проверка наличия пользователя с таким номером телефона или логином
+    const checkDuplicateQuery = 'SELECT * FROM users WHERE phone_number = ? OR login = ?';
+    connection.query(checkDuplicateQuery, [phone_number, login], (duplicateError, duplicateResults) => {
+        if (duplicateError) {
+            console.error('Ошибка при проверке дубликатов:', duplicateError);
+            return res.status(500).json({ error: 'Ошибка при проверке дубликатов' });
         }
+
+        if (duplicateResults.length > 0) {
+            // Пользователь с таким номером телефона или логином уже существует
+            alert('Пользователь с таким номером телефона или логином уже существует')
+            return res.status(409).json({ error: 'Пользователь с таким номером телефона или логином уже существует' });
+        }
+
+        // Продолжаем регистрацию, так как пользователь с таким номером телефона или логином не существует
+
+        const saltRounds = 10;
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+        const insertUserQuery = 'INSERT INTO users (phone_number, login, password, first_name, last_name) VALUES (?,?,?,?,?)';
+        connection.query(insertUserQuery, [phone_number, login, hashedPassword, first_name, last_name], (error) => {
+            if (error) {
+                console.error('Ошибка добавления пользователя:', error);
+                return res.status(500).json({ error: 'Ошибка добавления пользователя' });
+            }
+
+            res.status(200).json({ message: 'Пользователь успешно добавлен' });
+        });
     });
 });
+
 
 app.post('/login', (req, res) => {
     const { login, password } = req.body;
