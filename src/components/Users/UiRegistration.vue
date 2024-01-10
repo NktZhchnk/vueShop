@@ -1,12 +1,12 @@
 <template>
   <form class="registration-form" @submit.prevent="registerUser">
 
-    <input type="text" v-model="username" placeholder="Username" class="input-field">
-    <input type="text" v-model="firstname" placeholder="First Name" class="input-field">
-    <input type="text" v-model="lastname" placeholder="Last Name" class="input-field">
-    <input type="text" v-model="phoneNumber" placeholder="number" class="input-field">
-    <input type="password" v-model="password" placeholder="Password" class="input-field">
-    <input type="password" v-model="confirmPassword" placeholder="Confirm Password" class="input-field">
+    <input type="text" v-model="username" placeholder="Логін" class="input-field">
+    <input type="text" v-model="firstname" placeholder="Ім'я" class="input-field">
+    <input type="text" v-model="lastname" placeholder="Прізвище" class="input-field">
+    <input type="text" v-model="phoneNumber" placeholder="Телефон" class="input-field">
+    <input type="password" v-model="password" placeholder="Пароль" class="input-field">
+    <input type="password" v-model="confirmPassword" placeholder="Повторіть пароль" class="input-field">
 
     <button type="submit" class="submit-btn">Register</button>
   </form>
