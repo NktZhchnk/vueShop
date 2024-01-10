@@ -1,19 +1,44 @@
 <template>
-  <form class="registration-form" @submit.prevent="registerUser">
+  <div>
+    <form class="registration-form" @submit.prevent="registerUser">
+      <div class="form-group">
+        <label for="username">Логін:</label>
+        <input type="text" v-model="username" id="username" class="input-field" placeholder="Логін">
+      </div>
 
-    <input type="text" v-model="username" placeholder="Логін" class="input-field">
-    <input type="text" v-model="firstname" placeholder="Ім'я" class="input-field">
-    <input type="text" v-model="lastname" placeholder="Прізвище" class="input-field">
-    <input type="text" v-model="phoneNumber" placeholder="Телефон" class="input-field">
-    <input type="password" v-model="password" placeholder="Пароль" class="input-field">
-    <input type="password" v-model="confirmPassword" placeholder="Повторіть пароль" class="input-field">
+      <div class="form-group">
+        <label for="firstname">Ім'я:</label>
+        <input type="text" v-model="firstname" id="firstname" class="input-field" placeholder="Ім'я">
+      </div>
 
-    <button type="submit" class="submit-btn">Register</button>
-  </form>
+      <div class="form-group">
+        <label for="lastname">Прізвище:</label>
+        <input type="text" v-model="lastname" id="lastname" class="input-field" placeholder="Прізвище">
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Телефон:</label>
+        <input type="text" v-model="phoneNumber" id="phoneNumber" class="input-field" placeholder="Телефон">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Пароль:</label>
+        <input type="password" v-model="password" id="password" class="input-field" placeholder="Пароль">
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Повторіть пароль:</label>
+        <input type="password" v-model="confirmPassword" id="confirmPassword" class="input-field" placeholder="Повторіть пароль">
+      </div>
+
+      <button type="submit" class="submit-btn">Зареєструватися</button>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+  </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 export default {
   setup() {
@@ -23,7 +48,7 @@ export default {
     const firstname = ref('');
     const lastname = ref('');
     const phoneNumber = ref('');
-
+    const errorMessage = ref('');
     const registerUser = async () => {
       if (password.value !== confirmPassword.value) {
         // Обработка ошибки, если пароли не совпадают
@@ -52,7 +77,13 @@ export default {
           // Обработка ошибки регистрации
         }
       } catch (error) {
-        // Обработка ошибок связи с сервером
+        if (error.response && error.response.status === 409) {
+          // Конфликт: пользователь с таким номером телефона или логином уже существует
+          this.errorMessage = 'Пользователь с таким номером телефона или логином уже существует';
+        } else {
+          // Другие ошибки
+          this.errorMessage = 'Произошла ошибка при регистрации пользователя';
+        }
       }
     };
 
@@ -63,7 +94,8 @@ export default {
       confirmPassword,
       firstname,
       lastname,
-      registerUser
+      errorMessage,
+      registerUser,
     };
   }
 };
@@ -71,25 +103,22 @@ export default {
 
 <style scoped>
 .registration-form {
-  width: 300px;
+  max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+}
 
+.form-group {
+  margin-bottom: 15px;
 }
 
 .input-field {
-  display: block;
-  width: 94%;
-  margin-bottom: 10px;
+  width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 
 .submit-btn {
-  display: block;
   width: 100%;
   padding: 10px;
   border: none;
@@ -97,5 +126,10 @@ export default {
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 10px;
 }
 </style>
