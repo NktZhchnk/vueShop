@@ -5,6 +5,7 @@ import UiMainHeader from "@/components/UiMainHeader.vue";
 import UiSlideMenu from "@/components/UiSlideMenu.vue";
 import {useMyStore} from "@/store/store.js";
 import UiRegistration from "@/components/Users/UiRegistration.vue";
+import UiAuth from "@/components/Users/UiAuth.vue";
 
 
 const store = useMyStore()
@@ -33,6 +34,7 @@ const store = useMyStore()
       </div>
       gdgd
       <UiRegistration></UiRegistration>
+      <UiAuth></UiAuth>
 <!--      <router-view></router-view>-->
     </div>
   </div>
