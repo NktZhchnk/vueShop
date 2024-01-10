@@ -6,6 +6,7 @@ import logger from 'morgan';
 import dotenv from 'dotenv';
 import axios from "axios";
 import bcrypt from "bcrypt"
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -340,8 +341,16 @@ app.post('/login', (req, res) => {
                         res.status(500).json({ error: 'Ошибка сравнения паролей' });
                     } else {
                         if (bcryptResult) {
-                            // Пароль совпадает, пользователь аутентифицирован успешно
-                            res.status(200).json({ message: 'Успешная аутентификация' });
+                            // Пароль совпадает, генерируем токен
+                            const user = {
+                                id: results[0].id,
+                                login: results[0].login,
+                                // Другие данные о пользователе, которые могут быть полезны
+                            };
+
+                            const accessToken = jwt.sign(user, 'секретный_ключ', { expiresIn: '1h' });
+
+                            res.status(200).json({ accessToken });
                         } else {
                             // Неправильный пароль
                             res.status(401).json({ error: 'Неправильный пароль' });
