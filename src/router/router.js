@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
 
     if (to.name === 'AdminMenu' && (!token || userLogin !== 'admin')) {
         // Если маршрут требует аутентификации и логин не равен 'admin', перенаправляем на страницу входа
-        next('/login');
+        return
     } else {
         // Продолжаем навигацию
         next();
