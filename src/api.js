@@ -368,7 +368,7 @@ app.post('/login', (req, res) => {
 
                             const accessToken = jwt.sign(user, 'секретный_ключ', { expiresIn: '1h' });
 
-                            res.status(200).json({ accessToken });
+                            res.status(200).json({ accessToken, login: user.login });
                         } else {
                             // Неправильный пароль
                             res.status(401).json({ error: 'Неправильный пароль' });

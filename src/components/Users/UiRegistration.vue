@@ -32,7 +32,7 @@
       </div>
 
       <button type="submit" class="submit-btn">Зареєструватися</button>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }} <br/><router-link  to="/login">войти</router-link></p>
     </form>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
     const firstname = ref('');
     const lastname = ref('');
     const phoneNumber = ref('');
-    const errorMessage = ref('');
+    let errorMessage = ref('');
     const registerUser = async () => {
       if (password.value !== confirmPassword.value) {
         // Обработка ошибки, если пароли не совпадают
@@ -67,7 +67,6 @@ export default {
             password: password.value,
             first_name: firstname.value,
             last_name: lastname.value
-
           })
         });
 
@@ -75,14 +74,16 @@ export default {
           // Регистрация прошла успешно
         } else {
           // Обработка ошибки регистрации
+          errorMessage.value = 'Пользователь с таким номером телефона или логином уже существует';
         }
       } catch (error) {
         if (error.response && error.response.status === 409) {
           // Конфликт: пользователь с таким номером телефона или логином уже существует
-          this.errorMessage = 'Пользователь с таким номером телефона или логином уже существует';
+
+          errorMessage.value = 'Пользователь с таким номером телефона или логином уже существует';
         } else {
           // Другие ошибки
-          this.errorMessage = 'Произошла ошибка при регистрации пользователя';
+          errorMessage.value = 'Произошла ошибка при регистрации пользователя';
         }
       }
     };
@@ -102,34 +103,48 @@ export default {
 </script>
 
 <style scoped>
+/* Основной контейнер формы */
 .registration-form {
   max-width: 400px;
-  margin: 0 auto;
+  margin: auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
+/* Общие стили для всех полей ввода */
 .input-field {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
 }
 
+/* Кнопка отправки */
 .submit-btn {
   width: 100%;
   padding: 10px;
-  border: none;
-  border-radius: 3px;
-  background-color: #007bff;
+  background-color: #4CAF50;
   color: #fff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
+/* Стили для сообщения об ошибке */
 .error-message {
-  color: #ff0000;
+  color: red;
   margin-top: 10px;
 }
+
+/* Медиазапросы для различных размеров экранов */
+@media screen and (max-width: 600px) {
+  .registration-form {
+    max-width: 100%;
+  }
+}
+
+/* Дополнительные стили можно добавить для других размеров экранов при необходимости */
+
 </style>
