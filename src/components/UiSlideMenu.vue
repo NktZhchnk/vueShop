@@ -28,7 +28,7 @@ const isAdmin = () => {
         </div>
       </div>
       <div style="height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center;">
-        <div style="padding: 50px"><router-link  to="/login">Увійти</router-link> </div>
+        <div style="padding: 50px"><router-link  to="/authLogin">Увійти</router-link> </div>
         <div style="padding: 50px"> <router-link to="/registration">Реєстрація</router-link> </div>
       </div>
 
