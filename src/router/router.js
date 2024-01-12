@@ -39,7 +39,7 @@ const routes = [
     },
     {
         name: 'Auth',
-        path: '/login',
+        path: '/authLogin',
         component: UiAuth,
     },  {
         name: 'Registration',
@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
 
     if (to.name === 'AdminMenu' && (!token || userLogin !== 'admin')) {
         // Если маршрут требует аутентификации и логин не равен 'admin', перенаправляем на страницу входа
-        return
+        next('/authLogin');
     } else {
         // Продолжаем навигацию
         next();
