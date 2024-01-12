@@ -38,7 +38,7 @@ const loginUser = async () => {
       // Сохранение токена в localStorage после успешного входа
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('userLogin', data.login);
-
+      location.reload();
       // Пример вывода токена в консоль (для проверки)
       console.log('Токен сохранен в localStorage:', data.accessToken);
       console.log('userLogin сохранен в localStorage:', data.login);

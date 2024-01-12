@@ -32,9 +32,6 @@ const store = useMyStore()
           </svg>
         </router-link>
       </div>
-      <UiRegistration></UiRegistration>
-      <UiAuth></UiAuth>
-      <router-link to="/adminMenu">adadadad</router-link>
       <router-view></router-view>
     </div>
   </div>

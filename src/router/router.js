@@ -7,6 +7,8 @@ import UiRenderAllProducts from "@/components/UiRenderAllProducts.vue";
 import UiCatalog from "@/components/UiCatalog.vue";
 import UiRenderProductsCategory from "@/components/UiRenderProductsCategory.vue";
 import UiConfirmationOrder from "@/components/UiConfirmationOrder.vue";
+import UiAuth from "@/components/Users/UiAuth.vue";
+import UiRegistration from "@/components/Users/UiRegistration.vue";
 
 
 const routes = [
@@ -36,6 +38,15 @@ const routes = [
         component: UiMainHeader
     },
     {
+        name: 'Auth',
+        path: '/login',
+        component: UiAuth,
+    },  {
+        name: 'Registration',
+        path: '/registration',
+        component: UiRegistration,
+    },
+    {
         path: '/product/:id',
         name: 'ProductDetails',
         component: ProductDetails,
@@ -55,13 +66,15 @@ const router = createRouter({
     routes
 });
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('accessToken'); // Получение токена из localStorage или другого хранилища
+    const token = localStorage.getItem('accessToken');
+    const userLogin = localStorage.getItem('userLogin'); // Предположим, что вы храните логин пользователя в localStorage
 
-    // Проверка, если маршрут требует аутентификации и токен отсутствует
-    if (to.name === 'AdminMenu' && !token) {
-        next('/login'); // Перенаправление на страницу входа
+    if (to.name === 'AdminMenu' && (!token || userLogin !== 'admin')) {
+        // Если маршрут требует аутентификации и логин не равен 'admin', перенаправляем на страницу входа
+        next('/login');
     } else {
-        next(); // Продолжаем навигацию
+        // Продолжаем навигацию
+        next();
     }
 });
 export default router;

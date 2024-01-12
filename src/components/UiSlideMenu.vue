@@ -1,9 +1,15 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
-import AuthAdminPanel from "@/components/AdminPanel/AuthAdminPanel.vue";
 
+import {ref} from 'vue'
 
 const store = useMyStore()
+
+const userLogin = ref(localStorage.getItem('userLogin'));
+
+const isAdmin = () => {
+  return userLogin.value === 'admin';
+};
 
 </script>
 
@@ -21,13 +27,19 @@ const store = useMyStore()
           X
         </div>
       </div>
+      <div style="height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 50px"><router-link  to="/login">Увійти</router-link> </div>
+        <div style="padding: 50px"> <router-link to="/registration">Реєстрація</router-link> </div>
+      </div>
+
       <div class="div-body">
         <p>Здесь будет навигация сайта2</p>
+        <router-link v-if="isAdmin()" to="/adminMenu">добавление товара</router-link>
       </div>
       <div class="div-footer">
-        <br/>
-        <AuthAdminPanel></AuthAdminPanel>
-        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>
+<!--        <br/>-->
+<!--        <AuthAdminPanel></AuthAdminPanel>-->
+<!--        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>-->
       </div>
     </div>
   </div>
