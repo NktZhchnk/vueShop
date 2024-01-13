@@ -239,13 +239,19 @@ app.get('/getOrders', (req, res) => {
 });
 
 app.get('/getItemOrder/:orderId', (req, res) => {
-    const sqlQuery = 'SELECT * FROM order_item';
-    connection.query(sqlQuery, (error, results) => {
+    const productId = req.params.id;
+
+    const sqlQuery = 'SELECT * FROM order_item WHERE order_id = ?';
+    connection.query(sqlQuery, [productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({error: 'Ошибка выполнения запроса'});
         } else {
-            res.json(results);
+            if (results.length === 0) {
+                res.status(404).json({message: 'Вариации не найдены'});
+            } else {
+                res.json(results); // Отправляем найденные вариации в качестве ответа
+            }
         }
     });
 });
@@ -308,10 +314,10 @@ app.delete('/deleteProduct/:id', (req, res) => {
 });
 
 app.post('/addUsers', (req, res) => {
-    const { phone_number, login, password, first_name, last_name } = req.body;
+    const {phone_number, login, password, first_name, last_name} = req.body;
 
     if (!phone_number || !login || !password || !first_name || !last_name) {
-        return res.status(400).json({ error: 'Отсутствуют необходимые поля в запросе' });
+        return res.status(400).json({error: 'Отсутствуют необходимые поля в запросе'});
     }
 
     // Проверка наличия пользователя с таким номером телефона или логином
@@ -319,12 +325,12 @@ app.post('/addUsers', (req, res) => {
     connection.query(checkDuplicateQuery, [phone_number, login], (duplicateError, duplicateResults) => {
         if (duplicateError) {
             console.error('Ошибка при проверке дубликатов:', duplicateError);
-            return res.status(500).json({ error: 'Ошибка при проверке дубликатов' });
+            return res.status(500).json({error: 'Ошибка при проверке дубликатов'});
         }
 
         if (duplicateResults.length > 0) {
             // Пользователь с таким номером телефона или логином уже существует
-            return res.status(409).json({ error: 'Пользователь с таким номером телефона или логином уже существует' });
+            return res.status(409).json({error: 'Пользователь с таким номером телефона или логином уже существует'});
         }
 
         // Продолжаем регистрацию, так как пользователь с таким номером телефона или логином не существует
@@ -337,37 +343,37 @@ app.post('/addUsers', (req, res) => {
         connection.query(insertUserQuery, [phone_number, login, hashedPassword, first_name, last_name], (error) => {
             if (error) {
                 console.error('Ошибка добавления пользователя:', error);
-                return res.status(500).json({ error: 'Ошибка добавления пользователя' });
+                return res.status(500).json({error: 'Ошибка добавления пользователя'});
             }
 
-            res.status(200).json({ message: 'Пользователь успешно добавлен' });
+            res.status(200).json({message: 'Пользователь успешно добавлен'});
         });
     });
 });
 
 
 app.post('/login', (req, res) => {
-    const { login, password } = req.body;
+    const {login, password} = req.body;
 
     if (!login || !password) {
-        return res.status(400).json({ error: 'Отсутствует логин или пароль в запросе' });
+        return res.status(400).json({error: 'Отсутствует логин или пароль в запросе'});
     }
 
     const sqlQuery = 'SELECT * FROM users WHERE login = ?';
     connection.query(sqlQuery, [login], (error, results) => {
         if (error) {
             console.error('Ошибка при поиске пользователя:', error);
-            res.status(500).json({ error: 'Ошибка при поиске пользователя' });
+            res.status(500).json({error: 'Ошибка при поиске пользователя'});
         } else {
             if (results.length === 0) {
-                res.status(404).json({ error: 'Пользователь не найден' });
+                res.status(404).json({error: 'Пользователь не найден'});
             } else {
                 const hashedPassword = results[0].password;
 
                 bcrypt.compare(password, hashedPassword, (bcryptError, bcryptResult) => {
                     if (bcryptError) {
                         console.error('Ошибка сравнения паролей:', bcryptError);
-                        res.status(500).json({ error: 'Ошибка сравнения паролей' });
+                        res.status(500).json({error: 'Ошибка сравнения паролей'});
                     } else {
                         if (bcryptResult) {
                             // Пароль совпадает, генерируем токен
@@ -377,12 +383,12 @@ app.post('/login', (req, res) => {
                                 // Другие данные о пользователе, которые могут быть полезны
                             };
 
-                            const accessToken = jwt.sign(user, 'секретный_ключ', { expiresIn: '1h' });
+                            const accessToken = jwt.sign(user, 'секретный_ключ', {expiresIn: '1h'});
 
-                            res.status(200).json({ accessToken, login: user.login });
+                            res.status(200).json({accessToken, login: user.login});
                         } else {
                             // Неправильный пароль
-                            res.status(401).json({ error: 'Неправильный пароль' });
+                            res.status(401).json({error: 'Неправильный пароль'});
                         }
                     }
                 });
@@ -390,7 +396,6 @@ app.post('/login', (req, res) => {
         }
     });
 });
-
 
 
 app.post('/addProduct', (req, res) => {
