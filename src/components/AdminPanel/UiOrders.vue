@@ -6,7 +6,7 @@ const orderDetails = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await axios.get('https://eseniabila.com.ua/orders');
+    const response = await axios.get('https://eseniabila.com.ua/addOrders');
     orderDetails.value = response.data; // Предположим, что данные находятся в свойстве data объекта ответа
     console.log(orderDetails.value)
   } catch (error) {
