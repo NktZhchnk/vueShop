@@ -3,8 +3,7 @@
 <template>
   <div>
     <h2>Order Details</h2>
-    <p>Order ID: {{ orderId }}</p>
-    <!-- Ваш код для отображения подробной информации о заказе -->
+    <p v-if="orderId">Order ID: {{ orderId }}</p>
     <div v-if="order">
       <p>Order Date: {{ order.order_date }}</p>
       <p>Telephone: {{ order.telephone }}</p>
@@ -16,20 +15,27 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRoute } from "vue-router";
 
 const orderId = ref(null);
 const order = ref(null);
 
 onMounted(async () => {
-  // Получаем orderId из параметров маршрута
-  orderId.value = $route.params.orderId;
+  // Используем useRoute для получения доступа к $route
+  const route = useRoute();
 
-  try {
-    // Загружаем подробную информацию о заказе
-    const response = await axios.get(`https://eseniabila.com.ua/getOrderDetails/${orderId.value}`);
-    order.value = response.data;
-  } catch (error) {
-    console.error('Ошибка при получении подробной информации о заказе:', error);
+  // Получаем orderId из параметров маршрута
+  orderId.value = route.params.orderId;
+
+  // Проверяем наличие orderId перед запросом к серверу
+  if (orderId.value) {
+    try {
+      // Загружаем подробную информацию о заказе
+      const response = await axios.get(`https://eseniabila.com.ua/getOrderDetails/${orderId.value}`);
+      order.value = response.data;
+    } catch (error) {
+      console.error('Ошибка при получении подробной информации о заказе:', error);
+    }
   }
 });
 </script>
