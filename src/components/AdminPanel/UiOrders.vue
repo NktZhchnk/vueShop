@@ -2,6 +2,7 @@
 <template>
   <div>
     <router-link
+        class="link-order"
         v-for="(order, index) in uniqueOrders"
         :key="index"
         :to="'/order-details/' + order.id"
@@ -11,6 +12,7 @@
         <h2>{{ order.first_name }} {{ order.last_name }}</h2>
         <p>Order Date: {{ order.order_date }}</p>
         <p>Telephone: {{ order.telephone }}</p>
+        <p>Comment: {{ order.comment }}</p>
         <!-- Другие поля карточки -->
       </div>
     </router-link>
@@ -53,5 +55,9 @@ const uniqueOrders = computed(() => {
   border: 1px solid #ddd;
   padding: 10px;
   margin: 10px;
+}
+.link-order{
+  text-decoration: none; /* Убирает подчеркивание ссылки */
+  color: black; /* Задайте цвет текста, который вы хотите использовать */
 }
 </style>
