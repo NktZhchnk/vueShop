@@ -239,7 +239,7 @@ app.get('/getOrders', (req, res) => {
 });
 
 app.get('/getItemOrder/:orderId', (req, res) => {
-    const orderId = req.params.order_id;
+    const orderId = req.params.orderId; // Исправлено с req.params.order_id
     console.log(orderId)
 
     const sqlQuery = 'SELECT * FROM order_item WHERE order_id = ?';
@@ -256,6 +256,7 @@ app.get('/getItemOrder/:orderId', (req, res) => {
         }
     });
 });
+
 app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления
 
