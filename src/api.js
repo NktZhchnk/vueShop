@@ -240,6 +240,7 @@ app.get('/getOrders', (req, res) => {
 
 app.get('/getItemOrder/:orderId', (req, res) => {
     const orderId = req.params.order_id;
+    console.log(orderId)
 
     const sqlQuery = 'SELECT * FROM order_item WHERE order_id = ?';
     connection.query(sqlQuery, [orderId], (error, results) => {
