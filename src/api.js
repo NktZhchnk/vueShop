@@ -39,18 +39,6 @@ app.get('/getProducts', (req, res) => {
         }
     });
 });
-app.get('/getOrders', (req, res) => {
-    const sqlQuery = 'SELECT * FROM orders';
-    connection.query(sqlQuery, (error, results) => {
-        if (error) {
-            console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({error: 'Ошибка выполнения запроса'});
-        } else {
-            res.json(results);
-        }
-    });
-});
-
 app.get('/getProductsCategory', (req, res) => {
     const category = req.query.category; // Получение категории из запроса
 
@@ -238,6 +226,29 @@ app.get('/getUsers', (req, res) => {
     });
 });
 
+app.get('/getOrders', (req, res) => {
+    const sqlQuery = 'SELECT * FROM orders';
+    connection.query(sqlQuery, (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+app.get('/getItemOrder', (req, res) => {
+    const sqlQuery = 'SELECT * FROM order_item';
+    connection.query(sqlQuery, (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            res.json(results);
+        }
+    });
+});
 app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления
 
