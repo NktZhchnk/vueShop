@@ -59,6 +59,11 @@ const routes = [
         props: true
     },
     {
+        path: '/order-details/:orderId',
+        name: 'OrderDetails',
+        component: OrderDetails,
+    },
+    {
         path: '/image/:category',
         name: 'UiRenderProductsCategory',
         component: UiRenderProductsCategory,

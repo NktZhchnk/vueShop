@@ -238,7 +238,7 @@ app.get('/getOrders', (req, res) => {
     });
 });
 
-app.get('/getItemOrder', (req, res) => {
+app.get('/getItemOrder/:orderId', (req, res) => {
     const sqlQuery = 'SELECT * FROM order_item';
     connection.query(sqlQuery, (error, results) => {
         if (error) {
