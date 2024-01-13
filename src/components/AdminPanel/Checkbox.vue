@@ -47,12 +47,12 @@ export default {
             quantity: 0,
           });
         }
-      }else{
+      } else {
         const inpCheck = document.querySelector('.inpCheck')
         inpCheck.style.border = "3px solid red"
-        setTimeout(()=>{
+        setTimeout(() => {
           inpCheck.style.border = "1px solid gray"
-        },2000)
+        }, 2000)
       }
     };
 

@@ -27,19 +27,33 @@ const isAdmin = () => {
           X
         </div>
       </div>
-      <div style="height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center;">
-        <div style="padding: 50px"><router-link  to="/authLogin">Увійти</router-link> </div>
-        <div style="padding: 50px"> <router-link to="/registration">Реєстрація</router-link> </div>
+      <div
+          style="border-bottom: 1px solid gray; height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 50px">
+          <router-link to="/authLogin">Увійти</router-link>
+        </div>
+        <div style="padding: 50px">
+          <router-link to="/registration">Реєстрація</router-link>
+        </div>
       </div>
 
       <div class="div-body">
-        <p>Здесь будет навигация сайта2</p>
-        <router-link v-if="isAdmin()" to="/adminMenu">добавление товара</router-link>
+        <p>Здесь будет навигация сайта</p>
+        <div v-if="isAdmin()">
+          <ul>
+            <li>
+              <router-link to="/adminMenu">добавление товара</router-link>
+            </li>
+            <li>
+              <router-link to="/uiOrders">заказы</router-link>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="div-footer">
-<!--        <br/>-->
-<!--        <AuthAdminPanel></AuthAdminPanel>-->
-<!--        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>-->
+        <!--        <br/>-->
+        <!--        <AuthAdminPanel></AuthAdminPanel>-->
+        <!--        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>-->
       </div>
     </div>
   </div>
