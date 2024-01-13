@@ -242,7 +242,7 @@ app.get('/getItemOrder/:orderId', (req, res) => {
     const orderId = req.params.orderId; // Исправлено с req.params.order_id
     console.log(orderId)
 
-    const sqlQuery = 'SELECT * FROM order_item WHERE order_id = ?';
+    const sqlQuery = 'SELECT * FROM order_items WHERE order_id = ?';
     connection.query(sqlQuery, [orderId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
