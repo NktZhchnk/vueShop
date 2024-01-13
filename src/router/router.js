@@ -10,6 +10,7 @@ import UiConfirmationOrder from "@/components/UiConfirmationOrder.vue";
 import UiAuth from "@/components/Users/UiAuth.vue";
 import UiRegistration from "@/components/Users/UiRegistration.vue";
 import UiOrders from "@/components/AdminPanel/UiOrders.vue";
+import OrderDetails from "@/components/AdminPanel/OrderDetails.vue";
 
 
 const routes = [
