@@ -4,7 +4,7 @@
     <router-link
         v-for="(order, index) in uniqueOrders"
         :key="index"
-        :to="{ name: 'OrderDetails', params: { orderId: order.order_id }}"
+        :to="'/order-details/' + order.id"
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">

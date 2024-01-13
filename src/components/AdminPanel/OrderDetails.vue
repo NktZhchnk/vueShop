@@ -31,7 +31,7 @@ onMounted(async () => {
   if (orderId.value) {
     try {
       // Загружаем подробную информацию о заказе
-      const response = await axios.get(`https://eseniabila.com.ua/getOrderDetails/${orderId.value}`);
+      const response = await axios.get(`https://eseniabila.com.ua/getItemOrder/${orderId.value}`);
       order.value = response.data;
     } catch (error) {
       console.error('Ошибка при получении подробной информации о заказе:', error);
