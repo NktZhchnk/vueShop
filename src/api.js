@@ -239,10 +239,10 @@ app.get('/getOrders', (req, res) => {
 });
 
 app.get('/getItemOrder/:orderId', (req, res) => {
-    const productId = req.params.id;
+    const orderId = req.params.order_id;
 
     const sqlQuery = 'SELECT * FROM order_item WHERE order_id = ?';
-    connection.query(sqlQuery, [productId], (error, results) => {
+    connection.query(sqlQuery, [orderId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({error: 'Ошибка выполнения запроса'});
