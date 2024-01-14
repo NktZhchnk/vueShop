@@ -40,12 +40,15 @@ const isAdmin = () => {
       <div class="div-body">
         <p>Здесь будет навигация сайта</p>
         <div v-if="isAdmin()">
-          <ul>
+          <ul class="nav-menu">
             <li>
-              <router-link to="/adminMenu">добавление товара</router-link>
+              <router-link to="/adminMenu">Додавання товару</router-link>
             </li>
             <li>
-              <router-link to="/uiOrders">заказы</router-link>
+              <router-link to="/uiOrders">Замовлення</router-link>
+            </li>
+            <li>
+              <router-link to="/uiOrdersComplete">Виконані замовлення</router-link>
             </li>
           </ul>
         </div>
@@ -138,7 +141,29 @@ const isAdmin = () => {
 .slide-in {
   transform: translateX(0);
 }
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
+.nav-menu li {
+  margin: 0;
+}
+
+/* Стили для ссылок в списке */
+.nav-menu a {
+  text-decoration: none;
+  color: #050303; /* Цвет текста ссылок */
+  display: block;
+  padding: 15px 20px; /* Отступы внутри элемента списка */
+  transition: background-color 0.3s ease; /* Плавное изменение цвета фона */
+}
+
+.nav-menu a:hover {
+  background-color: #f2f2f2; /* Цвет фона при наведении */
+  color: rgba(70, 70, 70, 0.8); /* Изменение цвета текста при наведении */
+}
 
 @media screen and (max-width: 370px) {
   .main-menu {
