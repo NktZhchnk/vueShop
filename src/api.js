@@ -256,6 +256,33 @@ app.get('/getItemOrder/:orderId', (req, res) => {
         }
     });
 });
+app.put('/updateOrder/:orderId', (req, res) => {
+    const orderId = req.params.orderId;
+    const { complete } = req.body; // Предполагается, что вы отправляете объект с полем complete в запросе
+
+    const sqlQuery = 'UPDATE orders SET complete = ? WHERE id = ?';
+    connection.query(sqlQuery, [complete, orderId], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({error: 'Ошибка выполнения запроса'});
+        } else {
+            if (results.affectedRows === 0) {
+                res.status(404).json({message: 'Заказ не найден'});
+            } else {
+                // Если обновление прошло успешно, отправляем обновленные данные заказа в качестве ответа
+                const updatedOrderQuery = 'SELECT * FROM orders WHERE id = ?';
+                connection.query(updatedOrderQuery, [orderId], (error, updatedResults) => {
+                    if (error) {
+                        console.error('Ошибка выполнения запроса:', error);
+                        res.status(500).json({error: 'Ошибка выполнения запроса'});
+                    } else {
+                        res.json(updatedResults[0]);
+                    }
+                });
+            }
+        }
+    });
+});
 
 app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления

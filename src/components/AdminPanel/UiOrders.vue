@@ -9,7 +9,9 @@
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">
-        <h2>{{ order.first_name }} {{ order.last_name }}</h2>
+        <h2>{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
+          <button @click="toggleOrderCompletion(order.id, order.complete)">{{ order.complete ? 'Mark Incomplete' : 'Mark Complete' }}</button>
+        </h2>
         <p>Дата: {{ order.order_date }}</p>
         <p>Телефон: {{ order.telephone }}</p>
         <p>Коментар: {{ order.comment }}</p>
@@ -24,7 +26,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import {computed, ref, onMounted} from "vue";
 import axios from "axios";
 
 const orderDetails = ref([]);
@@ -51,6 +53,19 @@ const uniqueOrders = computed(() => {
   });
   return filteredOrders.reverse();
 });
+const toggleOrderCompletion = async (orderId, currentStatus) => {
+  try {
+    const response = await axios.put(`https://eseniabila.com.ua/updateOrder/${orderId}`, {
+      complete: !currentStatus
+    });
+    // Обновление локальных данных после успешного обновления на сервере
+    const updatedOrder = response.data;
+    const index = orderDetails.value.findIndex(order => order.id === orderId);
+    orderDetails.value[index] = updatedOrder;
+  } catch (error) {
+    console.error('Ошибка при обновлении статуса заказа:', error);
+  }
+};
 </script>
 
 <style scoped>
