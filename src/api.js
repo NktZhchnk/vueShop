@@ -256,6 +256,63 @@ app.get('/getItemOrder/:orderId', (req, res) => {
         }
     });
 });
+
+app.put('/updateVariety/:varietyId', (req, res) => {
+    const varietyId = req.params.varietyId;
+    const { newVarietyQuan } = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
+
+    const sqlQuery = 'UPDATE product_varieties SET variety_quan = ? WHERE id = ?';
+    connection.query(sqlQuery, [newVarietyQuan, varietyId], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            if (results.affectedRows === 0) {
+                res.status(404).json({ message: 'Вариация товара не найдена' });
+            } else {
+                // Если обновление прошло успешно, отправляем обновленные данные вариации в качестве ответа
+                const updatedVarietyQuery = 'SELECT * FROM product_varieties WHERE id = ?';
+                connection.query(updatedVarietyQuery, [varietyId], (error, updatedResults) => {
+                    if (error) {
+                        console.error('Ошибка выполнения запроса:', error);
+                        res.status(500).json({ error: 'Ошибка выполнения запроса' });
+                    } else {
+                        res.json(updatedResults[0]);
+                    }
+                });
+            }
+        }
+    });
+});
+
+app.put('/updateProductCount/:productId', (req, res) => {
+    const productId = req.params.productId;
+    const { newVarietyQuan } = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
+
+    const sqlQuery = 'UPDATE products SET quan_item = ? WHERE id = ?';
+    connection.query(sqlQuery, [newVarietyQuan, productId], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            if (results.affectedRows === 0) {
+                res.status(404).json({ message: 'Товар не найден' });
+            } else {
+                // Если обновление прошло успешно, отправляем обновленные данные товара в качестве ответа
+                const updatedProductQuery = 'SELECT * FROM products WHERE id = ?';
+                connection.query(updatedProductQuery, [productId], (error, updatedResults) => {
+                    if (error) {
+                        console.error('Ошибка выполнения запроса:', error);
+                        res.status(500).json({ error: 'Ошибка выполнения запроса' });
+                    } else {
+                        res.json(updatedResults[0]);
+                    }
+                });
+            }
+        }
+    });
+});
+
 app.put('/updateOrder/:orderId', (req, res) => {
     const orderId = req.params.orderId;
     const { complete } = req.body; // Предполагается, что вы отправляете объект с полем complete в запросе

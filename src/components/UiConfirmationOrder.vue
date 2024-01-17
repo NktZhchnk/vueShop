@@ -69,7 +69,7 @@ const addOrders = () => {
             // Обработка ошибки
           });
       store.cartProducts.forEach((cartProduct) => {
-        let orderItem ={
+        let orderItem = {
           order_id: store.lastIdOrders,
           quantity: cartProduct.countProduct,
           image_url: cartProduct.images.img,
@@ -78,7 +78,51 @@ const addOrders = () => {
           item_name: cartProduct.product.name_item,
           variety_name: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_name : null,
         };
-        console.log(orderItem)
+        if (cartProduct.selectedVariety !== null) {
+          const varietyId = cartProduct.selectedVariety.id;
+          const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
+
+          axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
+            variety_quan: newVarietyQuan
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+              .then(response => {
+                console.log('Ответ сервера количество вариации:', response.data);
+                // Обработка успешного ответа
+              })
+              .catch(error => {
+                console.error('Ошибка при отправке данных на сервер вариации:', error);
+                // Обработка ошибки
+              });
+        } else if (cartProduct.selectedVariety === null) {
+
+            const productId = cartProduct.product.id;
+            const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
+
+            axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+              variety_quan: newVarietyQuan
+            }, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+                .then(response => {
+                  console.log('Ответ сервера продукта:', response.data);
+                  // Обработка успешного ответа
+                })
+                .catch(error => {
+                  console.error('Ошибка при отправке данных на сервер продукта:', error);
+                  // Обработка ошибки
+                });
+
+        } else {
+          console.log('ты лох')
+          return
+        }
+
         axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
           headers: {
             'Content-Type': 'application/json'

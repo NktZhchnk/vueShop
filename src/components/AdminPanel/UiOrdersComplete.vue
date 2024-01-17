@@ -1,22 +1,34 @@
 <template>
   <div>
+    <!-- Поле ввода для поиска -->
+    <div class="card">
+      <input v-model="searchQuery" placeholder="Поиск по номеру телефона" class="search-input"/>
+    </div>
     <router-link
         class="link-order"
-        v-for="(order, index) in completedOrders"
+        v-for="(order, index) in filteredOrders"
         :key="index"
         :to="'/order-details/' + order.id"
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">
-        <h2>{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
-          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">{{ order.complete ? 'Не виконано' : 'виконано' }}</button>
+        <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }}
+          {{ order.middle_name }}
+          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">
+            {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
+          </button>
+          <svg @click.prevent="console.log('h')" xmlns="http://www.w3.org/2000/svg" height="28" width="26" viewBox="0 0 448 512">
+            <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+          </svg>
         </h2>
         <p>Дата: {{ order.order_date }}</p>
         <p>Телефон: {{ order.telephone }}</p>
-        <p>Коментар: {{ order.comment }}</p>
+        <p>Комментарий: {{ order.comment }}</p>
         <p>Город: {{ order.city }}</p>
-        <p v-if="order.address">Нова пошта: {{ order.address }}</p>
-        <p v-if="order.postal_code">УкрПошта: {{ order.postal_code }}</p>
+        <p v-if="order.address">Новая почта: {{ order.address }}</p>
+        <p v-if="order.postal_code">УкрПочта: {{ order.postal_code }}</p>
         <p>Total price: {{ order.total_price }} ₴.</p>
         <!-- Другие поля карточки -->
       </div>
@@ -29,6 +41,7 @@ import {computed, ref, onMounted} from "vue";
 import axios from "axios";
 
 const orderDetails = ref([]);
+const searchQuery = ref('');
 
 onMounted(async () => {
   try {
@@ -41,7 +54,12 @@ onMounted(async () => {
 });
 
 const completedOrders = computed(() => {
-  return orderDetails.value.filter(order => order.complete === 0).reverse();
+  return orderDetails.value.filter(order => order.complete === 1).reverse();
+});
+
+const filteredOrders = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return completedOrders.value.filter(order => order.telephone.toLowerCase().includes(query));
 });
 
 const toggleOrderCompletion = async (orderId, currentStatus) => {
@@ -61,6 +79,16 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
 
 <!-- Ваши стили для карточек и ссылок -->
 <style scoped>
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 98%; /* Измените ширину по вашему усмотрению */
+}
+
 .card {
   border: 1px solid #ddd;
   padding: 20px;

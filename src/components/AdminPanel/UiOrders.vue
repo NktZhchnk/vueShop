@@ -1,22 +1,26 @@
 <template>
   <div>
+    <!-- Поле ввода для поиска -->
+    <div class="card">
+      <input v-model="searchQuery" placeholder="Поиск по номеру телефона" class="search-input" />
+    </div>
     <router-link
         class="link-order"
-        v-for="(order, index) in completedOrders"
+        v-for="(order, index) in filteredOrders"
         :key="index"
         :to="'/order-details/' + order.id"
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">
         <h2>{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
-          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">{{ order.complete ? 'Не виконано' : 'виконано' }}</button>
+          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">{{ order.complete ? 'Не выполнено' : 'Выполнено' }}</button>
         </h2>
         <p>Дата: {{ order.order_date }}</p>
         <p>Телефон: {{ order.telephone }}</p>
-        <p>Коментар: {{ order.comment }}</p>
+        <p>Комментарий: {{ order.comment }}</p>
         <p>Город: {{ order.city }}</p>
-        <p v-if="order.address">Нова пошта: {{ order.address }}</p>
-        <p v-if="order.postal_code">УкрПошта: {{ order.postal_code }}</p>
+        <p v-if="order.address">Новая почта: {{ order.address }}</p>
+        <p v-if="order.postal_code">УкрПочта: {{ order.postal_code }}</p>
         <p>Total price: {{ order.total_price }} ₴.</p>
         <!-- Другие поля карточки -->
       </div>
@@ -29,6 +33,7 @@ import {computed, ref, onMounted} from "vue";
 import axios from "axios";
 
 const orderDetails = ref([]);
+const searchQuery = ref('');
 
 onMounted(async () => {
   try {
@@ -42,6 +47,11 @@ onMounted(async () => {
 
 const completedOrders = computed(() => {
   return orderDetails.value.filter(order => order.complete === 1).reverse();
+});
+
+const filteredOrders = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return completedOrders.value.filter(order => order.telephone.toLowerCase().includes(query));
 });
 
 const toggleOrderCompletion = async (orderId, currentStatus) => {
@@ -61,6 +71,16 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
 
 <!-- Ваши стили для карточек и ссылок -->
 <style scoped>
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 98%; /* Измените ширину по вашему усмотрению */
+}
+
 .card {
   border: 1px solid #ddd;
   padding: 20px;
