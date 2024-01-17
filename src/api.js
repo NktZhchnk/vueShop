@@ -257,7 +257,7 @@ app.get('/getItemOrder/:orderId', (req, res) => {
     });
 });
 
-app.put('/updateVariety/:varietyId', (req, res) => {
+app.put('/updateVarietyCount/:varietyId', (req, res) => {
     const varietyId = req.params.varietyId;
     const { newVarietyQuan } = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
 
