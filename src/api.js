@@ -260,7 +260,7 @@ app.get('/getItemOrder/:orderId', (req, res) => {
 app.put('/updateVarietyCount/:varietyId', (req, res) => {
     const varietyId = req.params.varietyId;
     const {variety_quan} = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
-    console.log('newVarietyQuan:', variety_quan);
+
     const sqlQuery = 'UPDATE product_varieties SET variety_quan = ? WHERE id = ?';
     connection.query(sqlQuery, [variety_quan, varietyId], (error, results) => {
         if (error) {
@@ -287,10 +287,10 @@ app.put('/updateVarietyCount/:varietyId', (req, res) => {
 
 app.put('/updateProductCount/:productId', (req, res) => {
     const productId = req.params.productId;
-    const {newVarietyQuan} = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
+    const {variety_quan} = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
 
     const sqlQuery = 'UPDATE products SET quan_item = ? WHERE id = ?';
-    connection.query(sqlQuery, [newVarietyQuan, productId], (error, results) => {
+    connection.query(sqlQuery, [variety_quan, productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({error: 'Ошибка выполнения запроса'});
