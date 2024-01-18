@@ -29,7 +29,7 @@ const validateText = () => {
   firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
   surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
 }
-const updateProductCount = async (cartProduct, orderItem) => {
+const updateProductCount = async (cartProduct) => {
   try {
     const productId = cartProduct.product.id;
     const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
@@ -41,7 +41,7 @@ const updateProductCount = async (cartProduct, orderItem) => {
         'Content-Type': 'application/json'
       }
     });
-    orderItem.quantity = newVarietyQuan
+
     console.log('Ответ сервера продукта:', response.data);
     // Обработка успешного ответа
   } catch (error) {
