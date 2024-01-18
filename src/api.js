@@ -289,7 +289,7 @@ app.put('/updateProductCount/:productId', (req, res) => {
     const productId = req.params.productId;
     const {variety_quan} = req.body; // Предполагается, что вы отправляете объект с полем newVarietyQuan в запросе
 
-    const sqlQuery = 'UPDATE products SET quan_item = ? WHERE id = ?';
+    const sqlQuery = 'UPDATE product SET quan_item = ? WHERE id = ?';
     connection.query(sqlQuery, [variety_quan, productId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
@@ -299,7 +299,7 @@ app.put('/updateProductCount/:productId', (req, res) => {
                 res.status(404).json({message: 'Товар не найден'});
             } else {
                 // Если обновление прошло успешно, отправляем обновленные данные товара в качестве ответа
-                const updatedProductQuery = 'SELECT * FROM products WHERE id = ?';
+                const updatedProductQuery = 'SELECT * FROM product WHERE id = ?';
                 connection.query(updatedProductQuery, [productId], (error, updatedResults) => {
                     if (error) {
                         console.error('Ошибка выполнения запроса:', error);
