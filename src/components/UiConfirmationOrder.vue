@@ -50,7 +50,7 @@ const updateProductCount = async (cartProduct) => {
   }
 }
 const addOrders = async () => {
-  if (store.cartProducts.length !== 0) {
+   if (store.cartProducts.length !== 0) {
     if (
         telephone.value !== '' &&
         lastName.value !== '' &&
@@ -118,9 +118,9 @@ const addOrders = async () => {
                 console.error('Ошибка при отправке данных на сервер вариации:', error);
                 // Обработка ошибки
               });
-          await updateProductCount(cartProduct);
+           updateProductCount(cartProduct);
         } else if (cartProduct.selectedVariety === null) {
-          await updateProductCount(cartProduct);
+           updateProductCount(cartProduct);
         } else {
           console.log('ты лох')
           return
