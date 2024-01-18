@@ -29,10 +29,11 @@ const validateText = () => {
   firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
   surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
 }
-const updateProductCount = async (cartProduct) => {
+const updateProductCount = async (cartProduct, orderItem) => {
   try {
     const productId = cartProduct.product.id;
     const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
+    cartProduct.product.quan_item = cartProduct.product.quan_item - cartProduct.countProduct;
 
     const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
       variety_quan: newVarietyQuan
@@ -41,7 +42,7 @@ const updateProductCount = async (cartProduct) => {
         'Content-Type': 'application/json'
       }
     });
-
+    orderItem.quantity = newVarietyQuan
     console.log('Ответ сервера продукта:', response.data);
     // Обработка успешного ответа
   } catch (error) {
@@ -98,6 +99,7 @@ const addOrders = async () => {
           if (cartProduct.selectedVariety !== null) {
             const varietyId = cartProduct.selectedVariety.id;
             const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
+            cartProduct.selectedVariety.variety_quan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
 
             console.log(varietyId);
             console.log('h', newVarietyQuan);
