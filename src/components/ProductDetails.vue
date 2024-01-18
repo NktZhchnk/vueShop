@@ -148,6 +148,7 @@ store.getCartItems()
     </div>
     <div class="text-info-product">
       <p style="overflow-wrap: break-word">{{ getProductById.text_info }}</p>
+      <p style="overflow-wrap: break-word">test {{ getProductById.quan_item }}</p>
     </div>
 
 
@@ -164,6 +165,7 @@ store.getCartItems()
           />
           <div class="rad-design"></div>
           <div class="rad-text">{{ item.variety_name }} - {{ item.variety_price }} ₴</div>
+          <p style="margin-left: 10px">test: {{item.variety_quan}}</p>
         </label>
       </div>
     </div>
