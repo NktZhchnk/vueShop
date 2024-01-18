@@ -29,7 +29,26 @@ const validateText = () => {
   firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
   surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
 }
+const updateProductCount = async (cartProduct) => {
+  try {
+    const productId = cartProduct.product.id;
+    const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
 
+    const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+      variety_quan: newVarietyQuan
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('Ответ сервера продукта:', response.data);
+    // Обработка успешного ответа
+  } catch (error) {
+    console.error('Ошибка при отправке данных на сервер продукта:', error);
+    // Обработка ошибки
+  }
+}
 const addOrders = async () => {
   try {
     if (store.cartProducts.length !== 0) {
@@ -93,44 +112,12 @@ const addOrders = async () => {
             });
 
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
-            const productId = cartProduct.product.id;
-            const newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
 
-            axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
-              variety_quan: newProductQuan
-            }, {
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            try {
-              console.log('Ответ сервера продукта:');
-              // Обработка успешного ответа
-            } catch (error) {
-              console.error('Ошибка при отправке данных на сервер продукта:', error);
-              // Обработка ошибки
-            }
             // Обновление количества продукта
-
+            await updateProductCount(cartProduct);
           } else if (cartProduct.selectedVariety === null) {
             // Обновление количества продукта
-            const productId = cartProduct.product.id;
-            const newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-
-            axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
-              variety_quan: newProductQuan
-            }, {
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            try {
-              console.log('Ответ сервера продукта:');
-              // Обработка успешного ответа
-            } catch (error) {
-              console.error('Ошибка при отправке данных на сервер продукта:', error);
-              // Обработка ошибки
-            }
+            await updateProductCount(cartProduct);
           } else {
             console.log('ты лох');
             return;
