@@ -84,7 +84,7 @@ const addOrders = () => {
           console.log(varietyId)
           console.log('h',newVarietyQuan)
           axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
-            newVarietyQuan: newVarietyQuan
+            variety_quan: newVarietyQuan
           }, {
             headers: {
               'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ const addOrders = () => {
 
             axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
 
-              newVarietyQuan: newVarietyQuan
+              variety_quan: newVarietyQuan
             }, {
               headers: {
                 'Content-Type': 'application/json'
