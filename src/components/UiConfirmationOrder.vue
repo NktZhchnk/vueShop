@@ -104,7 +104,7 @@ const addOrders = () => {
             const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
 
             axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
-              variety_quan: newVarietyQuan
+              newVarietyQuan: newVarietyQuan
             }, {
               headers: {
                 'Content-Type': 'application/json'
