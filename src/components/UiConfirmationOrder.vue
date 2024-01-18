@@ -36,6 +36,7 @@ const updateProductCount = async (cartProduct) => {
 
     let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
     newCount.product.quan_item = newVarietyQuan
+    console.log('newCountProd', newCount)
 
     sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
     cartProduct.product.quan_item = cartProduct.product.quan_item - cartProduct.countProduct;
@@ -107,7 +108,7 @@ const addOrders = async () => {
 
             let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
             newCount.selectedVariety.variety_quan = newVarietyQuan
-
+            console.log('newCountVar', newCount)
             sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
 
             console.log(varietyId);
