@@ -15,7 +15,7 @@
         <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }}
           {{ order.middle_name }}
           <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">
-            {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
+            {{ order.complete ? 'Выполнено' : 'Не выполнено' }}
           </button>
           <svg @click.prevent="console.log('h')" xmlns="http://www.w3.org/2000/svg" height="28" width="26" viewBox="0 0 448 512">
             <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->

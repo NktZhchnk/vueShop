@@ -29,28 +29,27 @@ const validateText = () => {
   firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
   surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
 }
-const updateProductCount = (cartProduct) => {
-  const productId = cartProduct.product.id;
-  const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
+const updateProductCount = async (cartProduct) => {
+  try {
+    const productId = cartProduct.product.id;
+    const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
 
-  axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+    const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+      variety_quan: newVarietyQuan
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
-    variety_quan: newVarietyQuan
-  }, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-      .then(response => {
-        console.log('Ответ сервера продукта:', response.data);
-        // Обработка успешного ответа
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер продукта:', error);
-        // Обработка ошибки
-      });
+    console.log('Ответ сервера продукта:', response.data);
+    // Обработка успешного ответа
+  } catch (error) {
+    console.error('Ошибка при отправке данных на сервер продукта:', error);
+    // Обработка ошибки
+  }
 }
-const addOrders = () => {
+const addOrders = async () => {
   if (store.cartProducts.length !== 0) {
     if (
         telephone.value !== '' &&
@@ -119,9 +118,9 @@ const addOrders = () => {
                 console.error('Ошибка при отправке данных на сервер вариации:', error);
                 // Обработка ошибки
               });
-          updateProductCount(cartProduct)
+          await updateProductCount(cartProduct);
         } else if (cartProduct.selectedVariety === null) {
-          updateProductCount(cartProduct)
+          await updateProductCount(cartProduct);
         } else {
           console.log('ты лох')
           return
