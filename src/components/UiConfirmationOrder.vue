@@ -5,10 +5,10 @@ import {useMyStore} from "@/store/store.js";
 import axios from "axios";
 
 const store = useMyStore()
-let telephone = ref('');
-let firstname = ref('');
-let lastName = ref('');
-let surname = ref('');
+let telephone = ref('4242424');
+let firstname = ref('test');
+let lastName = ref('test');
+let surname = ref('test');
 let comment = ref('');
 const loadCartProducts = () => {
   const savedCartProducts = sessionStorage.getItem('cartProducts');
@@ -50,124 +50,121 @@ const updateProductCount = async (cartProduct) => {
   }
 }
 const addOrders = async () => {
-   if (store.cartProducts.length !== 0) {
-    if (
-        telephone.value !== '' &&
-        lastName.value !== '' &&
-        firstname.value !== '' &&
-        surname.value !== '' &&
-        store.selectPoshta.cities !== '' &&
-        store.selectPoshta.searchQuery !== '' ||
-        store.selectPoshta.postIndex !== ''
-    ) {
-      // Если все поля заполнены, формируем заказ и отправляем данные
-      let order = {
-        order_date: new Date(),
-        telephone: telephone.value,
-        last_name: lastName.value,
-        first_name: firstname.value,
-        middle_name: surname.value,
-        comment: comment.value,
-        city: store.selectPoshta.cities,
-        address: store.selectPoshta.searchQuery,
-        postal_code: store.selectPoshta.postIndex,
-        total_price: store.allPriceProducts,
-        complete: true,
-      };
-      // Отправка данных на сервер
-      axios.post('https://eseniabila.com.ua/addOrders', order, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-          .then(response => {
-            console.log('Ответ сервера:', response.data);
-            // Обработка успешного ответа
-          })
-          .catch(error => {
-            console.error('Ошибка при отправке данных на сервер:', error);
-            // Обработка ошибки
-          });
-      store.cartProducts.forEach((cartProduct) => {
-        let orderItem = {
-          order_id: store.lastIdOrders,
-          quantity: cartProduct.countProduct,
-          image_url: cartProduct.images.img,
-          price: cartProduct.product.price_item,
-          variety_price: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_price : null,
-          item_name: cartProduct.product.name_item,
-          variety_name: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_name : null,
+  try {
+    if (store.cartProducts.length !== 0) {
+      if (
+          telephone.value !== '' &&
+          lastName.value !== '' &&
+          firstname.value !== '' &&
+          surname.value !== '' &&
+          store.selectPoshta.cities !== '' &&
+          (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '')
+      ) {
+        // Если все поля заполнены, формируем заказ и отправляем данные
+        let order = {
+          order_date: new Date(),
+          telephone: telephone.value,
+          last_name: lastName.value,
+          first_name: firstname.value,
+          middle_name: surname.value,
+          comment: comment.value,
+          city: store.selectPoshta.cities,
+          address: store.selectPoshta.searchQuery,
+          postal_code: store.selectPoshta.postIndex,
+          total_price: store.allPriceProducts,
+          complete: true,
         };
-        if (cartProduct.selectedVariety !== null) {
-          const varietyId = cartProduct.selectedVariety.id;
-          const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
-          console.log(varietyId)
-          console.log('h', newVarietyQuan)
-          axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
-            variety_quan: newVarietyQuan
-          }, {
+
+        // Отправка данных на сервер
+        const orderResponse = await axios.post('https://eseniabila.com.ua/addOrders', order, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        console.log('Ответ сервера:', orderResponse.data);
+
+        for (const cartProduct of store.cartProducts) {
+          let orderItem = {
+            order_id: store.lastIdOrders,
+            quantity: cartProduct.countProduct,
+            image_url: cartProduct.images.img,
+            price: cartProduct.product.price_item,
+            variety_price: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_price : null,
+            item_name: cartProduct.product.name_item,
+            variety_name: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_name : null,
+          };
+
+          if (cartProduct.selectedVariety !== null) {
+            const varietyId = cartProduct.selectedVariety.id;
+            const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
+
+            console.log(varietyId);
+            console.log('h', newVarietyQuan);
+
+            // Обновление количества вариации
+            const varietyResponse = await axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
+              variety_quan: newVarietyQuan,
+            }, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+
+            console.log('Ответ сервера количество вариации:', varietyResponse.data);
+
+            // Обновление количества продукта
+            await updateProductCount(cartProduct);
+          } else if (cartProduct.selectedVariety === null) {
+            // Обновление количества продукта
+            await updateProductCount(cartProduct);
+          } else {
+            console.log('ты лох');
+            return;
+          }
+
+          // Добавление товара в заказ
+          const itemResponse = await axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
             headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-              .then(response => {
-                console.log('Ответ сервера количество вариации:', response.data);
-                // Обработка успешного ответа
-              })
-              .catch(error => {
-                console.error('Ошибка при отправке данных на сервер вариации:', error);
-                // Обработка ошибки
-              });
-           updateProductCount(cartProduct);
-        } else if (cartProduct.selectedVariety === null) {
-           updateProductCount(cartProduct);
-        } else {
-          console.log('ты лох')
-          return
+              'Content-Type': 'application/json',
+            },
+          });
+
+          console.log('Ответ сервера:', itemResponse.data);
         }
 
-        axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-            .then(response => {
-              console.log('Ответ сервера:', response.data);
-              // Обработка успешного ответа
-            })
-            .catch(error => {
-              console.error('Ошибка при отправке данных на сервер:', error);
-              // Обработка ошибки
-            });
-      });
-
+      } else {
+        // Если какое-то поле не заполнено, добавляем класс error для подсветки
+        if (telephone.value === '') {
+          fnRedBorder('.inp-telephone');
+        }
+        if (firstname.value === '') {
+          fnRedBorder('.inp-firstName');
+        }
+        if (lastName.value === '') {
+          fnRedBorder('.inp-lastName');
+        }
+        if (surname.value === '') {
+          fnRedBorder('.inp-surname');
+        }
+        if (store.selectPoshta.cities === '') {
+          return;
+        }
+        if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
+          return;
+        }
+        console.log('Не все поля заполнены');
+      }
     } else {
-      // Если какое-то поле не заполнено, добавляем класс error для подсветки
-      if (telephone.value === '') {
-        fnRedBorder('.inp-telephone')
-      }
-      if (firstname.value === '') {
-        fnRedBorder('.inp-firstName')
-      }
-      if (lastName.value === '') {
-        fnRedBorder('.inp-lastName')
-      }
-      if (surname.value === '') {
-        fnRedBorder('.inp-surname')
-      }
-      if (store.selectPoshta.cities === '') {
-        return
-      }
-      if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
-        return;
-      }
-      console.log('Не все поля заполнены');
+      console.log('Ошибка');
+      fnRedBorder('.order-summary');
     }
-  } else {
-    console.log('Ошибка')
-    fnRedBorder('.order-summary')
+  } catch (error) {
+    console.error('Ошибка при выполнении заказа:', error);
+    // Обработка ошибки
   }
 }
+
 const fnRedBorder = (item) => {
   const inp = document.querySelector(item)
   inp.style.border = "1px solid red";
