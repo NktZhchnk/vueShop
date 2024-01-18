@@ -119,7 +119,7 @@ const addOrders = () => {
                 console.error('Ошибка при отправке данных на сервер вариации:', error);
                 // Обработка ошибки
               });
-
+          updateProductCount(cartProduct)
         } else if (cartProduct.selectedVariety === null) {
           updateProductCount(cartProduct)
         } else {
