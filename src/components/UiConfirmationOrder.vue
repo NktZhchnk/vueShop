@@ -34,10 +34,10 @@ const updateProductCount = async (cartProduct) => {
     const productId = cartProduct.product.id;
     const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
 
-    let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
-    newCount.product.quan_item = newVarietyQuan
-    console.log('newCountPro4242d', newCount)
-    sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
+    // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
+    // newCount.product.quan_item = newVarietyQuan
+    // console.log('newCountPro4242d', newCount)
+    // sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
 
     const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
       variety_quan: newVarietyQuan
@@ -105,10 +105,10 @@ const addOrders = async () => {
             const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
 
 
-            let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
-            newCount.selectedVariety.variety_quan = newVarietyQuan
-            console.log('newCountVar', newCount)
-            sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
+            // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
+            // newCount.selectedVariety.variety_quan = newVarietyQuan
+            // console.log('newCountVar', newCount)
+            // sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
 
 
             console.log(varietyId);
