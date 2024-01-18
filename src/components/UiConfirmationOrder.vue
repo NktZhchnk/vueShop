@@ -82,6 +82,7 @@ const addOrders = () => {
           const varietyId = cartProduct.selectedVariety.id;
           const productId = cartProduct.product.id;
           const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
+          const newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
           console.log(varietyId)
           console.log('h',newVarietyQuan)
           axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
@@ -101,8 +102,7 @@ const addOrders = () => {
               });
 
           axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
-
-            variety_quan: newVarietyQuan
+            variety_quan: newProductQuan
           }, {
             headers: {
               'Content-Type': 'application/json'
