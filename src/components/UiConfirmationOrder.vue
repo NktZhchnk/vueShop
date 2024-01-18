@@ -80,6 +80,7 @@ const addOrders = () => {
         };
         if (cartProduct.selectedVariety !== null) {
           const varietyId = cartProduct.selectedVariety.id;
+          const productId = cartProduct.product.id;
           const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
           console.log(varietyId)
           console.log('h',newVarietyQuan)
@@ -96,6 +97,23 @@ const addOrders = () => {
               })
               .catch(error => {
                 console.error('Ошибка при отправке данных на сервер вариации:', error);
+                // Обработка ошибки
+              });
+
+          axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+
+            variety_quan: newVarietyQuan
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+              .then(response => {
+                console.log('Ответ сервера продукта:', response.data);
+                // Обработка успешного ответа
+              })
+              .catch(error => {
+                console.error('Ошибка при отправке данных на сервер продукта:', error);
                 // Обработка ошибки
               });
         } else if (cartProduct.selectedVariety === null) {
