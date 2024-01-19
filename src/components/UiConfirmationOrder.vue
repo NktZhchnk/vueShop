@@ -33,21 +33,26 @@ const updateProductCount = async (cartProduct) => {
   try {
     const productId = cartProduct.product.id;
     const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
+    cartProduct.product.quan_item = newVarietyQuan
+    console.log('q', cartProduct.product.quan_item)
+    // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
+    // newCount.product.quan_item = newVarietyQuan
+    // console.log('newCountPro4242d', newCount)
+    // sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
 
     const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
       variety_quan: newVarietyQuan
+
     }, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
-    // Создаем новый объект для cartProduct.product
-    cartProduct.product = { ...cartProduct.product, quan_item: newVarietyQuan };
-
     console.log('Ответ сервера продукта:', response.data);
+    // Обработка успешного ответа
   } catch (error) {
     console.error('Ошибка при отправке данных на сервер продукта:', error);
+    // Обработка ошибки
   }
 }
 const addOrders = async () => {
@@ -84,7 +89,7 @@ const addOrders = async () => {
         });
 
         console.log('Ответ сервера:', orderResponse.data);
-        const asyncOperations = [];
+
         for (const cartProduct of store.cartProducts) {
           let orderItem = {
             order_id: store.lastIdOrders,
@@ -119,11 +124,23 @@ const addOrders = async () => {
                 'Content-Type': 'application/json',
               },
             });
-            asyncOperations.push(varietyResponse);
+
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
 
+            const productId = cartProduct.product.id;
+            const newVarietyQuan2 = cartProduct.product.quan_item - cartProduct.countProduct;
+
+            const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+              variety_quan: newVarietyQuan2,
+            }, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+
+          console.log('Ответ сервера количество вариации:', varietyResponse2.data);
             // Обновление количества продукта
-            await updateProductCount(cartProduct);
+            // await updateProductCount(cartProduct);
           } else if (cartProduct.selectedVariety === null) {
             // Обновление количества продукта
             await updateProductCount(cartProduct);
@@ -138,10 +155,10 @@ const addOrders = async () => {
               'Content-Type': 'application/json',
             },
           });
-          asyncOperations.push(itemResponse);
+
           console.log('Ответ сервера:', itemResponse.data);
         }
-        await Promise.all(asyncOperations);
+
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
         if (telephone.value === '') {
@@ -228,6 +245,7 @@ onMounted(loadCartProducts, store.getOrders());
           <img style="border-radius: 5px" :src="item.images.img"/>
           <div class="product-details">
             <span style=" word-break: break-word; height: 58px;  overflow: hidden">{{ item.product.name_item }}</span>
+            <span style=" word-break: break-word; height: 58px;  overflow: hidden">{{ item.selectedVariety.variety_name }}</span>
             <span>Кількість: {{ item.countProduct }}</span>
             <span style="margin-top: 10px">Ціна {{ item.product.price_item * item.countProduct }} ₴</span>
           </div>
