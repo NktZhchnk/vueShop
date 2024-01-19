@@ -263,7 +263,6 @@ onMounted(loadCartProducts, store.getOrders());
           <img style="border-radius: 5px" :src="item.images.img"/>
           <div class="product-details">
             <span style=" word-break: break-word; height: 58px;  overflow: hidden">{{ item.product.name_item }}</span>
-            <span style=" word-break: break-word; height: 58px;  overflow: hidden">{{ item.selectedVariety.variety_name }}</span>
             <span>Кількість: {{ item.countProduct }}</span>
             <span style="margin-top: 10px">Ціна {{ item.product.price_item * item.countProduct }} ₴</span>
           </div>
