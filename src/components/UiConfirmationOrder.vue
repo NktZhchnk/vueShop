@@ -34,7 +34,6 @@ const updateProductCount = async (cartProduct) => {
     const productId = cartProduct.product.id;
     const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
 
-   cartProduct.product.quan_item = newVarietyQuan
 
     // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
     // newCount.product.quan_item = newVarietyQuan
@@ -43,12 +42,13 @@ const updateProductCount = async (cartProduct) => {
 
     const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
       variety_quan: newVarietyQuan
+
     }, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
+    cartProduct.product.quan_item = newVarietyQuan
     console.log('Ответ сервера продукта:', response.data);
     // Обработка успешного ответа
   } catch (error) {
@@ -106,7 +106,7 @@ const addOrders = async () => {
             const varietyId = cartProduct.selectedVariety.id;
             const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
 
-            cartProduct.selectedVariety.variety_quan = newVarietyQuan
+
 
             // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
             // newCount.selectedVariety.variety_quan = newVarietyQuan
@@ -125,7 +125,7 @@ const addOrders = async () => {
                 'Content-Type': 'application/json',
               },
             });
-
+            cartProduct.selectedVariety.variety_quan = newVarietyQuan
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
 
             // Обновление количества продукта
