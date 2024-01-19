@@ -48,7 +48,7 @@ const updateProductCount = async (cartProduct) => {
         'Content-Type': 'application/json'
       }
     });
-    cartProduct.product.quan_item = newVarietyQuan
+
     console.log('Ответ сервера продукта:', response.data);
     // Обработка успешного ответа
   } catch (error) {
@@ -125,7 +125,7 @@ const addOrders = async () => {
                 'Content-Type': 'application/json',
               },
             });
-            cartProduct.selectedVariety.variety_quan = newVarietyQuan
+
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
 
             // Обновление количества продукта
