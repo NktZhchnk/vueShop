@@ -97,7 +97,7 @@ const addToCart = () => {
       store.cartProducts.push(newCartProduct);
       // Сохранение обновленной корзины в sessionStorage
       sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
-      console.log('Товар добавлен в корзину:', newCartProduct);
+      console.log('Товар добавлен в корзину3:', newCartProduct);
     } else {
       alert('Этот товар уже добавлен в корзину.');
     }
