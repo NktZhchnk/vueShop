@@ -33,8 +33,8 @@ const updateProductCount = async (cartProduct) => {
   try {
     const productId = cartProduct.product.id;
     const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-
-
+    cartProduct.product.quan_item = newVarietyQuan
+    console.log('q', cartProduct.product.quan_item)
     // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
     // newCount.product.quan_item = newVarietyQuan
     // console.log('newCountPro4242d', newCount)
@@ -48,7 +48,6 @@ const updateProductCount = async (cartProduct) => {
         'Content-Type': 'application/json'
       }
     });
-    cartProduct.product.quan_item = newVarietyQuan
     console.log('Ответ сервера продукта:', response.data);
     // Обработка успешного ответа
   } catch (error) {
@@ -105,8 +104,8 @@ const addOrders = async () => {
           if (cartProduct.selectedVariety !== null) {
             const varietyId = cartProduct.selectedVariety.id;
             const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
-
-
+            cartProduct.selectedVariety.variety_quan = newVarietyQuan
+            console.log('v',  cartProduct.selectedVariety.variety_quan = newVarietyQuan)
 
             // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
             // newCount.selectedVariety.variety_quan = newVarietyQuan
@@ -125,7 +124,7 @@ const addOrders = async () => {
                 'Content-Type': 'application/json',
               },
             });
-            cartProduct.selectedVariety.variety_quan = newVarietyQuan
+
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
 
             // Обновление количества продукта
