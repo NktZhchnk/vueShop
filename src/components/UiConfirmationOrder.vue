@@ -128,10 +128,11 @@ const addOrders = async () => {
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
 
             const productId = cartProduct.product.id;
-            const newVarietyQuan2 = cartProduct.product.quan_item - cartProduct.countProduct;
+            const newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
+            cartProduct.product.quan_item = newProductQuan
 
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
-              variety_quan: newVarietyQuan2,
+              variety_quan: newProductQuan,
             }, {
               headers: {
                 'Content-Type': 'application/json',
