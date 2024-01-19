@@ -89,7 +89,7 @@ const addOrders = async () => {
         });
 
         console.log('Ответ сервера:', orderResponse.data);
-
+        const asyncOperations = [];
         for (const cartProduct of store.cartProducts) {
           let orderItem = {
             order_id: store.lastIdOrders,
@@ -124,7 +124,7 @@ const addOrders = async () => {
                 'Content-Type': 'application/json',
               },
             });
-
+            asyncOperations.push(varietyResponse);
             console.log('Ответ сервера количество вариации:', varietyResponse.data);
 
             // Обновление количества продукта
@@ -143,10 +143,10 @@ const addOrders = async () => {
               'Content-Type': 'application/json',
             },
           });
-
+          asyncOperations.push(itemResponse);
           console.log('Ответ сервера:', itemResponse.data);
         }
-
+        await Promise.all(asyncOperations);
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
         if (telephone.value === '') {
