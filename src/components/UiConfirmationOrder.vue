@@ -106,7 +106,7 @@ const addOrders = async () => {
             const varietyId = cartProduct.selectedVariety.id;
             const newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
 
-            store.cartProducts.selectedVariety = newVarietyQuan
+            store.cartProducts.selectedVariety.variety_quan = newVarietyQuan
 
             // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
             // newCount.selectedVariety.variety_quan = newVarietyQuan
