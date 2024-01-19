@@ -20,6 +20,7 @@ const product = ref(null); // Создаем реактивную перемен
 const images = ref([]); // Создаем реактивную переменную для изображений
 const varieties = ref([]);
 const selectedVariety = ref(null);
+const hasVarieties = computed(() => varieties.value.length > 0);
 let countProduct = ref(1)
 
 // Функция для получения информации о продукте и изображений
@@ -76,8 +77,16 @@ const getVarieties = computed(() => {
 
 // Функция для добавления товара в корзину
 const addToCart = () => {
-  if (varieties.value || product.value && images.value.length > 0) {
-    if (varieties.value.length === 0 || selectedVariety.value !== null) {
+  if ((hasVarieties.value && selectedVariety.value !== null) || !hasVarieties.value) {
+    const duplicateProduct = store.cartProducts.find(item => {
+      if (hasVarieties.value) {
+        return item.selectedVariety && item.selectedVariety.id === selectedVariety.value.id;
+      } else {
+        return item.product.id === product.value.id;
+      }
+    });
+
+    if (!duplicateProduct) {
       const newCartProduct = {
         selectedVariety: selectedVariety.value,
         product: product.value,
@@ -90,13 +99,13 @@ const addToCart = () => {
       sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
       console.log('Товар добавлен в корзину:', newCartProduct);
     } else {
-      alert('Пожалуйста, выберите вариант товара перед добавлением в корзину.')
+      alert('Этот товар уже добавлен в корзину.');
     }
-
   } else {
-    console.warn('Ошибка в imag or product');
+    alert('Пожалуйста, выберите вариант товара перед добавлением в корзину.');
   }
 };
+
 const decrementCountProduct = () => {
   if (countProduct.value !== 1) {
     countProduct.value--
