@@ -75,11 +75,13 @@ onMounted(async () => {
 const removeOrder = async () => {
   for(const item of order.value){
     if(item.order_product_id){
-      const productResponse = await  axios.get(`https://eseniabila.com.ua/getProductById${item.order_product_id}`);
+      console.log(item.order_product_id)
+      const productResponse = await axios.get(`https://eseniabila.com.ua/getProductById${item.order_product_id}`);
       console.log('varietyResponse', productResponse.data)
     }
     if(item.order_variety_id){
-      const varietyResponse = await  axios.get(`https://eseniabila.com.ua/getVarietiesById${item.order_variety_id}`);
+      console.log(item.order_product_id)
+      const varietyResponse = await axios.get(`https://eseniabila.com.ua/getVarietiesById${item.order_variety_id}`);
       console.log('varietyResponse', varietyResponse.data)
     }
   }
