@@ -99,6 +99,8 @@ const addOrders = async () => {
             variety_price: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_price : null,
             item_name: cartProduct.product.name_item,
             variety_name: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_name : null,
+            order_product_id: cartProduct.product.id,
+            order_variety_id: cartProduct.selectedVariety.id ? cartProduct.selectedVariety.id : null,
           };
 
           if (cartProduct.selectedVariety !== null) {
