@@ -80,7 +80,7 @@ const removeOrder = async () => {
       console.log('varietyResponse', productResponse.data)
     }
     if(item.order_variety_id){
-      console.log(item.order_product_id)
+      console.log(item.order_variety_id)
       const varietyResponse = await axios.get(`https://eseniabila.com.ua/getVarietiesById${item.order_variety_id}`);
       console.log('varietyResponse', varietyResponse.data)
     }
