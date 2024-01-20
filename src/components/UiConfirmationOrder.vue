@@ -173,10 +173,10 @@ const addOrders = async () => {
               'Content-Type': 'application/json',
             },
           });
-
           console.log('Ответ сервера:', itemResponse.data);
         }
-
+         store.cartProducts = []
+         sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
         if (telephone.value === '') {

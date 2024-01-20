@@ -54,7 +54,7 @@ onMounted(async () => {
 });
 
 const completedOrders = computed(() => {
-  return orderDetails.value.filter(order => order.complete === 1).reverse();
+  return orderDetails.value.filter(order => order.complete === 0).reverse();
 });
 
 const filteredOrders = computed(() => {
