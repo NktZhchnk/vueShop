@@ -71,13 +71,14 @@ onMounted(async () => {
     }
   }
 });
-let orderId = 0;
+
+let ordersId = 0;
 const removeOrder = async () => {
   let shouldDelete = false; // Флаг для отслеживания необходимости удаления
 
   for (const item of order.value) {
     let quanProduct = 0;
-    orderId = item.order_id;
+    ordersId = item.order_id;
     let quanVariety = 0;
 
     if (item.order_product_id) {
@@ -128,7 +129,7 @@ const removeOrder = async () => {
 
   // После завершения цикла проверяем флаг и выполняем удаление, если нужно
   if (shouldDelete) {
-    await axios.delete(`https://eseniabila.com.ua/deleteOrder/${orderId}`);
+    await axios.delete(`https://eseniabila.com.ua/deleteOrder/${ordersId}`);
     this.$router.push({ name: 'uiOrdersComplete' });
   }
 };
