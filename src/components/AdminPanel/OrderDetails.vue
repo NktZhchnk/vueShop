@@ -74,17 +74,54 @@ onMounted(async () => {
 
 const removeOrder = async () => {
   for(const item of order.value){
+    let quanProduct = 0;
+    let orderId = item.order_id;
+    let quanVariety = 0;
+
     if(item.order_product_id){
       const productId = item.order_product_id
       console.log(productId)
       const productResponse = await axios.get(`https://eseniabila.com.ua/getProductById/${productId}`);
+
+      quanProduct = productResponse.data.quan_item
       console.log('productResponse', productResponse.data)
+
+      let newProductQuan = quanProduct + item.quantity
+
+      const productResponsePut = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
+        variety_quan: newProductQuan,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Ответ сервера количество вариации:', productResponsePut.data);
+
+      await axios.delete(`https://eseniabila.com.ua/deleteOrder/${orderId}`);
     }
     if(item.order_variety_id){
+
       const productId = item.order_variety_id
-      console.log(productId)
+
       const varietyResponse = await axios.get(`https://eseniabila.com.ua/getVarietiesId/${productId}`);
+
+      quanVariety = varietyResponse.data.variety_quan
+
       console.log('varietyResponse', varietyResponse.data)
+
+      let newVarietyQuan = quanVariety + item.quantity
+
+      const varietyResponsePut = await axios.put(`https://eseniabila.com.ua/updateVarietyCount/${productId}`, {
+        variety_quan: newVarietyQuan,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Ответ сервера количество вариации:', varietyResponsePut.data);
+
+      await axios.delete(`https://eseniabila.com.ua/deleteOrder/${orderId}`);
     }
   }
 }

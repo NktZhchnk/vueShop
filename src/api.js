@@ -357,7 +357,29 @@ app.put('/updateOrder/:orderId', (req, res) => {
         }
     });
 });
+app.delete('/deleteOrder/:id', (req, res) => {
+    const orderId = req.params.id; // Получаем ID заказа
 
+    // SQL-запрос для удаления элементов заказа из таблицы order_items по order_id
+    const deleteOrderItemsQuery = 'DELETE FROM order_items WHERE order_id = ?';
+    connection.query(deleteOrderItemsQuery, [orderId], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            // SQL-запрос для удаления заказа из таблицы orders по id
+            const deleteOrderQuery = 'DELETE FROM orders WHERE id = ?';
+            connection.query(deleteOrderQuery, [orderId], (error, results) => {
+                if (error) {
+                    console.error('Ошибка выполнения запроса:', error);
+                    res.status(500).json({ error: 'Ошибка выполнения запроса' });
+                } else {
+                    res.json({ message: 'Заказ и связанные с ним элементы успешно удалены' });
+                }
+            });
+        }
+    });
+});
 app.delete('/deleteProduct/:id', (req, res) => {
     const productId = req.params.id; // Получаем ID продукта для удаления
 
