@@ -98,6 +98,8 @@ const removeOrder = async () => {
       console.log('Ответ сервера количество вариации:', productResponsePut.data);
 
       await axios.delete(`https://eseniabila.com.ua/deleteOrder/${orderId}`);
+
+      this.$router.push({ name: 'uiOrdersComplete' });
     }
     if(item.order_variety_id){
 
@@ -105,7 +107,7 @@ const removeOrder = async () => {
 
       const varietyResponse = await axios.get(`https://eseniabila.com.ua/getVarietiesId/${productId}`);
 
-      quanVariety = varietyResponse.data.variety_quan
+      quanVariety = varietyResponse.data[0].variety_quan
 
       console.log('varietyResponse', varietyResponse.data)
 
@@ -122,6 +124,7 @@ const removeOrder = async () => {
       console.log('Ответ сервера количество вариации:', varietyResponsePut.data);
 
       await axios.delete(`https://eseniabila.com.ua/deleteOrder/${orderId}`);
+      this.$router.push({ name: 'uiOrdersComplete' });
     }
   }
 }
