@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('accessToken');
     const userLogin = localStorage.getItem('userLogin'); // Предположим, что вы храните логин пользователя в localStorage
 
-    if ((to.name === 'AdminMenu' || to.name === 'UiOrders') && (!token || userLogin !== 'admin')) {
+    if ((to.name === 'AdminMenu' || to.name === 'UiOrders' || to.name === 'UiOrdersComplete') && (!token || userLogin !== 'admin')) {
         // Если маршрут требует аутентификации и логин не равен 'admin', перенаправляем на страницу входа
         next('/authLogin');
     } else {
