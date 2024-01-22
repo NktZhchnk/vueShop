@@ -50,7 +50,7 @@ import {useRoute} from "vue-router";
 
 const orderId = ref(null);
 const order = ref(null);
-const router = this.$router;
+
 
 onMounted(async () => {
   // Используем useRoute для получения доступа к $route
@@ -130,7 +130,7 @@ const removeOrder = async () => {
   // После завершения цикла проверяем флаг и выполняем удаление, если нужно
   if (shouldDelete) {
     await axios.delete(`https://eseniabila.com.ua/deleteOrder/${ordersId}`);
-    router.push({ name: 'uiOrdersComplete' });
+    this.$router.push('/uiOrdersComplete');
   }
 };
 
