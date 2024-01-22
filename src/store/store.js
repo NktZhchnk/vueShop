@@ -8,6 +8,7 @@ export const useMyStore = defineStore({
         allPriceProducts: null,
         cartProducts: [],
         products: [],
+        productVarieties: [],
         productById: {
             id: [],
             img: [],
@@ -19,7 +20,6 @@ export const useMyStore = defineStore({
             searchQuery: null,
         },
         orders: [],
-        productVarieties: [],
         radioPrice: [],
         radioQuan: [],
         radioName: [],

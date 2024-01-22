@@ -12,6 +12,7 @@ import UiRegistration from "@/components/Users/UiRegistration.vue";
 import UiOrders from "@/components/AdminPanel/UiOrders.vue";
 import OrderDetails from "@/components/AdminPanel/OrderDetails.vue";
 import UiOrdersComplete from "@/components/AdminPanel/UiOrdersComplete.vue";
+import UiEditProducts from "@/components/AdminPanel/UiEditProducts.vue";
 
 
 const routes = [
@@ -60,6 +61,11 @@ const routes = [
         component: UiOrdersComplete,
     },
     {
+        name: 'UiEditProducts',
+        path: '/uiEditProducts',
+        component: UiEditProducts,
+    },
+    {
         path: '/product/:id',
         name: 'ProductDetails',
         component: ProductDetails,
@@ -87,7 +93,7 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('accessToken');
     const userLogin = localStorage.getItem('userLogin'); // Предположим, что вы храните логин пользователя в localStorage
 
-    if ((to.name === 'AdminMenu' || to.name === 'UiOrders' || to.name === 'UiOrdersComplete') && (!token || userLogin !== 'admin')) {
+    if ((to.name === 'AdminMenu' || to.name === 'UiOrders' || to.name === 'UiOrdersComplete' || to.name === 'UiEditProducts' ) && (!token || userLogin !== 'admin')) {
         // Если маршрут требует аутентификации и логин не равен 'admin', перенаправляем на страницу входа
         next('/authLogin');
     } else {

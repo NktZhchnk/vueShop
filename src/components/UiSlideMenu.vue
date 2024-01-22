@@ -50,6 +50,9 @@ const isAdmin = () => {
             <li>
               <router-link to="/uiOrdersComplete">Виконані замовлення</router-link>
             </li>
+            <li>
+              <router-link to="/uiEditProducts">Редагувати товари</router-link>
+            </li>
           </ul>
         </div>
       </div>
