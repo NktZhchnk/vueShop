@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {useMyStore} from "@/store/store.js";
+import axios from "axios";
 
 const store = useMyStore()
 
@@ -8,6 +9,7 @@ onMounted(async () => {
   await store.fetchData();
 });
 
+let varietyQuantities = ref({});
 const getProductVarieties = (productId) => {
   return store.productVarieties.filter(variety => variety.product_id === productId)
 }
@@ -17,7 +19,35 @@ const getTotalQuantity = (productId) => {
     return getProductVarieties(productId).reduce((total, variety) => total + variety.variety_quan, product.quan_item);
   }
 }
+const saveQuanProduct = async (productId, varietyId) => {
+  const values = Object.values(varietyQuantities.value)
+  const productQuantity = values.reduce((total, quantity) => total + quantity, 0)
 
+  const varietyResponse2 = await axios.put(
+      `https://eseniabila.com.ua/updateProductCount/${productId}`,
+      { variety_quan: productQuantity },
+      { headers: { 'Content-Type': 'application/json' } }
+  );
+
+
+  console.log('Ответ сервера количество вариации:', varietyResponse2.data);
+
+  varietyId.forEach((variety) => {
+
+    const varietyResponse = axios.put(`https://eseniabila.com.ua/updateVarietyCount/${variety.id}`, {
+      variety_quan: varietyQuantities.value[variety.id],
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log('Ответ сервера количество вариации:', varietyResponse.data);
+
+    console.log("Variety ID:", variety.id);
+    console.log("Variety Quantity:", variety.variety_quan);
+  });
+}
 </script>
 
 <template>
@@ -27,15 +57,15 @@ const getTotalQuantity = (productId) => {
       <ul class="product-info">
         <li>
           Общее количество: {{ getTotalQuantity(product.id) }}
-          <input :value="getTotalQuantity(product.id)"/>
+          <input v-show="false" v-model="qunProduct" />
         </li>
         <li>Вариации:</li>
         <ul class="varieties-list">
           <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
             {{ variety.variety_name }} - {{ variety.variety_quan }}
-            <input :value="variety.variety_quan"/>
+            <input type="number" v-model="varietyQuantities[variety.id]" />
           </li>
-          <button @click="console.log(product.id, getProductVarieties(product.id))">сохранить</button>
+          <button @click="saveQuanProduct(product.id, getProductVarieties(product.id))">сохранить</button>
         </ul>
       </ul>
     </div>
