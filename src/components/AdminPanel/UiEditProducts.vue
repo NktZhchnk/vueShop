@@ -109,7 +109,7 @@ const sortByQuantity = (order) => {
         <h2 class="product-name">{{ product.name_item }}</h2>
         <div class="product-details">
           <div class="quantity-section">
-            <span class="label">Количество:</span>
+            <span class="label">Общее количество:</span>
             <span class="total-quantity">{{ getTotalQuantity(product.id) }}</span>
             <input v-if="getProductVarieties(product.id).length === 0" type="number" v-model="qunProduct"
                    class="quantity-input"/>
@@ -118,7 +118,7 @@ const sortByQuantity = (order) => {
             <span class="label">Вариации:</span>
             <ul class="varieties-list">
               <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
-                <span class="variety-info">{{ variety.variety_name }} - {{ variety.variety_quan }}</span>
+                <span class="variety-info"> вариация: {{ variety.variety_name }} - количетсво: {{ variety.variety_quan }}</span>
                 <input type="number" v-model="varietyQuantities[variety.id]" class="quantity-input"/>
               </li>
             </ul>
