@@ -94,17 +94,18 @@ const addOrders = async () => {
           try {
             const response = await axios.get('https://eseniabila.com.ua/getOrders');
             // Обработка данных и сохранение их в состоянии магазина
-            const lastItem = this.response.data.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
-            idOrder.value = lastItem.id
-            console.log('в сторе вывожу лст айди:', response.data.id);
-            // Assuming lastIdOrders is a property in the response data
-            return response.data.lastIdOrders;
+            const lastItem = response.data.reduce((acc, curr) => (curr.id > acc.id ? curr : acc), response.data[0]);
+            idOrder.value = lastItem.id;
+            console.log('в сторе вывожу лст айди:', idOrder.value);
+            // Предполагается, что lastIdOrders - это свойство в данных ответа
+            return lastItem.lastIdOrders;
           } catch (error) {
             // Обработка ошибок
             console.error('Произошла ошибка:', error);
-            throw error; // rethrow the error to handle it in the calling code if needed
+            throw error; // Переброс ошибки для обработки в вызывающем коде, если это необходимо
           }
         };
+
         console.log('Ответ сервера:', getIdOrder().data);
         console.log('АЙДИИИИИИИИИИИИИИ', idOrder.value)
         for (const cartProduct of store.cartProducts) {
