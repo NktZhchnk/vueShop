@@ -220,7 +220,7 @@ const fnRedBorder = (item) => {
   }, 2000)
 }
 
-onMounted(loadCartProducts, store.getOrders());
+onMounted(loadCartProducts, store.getOrders(), store.fetchData());
 </script>
 
 <template>
