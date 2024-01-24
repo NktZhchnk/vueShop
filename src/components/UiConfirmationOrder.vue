@@ -106,8 +106,11 @@ const addOrders = async () => {
           }
         };
 
-        console.log('Ответ сервера:', getIdOrder().data);
-        console.log('АЙДИИИИИИИИИИИИИИ', idOrder.value)
+        // Используйте await или .then для получения данных из асинхронной функции
+        const lastIdOrders = await getIdOrder();
+        console.log('Ответ сервера:', lastIdOrders);
+        console.log('АЙДИИИИИИИИИИИИИИ', idOrder.value);
+
         for (const cartProduct of store.cartProducts) {
           let orderItem = {
             order_id: idOrder.value,
