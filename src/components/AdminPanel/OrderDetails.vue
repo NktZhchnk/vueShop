@@ -36,8 +36,6 @@
             <p class="item-info">Quantity: {{ item.quantity }}</p>
           </div>
         </div>
-
-
       </template>
     </div>
   </div>
