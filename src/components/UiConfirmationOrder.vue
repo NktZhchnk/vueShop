@@ -94,7 +94,8 @@ const addOrders = async () => {
           try {
             const response = await axios.get('https://eseniabila.com.ua/getOrders');
             // Обработка данных и сохранение их в состоянии магазина
-            idOrder.value = response.data.id
+            const lastItem = this.response.data.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
+            idOrder.value = lastItem.id
             console.log('в сторе вывожу лст айди:', response.data.id);
             // Assuming lastIdOrders is a property in the response data
             return response.data.lastIdOrders;
