@@ -117,7 +117,7 @@ export const useMyStore = defineStore({
                     // Обработка данных и сохранение их в состоянии магазина
                     this.orders = response.data;
                     const lastItem = this.orders.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
-                    this.lastIdOrders = lastItem.id + 1
+                    this.lastIdOrders = lastItem.id
                     console.log('в сторе вывожу лст айди:', this.lastIdOrders)
                 })
                 .catch(error => {
