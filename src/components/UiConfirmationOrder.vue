@@ -89,10 +89,25 @@ const addOrders = async () => {
         });
 
         console.log('Ответ сервера:', orderResponse.data);
-
+        let idOrder = ref(0);
+        const getIdOrder = async () => {
+          try {
+            const response = await axios.get('https://eseniabila.com.ua/getOrders');
+            // Обработка данных и сохранение их в состоянии магазина
+            idOrder.value = response.data.id
+            console.log('в сторе вывожу лст айди:', response.data.id);
+            // Assuming lastIdOrders is a property in the response data
+            return response.data.lastIdOrders;
+          } catch (error) {
+            // Обработка ошибок
+            console.error('Произошла ошибка:', error);
+            throw error; // rethrow the error to handle it in the calling code if needed
+          }
+        };
+        console.log('Ответ сервера:', getIdOrder().data);
         for (const cartProduct of store.cartProducts) {
           let orderItem = {
-            order_id: store.lastIdOrders,
+            order_id: idOrder.value,
             quantity: cartProduct.countProduct,
             image_url: cartProduct.images.img,
             price: cartProduct.product.price_item,
@@ -107,7 +122,7 @@ const addOrders = async () => {
             let varietyId = cartProduct.selectedVariety.id;
             let newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
             cartProduct.selectedVariety.variety_quan = newVarietyQuan
-            console.log('v',  cartProduct.selectedVariety.variety_quan = newVarietyQuan)
+            console.log('v', cartProduct.selectedVariety.variety_quan = newVarietyQuan)
 
             // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
             // newCount.selectedVariety.variety_quan = newVarietyQuan
@@ -131,7 +146,7 @@ const addOrders = async () => {
 
             let productId = cartProduct.product.id;
             let newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-            store.cartProducts.forEach((item)=>{
+            store.cartProducts.forEach((item) => {
               item.product.quan_item = newProductQuan
               console.log('hello')
             })
@@ -144,14 +159,14 @@ const addOrders = async () => {
               },
             });
 
-          console.log('Ответ сервера количество вариации:', varietyResponse2.data);
+            console.log('Ответ сервера количество вариации:', varietyResponse2.data);
             // Обновление количества продукта
             // await updateProductCount(cartProduct);
           } else if (cartProduct.selectedVariety === null) {
             // Обновление количества продукта
             let productId = cartProduct.product.id;
             let newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-            store.cartProducts.forEach((item)=>{
+            store.cartProducts.forEach((item) => {
               item.product.quan_item = newProductQuan
               console.log('hello')
             })
@@ -177,8 +192,8 @@ const addOrders = async () => {
           });
           console.log('Ответ сервера:', itemResponse.data);
         }
-         store.cartProducts = []
-         sessionStorage.removeItem('cartProducts');
+        store.cartProducts = []
+        sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
         if (telephone.value === '') {
