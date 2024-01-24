@@ -105,6 +105,7 @@ const addOrders = async () => {
           }
         };
         console.log('Ответ сервера:', getIdOrder().data);
+        console.log('АЙДИИИИИИИИИИИИИИ', idOrder.value)
         for (const cartProduct of store.cartProducts) {
           let orderItem = {
             order_id: idOrder.value,
@@ -273,7 +274,7 @@ onMounted(loadCartProducts, store.getOrders());
     </div>
     <div class="order-summary">
       <h2>Замовлення</h2>
-      <button @click="console.log(store.cartProducts)">test</button>
+      <button @click="">test</button>
       <div class="product-list">
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
              :key="item.id">
