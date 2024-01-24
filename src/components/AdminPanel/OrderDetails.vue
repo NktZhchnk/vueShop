@@ -44,8 +44,9 @@
 <script setup>
 import {ref, onMounted} from "vue";
 import axios from "axios";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
+const router = useRouter()
 const orderId = ref(null);
 const order = ref(null);
 
@@ -128,7 +129,7 @@ const removeOrder = async () => {
   // После завершения цикла проверяем флаг и выполняем удаление, если нужно
   if (shouldDelete) {
     await axios.delete(`https://eseniabila.com.ua/deleteOrder/${ordersId}`);
-    this.$router.push('/uiOrdersComplete');
+    router.push({name: 'RenderProducts'})
   }
 };
 
