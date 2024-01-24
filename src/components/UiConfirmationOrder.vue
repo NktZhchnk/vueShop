@@ -91,6 +91,7 @@ const addOrders = async () => {
         console.log('Ответ сервера:', orderResponse.data);
 
         for (const cartProduct of store.cartProducts) {
+          store.getOrders()
           let orderItem = {
             order_id: store.lastIdOrders,
             quantity: cartProduct.countProduct,
