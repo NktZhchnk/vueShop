@@ -66,7 +66,6 @@ const addOrders = async () => {
           store.selectPoshta.cities !== '' &&
           (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '')
       ) {
-        store.getOrders()
         // Если все поля заполнены, формируем заказ и отправляем данные
         let order = {
           order_date: new Date(),
@@ -220,7 +219,7 @@ const fnRedBorder = (item) => {
   }, 2000)
 }
 
-onMounted(loadCartProducts, store.getOrders(), store.fetchData());
+onMounted(loadCartProducts, store.getOrders());
 </script>
 
 <template>
