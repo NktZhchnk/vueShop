@@ -26,7 +26,7 @@ store.getCartItems()
   <div class="main-div">
     <div v-for="(image, index) in images" :key="index">
       <router-link :to="'/image/' + image.value">
-        <img :src="image.srcImg" alt="Image"/>
+        <img  loading="lazy" :src="image.srcImg" alt="Image"/>
       </router-link>
     </div>
   </div>
