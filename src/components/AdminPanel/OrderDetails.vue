@@ -129,7 +129,7 @@ const removeOrder = async () => {
   // После завершения цикла проверяем флаг и выполняем удаление, если нужно
   if (shouldDelete) {
     await axios.delete(`https://eseniabila.com.ua/deleteOrder/${ordersId}`);
-    router.push({name: 'RenderProducts'})
+    router.push({name: 'UiOrdersComplete'})
   }
 };
 
