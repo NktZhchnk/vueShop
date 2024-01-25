@@ -23,7 +23,7 @@ const allPriceCart = computed(() => {
       // Если нет variety_price, но есть price_item у товара, используем его
       itemPrice = parseFloat(cartItem.product.price_item * cartItem.countProduct);
     }
-      store.allPriceProducts = totalPrice + itemPrice;
+    store.allPriceProducts = totalPrice + itemPrice;
     // Добавляем цену товара к общей стоимости
     return totalPrice + itemPrice;
   }, 0); // Начальное значение общей стоимости равно 0
@@ -36,7 +36,41 @@ const removeProduct = (index) => {
   store.cartProducts.splice(index, 1)
 
   sessionStorage.setItem('cartProducts', JSON.stringify(savedCartProducts));
+};
+const updateCartProductCount = (index) => {
+  const savedCartProducts = JSON.parse(sessionStorage.getItem('cartProducts'));
+  savedCartProducts[index].countProduct = store.cartProducts[index].countProduct;
+
+  sessionStorage.setItem('cartProducts', JSON.stringify(savedCartProducts));
 }
+
+const decrementQuanProduct = (index) => {
+  if (store.cartProducts[index].countProduct > 1) {
+    store.cartProducts[index].countProduct--
+
+    updateCartProductCount(index)
+  } else {
+    console.log('h')
+  }
+};
+const sumQuanProduct = (index) => {
+  const storeVariety = store.cartProducts[index].selectedVariety
+
+  if (storeVariety === null && store.cartProducts[index].countProduct < store.cartProducts[index].product.quan_item) {
+    store.cartProducts[index].countProduct++;
+
+    updateCartProductCount(index)
+  } else {
+
+    if (storeVariety !== null && storeVariety.variety_quan > store.cartProducts[index].countProduct) {
+      store.cartProducts[index].countProduct++;
+
+      updateCartProductCount(index)
+    }
+
+  }
+
+};
 
 onMounted(loadCartProducts);
 </script>
@@ -53,18 +87,22 @@ onMounted(loadCartProducts);
         <img :src="item.images.img" alt="Product Image" class="product-image">
         <div class="product-details">
           <h1 class="text-name">Name:{{ item.product.name_item }}</h1>
-          <p v-if="item.selectedVariety">variety: {{ item.selectedVariety.variety_name }} '''''' Quan: {{item.countProduct}} </p>
+          <p v-if="item.selectedVariety">variety: {{ item.selectedVariety.variety_name }} '' Quan:
+            {{ item.countProduct }}</p>
 
+          <button @click="decrementQuanProduct(index)">-</button>
           <div
               style="display: block;"
               v-if="item.selectedVariety === null"
           >
-            <p>Quan: {{item.countProduct}}</p>
+            <p>Quan: {{ item.countProduct }}</p>
           </div>
+          <button @click="sumQuanProduct(index)">+</button>
           <div style=" width: 100%; display: flex; justify-content: space-between; align-items: center">
-            <p v-if="item.selectedVariety">Ціна: {{ item.selectedVariety.variety_price * item.countProduct}} ₴</p>
 
-            <p v-if="item.selectedVariety === null">Ціна: {{ item.product.price_item * item.countProduct}} ₴</p>
+            <p v-if="item.selectedVariety">Ціна: {{ item.selectedVariety.variety_price * item.countProduct }} ₴</p>
+            <p v-if="item.selectedVariety === null">Ціна: {{ item.product.price_item * item.countProduct }} ₴</p>
+
             <svg @click="removeProduct(index)" class="icon-trash" xmlns="http://www.w3.org/2000/svg" height="28"
                  width="26" viewBox="0 0 448 512">
               <path

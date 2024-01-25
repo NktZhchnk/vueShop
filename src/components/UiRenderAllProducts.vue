@@ -2,7 +2,6 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {useMyStore} from "@/store/store.js";
-
 const store = useMyStore()
 
 onMounted(async () => {
@@ -61,13 +60,11 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px;
   width: 250px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-
+  transition: transform 0.3s ease-in-out;
 }
 
 .style-product:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Стили для изображения товара */

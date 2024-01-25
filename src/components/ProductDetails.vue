@@ -130,7 +130,10 @@ const sumCountProduct = () => {
       countProduct.value++
     }
   } else {
-    return
+    const production = getProductById.value
+    if(countProduct.value < production.quan_item){
+      countProduct.value++
+    }
   }
 }
 const resetCount = () => {
