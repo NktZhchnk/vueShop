@@ -86,18 +86,23 @@ onMounted(loadCartProducts);
 
         <img :src="item.images.img" alt="Product Image" class="product-image">
         <div class="product-details">
-          <h1 class="text-name">Name:{{ item.product.name_item }}</h1>
-          <p v-if="item.selectedVariety">variety: {{ item.selectedVariety.variety_name }} '' Quan:
-            {{ item.countProduct }}</p>
+          <h1 class="text-name">{{ item.product.name_item }}</h1>
+          <p v-if="item.selectedVariety">Варіація: {{ item.selectedVariety.variety_name }}
+            <button @click="decrementQuanProduct(index)">-</button>
+            Кiл: {{ item.countProduct }}
+            <button @click="sumQuanProduct(index)">+</button>
 
-          <button @click="decrementQuanProduct(index)">-</button>
+          </p>
+
           <div
-              style="display: block;"
+              style="display: flex; height: 20px;align-items: center;"
               v-if="item.selectedVariety === null"
           >
-            <p>Quan: {{ item.countProduct }}</p>
+            <button @click="decrementQuanProduct(index)">-</button>
+            <p>Кiл: {{ item.countProduct }}</p>
+            <button @click="sumQuanProduct(index)">+</button>
           </div>
-          <button @click="sumQuanProduct(index)">+</button>
+
           <div style=" width: 100%; display: flex; justify-content: space-between; align-items: center">
 
             <p v-if="item.selectedVariety">Ціна: {{ item.selectedVariety.variety_price * item.countProduct }} ₴</p>
