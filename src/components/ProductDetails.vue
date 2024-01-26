@@ -335,6 +335,7 @@ store.getCartItems()
 }
 
 .product-details {
+  margin-top: 10px;
   max-width: 100%;
   padding: 20px;
   border-radius: 8px;
