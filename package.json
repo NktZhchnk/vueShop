@@ -30,7 +30,6 @@
     "safe-buffer": "^5.2.1",
     "swiper": "^11.0.5",
     "vue": "^3.3.8",
-    "vue-lazyload": "^3.0.0",
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
