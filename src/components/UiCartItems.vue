@@ -83,8 +83,9 @@ onMounted(loadCartProducts);
     </div>
     <div class="div-body">
       <div v-for="(item, index) in store.cartProducts" :key="index" class="product-item">
-
-        <img :src="item.images.img" alt="Product Image" class="product-image">
+        <div class="product-image">
+          <img :src="item.images.img" alt="Product Image">
+        </div>
         <div class="product-details">
           <h1 class="text-name">{{ item.product.name_item }}
             <svg @click="removeProduct(index)" class="icon-trash" xmlns="http://www.w3.org/2000/svg" height="28"
@@ -95,15 +96,15 @@ onMounted(loadCartProducts);
           </h1>
           <div v-if="item.selectedVariety">
             <div>
-              <p>Варіація: {{ item.selectedVariety.variety_name }}</p>
+              <p style="margin-bottom: 0">Варіація: {{ item.selectedVariety.variety_name }}</p>
             </div>
             <div>
-              <p>
+              <div>
                 <br>
                 <button @click="decrementQuanProduct(index)">-</button>
                 Кiл: {{ item.countProduct }}
                 <button @click="sumQuanProduct(index)">+</button>
-              </p>
+              </div>
             </div>
           </div>
 
@@ -157,6 +158,7 @@ onMounted(loadCartProducts);
   border-radius: 10px 10px 0 0;
   padding: 20px;
   display: flex;
+
   justify-content: space-between;
   align-items: center;
   background: #f2f2f2;
@@ -194,6 +196,7 @@ onMounted(loadCartProducts);
 .product-item {
   margin-bottom: 20px; /* Отступ снизу между элементами */
   width: 100%; /* Установка ширины элемента в половину контейнера с учетом отступов */
+  height: 200px;
   display: flex;
   background: #f5f5f5;
   border-radius: 10px;
@@ -203,13 +206,15 @@ onMounted(loadCartProducts);
 
 .product-image {
   width: 250px;
-  height: 250px;
+  height: 100%;
   display: block;
   border-radius: 10px 2px 2px 10px;
 }
 
 img {
   width: 200px;
+  height: 200px;
+  border-radius: 10px 2px 2px 10px;
 }
 
 .product-details {
@@ -259,7 +264,17 @@ img {
 
   .div-header {
     border-radius: 0;
+  }
 
+  .product-image {
+    width: 200px;
+    height: 250px;
+  }
+
+  img {
+    height: 200px;
+    width: 180px;
+    border-radius: 10px 2px 2px 10px;
   }
 }
 
@@ -268,6 +283,7 @@ img {
     height: 200px;
     width: 200px;
   }
+
 }
 
 @media (min-width: 800px) {
@@ -276,9 +292,9 @@ img {
   }
 
   .product-image {
-    height: 200px;
-    width: 300px;
+    height: 100%;
   }
+
 }
 </style>
 
