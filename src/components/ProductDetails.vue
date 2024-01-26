@@ -206,7 +206,7 @@ store.getCartItems()
       </Swiper>
     </div>
     <div class="div-name-product">
-      <h1 style="overflow-wrap: break-word;height: 40px">{{ getProductById.name_item }}</h1>
+      <h1>{{ getProductById.name_item }}</h1>
     </div>
     <div class="text-info-product">
       <p style="overflow-wrap: break-word">{{ getProductById.text_info }}</p>
@@ -291,6 +291,9 @@ store.getCartItems()
 }
 
 .div-name-product {
+  overflow-wrap: break-word;
+  height: 74px;
+  overflow: hidden;
   margin-top: 50px;
 }
 
