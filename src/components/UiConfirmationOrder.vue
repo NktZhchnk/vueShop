@@ -172,7 +172,9 @@ const addOrders = async () => {
 // Если продукт найден, обновляем его количество
             if (index !== -1) {
               store.cartProducts[index].product.quan_item = newProductQuan;
-
+            } else {
+              console.error('Ошибка: продукт не найден в корзине.');
+            }
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
               variety_quan: newProductQuan,
             }, {
