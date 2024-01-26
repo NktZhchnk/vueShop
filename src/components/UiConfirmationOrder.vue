@@ -129,11 +129,8 @@ const addOrders = async () => {
           if (cartProduct.selectedVariety !== null) {
             let varietyId = cartProduct.selectedVariety.id;
             let newVarietyQuan = cartProduct.selectedVariety.variety_quan - cartProduct.countProduct;
-            cartProduct.selectedVariety.variety_quan = newVarietyQuan
-            console.log('количество в корзине', cartProduct.selectedVariety.variety_quan = newVarietyQuan)
-
-
-            console.log('количество вариаций', newVarietyQuan);
+            cartProduct.selectedVariety.variety_quan = newVarietyQuan;
+            console.log('количество в корзине', cartProduct.selectedVariety.variety_quan = newVarietyQuan);
 
             // Обновление количества вариации
             const varietyResponse = await axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
@@ -152,16 +149,15 @@ const addOrders = async () => {
 
             console.log('Количество продукта:', newProductQuan);
 
-// Ищем индекс текущего продукта в массиве store.cartProducts
-            const index = store.cartProducts.findIndex(item => item.product.id === cartProduct.product.id);
+            // Ищем индексы текущего продукта в массиве store.cartProducts
+            const indexes = store.cartProducts
+                .map((item, index) => (item.product.id === cartProduct.product.id ? index : -1))
+                .filter(index => index !== -1);
 
-// Если продукт найден, обновляем его количество
-            if (index !== -1) {
+            // Если продукт найден, обновляем его количество для каждого индекса
+            indexes.forEach(index => {
               store.cartProducts[index].product.quan_item = newProductQuan;
-            } else {
-              console.error('Ошибка: продукт не найден в корзине.');
-            }
-
+            });
 
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
               variety_quan: newProductQuan,

@@ -119,7 +119,7 @@ const sortByQuantity = (order) => {
             <ul class="varieties-list">
               <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
                 <span class="variety-info">{{ variety.variety_name }} - {{ variety.variety_quan }}</span>
-                <input type="number" v-model="varietyQuantities[variety.id]" class="quantity-input"/>
+                <input type="number"  v-model="varietyQuantities[variety.id]" class="quantity-input"/>
               </li>
             </ul>
           </div>
