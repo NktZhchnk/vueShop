@@ -8,6 +8,7 @@ const swapMenu = () => {
 const swapCart = () =>{
     store.swapOpenCart()
 }
+
 </script>
 
 <template>
@@ -39,7 +40,7 @@ const swapCart = () =>{
       </router-link>
     </div>
     <div class="div-inp">
-      <input class="inp-search" style="height: 30px" placeholder="Я шукаю..."/>
+      <input v-model="store.searchProduct" class="inp-search" style="height: 30px" placeholder="Я шукаю..."/>
     </div>
 
     <div class="main-cart" @click="swapCart">

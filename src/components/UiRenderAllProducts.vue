@@ -1,26 +1,46 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {useMyStore} from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
+
 const store = useMyStore()
 
 onMounted(async () => {
   await store.fetchData();
+  console.log(store.searchProduct)
 });
 const itemImages = (itemId) => {
   return store.productImg.filter(img => img.product_id === itemId).map(img => img.img);
 };
+const filteredProduct = ref([])
+
+setTimeout(() => {
+  filteredProduct.value = ([...store.products]);
+}, 150)
+
+
+watch(() => store.searchProduct, (newSearchProduct) => {
+  if (newSearchProduct === '') {
+    // Если searchProduct пуст, отображаем все продукты
+    filteredProduct.value = [...store.products];
+  } else {
+    // Фильтруем продукты в зависимости от новой строки поиска
+    filteredProduct.value = store.products.filter(item => {
+      return item.name_item.toLowerCase().includes(newSearchProduct.toLowerCase());
+    });
+  }
+})
 
 </script>
 
 <template>
   <div class="style-products">
-    <div  v-for="item in store.products" :key="item.id" class="style-product">
+    <div v-for="item in filteredProduct" :key="item.id" class="style-product">
       <router-link class="custom-link" :to="'/product/' + item.id">
         <div style="height: 200px">
-<!--          <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]" loading="lazy"/>-->
-              <LazyLoadImage :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
+          <!--          <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]" loading="lazy"/> Старая реализация рендера картинок-->
+          <LazyLoadImage :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
         </div>
         <div class="div-name-product">
           {{ item.name_item }}
@@ -77,12 +97,15 @@ body {
   border-top-right-radius: 8px;
   transition: opacity 0.3s ease-in-out;
 }
+
 .img[data-loaded='false'] {
   opacity: 0;
 }
+
 .img[data-loaded='true'] {
   opacity: 1;
 }
+
 /* Стили для контента товара */
 .div-name-product,
 .div-price-product {

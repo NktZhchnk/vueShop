@@ -1,11 +1,8 @@
 <script setup>
 import UiCartItems from "@/components/UiCartItems.vue";
-import axios from "axios";
 import UiMainHeader from "@/components/UiMainHeader.vue";
 import UiSlideMenu from "@/components/UiSlideMenu.vue";
 import {useMyStore} from "@/store/store.js";
-import UiRegistration from "@/components/Users/UiRegistration.vue";
-import UiAuth from "@/components/Users/UiAuth.vue";
 
 
 const store = useMyStore()
@@ -36,12 +33,13 @@ const store = useMyStore()
     </div>
   </div>
 </template>
-<style>
 
+<style>
 body {
   overflow-y: scroll; /* Показывать вертикальный скроллбар всегда */
 }
 </style>
+
 <style scoped>
 
 html {
@@ -77,7 +75,6 @@ body {
   box-shadow: 2px 3px 10px gray;
   border-radius: 20px;
 }
-
 
 
 .custom-link {
