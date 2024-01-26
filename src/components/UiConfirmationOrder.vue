@@ -166,7 +166,12 @@ const addOrders = async () => {
             // Обновление количества продукта
             let productId = cartProduct.product.id;
             let newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-            cartProduct.product.quan_item = newProductQuan;
+
+            const index = store.cartProducts.findIndex(item => item.product.id === cartProduct.product.id);
+
+// Если продукт найден, обновляем его количество
+            if (index !== -1) {
+              store.cartProducts[index].product.quan_item = newProductQuan;
 
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
               variety_quan: newProductQuan,
