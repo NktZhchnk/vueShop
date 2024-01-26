@@ -148,9 +148,8 @@ const addOrders = async () => {
 
             let productId = cartProduct.product.id;
             let newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-            store.cartProducts.forEach((item) => {
-              item.product.quan_item = newProductQuan
-            })
+            cartProduct.product.quan_item = newProductQuan;
+
             console.log('количество продука', newProductQuan)
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
               variety_quan: newProductQuan,
@@ -167,10 +166,7 @@ const addOrders = async () => {
             // Обновление количества продукта
             let productId = cartProduct.product.id;
             let newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-            store.cartProducts.forEach((item) => {
-              item.product.quan_item = newProductQuan
-              console.log('hello')
-            })
+            cartProduct.product.quan_item = newProductQuan;
 
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
               variety_quan: newProductQuan,
