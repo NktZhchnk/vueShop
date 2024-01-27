@@ -38,9 +38,32 @@ const inputImages = () => {
   }
 };
 const addProduct = () => {
-  store.getRadioPrice()
+  let lastId = { value: 0 }; // Используем объект для хранения значения, чтобы обойти ограничения изменяемости в замыкании
+
+  axios.get('https://eseniabila.com.ua/getProducts')
+      .then(response => {
+        // Предполагаем, что ответ содержит массив объектов с полем "id"
+        const products = response.data;
+
+        if (products.length > 0) {
+          // Находим максимальный id в массиве
+          const maxId = Math.max(...products.map(product => product.id));
+
+          // Обновляем значение lastId
+          lastId.value = maxId;
+
+          // Используйте lastId.value по вашему усмотрению
+          console.log('Последний id в таблице:', lastId.value);
+        } else {
+          console.log('Таблица пуста');
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+
   const data = {
-    product_id: store.lastId,
+    product_id: lastId.value,
     variety_name: store.radioName,
     variety_quan: store.radioQuan,
     variety_price: store.radioPrice,
