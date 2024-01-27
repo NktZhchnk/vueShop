@@ -70,7 +70,7 @@ const addProduct = () => {
   };
   const dataImg = {
     img: imageLinks,
-    product_id: store.lastId,
+    product_id: lastId.value,
   }
   console.log(data)
 
