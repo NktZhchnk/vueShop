@@ -37,84 +37,37 @@ const inputImages = () => {
     }, 2000)
   }
 };
-const addProduct = () => {
-  let lastId = { value: 0 }; // Используем объект для хранения значения, чтобы обойти ограничения изменяемости в замыкании
+const addProduct = async () => {
+  try {
+    const lastIdResponse = await axios.get('https://eseniabila.com.ua/getProducts');
+    const products = lastIdResponse.data;
 
-  axios.get('https://eseniabila.com.ua/getProducts')
-      .then(response => {
-        // Предполагаем, что ответ содержит массив объектов с полем "id"
-        const products = response.data;
+    let lastId = 0;
+    if (products.length > 0) {
+      lastId = Math.max(...products.map(product => product.id));
+    }
 
-        if (products.length > 0) {
-          // Находим максимальный id в массиве
-          const maxId = Math.max(...products.map(product => product.id));
+    const data = {
+      product_id: lastId + 1, // Используйте следующий доступный ID
+      variety_name: store.radioName,
+      variety_quan: store.radioQuan,
+      variety_price: store.radioPrice,
+    };
 
-          // Обновляем значение lastId
-          lastId.value = maxId;
+    const dataImg = {
+      img: imageLinks,
+      product_id: lastId + 1,
+    };
 
-          // Используйте lastId.value по вашему усмотрению
-          console.log('Последний id в таблице:', lastId.value);
-        } else {
-          console.log('Таблица пуста');
-        }
-      })
-      .catch(error => {
-        console.error('Ошибка при получении данных:', error);
-      });
+    await axios.post('https://eseniabila.com.ua/addProduct', newData);
+    await axios.post('https://eseniabila.com.ua/addProductVarieties', data, { headers: { 'Content-Type': 'application/json' } });
+    await axios.post('https://eseniabila.com.ua/addProductImg', dataImg, { headers: { 'Content-Type': 'application/json' } });
 
-  const data = {
-    product_id: lastId.value,
-    variety_name: store.radioName,
-    variety_quan: store.radioQuan,
-    variety_price: store.radioPrice,
-  };
-  const dataImg = {
-    img: imageLinks,
-    product_id: lastId.value,
+    store.fetchData(); // Обновление данных после успешной отправки
+  } catch (error) {
+    console.error('Ошибка при отправке данных на сервер:', error);
   }
-  console.log(data)
-
-  axios.post('https://eseniabila.com.ua/addProduct', newData)
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
-        location.reload();
-        setTimeout(() => {
-          store.fetchData()
-        }, 2000)
-        // Обработка успешного ответа
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер Писос:', error);
-        // Обработка ошибки
-      });
-  axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
-        // Обработка успешного ответа
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер:', error);
-        // Обработка ошибки
-      });
-  axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
-        // Обработка успешного ответа
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер:', error);
-        // Обработка ошибки
-      });
 };
-
 
 </script>
 
