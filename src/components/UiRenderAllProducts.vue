@@ -40,7 +40,7 @@ watch(() => store.searchProduct, (newSearchProduct) => {
       <router-link class="custom-link" :to="'/product/' + item.id">
         <div style="height: 200px">
           <!--          <img class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]" loading="lazy"/> Старая реализация рендера картинок-->
-          <LazyLoadImage :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
+          <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
         </div>
         <div class="div-name-product">
           {{ item.name_item }}
@@ -95,6 +95,7 @@ body {
   height: 100%; /* Высота изображения (можно изменить по необходимости) */
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  object-fit: cover;
   transition: opacity 0.3s ease-in-out;
 }
 

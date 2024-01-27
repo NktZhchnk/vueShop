@@ -151,6 +151,18 @@ const deleteProductInDataBase = async () => {
     console.error(`Ошибка при удалении продукта с ID ${productId.value}:`, error);
   }
 }
+const showFullText = ref(false);
+
+const toggleTextInfo = () => {
+  showFullText.value = !showFullText.value;
+};
+
+const truncatedTextInfo = computed(() => {
+  const maxLength = 355; // установите максимальную длину текста, которую вы хотите отобразить
+  return showFullText.value
+      ? getProductById.value.text_info
+      : getProductById.value.text_info.slice(0, maxLength) + '... Показати більше';
+});
 
 store.getCartItems()
 </script>
@@ -209,7 +221,10 @@ store.getCartItems()
       <h1>{{ getProductById.name_item }}</h1>
     </div>
     <div class="text-info-product">
-      <p style="overflow-wrap: break-word">{{ getProductById.text_info }}</p>
+      <p style="overflow-wrap: break-word" @click="toggleTextInfo">
+        {{ truncatedTextInfo }}
+        <span style="color: black" v-if="showFullText" @click="toggleTextInfo"></span>
+      </p>
       <p style="overflow-wrap: break-word">test {{ getProductById.quan_item }}</p>
     </div>
 
