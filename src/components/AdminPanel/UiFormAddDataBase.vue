@@ -173,6 +173,7 @@ label {
   font-size: 18px;
 }
 .text-info {
+  height: 80px;
   box-shadow: 1px 1px 2px black;
   border-radius: 5px;
   padding: 10px;
