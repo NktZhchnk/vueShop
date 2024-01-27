@@ -37,6 +37,15 @@ const inputImages = () => {
     }, 2000)
   }
 };
+const handleKeyDown = (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    // Предотвращаем стандартное действие Enter (перенос строки)
+    event.preventDefault();
+
+    // Добавляем символ новой строки в текст
+    newData.text_info += '\n';
+  }
+};
 const addProduct = () => {
   store.getRadioPrice()
 
@@ -130,7 +139,7 @@ const addProduct = () => {
 
       <add-categories></add-categories>
 
-      <textarea v-model="newData.text_info" class="text-info" placeholder="Информация о продукте"></textarea>
+      <textarea v-model="newData.text_info" class="text-info" @keydown="handleKeyDown" placeholder="Информация о продукте"></textarea>
       <button type="submit" class="add-product-button">Добавить продукт</button>
     </form>
   </div>
