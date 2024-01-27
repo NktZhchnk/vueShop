@@ -1,39 +1,50 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute } from 'vue-router';
 import axios from "axios";
-import {useMyStore} from "@/store/store.js";
+import { useMyStore } from "@/store/store.js";
 
 const route = useRoute();
 const category = ref(route.params.category);
 const productsCategory = ref([]);
-const store = useMyStore()
+const store = useMyStore();
+
 const itemImages = (itemId) => {
   return store.productImg.filter(img => img.product_id === itemId).map(img => img.img);
 };
+
+
+const filteredProducts = ref([]);
+
 const fetchProducts = async () => {
   try {
     const response = await axios.get(`https://eseniabila.com.ua/getProductsCategory?category=${category.value}`);
     if (response.data) {
       productsCategory.value = response.data;
-      console.log(response.data);
+      filteredProducts.value = response.data;
     }
   } catch (error) {
     console.error('Ошибка при получении данных о товаре:', error);
   }
 };
 
-onMounted(() => {
-  store.fetchData()
-  fetchProducts(); // Fetch products when the component is mounted
+watch(() => store.searchProduct, (newSearchQuery) => {
+  // Фильтрация товаров при изменении поискового запроса
+  filteredProducts.value = productsCategory.value.filter(item =>
+      item.name_item.toLowerCase().includes(newSearchQuery.toLowerCase())
+  );
 });
 
+onMounted(() => {
+  store.fetchData();
+  fetchProducts(); // Fetch products when the component is mounted
+});
 
 </script>
 
 <template>
   <div class="style-products">
-    <div v-for="item in productsCategory" :key="item.id" class="style-product">
+    <div v-for="item in filteredProducts" :key="item.id" class="style-product">
       <router-link :to="'/product/' + item.id">
         <div style="height: 200px">
           <img alt="error" class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
