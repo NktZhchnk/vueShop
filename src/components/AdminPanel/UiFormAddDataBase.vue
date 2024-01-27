@@ -37,37 +37,62 @@ const inputImages = () => {
     }, 2000)
   }
 };
-const addProduct = async () => {
-  try {
-    const lastIdResponse = await axios.get('https://eseniabila.com.ua/getProducts');
-    const products = lastIdResponse.data;
+const addProduct = () => {
+  store.getRadioPrice()
 
-    let lastId = 0;
-    if (products.length > 0) {
-      lastId = Math.max(...products.map(product => product.id));
-    }
-
-    const data = {
-      product_id: lastId + 1, // Используйте следующий доступный ID
-      variety_name: store.radioName,
-      variety_quan: store.radioQuan,
-      variety_price: store.radioPrice,
-    };
-
-    const dataImg = {
-      img: imageLinks,
-      product_id: lastId + 1,
-    };
-
-    await axios.post('https://eseniabila.com.ua/addProduct', newData);
-    await axios.post('https://eseniabila.com.ua/addProductVarieties', data, { headers: { 'Content-Type': 'application/json' } });
-    await axios.post('https://eseniabila.com.ua/addProductImg', dataImg, { headers: { 'Content-Type': 'application/json' } });
-
-    store.fetchData(); // Обновление данных после успешной отправки
-  } catch (error) {
-    console.error('Ошибка при отправке данных на сервер:', error);
+  const data = {
+    product_id: store.lastId,
+    variety_name: store.radioName,
+    variety_quan: store.radioQuan,
+    variety_price: store.radioPrice,
+  };
+  const dataImg = {
+    img: imageLinks,
+    product_id: store.lastId,
   }
+  console.log(data)
+
+  axios.post('https://eseniabila.com.ua/addProduct', newData)
+      .then(response => {
+        console.log('Ответ сервера:', response.data);
+        location.reload();
+        setTimeout(() => {
+          store.fetchData()
+        }, 2000)
+        // Обработка успешного ответа
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных на сервер Писос:', error);
+        // Обработка ошибки
+      });
+  axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      .then(response => {
+        console.log('Ответ сервера:', response.data);
+        // Обработка успешного ответа
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных на сервер:', error);
+        // Обработка ошибки
+      });
+  axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      .then(response => {
+        console.log('Ответ сервера:', response.data);
+        // Обработка успешного ответа
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных на сервер:', error);
+        // Обработка ошибки
+      });
 };
+
 
 </script>
 
