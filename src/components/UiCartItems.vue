@@ -132,7 +132,7 @@ onMounted(loadCartProducts);
       <div class="cart-receipt">
         <p style="margin-bottom: 0">Загальна ціна: <span style="color: black">{{ allPriceCart }}</span> ₴</p>
         <router-link to="/uiConfirmationOrder">
-          <button @click="store.swapShowPage()" class="button-green">Оформить Заказ</button>
+          <button @click="store.swapShowPage()" class="button-green">Оформити</button>
         </router-link>
       </div>
     </div>
@@ -152,32 +152,33 @@ onMounted(loadCartProducts);
   width: 800px;
   height: 70%;
   overflow-y: auto;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: #f5f5f5; /* Soft gray background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
 }
 
 .div-header {
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 0 0 0;
   padding: 20px;
   display: flex;
-
   justify-content: space-between;
   align-items: center;
-  background: #f2f2f2;
-  border-bottom: 1px solid #ddd;
+  background: #d1d1d1; /* Lighter gray header background */
+  border-bottom: 1px solid #ccc;
 }
 
 .div-header h3 {
   margin: 0;
   font-size: 1.2em;
 }
-.div-text-name{
 
+.div-text-name {
+  font-size: 16px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .text-name {
   height: 40px;
   margin-bottom: 0px;
@@ -191,6 +192,7 @@ onMounted(loadCartProducts);
 .icon-trash {
   height: 24px;
   width: 28px;
+  fill: #777;
 }
 
 .div-header h1 {
@@ -200,26 +202,27 @@ onMounted(loadCartProducts);
 
 .div-body {
   padding: 20px;
-  flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
-  overflow: auto; /* Добавляем прокрутку, если элементы не помещаются */
+  flex-wrap: wrap;
+  overflow: auto;
   gap: 20px;
 }
 
 .product-item {
-  margin-bottom: 20px; /* Отступ снизу между элементами */
-  width: 100%; /* Установка ширины элемента в половину контейнера с учетом отступов */
-
+  margin-bottom: 20px;
+  width: 100%;
   display: flex;
-  background: #f5f5f5;
+  background: #fff;
   border-radius: 10px;
   border: 1px solid #cecece;
-  box-shadow: 2px 2px 10px gray;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .product-image {
   width: 250px;
-  height: 100%;
-  display: block;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px 2px 2px 10px;
 }
 
@@ -235,16 +238,16 @@ img {
 }
 
 .show-menu {
-  transform: translate(-50%, -50%) scale(1); /* Увеличиваем размер до 1 (100%) */
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .div-footer {
   position: sticky;
   bottom: 0;
   padding: 10px;
-  background: #fff;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.2);
+  background: #d1d1d1;
+  border-radius: 0 0 0 0;
+  box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.1);
 }
 
 .cart-receipt {
@@ -253,8 +256,12 @@ img {
   align-items: center;
 }
 
+.span-quan {
+  color: #555;
+}
+
 .button-green {
-  background-color: #00a046;
+  background-color: #4CAF50;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -288,7 +295,6 @@ img {
     width: 180px;
     border-radius: 10px 2px 2px 10px;
   }
-
 }
 
 @media (max-width: 450px) {
@@ -296,34 +302,34 @@ img {
     height: 200px;
     width: 200px;
   }
-
 }
+
 @media (max-width: 368px) {
-  .product-image{
+  .product-image {
     height: 200px;
     width: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  img{
+
+  img {
     margin-left: 5px;
     border-radius: 0 2px 2px 0;
     height: 120px;
     width: 115px;
-    box-shadow: 2px 2px 10px gray;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   }
 }
 
 @media (min-width: 800px) {
   .product-item {
-    width: 100%; /* Установка ширины элемента в половину контейнера с учетом отступов */
+    width: 100%;
   }
 
   .product-image {
     height: 100%;
   }
-
 }
-</style>
 
+</style>

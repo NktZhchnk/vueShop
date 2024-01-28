@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from "vue";
 import { useRoute } from 'vue-router';
 import axios from "axios";
 import { useMyStore } from "@/store/store.js";
+import LazyLoadImage from "@/LazyLoadImage.vue";
 
 const route = useRoute();
 const category = ref(route.params.category);
@@ -45,15 +46,17 @@ onMounted(() => {
 <template>
   <div class="style-products">
     <div v-for="item in filteredProducts" :key="item.id" class="style-product">
-      <router-link :to="'/product/' + item.id">
-        <div style="height: 200px">
-          <img alt="error" class="img" v-if="itemImages(item.id).length > 0" :src="itemImages(item.id)[0]"/>
+      <router-link class="custom-link" :to="'/product/' + item.id">
+        <div class="image-container">
+          <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
         </div>
-        <div class="div-name-product">
-          {{ item.name_item }}
-        </div>
-        <div class="div-price-product">
-          Ціна: {{ item.price_item }} ₴
+        <div class="product-details">
+          <div class="product-name">
+            {{ item.name_item }}
+          </div>
+          <div class="product-price">
+            Ціна: {{ item.price_item }} ₴
+          </div>
         </div>
       </router-link>
     </div>
@@ -61,76 +64,55 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Общие стили для всех элементов */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-}
-
-/* Стили для контейнера товаров */
 .style-products {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 20px;
-  margin: 0 auto;
-  max-width: 1200px;
 }
 
-/* Стили для карточек товаров */
 .style-product {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
   margin: 20px;
-  width: 250px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.style-product:hover {
-  transform: scale(1.05);
-}
-
-/* Стили для изображения товара */
-.img {
-  width: 100%;
-  height: 100%; /* Высота изображения (можно изменить по необходимости) */
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-/* Стили для контента товара */
-.div-name-product,
-.div-price-product {
-  padding: 15px 20px;
-}
-
-/* Стили для названия товара */
-.div-name-product {
-  font-size: 18px;
-  font-weight: bold;
-  word-wrap: break-word;
-  height: 25px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 
-}
-
-/* Стили для цены товара */
-.div-price-product {
-  font-size: 16px;
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-  .style-products {
-    padding: 10px;
-  }
-  .style-product {
-    width: calc(50% - 40px);
-    margin: 10px;
+  &:hover {
+    transform: scale(1.05);
   }
 }
 
+.custom-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.image-container {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.product-details {
+  padding: 15px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #555;
+}
 </style>
