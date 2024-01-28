@@ -221,7 +221,7 @@ store.getCartItems()
       <h1>{{ getProductById.name_item }}</h1>
     </div>
     <div class="text-info-product">
-      <p style="overflow-wrap: break-word" @click="toggleTextInfo">
+      <p style="overflow-wrap: break-word; font-family: 'Roboto Light', sans-serif;" @click="toggleTextInfo">
         {{ truncatedTextInfo }}
         <span style="color: black" v-if="showFullText" @click="toggleTextInfo"></span>
       </p>
