@@ -174,10 +174,19 @@ const addOrders = async () => {
             // Обновление количества продукта
             let productId = cartProduct.product.id;
             let newProductQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-            store.cartProducts.forEach((item) => {
-              item.product.quan_item = newProductQuan
-              console.log('hello')
-            })
+            cartProduct.product.quan_item = newProductQuan;
+
+            console.log('Количество продукта:', newProductQuan);
+
+            // Ищем индексы текущего продукта в массиве store.cartProducts
+            const indexes = store.cartProducts
+                .map((item, index) => (item.product.id === cartProduct.product.id ? index : -1))
+                .filter(index => index !== -1);
+
+            // Если продукт найден, обновляем его количество для каждого индекса
+            indexes.forEach(index => {
+              store.cartProducts[index].product.quan_item = newProductQuan;
+            });
 
             const varietyResponse2 = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
               variety_quan: newProductQuan,
@@ -186,7 +195,9 @@ const addOrders = async () => {
                 'Content-Type': 'application/json',
               },
             });
+
             console.log('Ответ сервера количество вариации:', varietyResponse2.data);
+
           } else {
             console.log('ты лох');
             return;
