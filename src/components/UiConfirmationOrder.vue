@@ -123,7 +123,7 @@ const addOrders = async () => {
             item_name: cartProduct.product.name_item,
             variety_name: cartProduct.selectedVariety ? cartProduct.selectedVariety.variety_name : null,
             order_product_id: cartProduct.product.id,
-            order_variety_id: cartProduct.selectedVariety.id ? cartProduct.selectedVariety.id : null,
+            order_variety_id: cartProduct.selectedVariety ? cartProduct.selectedVariety.id : null,
           };
 
           if (cartProduct.selectedVariety !== null) {
@@ -292,7 +292,7 @@ onMounted(loadCartProducts, store.getOrders());
     </div>
     <div class="order-summary">
       <h2>Замовлення</h2>
-      <button @click="">test</button>
+      <button @click="console.log(store.cartProducts)">test</button>
       <div class="product-list">
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
              :key="item.id">
