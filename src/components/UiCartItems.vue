@@ -24,6 +24,7 @@ const allPriceCart = computed(() => {
       itemPrice = parseFloat(cartItem.product.price_item * cartItem.countProduct);
     }
     store.allPriceProducts = totalPrice + itemPrice;
+    sessionStorage.setItem('allPrice', store.allPriceProducts)
     // Добавляем цену товара к общей стоимости
     return totalPrice + itemPrice;
   }, 0); // Начальное значение общей стоимости равно 0
@@ -123,7 +124,6 @@ onMounted(loadCartProducts);
           <div style=" width: 100%; display: flex; justify-content: space-between; align-items: center">
             <p v-if="item.selectedVariety">Ціна: {{ item.selectedVariety.variety_price * item.countProduct }} ₴</p>
             <p v-if="item.selectedVariety === null">Ціна: {{ item.product.price_item * item.countProduct }} ₴</p>
-
           </div>
         </div>
       </div>

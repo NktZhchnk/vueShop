@@ -228,6 +228,8 @@ const fnRedBorder = (item) => {
     inp.style.border = "1px solid gray";
   }, 2000)
 }
+let allPrice = sessionStorage.getItem('allPrice')
+store.allPriceProducts = allPrice
 
 onMounted(loadCartProducts, store.getOrders());
 </script>
@@ -268,7 +270,7 @@ onMounted(loadCartProducts, store.getOrders());
     </div>
     <div class="order-summary">
       <h2>Замовлення</h2>
-      <button @click="console.log(store.cartProducts)">test</button>
+      <button @click="console.log(store.allPriceProducts)">test</button>
       <div class="product-list">
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
              :key="item.id">
@@ -284,14 +286,22 @@ onMounted(loadCartProducts, store.getOrders());
         <button @click="store.swapOpenCart()">Редагувати товари</button>
       </div>
     </div>
-    <div>
-      <label>
-        <input type="radio"/>
+
+    <div style="margin-top: 15px">
+      <label v-if="store.allPriceProducts >= 200" class="payment-option">
+        <input type="radio" name="paymentMethod" v-model="paymentMethod" value="cashOnDelivery" class="radio-input"/>
+        <span class="radio-custom"></span>
+        <span>Накладной платеж</span>
       </label>
-      <label>
-        <input type="radio"/>
+
+      <label class="payment-option" style="margin-top: 10px;">
+        <input type="radio" name="paymentMethod" v-model="paymentMethod" value="creditCard" class="radio-input" />
+        <span class="radio-custom"></span>
+        <span>Оплата на карту</span>
       </label>
     </div>
+
+
     <div class="order-total">
       <h2>Разом</h2>
       <h4>{{ store.cartProducts.length }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
@@ -302,6 +312,7 @@ onMounted(loadCartProducts, store.getOrders());
 </template>
 
 <style scoped>
+
 /* Общие стили */
 .container {
   width: 100%;
@@ -484,6 +495,24 @@ input {
   background-color: #f8a86d;
 }
 
+/* Выбор оплаты*/
+.payment-option {
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+}
+
+.radio-input {
+  width: 20px; /* Adjust the width as needed */
+}
+
+
+
+input[type="radio"]:checked + .radio-custom::after {
+  display: block;
+}
+
 /* Медиа-запросы для адаптивности */
 @media (max-width: 960px) {
   .body {
@@ -495,4 +524,5 @@ input {
     flex: 1 1 100%;
   }
 }
+
 </style>
