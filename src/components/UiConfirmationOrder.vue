@@ -9,6 +9,7 @@ let telephone = ref('4242424');
 let firstname = ref('test');
 let lastName = ref('test');
 let surname = ref('test');
+let paymentMethod = ref(null);
 let comment = ref('');
 const loadCartProducts = () => {
   const savedCartProducts = sessionStorage.getItem('cartProducts');
@@ -25,36 +26,11 @@ const validateTelephone = () => {
   }
 }
 const validateText = () => {
-  lastName.value = lastName.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
-  firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
-  surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
+  lastName.value = lastName.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇґҐєЄ]/g, '');
 }
-const updateProductCount = async (cartProduct) => {
-  try {
-    const productId = cartProduct.product.id;
-    const newVarietyQuan = cartProduct.product.quan_item - cartProduct.countProduct;
-    cartProduct.product.quan_item = newVarietyQuan
-    console.log('q', cartProduct.product.quan_item)
-    // let newCount = JSON.parse(sessionStorage.getItem('cartProducts'))
-    // newCount.product.quan_item = newVarietyQuan
-    // console.log('newCountPro4242d', newCount)
-    // sessionStorage.setItem('cartProducts', JSON.stringify(newCount))
 
-    const response = await axios.put(`https://eseniabila.com.ua/updateProductCount/${productId}`, {
-      variety_quan: newVarietyQuan
-
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    console.log('Ответ сервера продукта:', response.data);
-    // Обработка успешного ответа
-  } catch (error) {
-    console.error('Ошибка при отправке данных на сервер продукта:', error);
-    // Обработка ошибки
-  }
-}
 const addOrders = async () => {
   try {
     if (store.cartProducts.length !== 0) {
@@ -307,6 +283,14 @@ onMounted(loadCartProducts, store.getOrders());
       <div class="edit-cart-button">
         <button @click="store.swapOpenCart()">Редагувати товари</button>
       </div>
+    </div>
+    <div>
+      <label>
+        <input type="radio"/>
+      </label>
+      <label>
+        <input type="radio"/>
+      </label>
     </div>
     <div class="order-total">
       <h2>Разом</h2>

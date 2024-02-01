@@ -239,7 +239,7 @@ store.getCartItems()
                 :value="item"
                 v-model="selectedVariety"
                 class="rad-input"
-                name="rad"
+                :name="'rad' + item.id"
                 @change="resetCount"
 
             />
@@ -416,7 +416,6 @@ store.getCartItems()
 .rad-input {
   position: absolute;
   left: 0;
-  top: 0;
   width: 1px;
   height: 1px;
   opacity: 0;
