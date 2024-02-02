@@ -36,10 +36,6 @@ const store = useMyStore()
 
 <style>
 
-body {
-  overflow-y: scroll; /* Показывать вертикальный скроллбар всегда */
-
-}
 </style>
 
 <style scoped>

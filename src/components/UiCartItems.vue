@@ -116,9 +116,9 @@ onMounted(loadCartProducts);
               style="display: flex; height: 20px;align-items: center;"
               v-if="item.selectedVariety === null"
           >
-            <button @click="decrementQuanProduct(index)">-</button>
+            <button class="btn-dec" @click="decrementQuanProduct(index)">-</button>
             <p>Кiл: {{ item.countProduct }}</p>
-            <button @click="sumQuanProduct(index)">+</button>
+            <button class="btn-sum" @click="sumQuanProduct(index)">+</button>
           </div>
 
           <div style=" width: 100%; display: flex; justify-content: space-between; align-items: center">
@@ -130,7 +130,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="div-footer">
       <div class="cart-receipt">
-        <p style="margin-bottom: 0">Загальна ціна: <span style="color: black">{{ allPriceCart }}</span> ₴</p>
+        <p >Загальна ціна: <span style="color: black">{{ allPriceCart }}</span> ₴</p>
         <router-link to="/uiConfirmationOrder">
           <button @click="store.swapShowPage()" class="button-green">Оформити</button>
         </router-link>
@@ -205,6 +205,7 @@ onMounted(loadCartProducts);
   flex-wrap: wrap;
   overflow: auto;
   gap: 20px;
+  height: 100%;
 }
 
 .product-item {
@@ -214,7 +215,7 @@ onMounted(loadCartProducts);
   background: #fff;
   border-radius: 10px;
   border: 1px solid #cecece;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .product-image {
@@ -260,8 +261,18 @@ img {
   color: #555;
 }
 
+.btn-sum{
+  background-color: #343434;
+  color: white;
+  border-radius: 6px;
+}
+.btn-dec{
+  background-color: #343434;
+  color: white;
+  border-radius: 6px;
+}
 .button-green {
-  background-color: #4CAF50;
+  background-color: #343434;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -271,7 +282,7 @@ img {
 }
 
 .button-green:hover {
-  background-color: #008c3f;
+  background-color: #181818;
 }
 
 @media (max-width: 800px) {
