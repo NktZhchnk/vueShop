@@ -24,7 +24,7 @@
         <p v-if="order.address">Новая почта: {{ order.address }}</p>
         <p v-if="order.postal_code">УкрПочта: {{ order.postal_code }}</p>
         <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
-        <p v-if="order.payment_method !== 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
+        <p v-if="order.payment_method === 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
         <p>Total price: {{ order.total_price }} ₴.</p>
         <!-- Другие поля карточки -->
       </div>
