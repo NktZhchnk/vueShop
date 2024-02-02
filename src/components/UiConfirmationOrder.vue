@@ -38,6 +38,7 @@ const addOrders = async () => {
           telephone.value !== '' &&
           lastName.value !== '' &&
           firstname.value !== '' &&
+          paymentMethod.value !== null &&
           surname.value !== '' &&
           store.selectPoshta.cities !== '' &&
           (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '')
@@ -55,6 +56,7 @@ const addOrders = async () => {
           postal_code: store.selectPoshta.postIndex,
           total_price: store.allPriceProducts,
           complete: true,
+          payment_method: paymentMethod.value,
         };
 
         // Отправка данных на сервер
@@ -203,6 +205,10 @@ const addOrders = async () => {
         if (surname.value === '') {
           fnRedBorder('.inp-surname');
         }
+        if (paymentMethod.value === null){
+          fnRedBorder('.payment-options')
+
+        }
         if (store.selectPoshta.cities === '') {
           return;
         }
@@ -224,6 +230,7 @@ const addOrders = async () => {
 const fnRedBorder = (item) => {
   const inp = document.querySelector(item)
   inp.style.border = "1px solid red";
+  inp.style.borderRadius = "10px";
   setTimeout(() => {
     inp.style.border = "1px solid gray";
   }, 2000)
@@ -270,7 +277,6 @@ onMounted(loadCartProducts, store.getOrders());
     </div>
     <div class="order-summary">
       <h2>Замовлення</h2>
-      <button @click="console.log(store.allPriceProducts)">test</button>
       <div class="product-list">
         <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
              :key="item.id">
@@ -287,17 +293,18 @@ onMounted(loadCartProducts, store.getOrders());
       </div>
     </div>
 
-    <div style="margin-top: 15px">
+    <div class="payment-options" style="margin-top: 15px;">
+      <h2>Спосiб Оплати</h2>
       <label v-if="store.allPriceProducts >= 200" class="payment-option">
         <input type="radio" name="paymentMethod" v-model="paymentMethod" value="cashOnDelivery" class="radio-input"/>
         <span class="radio-custom"></span>
-        <span>Накладной платеж</span>
+        <span>Післяплата (оплата при отриманні)</span>
       </label>
 
       <label class="payment-option" style="margin-top: 10px;">
         <input type="radio" name="paymentMethod" v-model="paymentMethod" value="creditCard" class="radio-input" />
         <span class="radio-custom"></span>
-        <span>Оплата на карту</span>
+        <span>Повна передоплата на картку</span>
       </label>
     </div>
 
@@ -448,14 +455,14 @@ input {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #fcc79f;
-  color: black;
+  background-color: #343434;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .order-summary button:hover {
-  background-color: #f8a86d;
+  background-color: #181818;
 }
 
 .order-total {
@@ -483,16 +490,17 @@ input {
   padding: 12px 24px;
   border: none;
   border-radius: 5px;
-  background-color: #fcc79f;
-  color: black;
+  background-color: #282828;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 1.1em;
   text-transform: uppercase;
 }
 
+
 .order-total button:hover {
-  background-color: #f8a86d;
+  background-color: #181818;
 }
 
 /* Выбор оплаты*/

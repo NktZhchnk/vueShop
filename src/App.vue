@@ -35,8 +35,10 @@ const store = useMyStore()
 </template>
 
 <style>
+
 body {
   overflow-y: scroll; /* Показывать вертикальный скроллбар всегда */
+
 }
 </style>
 
@@ -53,6 +55,7 @@ body {
   padding: 0;
   margin: 0;
   user-select: none;
+
 }
 
 .show-page {

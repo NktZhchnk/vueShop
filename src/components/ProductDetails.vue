@@ -335,10 +335,10 @@ store.getCartItems()
 }
 
 .price-product {
-  background-color: #f8a971;
+  background-color: #343434;
   border-radius: 5px;
   margin-top: 20px;
-  color: darkred;
+  color: #ffffff;
   font-size: 22px;
   display: flex;
   justify-content: center;
@@ -372,19 +372,19 @@ store.getCartItems()
 .product-details button {
   padding: 12px 24px;
   font-size: 16px;
-  background-color: #f8a971;
-  color: white;
+  background-color: #343434;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
   width: 100%;
   margin-top: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(21, 21, 21, 0.1);
 }
 
 .product-details button:hover {
-  background-color: #fa8e42;
+  background-color: #181818;
 }
 
 /* Общие стили varieties */
@@ -426,7 +426,7 @@ store.getCartItems()
   width: 22px;
   height: 22px;
   border-radius: 100px;
-  background: linear-gradient(to right bottom, hsl(154, 97%, 62%), hsl(225, 97%, 62%));
+  background: linear-gradient(to right bottom, hsl(0, 0%, 100%), hsl(0, 11%, 7%));
   position: relative;
 }
 

@@ -73,11 +73,11 @@ watch(() => store.searchProduct, (newSearchProduct) => {
   &:hover {
     transform: scale(1.05);
   }
-}
 
-.custom-link {
-  text-decoration: none;
-  color: inherit;
+  .custom-link {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .image-container {
@@ -94,16 +94,16 @@ watch(() => store.searchProduct, (newSearchProduct) => {
 
 .product-details {
   padding: 15px;
-}
 
-.product-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-.product-price {
-  font-size: 1rem;
-  color: #555;
+  .product-price {
+    font-size: 1rem;
+    color: #555;
+  }
 }
 </style>
