@@ -1,6 +1,5 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
-import axios from "axios";
 import {useMyStore} from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
 

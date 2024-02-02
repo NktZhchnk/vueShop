@@ -1,6 +1,6 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
-import {ref, onMounted, computed, watch} from 'vue';
+import {ref, computed, watch} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import axios from "axios";
 
