@@ -21,6 +21,7 @@
         <p>Город: {{ order.city }}</p>
         <p v-if="order.address">Новая почта: {{ order.address }}</p>
         <p v-if="order.postal_code">УкрПочта: {{ order.postal_code }}</p>
+        <p >Спосiб оплати: {{ order.payment_method }}</p>
         <p>Total price: {{ order.total_price }} ₴.</p>
         <!-- Другие поля карточки -->
       </div>
