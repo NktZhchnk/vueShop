@@ -21,7 +21,7 @@ const store = useMyStore()
     <div class="div-body">
       <!-- Отображаем содержимое страницы внутри router-view -->
       <div class="div-catalog">
-        <router-link to="/catalog" class="custom-link"><h1>Catalog</h1>
+        <router-link to="/catalog"  class="custom-link"><h1>Catalog</h1>
           <svg style="margin-left: 10px" xmlns="http://www.w3.org/2000/svg" height="30" width="32"
                viewBox="0 0 576 512">
             <path fill="#ffffff"
@@ -29,13 +29,12 @@ const store = useMyStore()
           </svg>
         </router-link>
       </div>
-      <router-view></router-view>
+      <router-view ></router-view>
     </div>
   </div>
 </template>
 
 <style>
-
 </style>
 
 <style scoped>
@@ -51,7 +50,6 @@ body {
   padding: 0;
   margin: 0;
   user-select: none;
-
 }
 
 .show-page {
@@ -72,7 +70,7 @@ body {
   display: none;
   background: rgba(0, 0, 0, 0.9);
   box-shadow: 2px 3px 10px gray;
-  border-radius: 20px;
+  border-radius: 5px;
 }
 
 
