@@ -2,7 +2,7 @@
   <div>
     <!-- Поле ввода для поиска -->
     <div class="card">
-      <input v-model="searchQuery" placeholder="Поиск по номеру телефона" class="search-input" />
+      <input v-model="searchQuery" placeholder="Поиск по номеру телефона" class="search-input"/>
     </div>
     <router-link
         class="link-order"
@@ -13,7 +13,9 @@
       <!-- Ваш код для отображения карточек -->
       <div class="card">
         <h2>{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
-          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">{{ order.complete ? 'Не выполнено' : 'Выполнено' }}</button>
+          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">
+            {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
+          </button>
         </h2>
         <p>Дата: {{ order.order_date }}</p>
         <p>Телефон: {{ order.telephone }}</p>
@@ -21,7 +23,8 @@
         <p>Город: {{ order.city }}</p>
         <p v-if="order.address">Новая почта: {{ order.address }}</p>
         <p v-if="order.postal_code">УкрПочта: {{ order.postal_code }}</p>
-        <p >Спосiб оплати: {{ order.payment_method }}</p>
+        <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
+        <p v-if="order.payment_method !== 'creditCard'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
         <p>Total price: {{ order.total_price }} ₴.</p>
         <!-- Другие поля карточки -->
       </div>
