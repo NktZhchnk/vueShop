@@ -23,10 +23,10 @@ console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
 console.log('DB_DATABASE:', process.env.DB_DATABASE);
 
 const connection = mysql.createConnection({
-    host:process.env.DB_HOST,
-    user:process.env.DB_USER,
-    password:process.env.DB_PASSWORD,
-    database:process.env.DB_DATABASE,
+    host: process.env.VUE_APP_DB_HOST,
+    user: process.env.VUE_APP_DB_USER,
+    password: process.env.VUE_APP_DB_PASSWORD,
+    database: process.env.VUE_APP_DB_DATABASE,
 });
 
 
