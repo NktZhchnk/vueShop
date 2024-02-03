@@ -17,16 +17,11 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('DB_DATABASE:', process.env.DB_DATABASE);
-
 const connection = mysql.createConnection({
-    host: process.env.VUE_APP_DB_HOST,
-    user: process.env.VUE_APP_DB_USER,
-    password: process.env.VUE_APP_DB_PASSWORD,
-    database: process.env.VUE_APP_DB_DATABASE,
+    host: '193.0.61.203',
+    user: 'admin',
+    password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
+    database: 'products',
 });
 
 
