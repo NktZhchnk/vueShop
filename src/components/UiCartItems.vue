@@ -291,7 +291,14 @@ img {
     border-radius: 0;
     height: 100%;
   }
-
+  button{
+    background-color: #343434;
+    color: white;
+    border-radius: 6px;
+  }
+  button:hover{
+    background-color: #181818;
+  }
   .div-header {
     border-radius: 0;
   }
