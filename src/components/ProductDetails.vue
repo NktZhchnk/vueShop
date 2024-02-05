@@ -249,7 +249,7 @@ store.getCartItems()
             </div>
             <p style="margin: 0; margin-left: 10px">test: {{ item.variety_quan }}</p>
           </label>
-          <div v-else="item.variety_quan" :key="item.id" class="rad-label">
+          <div v-else :key="item.id" class="rad-label">
             <input
                 type="radio"
                 :value="item"
@@ -343,7 +343,6 @@ store.getCartItems()
 
 .swiper-button-prev {
   right: 20%;
-
 }
 
 .swiper-slide img {
@@ -409,6 +408,8 @@ store.getCartItems()
 /* Общие стили varieties */
 
 .varieties-wrapper {
+  outline: none; /* Убирает контур при активации */
+  -webkit-tap-highlight-color: transparent; /* Убирает выделение на мобильных устройствах */
   display: grid;
   padding: 10px;
   box-sizing: border-box;
@@ -439,6 +440,7 @@ store.getCartItems()
   height: 1px;
   opacity: 0;
   z-index: -1;
+
 }
 
 .rad-design {
