@@ -345,6 +345,14 @@ img {
     width: 100%;
   }
 
+  button{
+    background-color: #343434;
+    color: white;
+    border-radius: 6px;
+  }
+  button:hover{
+    background-color: #181818;
+  }
   .product-image {
     height: 100%;
   }

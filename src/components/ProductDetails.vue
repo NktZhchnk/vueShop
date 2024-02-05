@@ -131,7 +131,7 @@ const sumCountProduct = () => {
     }
   } else {
     const production = getProductById.value
-    if(countProduct.value < production.quan_item){
+    if (countProduct.value < production.quan_item) {
       countProduct.value++
     }
   }
@@ -221,16 +221,15 @@ store.getCartItems()
       <h1>{{ getProductById.name_item }}</h1>
     </div>
     <div class="text-info-product">
-      <p style="overflow-wrap: break-word; font-family: 'Roboto Light', sans-serif;" @click="toggleTextInfo">
+      <p style="overflow-wrap: break-word; font-family: 'Roboto Light', sans-serif; margin-top: 0" @click="toggleTextInfo">
         {{ truncatedTextInfo }}
         <span style="color: black" v-if="showFullText" @click="toggleTextInfo"></span>
       </p>
-      <p style="overflow-wrap: break-word">test {{ getProductById.quan_item }}</p>
     </div>
 
 
     <div v-if="getVarieties.length > 0">
-      <h3 style="display: flex; justify-content: center">Варіанти:</h3>
+      <h3 style="display: flex; justify-content: center; margin-bottom: 0">Варіанти:</h3>
       <div class="varieties-wrapper">
         <template v-for="item in getVarieties">
           <label v-if="item.variety_quan > 0" :key="item.id" class="rad-label">
@@ -244,9 +243,29 @@ store.getCartItems()
 
             />
             <div class="rad-design"></div>
-            <div class="rad-text">{{ item.variety_name }} - {{ item.variety_price }} ₴</div>
-            <p style="margin-left: 10px">test: {{ item.variety_quan }}</p>
+            <div class="rad-text">{{ item.variety_name }} - <span style="color: #676767">{{
+                item.variety_price
+              }} ₴</span>
+            </div>
+            <p style="margin: 0; margin-left: 10px">test: {{ item.variety_quan }}</p>
           </label>
+          <div v-else="item.variety_quan" :key="item.id" class="rad-label">
+            <input
+                type="radio"
+                :value="item"
+                v-model="selectedVariety"
+                class="rad-input"
+                :name="'rad' + item.id"
+                @change="resetCount"
+
+            />
+            <div class="rad-design"></div>
+            <div class="rad-text" style="text-decoration: line-through;">{{ item.variety_name }} - {{
+                item.variety_price
+              }} ₴
+            </div>
+            <p style="margin: 0; margin-left: 10px">немає в наявності</p>
+          </div>
         </template>
       </div>
     </div>
