@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useMyStore} from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
 
@@ -12,11 +12,14 @@ onMounted(async () => {
 const itemImages = (itemId) => {
   return store.productImg.filter(img => img.product_id === itemId).map(img => img.img);
 };
-const filteredProduct = ref([])
 
-setTimeout(() => {
-  filteredProduct.value = ([...store.products]);
-}, 150)
+const filteredProduct = computed(()=>{
+  const searchQuery = store.searchProduct.toLowerCase();
+
+  return store.products
+      .filter(item => item.name_item.toLowerCase().includes(searchQuery) && (item.quan_item > 0 || searchQuery === ''))
+      .sort((a, b) => (b.quan_item > 0 ? 1 : 0) - (a.quan_item > 0 ? 1 : 0));
+})
 
 
 watch(() => store.searchProduct, (newSearchProduct) => {
@@ -31,14 +34,18 @@ watch(() => store.searchProduct, (newSearchProduct) => {
   }
 })
 
+
 </script>
 
 <template>
   <div class="style-products">
-    <div v-for="item in filteredProduct" :key="item.id" class="style-product">
+    <div v-for="item in filteredProduct" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
       <router-link class="custom-link" :to="'/product/' + item.id">
         <div class="image-container">
           <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
+          <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
+            Товар закінчився
+          </div>
         </div>
         <div class="product-details">
           <div class="product-name">
@@ -67,10 +74,15 @@ watch(() => store.searchProduct, (newSearchProduct) => {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  &.out-of-stock {
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .custom-link {
@@ -89,6 +101,22 @@ watch(() => store.searchProduct, (newSearchProduct) => {
     height: 100%;
     object-fit: cover;
   }
+
+  .out-of-stock-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: white;
+    border-radius: 20px;
+    color: #000000;
+  }
 }
 
 .product-details {
@@ -106,3 +134,4 @@ watch(() => store.searchProduct, (newSearchProduct) => {
   }
 }
 </style>
+
