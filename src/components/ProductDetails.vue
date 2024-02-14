@@ -158,10 +158,17 @@ const toggleTextInfo = () => {
 };
 
 const truncatedTextInfo = computed(() => {
-  const maxLength = 355; // установите максимальную длину текста, которую вы хотите отобразить
+  const maxLength = 100;
   return showFullText.value
       ? getProductById.value.text_info
       : getProductById.value.text_info.slice(0, maxLength) + '... Показати більше';
+});
+
+const formattedText = computed(() => {
+  if (getProductById.value && getProductById.value.text_info) {
+    return truncatedTextInfo.value.replace(/\n/g, '</p><p>');
+  }
+  return '';
 });
 
 store.getCartItems()
@@ -221,9 +228,9 @@ store.getCartItems()
       <h1>{{ getProductById.name_item }}</h1>
     </div>
     <div class="text-info-product">
-      <p style="overflow-wrap: break-word; font-family: 'Roboto Light', sans-serif; margin-top: 0" @click="toggleTextInfo">
-        {{ truncatedTextInfo }}
-        <span style="color: black" v-if="showFullText" @click="toggleTextInfo"></span>
+      <p class="truncated-text" @click="toggleTextInfo">
+        <span v-html="formattedText"></span>
+        <span v-if="!showFullText" class="read-more">... Показати більше</span>
       </p>
     </div>
 
@@ -302,7 +309,18 @@ store.getCartItems()
 
 <style scoped>
 /* Общие стили */
+.truncated-text {
+  font-family: 'Roboto Light', sans-serif;
+  margin-top: 0;
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+.read-more {
+  color: Black;
+  cursor: pointer;
+}
 .swiper {
   width: 400px;
   height: 400px;
@@ -470,8 +488,6 @@ store.getCartItems()
 .rad-text {
   color: hsl(0, 0%, 60%);
   margin-left: 14px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
   font-size: 18px;
   font-weight: 900;
   transition: .3s;

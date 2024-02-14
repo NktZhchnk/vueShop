@@ -51,7 +51,7 @@ watch(() => store.searchProduct, (newSearchProduct) => {
           <div class="product-name">
             {{ item.name_item }}
           </div>
-          <div class="product-price">
+          <div class="product-price" style="position: relative; bottom:  0;">
             Ціна: {{ item.price_item }} ₴
           </div>
         </div>
