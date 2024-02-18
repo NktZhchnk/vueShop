@@ -6,13 +6,21 @@ import LazyLoadImage from "@/LazyLoadImage.vue";
 const store = useMyStore();
 const productsPerPage = 15;
 const initiallyLoadedProducts = ref(productsPerPage);
+const totalProducts = ref(0);
 
-const loadMoreProducts = () => {
-  initiallyLoadedProducts.value += productsPerPage;
+const loadMoreProducts = async () => {
+  if (initiallyLoadedProducts.value < totalProducts.value) {
+    initiallyLoadedProducts.value += productsPerPage;
+  } else {
+    // Загрузка больше товаров, если не все товары уже загружены
+    await store.fetchData();
+    initiallyLoadedProducts.value += productsPerPage;
+  }
 };
 
 onMounted(async () => {
   await store.fetchData();
+  totalProducts.value = store.products.length;
   observeScroll();
 });
 
@@ -27,16 +35,9 @@ const productImagesMap = computed(() => {
   return map;
 });
 
-const itemImages = computed(() => {
-  const memoizedImages = {};
-
-  return (itemId) => {
-    if (!memoizedImages[itemId]) {
-      memoizedImages[itemId] = productImagesMap.value[itemId] || [];
-    }
-    return memoizedImages[itemId];
-  };
-});
+const itemImages = (itemId) => {
+  return productImagesMap.value[itemId] || [];
+};
 
 
 const filteredProduct = computed(() => {
@@ -90,7 +91,7 @@ const observeScroll = () => {
     <div v-for="item in filteredProduct.slice(0, initiallyLoadedProducts)" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
     <router-link class="custom-link" :to="'/product/' + item.id">
         <div class="image-container">
-          <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item" ></LazyLoadImage>
+          <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
           <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
             Товар закінчився
           </div>
