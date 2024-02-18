@@ -16,11 +16,28 @@ onMounted(async () => {
   observeScroll();
 });
 
-const itemImages = (itemId) => {
-  return store.productImg
-      .filter((img) => img.product_id === itemId)
-      .map((img) => img.img);
-};
+const productImagesMap = computed(() => {
+  const map = {};
+  store.productImg.forEach((img) => {
+    if (!map[img.product_id]) {
+      map[img.product_id] = [];
+    }
+    map[img.product_id].push(img.img);
+  });
+  return map;
+});
+
+const itemImages = computed(() => {
+  const memoizedImages = {};
+
+  return (itemId) => {
+    if (!memoizedImages[itemId]) {
+      memoizedImages[itemId] = productImagesMap.value[itemId] || [];
+    }
+    return memoizedImages[itemId];
+  };
+});
+
 
 const filteredProduct = computed(() => {
   const searchQuery = store.searchProduct.toLowerCase();
@@ -47,10 +64,11 @@ watch(() => store.searchProduct, (newSearchProduct) => {
 });
 
 const observeScroll = () => {
+  const windowHeight = window.innerHeight;
+  const contentHeight = document.documentElement.scrollHeight;
+
   const handleScroll = () => {
     const scrollY = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const contentHeight = document.documentElement.scrollHeight;
 
     if (scrollY + windowHeight >= contentHeight - 200) {
       loadMoreProducts();
@@ -59,11 +77,11 @@ const observeScroll = () => {
 
   window.addEventListener("scroll", handleScroll);
 
-  // Опционально, чтобы избежать утечек памяти, освобождаем слушателя события при уничтожении компонента
   onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
   });
 };
+
 </script>
 
 
@@ -72,7 +90,7 @@ const observeScroll = () => {
     <div v-for="item in filteredProduct.slice(0, initiallyLoadedProducts)" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
     <router-link class="custom-link" :to="'/product/' + item.id">
         <div class="image-container">
-          <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
+          <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item" ></LazyLoadImage>
           <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
             Товар закінчився
           </div>
@@ -81,7 +99,7 @@ const observeScroll = () => {
           <div class="product-name">
             {{ item.name_item }}
           </div>
-          <div class="product-price" style="position: relative; bottom:  0;">
+          <div class="product-price">
             Ціна: {{ item.price_item }} ₴
           </div>
         </div>
@@ -159,6 +177,8 @@ const observeScroll = () => {
   }
 
   .product-price {
+    position: relative;
+    bottom: 0;
     font-size: 1rem;
     color: #555;
   }
