@@ -38,7 +38,6 @@ const isAdmin = () => {
       </div>
 
       <div class="div-body">
-        <p>Здесь будет навигация сайта</p>
         <div v-if="isAdmin()">
           <ul class="nav-menu">
             <li>
