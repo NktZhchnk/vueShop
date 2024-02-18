@@ -1,14 +1,15 @@
 <script setup>
-import {onMounted,computed, ref} from "vue";
+import {onMounted, computed, ref} from "vue";
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
+import LazyLoadImage from "@/LazyLoadImage.vue";
 
 const store = useMyStore()
 
 onMounted(async () => {
   await store.fetchData();
-});
 
+});
 
 let varietyQuantities = ref({});
 let qunProduct = ref(0)
@@ -87,7 +88,11 @@ const sortedProducts = computed(() => {
 
 // Остальной код остается неизменным
 // ...
-
+const itemImages = (itemId) => {
+  return store.productImg
+      .filter((img) => img.product_id === itemId)
+      .map((img) => img.img);
+};
 // Функция для установки порядка сортировки
 const sortByQuantity = (order) => {
   sortBy.value = order;
@@ -96,7 +101,7 @@ const sortByQuantity = (order) => {
 
 <template>
   <div>
-    <input v-model="searchQuery" placeholder="Поиск по названию" class="search-input" />
+    <input v-model="searchQuery" placeholder="Поиск по названию" class="search-input"/>
 
     <!-- Кнопки для сортировки -->
     <div class="sort-buttons">
@@ -106,10 +111,16 @@ const sortByQuantity = (order) => {
 
     <div class="product-list">
       <div v-for="product in sortedProducts" :key="product.id" class="product-card">
-        <h2 class="product-name">{{ product.name_item }}</h2>
+        <div style="display: flex;  justify-content: space-between; padding: 5px">
+          <h2 class="product-name">{{ product.name_item }} </h2>
+          <LazyLoadImage
+              class="img" style=" flex-shrink: 0; right:10px ; width: 120px; height: 120px"
+              :src="itemImages(product.id)[0]"
+              :alt="product.name_item"></LazyLoadImage>
+        </div>
         <div class="product-details">
           <div class="quantity-section">
-            <span class="label">Общее количество:</span>
+            <span class="label">Общее количество:  </span>
             <span class="total-quantity">{{ getTotalQuantity(product.id) }}</span>
             <input v-if="getProductVarieties(product.id).length === 0" type="number" v-model="qunProduct"
                    class="quantity-input"/>
@@ -119,7 +130,7 @@ const sortByQuantity = (order) => {
             <ul class="varieties-list">
               <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
                 <span class="variety-info">{{ variety.variety_name }} - {{ variety.variety_quan }}</span>
-                <input type="number"  v-model="varietyQuantities[variety.id]" class="quantity-input"/>
+                <input type="number" v-model="varietyQuantities[variety.id]" class="quantity-input"/>
               </li>
             </ul>
           </div>
@@ -138,6 +149,7 @@ const sortByQuantity = (order) => {
   gap: 20px;
   justify-content: space-around;
 }
+
 .sort-buttons {
   display: flex;
   gap: 10px;
@@ -156,6 +168,7 @@ const sortByQuantity = (order) => {
 .sort-buttons button:hover {
   background-color: #45a049;
 }
+
 .search-input {
   width: 100%;
   margin-top: 20px;
@@ -177,9 +190,10 @@ const sortByQuantity = (order) => {
 .product-name {
   font-size: 1.5rem;
   margin: 15px;
-  white-space: nowrap;
+  width: 70%;
+  overflow-wrap: break-word;
+  height: 95px;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .product-details {
