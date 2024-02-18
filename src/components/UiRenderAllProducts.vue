@@ -1,46 +1,76 @@
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
-import {useMyStore} from "@/store/store.js";
+import { ref, computed, onMounted, watch, onUnmounted } from "vue";
+import { useMyStore } from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
 
-const store = useMyStore()
+const store = useMyStore();
+const productsPerPage = 15;
+const initiallyLoadedProducts = ref(productsPerPage);
+
+const loadMoreProducts = () => {
+  initiallyLoadedProducts.value += productsPerPage;
+};
 
 onMounted(async () => {
   await store.fetchData();
-  console.log(store.searchProduct)
+  observeScroll();
 });
+
 const itemImages = (itemId) => {
-  return store.productImg.filter(img => img.product_id === itemId).map(img => img.img);
+  return store.productImg
+      .filter((img) => img.product_id === itemId)
+      .map((img) => img.img);
 };
 
-const filteredProduct = computed(()=>{
+const filteredProduct = computed(() => {
   const searchQuery = store.searchProduct.toLowerCase();
-
   return store.products
-      .filter(item => item.name_item.toLowerCase().includes(searchQuery) && (item.quan_item > 0 || searchQuery === ''))
-      .sort((a, b) => (b.quan_item > 0 ? 1 : 0) - (a.quan_item > 0 ? 1 : 0));
-})
-
+      .filter(
+          (item) =>
+              item.name_item.toLowerCase().includes(searchQuery) &&
+              (item.quan_item > 0 || searchQuery === "")
+      )
+      .sort(
+          (a, b) =>
+              (b.quan_item > 0 ? 1 : 0) - (a.quan_item > 0 ? 1 : 0)
+      );
+});
 
 watch(() => store.searchProduct, (newSearchProduct) => {
-  if (newSearchProduct === '') {
-    // Если searchProduct пуст, отображаем все продукты
+  if (newSearchProduct === "") {
     filteredProduct.value = [...store.products];
   } else {
-    // Фильтруем продукты в зависимости от новой строки поиска
-    filteredProduct.value = store.products.filter(item => {
+    filteredProduct.value = store.products.filter((item) => {
       return item.name_item.toLowerCase().includes(newSearchProduct.toLowerCase());
     });
   }
-})
+});
 
+const observeScroll = () => {
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const contentHeight = document.documentElement.scrollHeight;
 
+    if (scrollY + windowHeight >= contentHeight - 200) {
+      loadMoreProducts();
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  // Опционально, чтобы избежать утечек памяти, освобождаем слушателя события при уничтожении компонента
+  onUnmounted(() => {
+    window.removeEventListener("scroll", handleScroll);
+  });
+};
 </script>
+
 
 <template>
   <div class="style-products">
-    <div v-for="item in filteredProduct" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
-      <router-link class="custom-link" :to="'/product/' + item.id">
+    <div v-for="item in filteredProduct.slice(0, initiallyLoadedProducts)" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
+    <router-link class="custom-link" :to="'/product/' + item.id">
         <div class="image-container">
           <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
           <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
