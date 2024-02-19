@@ -19,7 +19,6 @@ export const useMyStore = defineStore({
             cities: '',
             searchQuery: null,
         },
-        searchProduct: '',
         orders: [],
         radioPrice: [],
         radioQuan: [],

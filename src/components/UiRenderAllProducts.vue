@@ -8,20 +8,14 @@ const productsPerPage = 15;
 const initiallyLoadedProducts = ref(productsPerPage);
 const totalProducts = ref(0);
 
-const loadMoreProducts = async () => {
-  if (initiallyLoadedProducts.value < totalProducts.value) {
-    initiallyLoadedProducts.value += productsPerPage;
-  } else {
-    // Загрузка больше товаров, если не все товары уже загружены
-    await store.fetchData();
-    initiallyLoadedProducts.value += productsPerPage;
-  }
+const loadMoreProducts = () => {
+  initiallyLoadedProducts.value += productsPerPage;
 };
 
-onMounted(async () => {
-  await store.fetchData();
+onMounted(() => {
   totalProducts.value = store.products.length;
   observeScroll();
+  store.fetchData()
 });
 
 const productImagesMap = computed(() => {
@@ -39,41 +33,17 @@ const itemImages = (itemId) => {
   return productImagesMap.value[itemId] || [];
 };
 
-
-const filteredProduct = computed(() => {
-  const searchQuery = store.searchProduct.toLowerCase();
-  return store.products
-      .filter(
-          (item) =>
-              item.name_item.toLowerCase().includes(searchQuery) &&
-              (item.quan_item > 0 || searchQuery === "")
-      )
-      .sort(
-          (a, b) =>
-              (b.quan_item > 0 ? 1 : 0) - (a.quan_item > 0 ? 1 : 0)
-      );
-});
-
-watch(() => store.searchProduct, (newSearchProduct) => {
-  if (newSearchProduct === "") {
-    filteredProduct.value = [...store.products];
-  } else {
-    filteredProduct.value = store.products.filter((item) => {
-      return item.name_item.toLowerCase().includes(newSearchProduct.toLowerCase());
-    });
-  }
-});
-
 const observeScroll = () => {
-  const windowHeight = window.innerHeight;
-  const contentHeight = document.documentElement.scrollHeight;
-
   const handleScroll = () => {
-    const scrollY = window.scrollY;
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const contentHeight = document.documentElement.scrollHeight;
 
-    if (scrollY + windowHeight >= contentHeight - 200) {
-      loadMoreProducts();
-    }
+      if (scrollY + windowHeight >= contentHeight - 200) {
+        loadMoreProducts();
+      }
+    });
   };
 
   window.addEventListener("scroll", handleScroll);
@@ -82,13 +52,12 @@ const observeScroll = () => {
     window.removeEventListener("scroll", handleScroll);
   });
 };
-
 </script>
 
 
 <template>
   <div class="style-products">
-    <div v-for="item in filteredProduct.slice(0, initiallyLoadedProducts)" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
+    <div v-for="item in store.products.slice(0, initiallyLoadedProducts)" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
     <router-link class="custom-link" :to="'/product/' + item.id">
         <div class="image-container">
           <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>

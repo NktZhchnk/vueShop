@@ -1,6 +1,7 @@
 <template>
   <div ref="intersectionTarget" class="lazy-load">
     <img v-if="isVisible" :src="src" :alt="alt"/>
+    <div v-else class="placeholder">Загрузка...</div>
   </div>
 </template>
 
@@ -29,7 +30,7 @@ export default {
       const options = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1,
+        threshold: 0.52,
       };
 
       const observer = new IntersectionObserver(this.handleIntersection, options);
@@ -56,7 +57,14 @@ export default {
   position: relative;
   overflow: hidden;
 }
-
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0; /* Цвет заглушки */
+}
 img {
   width: 100%;
   height: 100%;

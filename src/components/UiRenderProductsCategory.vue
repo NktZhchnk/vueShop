@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useRoute } from 'vue-router';
 import axios from "axios";
 import { useMyStore } from "@/store/store.js";
@@ -9,16 +9,21 @@ const route = useRoute();
 const category = ref(route.params.category);
 const productsCategory = ref([]);
 const store = useMyStore();
+const productsPerPage = 15;
+const initiallyLoadedProducts = ref(productsPerPage);
+const totalProducts = ref(0);
+
+const loadMoreProducts = () => {
+  initiallyLoadedProducts.value += productsPerPage;
+};
 
 const itemImages = (itemId) => {
   return store.productImg.filter(img => img.product_id === itemId).map(img => img.img);
 };
 
 const filteredProducts = computed(() => {
-  const searchQuery = store.searchProduct.toLowerCase();
-
   return productsCategory.value
-      .filter(item => item.name_item.toLowerCase().includes(searchQuery) && (item.quan_item > 0 || searchQuery === ''))
+      .filter(item => item.name_item.toLowerCase() && (item.quan_item > 0))
       .sort((a, b) => (b.quan_item > 0 ? 1 : 0) - (a.quan_item > 0 ? 1 : 0));
 });
 
@@ -27,6 +32,8 @@ const fetchProducts = async () => {
     const response = await axios.get(`https://eseniabila.com.ua/getProductsCategory?category=${category.value}`);
     if (response.data) {
       productsCategory.value = response.data;
+      totalProducts.value = response.data.length;
+      observeScroll();
     }
   } catch (error) {
     console.error('Ошибка при получении данных о товаре:', error);
@@ -35,18 +42,38 @@ const fetchProducts = async () => {
 
 onMounted(() => {
   store.fetchData();
-  fetchProducts(); // Fetch products when the component is mounted
+  fetchProducts(); // Загрузка товаров при монтировании компонента
 });
+
+const observeScroll = () => {
+  const handleScroll = () => {
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const contentHeight = document.documentElement.scrollHeight;
+
+      if (scrollY + windowHeight >= contentHeight - 200) {
+        loadMoreProducts();
+      }
+    });
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  onUnmounted(() => {
+    window.removeEventListener("scroll", handleScroll);
+  });
+};
 </script>
 
 <template>
   <div class="style-products">
-    <div v-for="item in filteredProducts" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
+    <div v-for="item in filteredProducts.slice(0, initiallyLoadedProducts)" :key="item.id" class="style-product" :class="{ 'out-of-stock': item.quan_item <= 0 }">
       <router-link class="custom-link" :to="'/product/' + item.id">
         <div class="image-container">
           <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
           <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
-            Товар закінчився
+            Товар закончился
           </div>
         </div>
         <div class="product-details">
@@ -54,13 +81,14 @@ onMounted(() => {
             {{ item.name_item }}
           </div>
           <div class="product-price">
-            Ціна: {{ item.price_item }} ₴
+            Цена: {{ item.price_item }} ₴
           </div>
         </div>
       </router-link>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .style-products {
