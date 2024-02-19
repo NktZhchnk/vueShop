@@ -5,10 +5,10 @@ import {useMyStore} from "@/store/store.js";
 import axios from "axios";
 
 const store = useMyStore()
-let telephone = ref('4242424');
-let firstname = ref('test');
-let lastName = ref('test');
-let surname = ref('test');
+let telephone = ref('');
+let firstname = ref('');
+let lastName = ref('');
+let surname = ref('');
 let paymentMethod = ref(null);
 let comment = ref('');
 const loadCartProducts = () => {
