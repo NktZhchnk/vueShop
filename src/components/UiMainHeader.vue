@@ -121,7 +121,6 @@ const showPage = () => {
           </router-link>
         </div>
       </div>
-
     </div>
 
     <div class="main-cart" @click="swapCart">
@@ -149,7 +148,7 @@ const showPage = () => {
   left: 0;
   width: 100%;
   background-color: white;
-  max-height: 300px;
+  max-height: 320px;
   overflow-y: auto;
   z-index: 999;
   display: none; /* Скрываем блок изначально */

@@ -109,6 +109,7 @@ const observeScroll = () => {
   }
 }
 
+
 .image-container {
   height: 200px;
   overflow: hidden;
