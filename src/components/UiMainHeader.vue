@@ -39,6 +39,7 @@ const performSearch = () => {
 const selectResult = () => {
   // Выполните необходимые действия при выборе результата, например, переход на страницу товара
   document.body.style.overflow = 'auto';
+  store.showResults = false;
   store.isOpenShowPage = false
   // Скрыть результаты после выбора
   store.showResults = false;
