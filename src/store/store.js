@@ -59,6 +59,7 @@ export const useMyStore = defineStore({
             this.isOpenShowPage = !this.isOpenShowPage;
         },
         swapSearchProduct() {
+            document.body.style.overflow = 'hidden';
           this.isOpenShowPage = !this.isOpenShowPage
         },
         swapOpenCart() {
