@@ -1,6 +1,6 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
-import {ref, computed, watch} from 'vue';
+import {ref, computed, watch, onMounted} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import axios from "axios";
 
@@ -170,7 +170,9 @@ const formattedText = computed(() => {
   }
   return '';
 });
-
+onMounted(() => {
+  store.fetchData()
+})
 store.getCartItems()
 </script>
 
@@ -321,6 +323,7 @@ store.getCartItems()
   color: Black;
   cursor: pointer;
 }
+
 .swiper {
   width: 400px;
   height: 400px;

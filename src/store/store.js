@@ -8,6 +8,8 @@ export const useMyStore = defineStore({
         allPriceProducts: null,
         cartProducts: [],
         products: [],
+        showResults: false,
+        searchQuery: '',
         productVarieties: [],
         productById: {
             id: [],
@@ -56,9 +58,13 @@ export const useMyStore = defineStore({
             this.checkCart = false;
             this.isOpenShowPage = !this.isOpenShowPage;
         },
+        swapSearchProduct() {
+          this.isOpenShowPage = !this.isOpenShowPage
+        },
         swapOpenCart() {
             this.checkCart = !this.checkCart;
             setTimeout(() => {
+                document.body.style.overflow = 'hidden';
                 this.isOpenCart = !this.isOpenCart;
                 this.isOpenMenu = false;
                 this.isOpenShowPage = !this.isOpenShowPage;
@@ -69,7 +75,10 @@ export const useMyStore = defineStore({
             this.isOpenMenu = false;
         },
         swapShowPage() {
+            document.body.style.overflow = 'auto';
             this.isOpenMenu = false;
+            this.showResults = false;
+            this.searchQuery = '';
             this.isOpenCart = false;
             this.isOpenShowPage = false;
             this.showCheckAuth.showAuthB = false;

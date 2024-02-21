@@ -1,14 +1,46 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
+import {ref} from "vue";
 
 const store = useMyStore()
 const swapMenu = () => {
   store.swapOpenMenu()
 }
-const swapCart = () =>{
-    store.swapOpenCart()
-}
+const swapCart = () => {
+  store.swapOpenCart()
 
+}
+// Добавим переменную для хранения запроса поиска
+
+
+// Добавим переменную для хранения результатов поиска
+let searchResults = ref([]);
+
+// Добавим переменную для отображения/скрытия результатов
+
+
+// Добавим метод для выполнения поиска
+const performSearch = () => {
+  // Простой поиск по названию товара
+  searchResults.value = store.products.filter((product) =>
+      product.name_item.toLowerCase().includes(store.searchQuery.toLowerCase())
+  );
+  store.swapSearchProduct()
+  console.log(searchResults)
+  // Показать результаты только если есть совпадения
+  store.showResults = searchResults.value.length > 0;
+};
+
+// Добавим метод для выбора результата поиска и перехода на страницу товара
+const selectResult = (result) => {
+  // Выполните необходимые действия при выборе результата, например, переход на страницу товара
+  console.log("Выбран товар:", result);
+  store.isOpenShowPage = false
+  // Скрыть результаты после выбора
+  store.showResults = false;
+  // Очистить поле ввода
+  store.searchQuery = "";
+};
 </script>
 
 <template>
@@ -39,18 +71,44 @@ const swapCart = () =>{
         </svg>
       </router-link>
     </div>
+
     <div class="div-inp">
-      <input v-model="store.searchProduct" class="inp-search" style="height: 30px" placeholder="Я шукаю..."/>
+      <input v-model="store.searchQuery" class="inp-search" style="height: 30px" placeholder="Я шукаю..."
+             @input="performSearch"/>
+      <!-- Отображение результатов поиска -->
+      <div v-show="true" class="search-results" :class="{ active: store.showResults }">
+        <div class="search-text-div" v-for="result in searchResults" :key="result.id" @click="selectResult(result)">
+          <router-link class="search-text-link" :to="'/product/' + result.id">
+            <div style="display: flex; margin-top: 10px">
+              <div style="flex-shrink: 0; margin-right: 10px;">
+                <img
+                    style="width: 75px; height: 75px; border-radius: 3px;"
+                    v-if="store.productImg.some(img => img.product_id === result.id)"
+                    :src="store.productImg.find(img => img.product_id === result.id).img"
+                    alt="Product Image"
+                />
+              </div>
+              <div style="flex-grow: 1;">
+                <p class="search-text">
+                  {{ result.name_item }}
+                </p>
+              </div>
+            </div>
+          </router-link>
+        </div>
+      </div>
+
     </div>
 
     <div class="main-cart" @click="swapCart">
-        <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512">
-          <path fill="#ffffff"
-                d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
-        </svg>
-        <div v-if="store.cartProducts.length !== 0" style="position: relative; bottom: 10px; right: 10px; width:20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #bbbbbb; color:  #000000">
-          <h3>{{ store.cartProducts.length }}</h3>
-        </div>
+      <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512">
+        <path fill="#ffffff"
+              d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+      </svg>
+      <div v-if="store.cartProducts.length !== 0"
+           style="position: relative; bottom: 10px; right: 10px; width:20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #bbbbbb; color:  #000000">
+        <h3>{{ store.cartProducts.length }}</h3>
+      </div>
     </div>
 
   </div>
@@ -59,6 +117,41 @@ const swapCart = () =>{
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/roboto');
+
+.search-results {
+  padding: 10px;
+  position: absolute;
+  top: calc(100% + 5px); /* Расположите блок ниже инпута с небольшим отступом */
+  left: 0;
+  width: 100%;
+  background-color: white;
+
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 999;
+  display: none; /* Скрываем блок изначально */
+  border-bottom: 1px solid gray;
+  box-shadow: 2px 2px 3px gray;
+}
+
+.search-text-link {
+  text-decoration: none;
+  color: black;
+}
+
+.search-text {
+  font-size: 24px;
+}
+
+.search-text-div:hover {
+  border-radius: 10px;
+  background: rgb(236, 236, 236);
+}
+
+.search-results.active {
+  z-index: 999;
+  display: block; /* Показываем блок при наличии активных результатов */
+}
 
 .img-a {
   height: 100%;
@@ -80,7 +173,8 @@ const swapCart = () =>{
   .main-header {
     height: 65px;
   }
-  .img-a{
+
+  .img-a {
     height: 100%;
   }
 }
@@ -99,10 +193,12 @@ const swapCart = () =>{
   color: #cccccc;
   transform: scale(1.1);
 }
-svg:hover{
+
+svg:hover {
   transform: scale(1.2);
 }
-.img-a:hover{
+
+.img-a:hover {
   transform: scale(1.1);
 }
 
@@ -179,6 +275,9 @@ h1 {
   .img-header {
     width: 65%;
   }
+  .search-text {
+    font-size: 24px;
+  }
 }
 
 @media screen and (min-width: 900px) {
@@ -218,6 +317,7 @@ h1 {
   .div-catalog {
     display: none;
   }
+
   .img-header {
     width: 70%;
   }
@@ -227,11 +327,16 @@ h1 {
   .div-catalog {
     display: none;
   }
+
   .img-header {
     width: 90%;
   }
-  .div-inp{
+
+  .div-inp {
     margin: 0;
+  }
+  .search-text {
+    font-size: 14px;
   }
 }
 

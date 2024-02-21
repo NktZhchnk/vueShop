@@ -10,7 +10,7 @@ const store = useMyStore()
 </script>
 
 <template>
-  <div>
+  <di>
     <ui-slide-menu class="slide-menu-left"></ui-slide-menu>
     <ui-cart-items v-if="store.checkCart"></ui-cart-items>
     <div class="show-page" @click="store.swapShowPage()" v-if="store.isOpenShowPage"></div>
@@ -31,7 +31,7 @@ const store = useMyStore()
       </div>
       <router-view ></router-view>
     </div>
-  </div>
+  </di>
 </template>
 
 <style>
@@ -62,7 +62,7 @@ body {
 }
 
 .slide-menu-left {
-  z-index: 4;
+  z-index: 5;
 }
 
 
@@ -99,7 +99,7 @@ h1 {
 
 .main-header {
   position: fixed;
-  z-index: 2;
+  z-index: 4;
 }
 
 .div-header {
