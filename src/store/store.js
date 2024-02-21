@@ -10,6 +10,7 @@ export const useMyStore = defineStore({
         products: [],
         showResults: false,
         searchQuery: '',
+        checkInput: false,
         productVarieties: [],
         productById: {
             id: [],
@@ -60,7 +61,7 @@ export const useMyStore = defineStore({
         },
         swapSearchProduct() {
             document.body.style.overflow = 'hidden';
-          this.isOpenShowPage = !this.isOpenShowPage
+            this.isOpenShowPage = !this.isOpenShowPage
         },
         swapOpenCart() {
             this.checkCart = !this.checkCart;
@@ -78,6 +79,7 @@ export const useMyStore = defineStore({
         swapShowPage() {
             document.body.style.overflow = 'auto';
             this.isOpenMenu = false;
+            this.checkInput = false
             this.showResults = false;
             this.searchQuery = '';
             this.isOpenCart = false;
@@ -121,7 +123,7 @@ export const useMyStore = defineStore({
                 });
             this.getCartItems()
         },
-        getOrders(){
+        getOrders() {
             axios.get('https://eseniabila.com.ua/getOrders')
                 .then(response => {
                     // Обработка данных и сохранение их в состоянии магазина

@@ -1,6 +1,6 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 
 const store = useMyStore()
 const swapMenu = () => {
@@ -8,7 +8,6 @@ const swapMenu = () => {
 }
 const swapCart = () => {
   store.swapOpenCart()
-
 }
 // Добавим переменную для хранения запроса поиска
 
@@ -17,7 +16,15 @@ const swapCart = () => {
 let searchResults = ref([]);
 
 // Добавим переменную для отображения/скрытия результатов
-
+watch(
+    () => store.searchQuery,
+    (newSearchQuery, oldSearchQuery) => {
+      // Обработка изменений searchQuery
+      if (newSearchQuery === '') {
+        store.showResults = false;
+      }
+    }
+);
 
 // Добавим метод для выполнения поиска
 const performSearch = () => {
@@ -25,12 +32,10 @@ const performSearch = () => {
   searchResults.value = store.products.filter((product) =>
       product.name_item.toLowerCase().includes(store.searchQuery.toLowerCase())
   );
-  store.swapSearchProduct()
   console.log(searchResults)
-  // Показать результаты только если есть совпадения
+  // Показать результаты только если есть совпаденияs
   store.showResults = searchResults.value.length > 0;
 };
-
 // Добавим метод для выбора результата поиска и перехода на страницу товара
 const selectResult = (result) => {
   // Выполните необходимые действия при выборе результата, например, переход на страницу товара
@@ -41,6 +46,12 @@ const selectResult = (result) => {
   // Очистить поле ввода
   store.searchQuery = "";
 };
+const showPage = () => {
+  if(store.checkInput === false){
+    store.checkInput = true
+    store.swapSearchProduct()
+  }
+}
 </script>
 
 <template>
@@ -73,7 +84,8 @@ const selectResult = (result) => {
     </div>
 
     <div class="div-inp">
-      <input v-model="store.searchQuery" class="inp-search" style="height: 30px" placeholder="Я шукаю..."
+      <input @click="showPage" v-model="store.searchQuery" class="inp-search" style="height: 30px"
+             placeholder="Я шукаю..."
              @input="performSearch"/>
       <!-- Отображение результатов поиска -->
       <div v-show="true" class="search-results" :class="{ active: store.showResults }">
@@ -275,6 +287,7 @@ h1 {
   .img-header {
     width: 65%;
   }
+
   .search-text {
     font-size: 24px;
   }
@@ -335,6 +348,7 @@ h1 {
   .div-inp {
     margin: 0;
   }
+
   .search-text {
     font-size: 14px;
   }
