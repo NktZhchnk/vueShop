@@ -53,28 +53,33 @@ export const useMyStore = defineStore({
             this.addProductsInAdmin.poshtaInfo = item;
             console.log(this.addProductsInAdmin.poshtaInfo);
         },
-        swapOpenMenu() {
-            this.isOpenMenu = !this.isOpenMenu;
+        updateCommonState() {
             this.showResults = false;
             this.searchQuery = '';
+            this.checkInput = false;
+        },
+        swapOpenMenu() {
+            this.isOpenMenu = !this.isOpenMenu;
+            this.updateCommonState()
             this.isOpenCart = false;
             this.checkCart = false;
-            this.isOpenShowPage = !this.isOpenShowPage;
-        },
-        swapSearchProduct() {
-            document.body.style.overflow = 'hidden';
-            this.isOpenShowPage = !this.isOpenShowPage
+
+            if (!this.isOpenShowPage) {
+                this.isOpenShowPage = !this.isOpenShowPage;
+            }
         },
         swapOpenCart() {
             this.checkCart = !this.checkCart;
             setTimeout(() => {
                 document.body.style.overflow = 'hidden';
-                this.showResults = false;
-                this.searchQuery = '';
+                this.updateCommonState()
                 this.isOpenCart = !this.isOpenCart;
                 this.isOpenMenu = false;
-                this.isOpenShowPage = !this.isOpenShowPage;
-            }, 40)
+
+                if (!this.isOpenShowPage) {
+                    this.isOpenShowPage = !this.isOpenShowPage;
+                }
+            }, 40);
         },
         swapOpenAuth() {
             this.showCheckAuth.showAuthB = !this.showCheckAuth.showAuthB;
@@ -83,9 +88,7 @@ export const useMyStore = defineStore({
         swapShowPage() {
             document.body.style.overflow = 'auto';
             this.isOpenMenu = false;
-            this.checkInput = false
-            this.showResults = false;
-            this.searchQuery = '';
+            this.updateCommonState()
             this.isOpenCart = false;
             this.isOpenShowPage = false;
             this.showCheckAuth.showAuthB = false;

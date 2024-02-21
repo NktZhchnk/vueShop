@@ -47,9 +47,21 @@ const selectResult = (result) => {
   store.searchQuery = "";
 };
 const showPage = () => {
-  if(store.checkInput === false){
-    store.checkInput = true
-    store.swapSearchProduct()
+  if(store.isOpenShowPage === true){
+    if(store.checkInput === false){
+      store.checkCart = false
+      store.isOpenMenu = false;
+      store.checkInput = true
+      document.body.style.overflow = 'hidden';
+    }
+  }else{
+    if(store.checkInput === false){
+      store.checkCart = false
+      store.checkInput = true
+      store.isOpenMenu = false;
+      document.body.style.overflow = 'hidden';
+      store.isOpenShowPage = !store.isOpenShowPage
+    }
   }
 }
 </script>
