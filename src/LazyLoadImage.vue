@@ -1,7 +1,7 @@
 <template>
   <div ref="intersectionTarget" class="lazy-load">
     <img v-if="isVisible" :src="src" :alt="alt"/>
-    <div v-else class="placeholder">Загрузка...</div>
+    <div v-else class="placeholder" :style="{ display: isVisible ? 'none' : 'flex' }">Загрузка...</div>
   </div>
 </template>
 
