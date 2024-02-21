@@ -55,6 +55,8 @@ export const useMyStore = defineStore({
         },
         swapOpenMenu() {
             this.isOpenMenu = !this.isOpenMenu;
+            this.showResults = false;
+            this.searchQuery = '';
             this.isOpenCart = false;
             this.checkCart = false;
             this.isOpenShowPage = !this.isOpenShowPage;
@@ -67,6 +69,8 @@ export const useMyStore = defineStore({
             this.checkCart = !this.checkCart;
             setTimeout(() => {
                 document.body.style.overflow = 'hidden';
+                this.showResults = false;
+                this.searchQuery = '';
                 this.isOpenCart = !this.isOpenCart;
                 this.isOpenMenu = false;
                 this.isOpenShowPage = !this.isOpenShowPage;
