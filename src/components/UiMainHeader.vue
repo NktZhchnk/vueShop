@@ -149,8 +149,7 @@ const showPage = () => {
   left: 0;
   width: 100%;
   background-color: white;
-
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
   z-index: 999;
   display: none; /* Скрываем блок изначально */
