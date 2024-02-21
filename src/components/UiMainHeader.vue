@@ -32,14 +32,13 @@ const performSearch = () => {
   searchResults.value = store.products.filter((product) =>
       product.name_item.toLowerCase().includes(store.searchQuery.toLowerCase())
   );
-  console.log(searchResults)
   // Показать результаты только если есть совпаденияs
   store.showResults = searchResults.value.length > 0;
 };
 // Добавим метод для выбора результата поиска и перехода на страницу товара
-const selectResult = (result) => {
+const selectResult = () => {
   // Выполните необходимые действия при выборе результата, например, переход на страницу товара
-  console.log("Выбран товар:", result);
+  document.body.style.overflow = 'auto';
   store.isOpenShowPage = false
   // Скрыть результаты после выбора
   store.showResults = false;
