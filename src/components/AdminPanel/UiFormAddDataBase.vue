@@ -8,7 +8,7 @@ import AddCategories from "@/components/AdminPanel/AddCategories.vue";
 const store = useMyStore()
 
 const newData = {
-  name_item: 'Н',
+  name_item: '',
   price_item: 1, // цена продукта
   quan_item: 1,    // количество продукта
   show_item: 1,
@@ -64,7 +64,6 @@ const addProduct = () => {
   axios.post('https://eseniabila.com.ua/addProduct', newData)
       .then(response => {
         console.log('Ответ сервера:', response.data);
-        location.reload();
         setTimeout(() => {
           store.fetchData()
         }, 2000)
@@ -95,6 +94,9 @@ const addProduct = () => {
       .then(response => {
         console.log('Ответ сервера:', response.data);
         // Обработка успешного ответа
+        setTimeout(()=>{
+          location.reload();
+        },1500)
       })
       .catch(error => {
         console.error('Ошибка при отправке данных на сервер:', error);
