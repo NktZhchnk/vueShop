@@ -43,30 +43,26 @@ const debounce = (func, delay) => {
   };
 };
 
-const handleDebouncedScroll = debounce(handleScroll, 200);
+const delayedLoadMoreProducts = debounce(loadMoreProducts, 150); // Настройте задержку по необходимости
+
 
 const observeScroll = () => {
-  window.addEventListener("scroll", handleDebouncedScroll);
+  const handleScroll = debounce(() => {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const contentHeight = document.documentElement.scrollHeight;
+
+    if (scrollY + windowHeight >= contentHeight - 200) {
+      delayedLoadMoreProducts();
+    }
+  }, 300); // Измените значение по необходимости
+
+  window.addEventListener("scroll", handleScroll);
 
   onUnmounted(() => {
-    window.removeEventListener("scroll", handleDebouncedScroll);
+    window.removeEventListener("scroll", handleScroll);
   });
 };
-
-const handleScroll = () => {
-  const scrollY = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const contentHeight = document.documentElement.scrollHeight;
-
-  if (scrollY + windowHeight >= contentHeight - 200 && moreProductsAvailable()) {
-    loadMoreProducts();
-  }
-};
-
-const moreProductsAvailable = () => {
-  return initiallyLoadedProducts.value < totalProducts.value;
-};
-
 </script>
 
 
