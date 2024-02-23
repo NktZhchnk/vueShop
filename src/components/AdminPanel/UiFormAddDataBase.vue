@@ -47,7 +47,7 @@ const handleKeyDown = (event) => {
   }
 };
 const addProduct = () => {
-  store.getRadioPrice()
+  store.getRadioPrice();
 
   const data = {
     product_id: store.lastId,
@@ -58,51 +58,38 @@ const addProduct = () => {
   const dataImg = {
     img: imageLinks,
     product_id: store.lastId,
-  }
-  console.log(data)
+  };
 
-  axios.post('https://eseniabila.com.ua/addProduct', newData)
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
+  // Создаем массив обещаний для всех трех запросов
+  const promises = [
+    axios.post('https://eseniabila.com.ua/addProduct', newData),
+    axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }),
+    axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }),
+  ];
+
+  // Используем Promise.all для выполнения действия после завершения всех запросов
+  Promise.all(promises)
+      .then((responses) => {
+        console.log('Ответы сервера:', responses);
         setTimeout(() => {
-          store.fetchData()
-        }, 2000)
-        // Обработка успешного ответа
+          store.fetchData();
+          location.reload(); // Перезагрузка страницы после выполнения всех запросов
+        }, 2000);
       })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер Писос:', error);
-        // Обработка ошибки
-      });
-  axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
-        // Обработка успешного ответа
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер:', error);
-        // Обработка ошибки
-      });
-  axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-      .then(response => {
-        console.log('Ответ сервера:', response.data);
-        // Обработка успешного ответа
-        setTimeout(()=>{
-          location.reload();
-        },1500)
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных на сервер:', error);
+      .catch((errors) => {
+        console.error('Ошибка при отправке данных на сервер:', errors);
         // Обработка ошибки
       });
 };
+
 
 
 </script>
