@@ -34,30 +34,17 @@ let countProduct = ref(1)
 // Функция для получения информации о продукте и изображений
 const getProductDetails = async () => {
   try {
-    const response = await axios.get(`https://eseniabila.com.ua/getProductById/${productId.value}`);
-    if (response.data) {
-      product.value = response.data;
-    }
-  } catch (error) {
-    console.error('Ошибка при получении данных о товаре:', error);
-  }
+    const [productResponse, imagesResponse, varietiesResponse] = await Promise.all([
+      axios.get(`https://eseniabila.com.ua/getProductById/${productId.value}`),
+      axios.get(`https://eseniabila.com.ua/getImgById/${productId.value}`),
+      axios.get(`https://eseniabila.com.ua/getVarietiesById/${productId.value}`)
+    ]);
 
-  try {
-    const response = await axios.get(`https://eseniabila.com.ua/getImgById/${productId.value}`);
-    if (response.data) {
-      images.value = response.data;
-    }
+    product.value = productResponse.data;
+    images.value = imagesResponse.data;
+    varieties.value = varietiesResponse.data;
   } catch (error) {
-    console.error('Ошибка при получении данных о картинках:', error);
-  }
-
-  try {
-    const response = await axios.get(`https://eseniabila.com.ua/getVarietiesById/${productId.value}`);
-    if (response.data) {
-      varieties.value = response.data;
-    }
-  } catch (error) {
-    return;
+    console.error('Ошибка при получении данных:', error);
   }
 };
 
@@ -172,6 +159,7 @@ const formattedText = computed(() => {
 });
 onMounted(() => {
   store.fetchData()
+
 })
 store.getCartItems()
 </script>
@@ -256,7 +244,7 @@ store.getCartItems()
                 item.variety_price
               }} ₴</span>
             </div>
-            <p style="margin: 0; margin-left: 10px">test: {{ item.variety_quan }}</p>
+            <p v-if="isAdmin()" style="margin: 0; margin-left: 10px">test: {{ item.variety_quan }}</p>
           </label>
           <div v-else :key="item.id" class="rad-label">
             <input

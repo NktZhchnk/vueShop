@@ -13,11 +13,36 @@ const loadMoreProducts = () => {
 };
 
 onMounted(() => {
-  totalProducts.value = store.products.length;
-  observeScroll();
-  store.fetchData()
-});
+  const cachedProducts = loadFromLocalStorage("cachedProducts");
 
+  if (cachedProducts) {
+    store.setProducts(cachedProducts);
+  } else {
+    store.fetchData().then((data) => {
+      saveToLocalStorage("cachedProducts", data);
+    });
+  }
+
+  observeScroll();
+});
+const saveToLocalStorage = (key, data) => {
+  try {
+    const serializedData = JSON.stringify(data);
+    localStorage.setItem(key, serializedData);
+  } catch (error) {
+    console.error("Error saving to local storage:", error);
+  }
+};
+
+const loadFromLocalStorage = (key) => {
+  try {
+    const serializedData = localStorage.getItem(key);
+    return serializedData ? JSON.parse(serializedData) : null;
+  } catch (error) {
+    console.error("Error loading from local storage:", error);
+    return null;
+  }
+};
 const productImagesMap = computed(() => {
   const map = {};
   store.productImg.forEach((img) => {
