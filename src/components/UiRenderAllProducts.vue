@@ -13,35 +13,11 @@ const loadMoreProducts = () => {
 };
 
 onMounted(() => {
-  const cachedProducts = loadFromLocalStorage("cachedProducts");
-
-  if (cachedProducts) {
-    store.setProducts(cachedProducts);
-  } else {
-    store.fetchData().then((data) => {
-      saveToLocalStorage("cachedProducts", data);
-    });
-  }
   totalProducts.value = store.products.length;
   observeScroll();
+  store.fetchData()
 });
-const saveToLocalStorage = (key, data) => {
-  try {
-    const serializedData = JSON.stringify(data);
-    localStorage.setItem(key, serializedData);
-  } catch (error) {
-    console.error("Error saving to local storage:", error);
-  }
-};
 
-const loadFromLocalStorage = (key) => {
-  try {
-    const serializedData = localStorage.getItem(key);
-    return serializedData ? JSON.parse(serializedData) : null;
-  } catch (error) {
-    console.error("Error loading from local storage:", error);
-    return null;
-  }
 const productImagesMap = computed(() => {
   const map = {};
   store.productImg.forEach((img) => {
@@ -57,25 +33,40 @@ const itemImages = (itemId) => {
   return productImagesMap.value[itemId] || [];
 };
 
-const observeScroll = () => {
-  const handleScroll = () => {
-    requestAnimationFrame(() => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const contentHeight = document.documentElement.scrollHeight;
-
-      if (scrollY + windowHeight >= contentHeight - 200) {
-        loadMoreProducts();
-      }
-    });
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
   };
+};
 
-  window.addEventListener("scroll", handleScroll);
+const handleDebouncedScroll = debounce(handleScroll, 200);
+
+const observeScroll = () => {
+  window.addEventListener("scroll", handleDebouncedScroll);
 
   onUnmounted(() => {
-    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("scroll", handleDebouncedScroll);
   });
 };
+
+const handleScroll = () => {
+  const scrollY = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const contentHeight = document.documentElement.scrollHeight;
+
+  if (scrollY + windowHeight >= contentHeight - 200 && moreProductsAvailable()) {
+    loadMoreProducts();
+  }
+};
+
+const moreProductsAvailable = () => {
+  return initiallyLoadedProducts.value < totalProducts.value;
+};
+
 </script>
 
 
