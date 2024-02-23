@@ -34,17 +34,30 @@ let countProduct = ref(1)
 // Функция для получения информации о продукте и изображений
 const getProductDetails = async () => {
   try {
-    const [productResponse, imagesResponse, varietiesResponse] = await Promise.all([
-      axios.get(`https://eseniabila.com.ua/getProductById/${productId.value}`),
-      axios.get(`https://eseniabila.com.ua/getImgById/${productId.value}`),
-      axios.get(`https://eseniabila.com.ua/getVarietiesById/${productId.value}`)
-    ]);
-
-    product.value = productResponse.data;
-    images.value = imagesResponse.data;
-    varieties.value = varietiesResponse.data;
+    const response = await axios.get(`https://eseniabila.com.ua/getProductById/${productId.value}`);
+    if (response.data) {
+      product.value = response.data;
+    }
   } catch (error) {
-    console.error('Ошибка при получении данных:', error);
+    console.error('Ошибка при получении данных о товаре:', error);
+  }
+
+  try {
+    const response = await axios.get(`https://eseniabila.com.ua/getImgById/${productId.value}`);
+    if (response.data) {
+      images.value = response.data;
+    }
+  } catch (error) {
+    console.error('Ошибка при получении данных о картинках:', error);
+  }
+
+  try {
+    const response = await axios.get(`https://eseniabila.com.ua/getVarietiesById/${productId.value}`);
+    if (response.data) {
+      varieties.value = response.data;
+    }
+  } catch (error) {
+    return;
   }
 };
 
@@ -159,7 +172,6 @@ const formattedText = computed(() => {
 });
 onMounted(() => {
   store.fetchData()
-
 })
 store.getCartItems()
 </script>

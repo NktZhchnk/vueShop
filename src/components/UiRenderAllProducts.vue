@@ -33,29 +33,18 @@ const itemImages = (itemId) => {
   return productImagesMap.value[itemId] || [];
 };
 
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-};
-
-const delayedLoadMoreProducts = debounce(loadMoreProducts, 150); // Настройте задержку по необходимости
-
-
 const observeScroll = () => {
-  const handleScroll = debounce(() => {
-    const scrollY = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const contentHeight = document.documentElement.scrollHeight;
+  const handleScroll = () => {
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const contentHeight = document.documentElement.scrollHeight;
 
-    if (scrollY + windowHeight >= contentHeight - 200) {
-      delayedLoadMoreProducts();
-    }
-  }, 300); // Измените значение по необходимости
+      if (scrollY + windowHeight >= contentHeight - 200) {
+        loadMoreProducts();
+      }
+    });
+  };
 
   window.addEventListener("scroll", handleScroll);
 
