@@ -22,7 +22,7 @@ onMounted(() => {
       saveToLocalStorage("cachedProducts", data);
     });
   }
-
+  totalProducts.value = store.products.length;
   observeScroll();
 });
 const saveToLocalStorage = (key, data) => {
@@ -42,7 +42,6 @@ const loadFromLocalStorage = (key) => {
     console.error("Error loading from local storage:", error);
     return null;
   }
-};
 const productImagesMap = computed(() => {
   const map = {};
   store.productImg.forEach((img) => {
