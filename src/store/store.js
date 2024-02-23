@@ -103,22 +103,15 @@ export const useMyStore = defineStore({
                 console.log('Товары уже загружены. Пропускаем запрос.');
                 return;
             }
-            // Запрашиваем товары с сервера
+            // Здесь вы можете использовать Axios, Fetch API или другую библиотеку для получения данных с сервера
             axios.get('https://eseniabila.com.ua/getProducts')
                 .then(response => {
-                    // Обрабатываем данные и сохраняем их в состоянии магазина
-                    const newProducts = response.data;
-                    const lastItem = newProducts.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
-                    const newLastId = lastItem.id + 1;
-
-                    // Проверка наличия новых товаров
-                    if (newLastId > this.lastId) {
-                        // Есть новые товары, обновим состояние
-                        this.products = [...this.products, ...newProducts];
-                        this.lastId = newLastId;
-                        console.log('В сторе выводим lastId:', this.lastId);
-                        this.priceItem = this.products[0].price_item;
-                    }
+                    // Обработка данных и сохранение их в состоянии магазина
+                    this.products = response.data;
+                    const lastItem = this.products.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
+                    this.lastId = lastItem.id + 1
+                    console.log('в сторе вывожу лст айди:', this.lastId)
+                    this.priceItem = this.products[0].price_item;
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
