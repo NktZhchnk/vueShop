@@ -85,16 +85,19 @@ const addProduct = () => {
   Promise.all(promises)
       .then((responses) => {
         console.log('Ответы сервера:', responses);
-        setTimeout(() => {
-          store.fetchData();
-          location.reload(); // Перезагрузка страницы после выполнения всех запросов
-        }, 2000);
       })
       .catch((errors) => {
         console.error('Ошибка при отправке данных на сервер:', errors);
         // Обработка ошибки
+      })
+      .finally(() => {
+        setTimeout(() => {
+          store.fetchData();
+          location.reload(); // Перезагрузка страницы после выполнения всех запросов
+        }, 2000);
       });
 };
+
 
 
 </script>
