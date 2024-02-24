@@ -14,8 +14,8 @@
       <div class="card">
         <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }}
           {{ order.middle_name }}
-          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">
-            {{ order.complete ? 'Выполнено' : 'Не выполнено' }}
+          <button style="background: greenyellow; border-radius: 5px;" @click.prevent="toggleOrderCompletion(order.id, order.complete)">
+            {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
           </button>
 
         </h2>

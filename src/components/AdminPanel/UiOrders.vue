@@ -12,8 +12,8 @@
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">
-        <h2>{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
-          <button @click.prevent="toggleOrderCompletion(order.id, order.complete)">
+        <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
+          <button style="background: red; border-radius: 5px;" @click.prevent="toggleOrderCompletion(order.id, order.complete)">
             {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
           </button>
         </h2>

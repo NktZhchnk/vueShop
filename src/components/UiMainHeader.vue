@@ -3,8 +3,14 @@ import {useMyStore} from "@/store/store.js";
 import {ref, watch} from "vue";
 
 const store = useMyStore()
+
+const userLogin = ref(localStorage.getItem('userLogin'));
+
 const swapMenu = () => {
   store.swapOpenMenu()
+  if(userLogin.value === 'admin'){
+    store.getOrders()
+  }
 }
 const swapCart = () => {
   store.swapOpenCart()

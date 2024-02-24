@@ -1,7 +1,7 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
 
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 const store = useMyStore()
 
@@ -10,7 +10,9 @@ const userLogin = ref(localStorage.getItem('userLogin'));
 const isAdmin = () => {
   return userLogin.value === 'admin';
 };
-
+const test = computed(() => {
+  return store.orders.filter((item) => item.complete === 1).length
+});
 </script>
 
 <template>
@@ -44,7 +46,8 @@ const isAdmin = () => {
               <router-link to="/adminMenu">Додавання товару</router-link>
             </li>
             <li>
-              <router-link to="/uiOrders">Замовлення</router-link>
+              <router-link to="/uiOrders">Замовлення<span
+                  style="margin-left: 5px; font-size: 18px; color: red">{{ test }}</span></router-link>
             </li>
             <li>
               <router-link to="/uiOrdersComplete">Виконані замовлення</router-link>
@@ -143,6 +146,7 @@ const isAdmin = () => {
 .slide-in {
   transform: translateX(0);
 }
+
 .nav-menu {
   list-style: none;
   padding: 0;
