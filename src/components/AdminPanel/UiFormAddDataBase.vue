@@ -60,20 +60,26 @@ const addProduct = () => {
     product_id: store.lastId,
   };
 
-  // Создаем массив обещаний для всех трех запросов
+  // Создаем массив обещаний только для запросов, у которых есть данные
   const promises = [
     axios.post('https://eseniabila.com.ua/addProduct', newData),
-    axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }),
     axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
       headers: {
         'Content-Type': 'application/json',
       },
     }),
   ];
+
+  // Проверяем наличие данных для addProductVarieties
+  if (data.variety_name && data.variety_quan && data.variety_price) {
+    promises.push(
+        axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+    );
+  }
 
   // Используем Promise.all для выполнения действия после завершения всех запросов
   Promise.all(promises)
@@ -89,7 +95,6 @@ const addProduct = () => {
         // Обработка ошибки
       });
 };
-
 
 
 </script>

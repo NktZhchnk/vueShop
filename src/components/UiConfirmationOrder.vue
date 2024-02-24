@@ -313,6 +313,7 @@ onMounted(loadCartProducts, store.getOrders());
       <h2>Разом</h2>
       <h4>{{ store.cartProducts.length }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
       <h4>Вартість доставки згідно з тарифами перевізника</h4>
+      <h2></h2>
       <button @click="addOrders">Підтвердити замовлення</button>
     </div>
   </div>
