@@ -19,7 +19,7 @@
           </button>
 
         </h2>
-        <p>Дата: {{ order.order_date }}</p>
+        <p>Дата: {{ formattedDate(order.order_date) }}</p>
         <p>Телефон: {{ order.telephone }}</p>
         <p>Комментарий: {{ order.comment }}</p>
         <p>Город: {{ order.city }}</p>
@@ -50,7 +50,20 @@ onMounted(async () => {
     console.error('Ошибка при получении данных:', error);
   }
 });
+const formattedDate = (dateString) => {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZone: 'Europe/Kiev',
+  };
 
+  const utcDate = new Date(dateString);
+  return new Intl.DateTimeFormat('ru-RU', options).format(utcDate);
+};
 const completedOrders = computed(() => {
   return orderDetails.value.filter(order => order.complete === 0).reverse();
 });
