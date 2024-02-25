@@ -5,16 +5,24 @@ import LazyLoadImage from "@/LazyLoadImage.vue";
 
 const store = useMyStore();
 const productsPerPage = 15;
-const initiallyLoadedProducts = ref(productsPerPage);
+// const initiallyLoadedProducts = ref(productsPerPage);
 const totalProducts = ref(0);
+const scrollPosition = ref(0);
+
+const INITIAL_PRODUCTS_PER_PAGE = 15;
+const localStorageKey = 'initiallyLoadedProducts';
+
+const initiallyLoadedProducts = ref(localStorage.getItem(localStorageKey) || INITIAL_PRODUCTS_PER_PAGE);
 
 const loadMoreProducts = () => {
   initiallyLoadedProducts.value += productsPerPage;
+  localStorage.setItem(localStorageKey, initiallyLoadedProducts.value);
 };
 
 onMounted(() => {
   totalProducts.value = store.products.length;
   observeScroll();
+  window.scrollTo(0, scrollPosition.value);
   store.fetchData()
 });
 
@@ -36,7 +44,9 @@ const itemImages = (itemId) => {
 const observeScroll = () => {
   const handleScroll = () => {
     requestAnimationFrame(() => {
+      scrollPosition.value = window.scrollY;
       const scrollY = window.scrollY;
+
       const windowHeight = window.innerHeight;
       const contentHeight = document.documentElement.scrollHeight;
 
