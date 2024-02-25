@@ -141,12 +141,14 @@ watch(selectedSortOrder, () => {
   display: flex;
   align-items: center;
 }
-
 .filter-button {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
   margin-left: auto;
   margin-right: 10px;
   cursor: pointer; /* Добавлен указатель при наведении */
 }
+
 
 .filter-button svg {
   width: 50px;
