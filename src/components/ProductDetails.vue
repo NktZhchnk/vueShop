@@ -5,12 +5,11 @@ import {useRoute, useRouter} from 'vue-router';
 import axios from "axios";
 
 import {Swiper, SwiperSlide} from "swiper/vue";
-import {EffectCube, Pagination, Navigation, EffectCards} from "swiper/modules";
+import {EffectCube, Pagination, Navigation, EffectCards, EffectFlip} from "swiper/modules";
 
 
 import "swiper/css"
 import "swiper/css/bundle"
-
 
 const route = useRoute();
 const productId = ref(route.params.id); // Используем реактивную переменную
@@ -201,7 +200,7 @@ store.getCartItems()
       </svg>
     </div>
 
-    <div v-if="getImages.length > 0">
+    <div v-if="getImages.length > 0" class="div-swiper">
       <Swiper
           :modules="[EffectCards, Pagination, Navigation]"
           effect="cards"
@@ -317,7 +316,12 @@ store.getCartItems()
   color: Black;
   cursor: pointer;
 }
-
+.div-swiper{
+  max-width: 600px;
+  max-height: 400px;
+  padding: 20px;
+  overflow: hidden;
+}
 .swiper {
   width: 400px;
   height: 400px;
