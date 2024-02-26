@@ -8,7 +8,7 @@ const userLogin = ref(localStorage.getItem('userLogin'));
 
 const swapMenu = () => {
   store.swapOpenMenu()
-  if(userLogin.value === 'admin'){
+  if (userLogin.value === 'admin') {
     store.getOrders()
   }
 }
@@ -54,15 +54,15 @@ const selectResult = () => {
   store.searchQuery = "";
 };
 const showPage = () => {
-  if(store.isOpenShowPage === true){
-    if(store.checkInput === false){
+  if (store.isOpenShowPage === true) {
+    if (store.checkInput === false) {
       store.checkCart = false
       store.isOpenMenu = false;
       store.checkInput = true
       document.body.style.overflow = 'hidden';
     }
-  }else{
-    if(store.checkInput === false){
+  } else {
+    if (store.checkInput === false) {
       store.checkCart = false
       store.checkInput = true
       store.isOpenMenu = false;
@@ -71,6 +71,25 @@ const showPage = () => {
     }
   }
 }
+
+const showFilterMenu = ref(false);
+const selectedSortOrder = ref(null);
+
+const toggleFilterMenu = () => {
+  showFilterMenu.value = !showFilterMenu.value;
+};
+const sortByPrice = (order) => {
+  selectedSortOrder.value = order;
+  showFilterMenu.value = false;
+
+  // Реализуйте свою логику сортировки в зависимости от выбранного порядка
+  if (order === 'asc') {
+    store.products.sort((a, b) => a.price_item - b.price_item);
+  } else if (order === 'desc') {
+    store.products.sort((a, b) => b.price_item - a.price_item);
+  }
+};
+
 </script>
 
 <template>
@@ -130,6 +149,19 @@ const showPage = () => {
       </div>
     </div>
 
+    <div style=" width: 50px; height: 100%; margin-left: 6px; padding-left: 5px"
+         class="filter-button">
+      <svg @click="toggleFilterMenu" xmlns="http://www.w3.org/2000/svg"
+           style="display: flex; position: relative; bottom: 15px; height: 100%" viewBox="0 0 320 512">
+        <path fill="#ffffff"
+              d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"/>
+      </svg>
+      <div v-if="showFilterMenu" class="filter-menu">
+        <button @click="sortByPrice('asc')">Дорожчі ₴</button>
+        <button @click="sortByPrice('desc')">Дешевші ₴</button>
+      </div>
+    </div>
+
     <div class="main-cart" @click="swapCart">
       <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512">
         <path fill="#ffffff"
@@ -148,6 +180,40 @@ const showPage = () => {
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/roboto');
 
+.filter-button {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  cursor: pointer; /* Добавлен указатель при наведении */
+}
+
+.filter-button svg {
+  width: 50px;
+  height: 50px;
+  fill: #ffffff;
+}
+
+.filter-menu {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 2px 3px 10px gray;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  z-index: 11;
+}
+
+.filter-menu button {
+  color: white;
+  border: none;
+  background: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.filter-menu button:hover {
+  background: #555;
+}
+
 .search-results {
   padding: 10px;
   position: absolute;
@@ -157,7 +223,7 @@ const showPage = () => {
   background-color: white;
   max-height: 320px;
   overflow-y: auto;
-  z-index: 999;
+  z-index: 10;
   display: none; /* Скрываем блок изначально */
   border-bottom: 1px solid gray;
   box-shadow: 2px 2px 3px gray;

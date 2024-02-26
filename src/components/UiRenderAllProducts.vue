@@ -63,28 +63,6 @@ const observeScroll = () => {
     window.removeEventListener("scroll", handleScroll);
   });
 };
-const showFilterMenu = ref(false);
-const selectedSortOrder = ref(null);
-
-const toggleFilterMenu = () => {
-  showFilterMenu.value = !showFilterMenu.value;
-};
-const sortByPrice = (order) => {
-  selectedSortOrder.value = order;
-  showFilterMenu.value = false;
-
-  // Реализуйте свою логику сортировки в зависимости от выбранного порядка
-  if (order === 'asc') {
-    store.products.sort((a, b) => a.price_item - b.price_item);
-  } else if (order === 'desc') {
-    store.products.sort((a, b) => b.price_item - a.price_item);
-  }
-};
-watch(selectedSortOrder, () => {
-  // Перезагрузите изначально загруженные товары при изменении порядка сортировки
-  initiallyLoadedProducts.value = productsPerPage;
-});
-
 
 </script>
 
@@ -93,16 +71,6 @@ watch(selectedSortOrder, () => {
   <div>
     <div class="div-catalog">
       <div style="display: flex; justify-content: center; align-items: center">
-        <div class="filter-button">
-          <svg @click="toggleFilterMenu" xmlns="http://www.w3.org/2000/svg" style="position: relative; bottom: 7px" viewBox="0 0 320 512">
-            <path fill="#ffffff"
-                  d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"/>
-          </svg>
-          <div v-if="showFilterMenu" class="filter-menu">
-            <button @click="sortByPrice('asc')">по Убыванию</button>
-            <button @click="sortByPrice('desc')">по Возрастанию</button>
-          </div>
-        </div>
         <router-link to="/catalog" class="div-catalog-link"><h1>Catalog</h1>
           <svg style="margin-left: 10px" xmlns="http://www.w3.org/2000/svg" height="30" width="32"
                viewBox="0 0 576 512">
@@ -140,44 +108,6 @@ watch(selectedSortOrder, () => {
 .div-catalog-header {
   display: flex;
   align-items: center;
-}
-.filter-button {
-  -webkit-tap-highlight-color: transparent;
-  tap-highlight-color: transparent;
-  margin-left: auto;
-  margin-right: 10px;
-  cursor: pointer; /* Добавлен указатель при наведении */
-}
-
-
-.filter-button svg {
-  width: 50px;
-  height: 50px;
-  fill: #ffffff;
-  margin-right: 5px;
-}
-
-.filter-menu {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.9);
-  box-shadow: 2px 3px 10px gray;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  margin-top: 5px;
-  z-index: 1;
-}
-
-.filter-menu button {
-  color: white;
-  border: none;
-  background: none;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.filter-menu button:hover {
-  background: #555;
 }
 
 .style-products {
