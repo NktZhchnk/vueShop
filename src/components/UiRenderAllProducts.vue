@@ -84,7 +84,6 @@ const selectedSortOrder = ref(sessionStorage.getItem('selectedSortOrder'));
 if(selectedSortOrder.value === ''){
   sortProductsByDate()
 }
-
 </script>
 
 

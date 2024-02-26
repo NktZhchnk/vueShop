@@ -171,12 +171,12 @@ const sortByDate = (order) => {
       </div>
     </div>
 
-    <div style=" width: 50px; height: 100%; margin-left: 6px; padding-left: 5px"
+    <div @click="toggleFilterMenu" style="margin-left: 10px"
          class="filter-button">
-      <svg @click="toggleFilterMenu" xmlns="http://www.w3.org/2000/svg"
-           style="display: flex; position: relative; bottom: 15px; height: 100%" viewBox="0 0 320 512">
-        <path fill="#ffffff"
-              d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"/>
+      <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512"
+           style="display: flex; position: relative; height: 100%;" >
+        <path fill="#ededed"
+              d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
       </svg>
       <div v-if="showFilterMenu" class="filter-menu">
         <button @click="sortByPrice('asc')">Дорожчі ₴</button>

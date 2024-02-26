@@ -5,7 +5,7 @@ import {useRoute, useRouter} from 'vue-router';
 import axios from "axios";
 
 import {Swiper, SwiperSlide} from "swiper/vue";
-import {EffectCube, Pagination, Navigation} from "swiper/modules";
+import {EffectCube, Pagination, Navigation, EffectCards} from "swiper/modules";
 
 
 import "swiper/css"
@@ -203,29 +203,23 @@ store.getCartItems()
 
     <div v-if="getImages.length > 0">
       <Swiper
-          :modules="[EffectCube, Pagination, Navigation]"
-          effect="cube"
+          :modules="[EffectCards, Pagination, Navigation]"
+          effect="cards"
           :grab-cursor="true"
           :loop="true"
-          :cube-effect="{
-              shadow: true,
-              slideShadows: true,
-              shadowOffset: 20,
-              shadowScale: 0.94,
-            }"
-          :navigation="{
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          }"
-          :pagination="true"
+          :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
+          :pagination="{ clickable: true }"
+          :cards="{ slideShadows: true, rotate: 30, stretch: 10, depth: 100, modifier: 1 }"
       >
-        <SwiperSlide v-for="(image, index) in getImages" :key="index">
-          <img :src="image.img" alt="error"/>
-        </SwiperSlide>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+      <SwiperSlide v-for="(image, index) in getImages" :key="index">
+        <img :src="image.img" alt="error"/>
+      </SwiperSlide>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
       </Swiper>
     </div>
+
+
     <div class="div-name-product">
       <h1>{{ getProductById.name_item }}</h1>
     </div>
@@ -372,7 +366,12 @@ store.getCartItems()
   border-radius: 5px;
   z-index: 1;
 }
-
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgba(75, 75, 75, 0.5); /* Добавлены стили для тени */
+}
 .price-product {
   background-color: #343434;
   border-radius: 5px;
@@ -394,8 +393,9 @@ store.getCartItems()
   padding: 20px;
   border-radius: 8px;
   background-color: #f8f8f8;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Увеличены значения для создания более заметного эффекта объемности */
 }
+
 
 .product-details h1 {
   font-size: 24px;
