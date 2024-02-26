@@ -27,6 +27,7 @@ onMounted(() => {
   store.fetchData()
 });
 
+
 const productImagesMap = computed(() => {
   const map = {};
   store.productImg.forEach((img) => {
@@ -58,11 +59,31 @@ const observeScroll = () => {
   };
 
   window.addEventListener("scroll", handleScroll);
-
   onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
+
   });
 };
+const sortProductsByDate = () => {
+  store.products.sort(sortByDate);
+};
+
+const sortByDate = (a, b) => {
+  const dateA = new Date(a.date_item);
+  const dateB = new Date(b.date_item);
+  return dateB - dateA;
+};
+
+// Используйте watch для слежения за изменениями в store.products
+watch(() => store.products, () => {
+  sortProductsByDate();
+});
+
+const selectedSortOrder = ref(sessionStorage.getItem('selectedSortOrder'));
+
+if(selectedSortOrder.value === ''){
+  sortProductsByDate()
+}
 
 </script>
 

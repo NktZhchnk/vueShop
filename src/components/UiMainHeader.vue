@@ -75,9 +75,14 @@ const showPage = () => {
 const showFilterMenu = ref(false);
 const selectedSortOrder = ref(null);
 
+if (!selectedSortOrder.value) {
+  selectedSortOrder.value = sessionStorage.getItem('selectedSortOrder') || null;
+}
+
 const toggleFilterMenu = () => {
   showFilterMenu.value = !showFilterMenu.value;
 };
+
 const sortByPrice = (order) => {
   selectedSortOrder.value = order;
   showFilterMenu.value = false;
@@ -88,6 +93,23 @@ const sortByPrice = (order) => {
   } else if (order === 'desc') {
     store.products.sort((a, b) => b.price_item - a.price_item);
   }
+
+  // Сохраняем выбранный фильтр в состояние
+  sessionStorage.setItem('selectedSortOrder', order);
+};
+
+const sortByDate = (order) => {
+  selectedSortOrder.value = order;
+  showFilterMenu.value = false;
+
+  if (order === 'new') {
+    store.products.sort((a, b) => new Date(b.date_item) - new Date(a.date_item));
+  } else if (order === 'old') {
+    store.products.sort((a, b) => new Date(a.date_item) - new Date(b.date_item));
+  }
+
+  // Сохраняем выбранный фильтр в состояние
+  sessionStorage.setItem('selectedSortOrder', order);
 };
 
 </script>
@@ -159,6 +181,8 @@ const sortByPrice = (order) => {
       <div v-if="showFilterMenu" class="filter-menu">
         <button @click="sortByPrice('asc')">Дорожчі ₴</button>
         <button @click="sortByPrice('desc')">Дешевші ₴</button>
+        <button @click="sortByDate('new')">Нові</button>
+        <button @click="sortByDate('old')">Старі</button>
       </div>
     </div>
 
