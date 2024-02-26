@@ -1,17 +1,15 @@
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useRoute } from 'vue-router';
-import axios from "axios";
 import { useMyStore } from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
 
 const route = useRoute();
 const category = ref(route.params.category);
-const productsCategory = ref([]);
 const store = useMyStore();
 const productsPerPage = 15;
 const initiallyLoadedProducts = ref(productsPerPage);
-const totalProducts = ref(0);
+
 
 const loadMoreProducts = () => {
   initiallyLoadedProducts.value += productsPerPage;
@@ -22,27 +20,14 @@ const itemImages = (itemId) => {
 };
 
 const filteredProducts = computed(() => {
-  return productsCategory.value
-      .filter(item => item.name_item.toLowerCase() && (item.quan_item > 0))
+  return store.products
+      .filter(item => item.category_item === category.value && item.quan_item > 0)
       .sort((a, b) => (b.quan_item > 0 ? 1 : 0) - (a.quan_item > 0 ? 1 : 0));
 });
 
-const fetchProducts = async () => {
-  try {
-    const response = await axios.get(`https://eseniabila.com.ua/getProductsCategory?category=${category.value}`);
-    if (response.data) {
-      productsCategory.value = response.data;
-      totalProducts.value = response.data.length;
-      observeScroll();
-    }
-  } catch (error) {
-    console.error('Ошибка при получении данных о товаре:', error);
-  }
-};
-
 onMounted(() => {
   store.fetchData();
-  fetchProducts(); // Загрузка товаров при монтировании компонента
+  observeScroll();
 });
 
 const observeScroll = () => {
