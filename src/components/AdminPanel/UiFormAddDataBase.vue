@@ -14,6 +14,7 @@ const newData = {
   show_item: 1,
   category_item: null,
   text_info: '',
+  date_item: new Date(),
 };
 
 watch(() => store.categoryItem, (newValue) => {
