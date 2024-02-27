@@ -2,7 +2,8 @@ import {createApp} from 'vue'
 import {createPinia} from 'pinia'
 import App from './App.vue'
 import router from "@/router/router.js";
-
+import "swiper/css"
+import "swiper/css/bundle"
 
 
 import {library} from "@fortawesome/fontawesome-svg-core";

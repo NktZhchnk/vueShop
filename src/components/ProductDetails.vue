@@ -4,12 +4,11 @@ import {ref, computed, watch, onMounted} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import axios from "axios";
 
+
 import {Swiper, SwiperSlide} from "swiper/vue";
-import {EffectCube, Pagination, Navigation, EffectCards, EffectFlip} from "swiper/modules";
+import { Navigation, Pagination, EffectCards} from 'swiper/modules';
 
 
-import "swiper/css"
-import "swiper/css/bundle"
 
 const route = useRoute();
 const productId = ref(route.params.id); // Используем реактивную переменную
@@ -557,15 +556,18 @@ store.getCartItems()
 
 @media (max-width: 500px) {
   .swiper {
-    width: calc(90% - 60px);
+    width: calc(90% - 30px);
     max-height: 350px;
+  }
+  .product-details{
+    padding: 10px;
   }
 }
 
 @media (max-width: 400px) {
   .swiper {
-    width: 90%;
-    max-height: 280px;
+    width: calc(90% - 30px);
+    max-height: 300px;
   }
 }
 
