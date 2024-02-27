@@ -81,6 +81,7 @@ if (!selectedSortOrder.value) {
 
 const toggleFilterMenu = () => {
   showFilterMenu.value = !showFilterMenu.value;
+  console.log(showFilterMenu.value);
 };
 
 const sortByPrice = (order) => {
@@ -90,6 +91,7 @@ const sortByPrice = (order) => {
   // Реализуйте свою логику сортировки в зависимости от выбранного порядка
   if (order === 'asc') {
     store.products.sort((a, b) => a.price_item - b.price_item);
+    showFilterMenu.value = false;
   } else if (order === 'desc') {
     store.products.sort((a, b) => b.price_item - a.price_item);
   }
@@ -170,9 +172,9 @@ const sortByDate = (order) => {
       </div>
     </div>
 
-    <div @click="toggleFilterMenu" style="margin-left: 10px"
+    <div style="margin-left: 10px;"
          class="filter-button">
-      <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512"
+      <svg @click="toggleFilterMenu" xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512"
            style="display: flex; position: relative; height: 100%;">
         <path fill="#ededed"
               d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
