@@ -6,8 +6,7 @@ import axios from "axios";
 
 
 import {Swiper, SwiperSlide} from "swiper/vue";
-import { Navigation, Pagination, EffectCards} from 'swiper/modules';
-
+import {Navigation, Pagination, EffectCards} from 'swiper/modules';
 
 
 const route = useRoute();
@@ -172,6 +171,7 @@ onMounted(() => {
   store.fetchData()
 })
 store.getCartItems()
+
 </script>
 
 <template>
@@ -209,11 +209,11 @@ store.getCartItems()
           :pagination="{ clickable: true }"
           :cards="{ slideShadows: true, rotate: 30, stretch: 10, depth: 100, modifier: 1 }"
       >
-      <SwiperSlide v-for="(image, index) in getImages" :key="index">
-        <img :src="image.img" alt="error"/>
-      </SwiperSlide>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+        <SwiperSlide v-for="(image, index) in getImages" :key="index">
+          <img :src="image.img" alt="error"/>
+        </SwiperSlide>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </Swiper>
     </div>
 
@@ -296,8 +296,14 @@ store.getCartItems()
     </div>
     <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
   </div>
-  <div v-else>
-    <p>Loading...</p>
+  <div v-else style="width: 100%; height: auto; display: flex; justify-content: center; align-items: center">
+    <div class="placeholder-details">
+      <div style="display: flex; justify-content: center; align-items: center; width: 600px">
+        <div class="placeholder-image"><p>Loading...</p></div>
+      </div>
+      <div class="placeholder-name"></div>
+      <div class="placeholder-text-info"></div>
+    </div>
   </div>
 </template>
 
@@ -315,16 +321,44 @@ store.getCartItems()
   color: Black;
   cursor: pointer;
 }
-.div-swiper{
+
+.div-swiper {
   max-width: 600px;
   max-height: 400px;
   padding: 20px;
   overflow: hidden;
 }
+
 .swiper {
   width: 400px;
   height: 400px;
   z-index: 1;
+}
+
+.placeholder-image {
+  background: #dadada;
+  margin-top: 20px;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.placeholder-name {
+  margin-top: 90px;
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  background: #dadada;
+}
+.placeholder-text-info{
+  margin-top: 40px;
+  height: 60px;
+  width: 100%;
+  border-radius: 10px;
+  background: #dadada;
 }
 
 .icon-admin:hover {
@@ -370,12 +404,14 @@ store.getCartItems()
   border-radius: 5px;
   z-index: 1;
 }
+
 .swiper-slide {
   background-size: cover;
   background-position: center;
   border-radius: 5px;
   box-shadow: 0px 0px 20px rgba(75, 75, 75, 0.5); /* Добавлены стили для тени */
 }
+
 .price-product {
   background-color: #343434;
   border-radius: 5px;
@@ -400,6 +436,14 @@ store.getCartItems()
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Увеличены значения для создания более заметного эффекта объемности */
 }
 
+.placeholder-details {
+  width: 600px;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Увеличены значения для создания более заметного эффекта объемности */
+}
 
 .product-details h1 {
   font-size: 24px;
@@ -560,7 +604,8 @@ store.getCartItems()
     width: calc(90% - 30px);
     max-height: 350px;
   }
-  .product-details{
+
+  .product-details {
     padding: 10px;
   }
 }
