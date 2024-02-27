@@ -114,9 +114,9 @@ if(selectedSortOrder.value === ''){
             <div class="product-name">
               {{ item.name_item }}
             </div>
-            <div class="product-price">
-              Ціна: {{ item.price_item }} ₴
-            </div>
+          </div>
+          <div class="product-price">
+            Ціна: {{ item.price_item }} ₴
           </div>
         </router-link>
       </div>
@@ -161,18 +161,19 @@ if(selectedSortOrder.value === ''){
 }
 
 .style-product {
+  position: relative;
   width: 300px;
   margin: 20px;
-  padding: 15px; /* Добавлен внутренний отступ */
+  padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличена тень */
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Добавлено свойство для анимации тени */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Изменена тень при наведении */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
   }
 
   &.out-of-stock {
@@ -183,6 +184,15 @@ if(selectedSortOrder.value === ''){
   .custom-link {
     text-decoration: none;
     color: inherit;
+  }
+
+  .product-price {
+    position: absolute;
+    bottom: 15px;
+    left: 30px;
+    width: 100%;
+    font-size: 1rem;
+    color: #555;
   }
 }
 
@@ -232,13 +242,7 @@ if(selectedSortOrder.value === ''){
     font-weight: bold;
     margin-bottom: 10px;
   }
-
-  .product-price {
-    position: relative;
-    bottom: 0;
-    font-size: 1rem;
-    color: #555;
-  }
 }
+
 </style>
 

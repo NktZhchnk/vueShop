@@ -13,6 +13,10 @@ const isAdmin = () => {
 const test = computed(() => {
   return store.orders.filter((item) => item.complete === 1).length
 });
+const swapMenu = () =>{
+  store.swapOpenMenu()
+  store.isOpenShowPage = false
+}
 </script>
 
 <template>
@@ -20,22 +24,22 @@ const test = computed(() => {
     <div class="div-menu">
       <div class="div-header">
         <div class="div-header-text">
-          <router-link class="rout-header-text" @click="store.swapOpenMenu()" to="/">
+          <router-link class="rout-header-text" @click="swapMenu" to="/">
             <img alt="error" class="img-header" src="../../images/header.jpg"/>
             <h1 class="main-text-header">Esenia</h1>
           </router-link>
         </div>
-        <div class="div-exit-menu" @click="store.swapOpenMenu()">
-          X
+        <div class="div-exit-menu" >
+          <span @click="swapMenu" style="width: 100%; display: flex; justify-content: center">X</span>
         </div>
       </div>
       <div
           style="border-bottom: 1px solid gray; height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center;">
-        <div style="padding: 50px">
-          <router-link to="/authLogin">Увійти</router-link>
+        <div style="padding: 50px; pointer-events: none;">
+          <router-link style="pointer-events: auto" to="/authLogin">Увійти</router-link>
         </div>
-        <div style="padding: 50px">
-          <router-link to="/registration">Реєстрація</router-link>
+        <div style="padding: 50px; pointer-events: none;">
+          <router-link  style="pointer-events: auto" to="/registration">Реєстрація</router-link>
         </div>
       </div>
 
@@ -87,16 +91,6 @@ const test = computed(() => {
   width: 90%;
   border-radius: 50%;
 }
-
-.div-footer {
-  height: 64px;
-  border-top: 1px solid gray;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .div-body {
   height: 84%;
   background: white;
@@ -120,9 +114,12 @@ const test = computed(() => {
   top: 0;
   left: 0;
   border-right: 1px solid black;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.6); /* Тень слева */
   transform: translateX(-105%);
   transition: transform 0.4s ease;
 }
+
+/* Добавление градиента для эффекта глубины */
 
 .rout-header-text {
   height: 100%;

@@ -153,7 +153,7 @@ onMounted(loadCartProducts);
   height: 70%;
   overflow-y: auto;
   background: #f5f5f5; /* Soft gray background */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 0, 0, 0.7); /* Lighter shadow with spread */
 }
 
 .div-header {

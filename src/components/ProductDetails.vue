@@ -347,6 +347,7 @@ store.getCartItems()
   height: 74px;
   overflow: hidden;
   margin-top: 50px;
+  padding: 10px;
 }
 
 .swiper-button-prev, .swiper-button-next {

@@ -124,7 +124,6 @@ const sortByDate = (order) => {
         </svg>
       </div>
     </div>
-
     <div class="div-img">
       <router-link class="img-a" to="/">
         <img class="img-header" alt="error" src="../../images/header.jpg"/>
@@ -136,7 +135,7 @@ const sortByDate = (order) => {
     </div>
     <div class="div-catalog">
       <router-link to="/catalog" class="custom-link"><h1>Catalog</h1>
-        <svg style="margin-left: 10px" xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512">
+        <svg style="margin-left: 10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
           <path fill="#ffffff"
                 d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/>
         </svg>
@@ -174,7 +173,7 @@ const sortByDate = (order) => {
     <div @click="toggleFilterMenu" style="margin-left: 10px"
          class="filter-button">
       <svg xmlns="http://www.w3.org/2000/svg" height="30" width="32" viewBox="0 0 576 512"
-           style="display: flex; position: relative; height: 100%;" >
+           style="display: flex; position: relative; height: 100%;">
         <path fill="#ededed"
               d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 128H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
       </svg>
@@ -211,8 +210,8 @@ const sortByDate = (order) => {
 }
 
 .filter-button svg {
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 30px;
   fill: #ffffff;
 }
 
@@ -283,9 +282,9 @@ const sortByDate = (order) => {
 .main-header {
   width: 100%;
   height: 65px;
-  background: #221f1f;;
+  background: #221f1f;
   display: flex;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px black, 0 0 10px rgba(0, 0, 0, 0.5); /* Added shadow for volume from the bottom */
 }
 
 @media screen and (max-height: 700px) {

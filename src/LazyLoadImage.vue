@@ -1,6 +1,6 @@
 <template>
   <div ref="intersectionTarget" class="lazy-load">
-    <img v-if="isVisible" :src="src" :alt="alt"/>
+    <img v-if="isVisible" :src="cachedSrc || src" :alt="alt"/>
     <div v-else class="placeholder" :style="{ display: isVisible ? 'none' : 'flex' }">Загрузка...</div>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       isVisible: false,
+      cachedSrc: null, // Хранение закешированного источника
     };
   },
   mounted() {
@@ -38,11 +39,9 @@ export default {
     },
     handleIntersection(entries) {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !this.cachedSrc) {
           this.isVisible = true;
-          // Если нужно, можно дополнительно обработать событие появления в зоне видимости
-        } else {
-          // Если нужно, можно дополнительно обработать событие выхода из зоны видимости
+          this.cachedSrc = this.src; // Кеширование источника после первой загрузки
         }
       });
     },
