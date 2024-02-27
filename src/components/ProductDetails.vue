@@ -171,11 +171,17 @@ onMounted(() => {
   store.fetchData()
 })
 store.getCartItems()
+const isDataLoaded = ref(false);
 
+watch(product, () => {
+  setTimeout(()=>{
+    isDataLoaded.value = true;
+  },50)
+});
 </script>
 
 <template>
-  <div v-if="getProductById" class="product-details">
+  <div v-if="isDataLoaded && product" class="product-details">
     <div v-if="isAdmin()"
          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
       <svg class="icon-admin" style="width: 25px; height: 25px" xmlns="http://www.w3.org/2000/svg"
