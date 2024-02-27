@@ -176,7 +176,7 @@ const isDataLoaded = ref(false);
 watch(product, () => {
   setTimeout(()=>{
     isDataLoaded.value = true;
-  },50)
+  },70)
 });
 </script>
 
@@ -302,9 +302,9 @@ watch(product, () => {
     </div>
     <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
   </div>
-  <div v-else style="width: 100%; height: auto; display: flex; justify-content: center; align-items: center">
+  <div v-else style="width: 100%; height: auto;  display: grid; place-items: center;">
     <div class="placeholder-details">
-      <div style="display: flex; justify-content: center; align-items: center; width: 600px">
+      <div style="display: flex; justify-content: center; align-items: center;">
         <div class="placeholder-image"><p>Loading...</p></div>
       </div>
       <div class="placeholder-name"></div>
@@ -341,10 +341,22 @@ watch(product, () => {
   z-index: 1;
 }
 
+.placeholder-details {
+  max-width: 600px;
+  width: 85%;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Увеличены значения для создания более заметного эффекта объемности */
+}
+
 .placeholder-image {
   background: #dadada;
   margin-top: 20px;
-  width: 400px;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
   height: 400px;
   display: flex;
   justify-content: center;
@@ -353,7 +365,7 @@ watch(product, () => {
 }
 
 .placeholder-name {
-  margin-top: 90px;
+  margin-top: 70px;
   height: 50px;
   width: 100%;
   border-radius: 10px;
@@ -442,14 +454,6 @@ watch(product, () => {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Увеличены значения для создания более заметного эффекта объемности */
 }
 
-.placeholder-details {
-  width: 600px;
-  margin-top: 30px;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f8f8f8;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Увеличены значения для создания более заметного эффекта объемности */
-}
 
 .product-details h1 {
   font-size: 24px;
@@ -582,10 +586,6 @@ watch(product, () => {
     width: calc(90% - 60px);
     max-height: 350px;
   }
-  .placeholder-image{
-    width: calc(90% - 60px);
-    max-height: 350px;
-  }
   .swiper-button-prev,
   .swiper-button-next {
     display: none;
@@ -613,10 +613,7 @@ watch(product, () => {
     width: calc(90% - 30px);
     max-height: 350px;
   }
-  .placeholder-image{
-    width: calc(90% - 30px);
-    max-height: 350px;
-  }
+
   .product-details {
     padding: 10px;
   }
@@ -627,10 +624,7 @@ watch(product, () => {
     width: calc(90% - 30px);
     max-height: 300px;
   }
-  .placeholder-image{
-    width: calc(90% - 30px);
-    max-height: 300px;
-  }
+
 }
 
 
