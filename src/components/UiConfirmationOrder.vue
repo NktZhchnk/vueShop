@@ -268,7 +268,7 @@ let checkBtn = ref(true);
           <input class="inp-surname" v-model="surname" @input="validateText" placeholder="По-батькові"/>
         </div>
         <div class="input-group">
-          <label>Коментерій(за бажанням)</label>
+          <label>Коментар(за бажанням)</label>
           <input v-model="comment" placeholder="Коментерій"/>
         </div>
       </div>

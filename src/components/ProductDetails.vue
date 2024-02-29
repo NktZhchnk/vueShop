@@ -104,11 +104,11 @@ const addToCart = () => {
       sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
       console.log('Товар добавлен в корзину3:', newCartProduct);
     } else {
-      alert('Этот товар уже добавлен в корзину.');
+      alert('Цей товар вже доданий до кошика.');
     }
     countProduct.value = 1;
   } else {
-    alert('Пожалуйста, выберите вариант товара перед добавлением в корзину.');
+    alert('Будь ласка, оберіть варіант товару перед додаванням до кошика.');
   }
 };
 
