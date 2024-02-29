@@ -190,6 +190,9 @@ const addOrders = async () => {
           console.log('Ответ сервера:', itemResponse.data);
         }
         store.cartProducts = []
+        setTimeout(()=>{
+          window.location.reload();
+        },2000)
         sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
@@ -230,9 +233,6 @@ const fnRedBorder = (item) => {
   const inp = document.querySelector(item)
   inp.style.border = "1px solid red";
   inp.style.borderRadius = "10px";
-  setTimeout(() => {
-    inp.style.border = "1px solid gray";
-  }, 2000)
 }
 let allPrice = sessionStorage.getItem('allPrice')
 store.allPriceProducts = allPrice
