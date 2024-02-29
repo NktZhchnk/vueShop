@@ -54,8 +54,8 @@ const infoPoshta = ref([]);
 const searchQuery = ref('');
 const selectedCity = ref('');
 const cities = ref([]); // Список доступных городов
-let selectedPostType = ref(null);
-let postIndex = ref(null);
+let selectedPostType = ref('');
+let postIndex = ref('');
 
 watch([postIndex, searchQuery, selectedCity], ([newPostIndex, newSearchQuery, newSelectedCity]) => {
   store.selectPoshta.cities = newSelectedCity

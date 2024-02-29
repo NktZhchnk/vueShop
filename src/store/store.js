@@ -18,9 +18,9 @@ export const useMyStore = defineStore({
             varieties: [],
         },
         selectPoshta: {
-            postIndex: null,
+            postIndex: '',
             cities: '',
-            searchQuery: null,
+            searchQuery: '',
         },
         orders: [],
         radioPrice: [],

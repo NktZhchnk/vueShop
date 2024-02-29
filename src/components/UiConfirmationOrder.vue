@@ -41,7 +41,7 @@ const addOrders = async () => {
           paymentMethod.value !== null &&
           surname.value !== '' &&
           store.selectPoshta.cities !== '' &&
-          (store.selectPoshta.searchQuery !== null && store.selectPoshta.postIndex !== null)
+          (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '')
       ) {
         // Если все поля заполнены, формируем заказ и отправляем данные
         let order = {
@@ -214,7 +214,7 @@ const addOrders = async () => {
         if (store.selectPoshta.cities === '') {
           alert('введіть місто')
         }
-        if (store.selectPoshta.postIndex === null || store.selectPoshta.searchQuery === null) {
+        if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
           alert('введіть місце доставки')
         }
         console.log('Не все поля заполнены');
@@ -306,7 +306,6 @@ onMounted(loadCartProducts, store.getOrders());
         <span>Повна передоплата на картку</span>
       </label>
     </div>
-
 
     <div class="order-total">
       <h2>Разом</h2>
