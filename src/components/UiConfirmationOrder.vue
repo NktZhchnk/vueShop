@@ -207,13 +207,12 @@ const addOrders = async () => {
         }
         if (paymentMethod.value === null){
           fnRedBorder('.payment-options')
-
         }
         if (store.selectPoshta.cities === '') {
-          return;
+          alert('введіть місто')
         }
         if (store.selectPoshta.postIndex === '' && store.selectPoshta.searchQuery === '') {
-          return;
+          alert('введіть місце доставки')
         }
         console.log('Не все поля заполнены');
       }
