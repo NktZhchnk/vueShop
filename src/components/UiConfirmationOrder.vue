@@ -212,7 +212,7 @@ const addOrders = async () => {
         if (store.selectPoshta.cities === '') {
           return;
         }
-        if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
+        if (store.selectPoshta.postIndex === '' && store.selectPoshta.searchQuery === '') {
           return;
         }
         console.log('Не все поля заполнены');

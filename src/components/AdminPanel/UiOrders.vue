@@ -19,8 +19,8 @@
         </h2>
         <p>Дата: {{ formattedDate(order.order_date) }}</p>
         <p>Телефон: {{ order.telephone }}</p>
-        <p>Комментарий: {{ order.comment }}</p>
-        <p>Город: {{ order.city }}</p>
+        <p>Коментар: {{ order.comment }}</p>
+        <p>Місто: {{ order.city }}</p>
         <p v-if="order.address">Новая почта: {{ order.address }}</p>
         <p v-if="order.postal_code">УкрПочта: {{ order.postal_code }}</p>
         <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
