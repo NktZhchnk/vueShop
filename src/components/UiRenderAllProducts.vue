@@ -71,6 +71,11 @@ const sortProductsByDate = () => {
 const sortByDate = (a, b) => {
   const dateA = new Date(a.date_item);
   const dateB = new Date(b.date_item);
+
+  if (a.quan_item !== b.quan_item) {
+    return b.quan_item - a.quan_item;
+  }
+
   return dateB - dateA;
 };
 
@@ -84,6 +89,7 @@ const selectedSortOrder = ref(sessionStorage.getItem('selectedSortOrder'));
 if(selectedSortOrder.value === ''){
   sortProductsByDate()
 }
+
 </script>
 
 

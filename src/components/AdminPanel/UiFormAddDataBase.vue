@@ -56,12 +56,13 @@ const addProduct = () => {
     variety_quan: store.radioQuan,
     variety_price: store.radioPrice,
   };
+
   const dataImg = {
     img: imageLinks,
     product_id: store.lastId,
   };
 
-  // Создаем массив обещаний только для запросов, у которых есть данные
+// Создаем массив обещаний только для запросов, у которых есть данные
   const promises = [
     axios.post('https://eseniabila.com.ua/addProduct', newData),
     axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
@@ -71,7 +72,7 @@ const addProduct = () => {
     }),
   ];
 
-  // Проверяем наличие данных для addProductVarieties
+// Проверяем наличие данных для addProductVarieties
   if (data.variety_name && data.variety_quan && data.variety_price) {
     promises.push(
         axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
@@ -82,20 +83,24 @@ const addProduct = () => {
     );
   }
 
-  // Используем Promise.all для выполнения действия после завершения всех запросов
+// Используем Promise.all для выполнения действия после завершения всех запросов
   Promise.all(promises)
       .then((responses) => {
         console.log('Ответы сервера:', responses);
+
+        // Проверяем успешность ответов перед перезагрузкой
+        const allResponsesSuccessful = responses.every((response) => response.status === 200);
+
+        if (allResponsesSuccessful) {
+          setTimeout(() => {
+            store.fetchData();
+            location.reload(); // Перезагрузка страницы после успешного выполнения всех запросов
+          }, 2000);
+        }
       })
       .catch((errors) => {
         console.error('Ошибка при отправке данных на сервер:', errors);
         // Обработка ошибки
-      })
-      .finally(() => {
-        setTimeout(() => {
-          store.fetchData();
-          location.reload(); // Перезагрузка страницы после выполнения всех запросов
-        }, 2000);
       });
 };
 

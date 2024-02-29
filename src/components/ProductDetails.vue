@@ -158,7 +158,7 @@ const truncatedTextInfo = computed(() => {
   const maxLength = 100;
   return showFullText.value
       ? getProductById.value.text_info
-      : getProductById.value.text_info.slice(0, maxLength) + '... Показати більше';
+      : getProductById.value.text_info.slice(0, maxLength) + '  ... Показати більше';
 });
 
 const formattedText = computed(() => {
@@ -230,7 +230,7 @@ watch(product, () => {
     <div class="text-info-product">
       <p class="truncated-text" @click="toggleTextInfo">
         <span v-html="formattedText"></span>
-        <span v-if="!showFullText" class="read-more">... Показати більше</span>
+        <span v-if="!showFullText" class="read-more"></span>
       </p>
     </div>
 
@@ -396,9 +396,9 @@ watch(product, () => {
 
 .div-name-product {
   overflow-wrap: break-word;
-  height: 74px;
+  height: 90px;
   overflow: hidden;
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 10px;
 }
 

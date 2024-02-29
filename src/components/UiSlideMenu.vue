@@ -42,6 +42,11 @@ const swapMenu = () =>{
           <router-link  style="pointer-events: auto" to="/registration">Реєстрація</router-link>
         </div>
       </div>
+      <div style="padding: 10px">
+        <p>Для получения технической поддержки по вопросам, связанным с функциональностью данного сайта,
+          а также для предложений по его улучшению и внесения идей, просим обращаться в наш Telegram-канал:</p>
+        <a href="https://t.me/Nikita58766">Техническая поддержка в Telegram</a>
+      </div>
 
       <div class="div-body">
         <div v-if="isAdmin()">

@@ -33,14 +33,31 @@ watch(
 );
 
 // Добавим метод для выполнения поиска
+const sortByDateAndQuantity = (a, b) => {
+  const dateA = new Date(a.date_item);
+  const dateB = new Date(b.date_item);
+
+  // Сначала сравниваем количество товара
+  if (a.quan_item !== b.quan_item) {
+    return b.quan_item - a.quan_item;
+  }
+
+  // Если количество товара одинаковое, сравниваем по дате
+  return dateB - dateA;
+};
+
 const performSearch = () => {
   // Простой поиск по названию товара
-  searchResults.value = store.products.filter((product) =>
-      product.name_item.toLowerCase().includes(store.searchQuery.toLowerCase())
-  );
-  // Показать результаты только если есть совпаденияs
+  searchResults.value = store.products
+      .filter((product) =>
+          product.name_item.toLowerCase().includes(store.searchQuery.toLowerCase())
+      )
+      .sort(sortByDateAndQuantity);
+
+  // Показать результаты только если есть совпадения
   store.showResults = searchResults.value.length > 0;
 };
+
 // Добавим метод для выбора результата поиска и перехода на страницу товара
 const selectResult = () => {
   // Выполните необходимые действия при выборе результата, например, переход на страницу товара
@@ -151,7 +168,7 @@ const sortByDate = (order) => {
       <!-- Отображение результатов поиска -->
       <div v-show="true" class="search-results" :class="{ active: store.showResults }">
         <div class="search-text-div" v-for="result in searchResults" :key="result.id" @click="selectResult(result)">
-          <router-link class="search-text-link" :to="'/product/' + result.id">
+          <router-link v-if="result.quan_item > 0" class="search-text-link" :to="'/product/' + result.id">
             <div style="display: flex; margin-top: 10px">
               <div style="flex-shrink: 0; margin-right: 10px;">
                 <img
@@ -168,6 +185,26 @@ const sortByDate = (order) => {
               </div>
             </div>
           </router-link>
+          <div v-else>
+            <div style="display: flex; margin-top: 10px; cursor: not-allowed; background-color: rgba(0, 0, 0, 0.2);">
+              <div style="flex-shrink: 0; margin-right: 10px;">
+                <img
+                    style="width: 75px; height: 75px; border-radius: 3px; position: relative;"
+                    v-if="store.productImg.some(img => img.product_id === result.id)"
+                    :src="store.productImg.find(img => img.product_id === result.id).img"
+                    alt="Product Image"
+                />
+                <span style="position: absolute; background: red;  color: white; margin-left: 10px;font-size: 20px;">
+            Товар закінчився
+        </span>
+              </div>
+              <div style="flex-grow: 1;">
+                <p class="search-text">
+                  {{ result.name_item }}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
