@@ -336,7 +336,7 @@ watch(product, () => {
 }
 
 .swiper {
-  width: 400px;
+  width: 330px;
   height: 400px;
   z-index: 1;
 }
@@ -583,7 +583,7 @@ watch(product, () => {
 
 @media (max-width: 600px) {
   .swiper {
-    width: calc(90% - 60px);
+    width: calc(80% - 60px);
     max-height: 350px;
   }
   .swiper-button-prev,
