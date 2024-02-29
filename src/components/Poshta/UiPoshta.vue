@@ -10,7 +10,7 @@
       </datalist>
     </div>
 
-    <div style="display: flex;  align-items: center" v-if="infoPoshta.length">
+    <div style="display: flex;  align-items: center" v-if="selectedCity !== ''">
       <input type="radio" id="newPost" value="newPost" v-model="selectedPostType">
       <label style="margin-bottom: 0" for="newPost">Нова Пошта</label>
       <input style="margin-left: 20px" type="radio" id="ukrPost" value="ukrPost" v-model="selectedPostType">
@@ -62,7 +62,7 @@ watch([postIndex, searchQuery, selectedCity], ([newPostIndex, newSearchQuery, ne
   store.selectPoshta.searchQuery = newSearchQuery
   store.selectPoshta.postIndex = newPostIndex
   if (selectedPostType.value === 'newPost') {
-    postIndex.value = null
+    postIndex.value = ''
   } else if (selectedPostType.value === 'ukrPost') {
     searchQuery.value = ''
   } else {

@@ -110,6 +110,7 @@ const addOrders = async () => {
             cartProduct.selectedVariety.variety_quan = newVarietyQuan;
             console.log('количество в корзине', cartProduct.selectedVariety.variety_quan = newVarietyQuan);
 
+            checkBtn.value = false;
             // Обновление количества вариации
             const varietyResponse = await axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
               variety_quan: newVarietyQuan,
@@ -238,6 +239,8 @@ let allPrice = sessionStorage.getItem('allPrice')
 store.allPriceProducts = allPrice
 
 onMounted(loadCartProducts, store.getOrders());
+
+let checkBtn = ref(true);
 </script>
 
 <template>
@@ -312,7 +315,7 @@ onMounted(loadCartProducts, store.getOrders());
       <h4>{{ store.cartProducts.length }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
       <h4>Вартість доставки згідно з тарифами перевізника</h4>
       <h2></h2>
-      <button @click="addOrders">Підтвердити замовлення</button>
+      <button v-if="checkBtn" @click="addOrders">Підтвердити замовлення</button>
     </div>
   </div>
 </template>
