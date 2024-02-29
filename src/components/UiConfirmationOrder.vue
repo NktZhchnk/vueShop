@@ -41,7 +41,7 @@ const addOrders = async () => {
           paymentMethod.value !== null &&
           surname.value !== '' &&
           store.selectPoshta.cities !== '' &&
-          (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '')
+          (store.selectPoshta.searchQuery !== null && store.selectPoshta.postIndex !== null)
       ) {
         // Если все поля заполнены, формируем заказ и отправляем данные
         let order = {
@@ -211,7 +211,7 @@ const addOrders = async () => {
         if (store.selectPoshta.cities === '') {
           alert('введіть місто')
         }
-        if (store.selectPoshta.postIndex === '' && store.selectPoshta.searchQuery === '') {
+        if (store.selectPoshta.postIndex === null || store.selectPoshta.searchQuery === null) {
           alert('введіть місце доставки')
         }
         console.log('Не все поля заполнены');
