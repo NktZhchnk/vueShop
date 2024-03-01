@@ -28,6 +28,7 @@
         <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
         <p v-if="order.payment_method === 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
         <p>Total price: {{ order.total_price }} ₴.</p>
+        <p>TNN: {{order.poshta_tnn}}</p>
         <!-- Другие поля карточки -->
       </div>
     </router-link>
