@@ -28,7 +28,7 @@
         <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
         <p v-if="order.payment_method === 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
         <p style="display: flex; justify-content: space-between;">Total price: {{ order.total_price }} ₴.
-          <input v-model="poshtaTnn" style="padding: 5px; border-radius: 5px;" placeholder="ТНН" @click.prevent/>
+          <input v-model="poshtaTnn" style="padding: 5px; border-radius: 5px;" placeholder="ТТН" @click.prevent/>
         </p>
         <!-- Другие поля карточки -->
       </div>
@@ -94,7 +94,7 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
       console.error('Ошибка при обновлении статуса заказа:', error);
     }
   }else{
-    alert('Ввiдiть ТНН')
+    alert('Ввiдiть ТТН')
   }
 };
 </script>

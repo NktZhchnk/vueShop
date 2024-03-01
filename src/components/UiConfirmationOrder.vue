@@ -29,9 +29,10 @@ const validateTelephone = () => {
   }
 }
 const validateText = () => {
-  lastName.value = lastName.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇґҐєЄ]/g, '');
-  firstname.value = firstname.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇґҐєЄ]/g, '');
-  surname.value = surname.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  lastName.value = lastName.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  firstname.value = firstname.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  surname.value = surname.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  comment.value = comment.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
 }
 
 const addOrders = async () => {
@@ -278,7 +279,7 @@ let checkBtn = ref(true);
         </div>
         <div class="input-group">
           <label>Коментар(за бажанням)</label>
-          <input v-model="comment" placeholder="Коментерій"/>
+          <input v-model="comment" @input="validateText" placeholder="Коментерій"/>
         </div>
       </div>
       <div class="delivery-info">
