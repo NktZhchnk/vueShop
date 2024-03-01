@@ -12,8 +12,10 @@
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">
-        <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }} {{ order.middle_name }}
-          <button style="background: red; border-radius: 5px;" @click.prevent="toggleOrderCompletion(order.id, order.complete)">
+        <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }}
+          {{ order.middle_name }}
+          <button style="background: red; border-radius: 5px;"
+                  @click.prevent="toggleOrderCompletion(order.id, order.complete)">
             {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
           </button>
         </h2>
@@ -25,7 +27,9 @@
         <p v-if="order.postal_code">УкрПошта: {{ order.postal_code }}</p>
         <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
         <p v-if="order.payment_method === 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
-        <p>Total price: {{ order.total_price }} ₴.</p>
+        <p style="display: flex; justify-content: space-between;">Total price: {{ order.total_price }} ₴.
+          <input v-model="poshtaTnn" style="padding: 5px; border-radius: 5px;" placeholder="ТНН" @click.prevent/>
+        </p>
         <!-- Другие поля карточки -->
       </div>
     </router-link>
@@ -38,6 +42,7 @@ import axios from "axios";
 
 const orderDetails = ref([]);
 const searchQuery = ref('');
+const poshtaTnn = ref('')
 
 onMounted(async () => {
   try {
@@ -73,16 +78,22 @@ const filteredOrders = computed(() => {
 });
 
 const toggleOrderCompletion = async (orderId, currentStatus) => {
-  try {
-    const response = await axios.put(`https://eseniabila.com.ua/updateOrder/${orderId}`, {
-      complete: !currentStatus
-    });
-    // Обновление локальных данных после успешного обновления на сервере
-    const updatedOrder = response.data;
-    const index = orderDetails.value.findIndex(order => order.id === orderId);
-    orderDetails.value[index] = updatedOrder;
-  } catch (error) {
-    console.error('Ошибка при обновлении статуса заказа:', error);
+  if(poshtaTnn.value !== ''){
+    try {
+      const response = await axios.put(`https://eseniabila.com.ua/updateOrder/${orderId}`, {
+        complete: !currentStatus,
+        poshta_tnn: poshtaTnn.value // Добавлено поле poshta_tnn в теле запроса
+      });
+
+      // Обновление локальных данных после успешного обновления на сервере
+      const updatedOrder = response.data;
+      const index = orderDetails.value.findIndex(order => order.id === orderId);
+      orderDetails.value[index] = updatedOrder;
+    } catch (error) {
+      console.error('Ошибка при обновлении статуса заказа:', error);
+    }
+  }else{
+    alert('Ввiдiть ТНН')
   }
 };
 </script>

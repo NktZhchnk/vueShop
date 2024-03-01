@@ -188,7 +188,7 @@ const addOrders = async () => {
           // Добавление товара в заказ
           const itemResponse = await axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json',last_name
             },
           });
           console.log('Ответ сервера:', itemResponse.data);
@@ -199,7 +199,7 @@ const addOrders = async () => {
           setTimeout(() => {
             window.location.reload();
           }, 100)
-        }, 2000)
+        }, 3000)
         sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки

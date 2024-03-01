@@ -332,23 +332,23 @@ app.put('/updateProductCount/:productId', (req, res) => {
 
 app.put('/updateOrder/:orderId', (req, res) => {
     const orderId = req.params.orderId;
-    const {complete} = req.body; // Предполагается, что вы отправляете объект с полем complete в запросе
+    const { complete, poshta_tnn } = req.body; // Добавлено поле poshta_tnn
 
-    const sqlQuery = 'UPDATE orders SET complete = ? WHERE id = ?';
-    connection.query(sqlQuery, [complete, orderId], (error, results) => {
+    const sqlQuery = 'UPDATE orders SET complete = ?, poshta_tnn = ? WHERE id = ?'; // Обновлен SQL-запрос
+    connection.query(sqlQuery, [complete, poshta_tnn, orderId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({error: 'Ошибка выполнения запроса'});
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
         } else {
             if (results.affectedRows === 0) {
-                res.status(404).json({message: 'Заказ не найден'});
+                res.status(404).json({ message: 'Заказ не найден' });
             } else {
                 // Если обновление прошло успешно, отправляем обновленные данные заказа в качестве ответа
                 const updatedOrderQuery = 'SELECT * FROM orders WHERE id = ?';
                 connection.query(updatedOrderQuery, [orderId], (error, updatedResults) => {
                     if (error) {
                         console.error('Ошибка выполнения запроса:', error);
-                        res.status(500).json({error: 'Ошибка выполнения запроса'});
+                        res.status(500).json({ error: 'Ошибка выполнения запроса' });
                     } else {
                         res.json(updatedResults[0]);
                     }
@@ -357,6 +357,7 @@ app.put('/updateOrder/:orderId', (req, res) => {
         }
     });
 });
+
 app.delete('/deleteOrder/:id', (req, res) => {
     const orderId = req.params.id; // Получаем ID заказа
 
