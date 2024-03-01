@@ -254,7 +254,7 @@ let checkBtn = ref(true);
 </script>
 
 <template>
-  <div class="container" v-if="checkBtn">
+  <div class="container" v-if="true">
     <div class="header">
       <h1>Оформлення замовлення</h1>
     </div>
