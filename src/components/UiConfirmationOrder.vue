@@ -60,6 +60,7 @@ const addOrders = async () => {
           total_price: store.allPriceProducts,
           complete: true,
           payment_method: paymentMethod.value,
+          poshta_tnn: '0',
         };
 
         // Отправка данных на сервер

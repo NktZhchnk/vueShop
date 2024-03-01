@@ -576,10 +576,11 @@ app.post('/addOrders', (req, res) => {
         postal_code,
         total_price,
         complete,
-        payment_method
+        payment_method,
+        poshta_tnn,
     } = req.body;
-    const sqlQuery = 'INSERT INTO orders (order_date, telephone, last_name, first_name, middle_name, comment, city, address, postal_code, total_price, complete, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    connection.query(sqlQuery, [order_date, telephone, last_name, first_name, middle_name, comment, city, address, postal_code, total_price, complete, payment_method], (error) => {
+    const sqlQuery = 'INSERT INTO orders (order_date, telephone, last_name, first_name, middle_name, comment, city, address, postal_code, total_price, complete, payment_method, poshta_tnn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    connection.query(sqlQuery, [order_date, telephone, last_name, first_name, middle_name, comment, city, address, postal_code, total_price, complete, payment_method, poshta_tnn], (error) => {
         if (error) {
             console.error('Ошибка добавления продукта:', error);
             res.status(500).json({error: 'Ошибка добавления продукта'});
