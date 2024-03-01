@@ -89,6 +89,7 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
       const updatedOrder = response.data;
       const index = orderDetails.value.findIndex(order => order.id === orderId);
       orderDetails.value[index] = updatedOrder;
+      poshtaTnn.value = ''
     } catch (error) {
       console.error('Ошибка при обновлении статуса заказа:', error);
     }
