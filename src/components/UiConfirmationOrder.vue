@@ -198,7 +198,7 @@ const addOrders = async () => {
           router.push({name: 'RenderProducts'})
           setTimeout(() => {
             window.location.reload();
-          }, 500)
+          }, 100)
         }, 2000)
         sessionStorage.removeItem('cartProducts');
       } else {
