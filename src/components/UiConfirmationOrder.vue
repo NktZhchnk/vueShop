@@ -244,7 +244,7 @@ let checkBtn = ref(true);
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" v-if="checkBtn">
     <div class="header">
       <h1>Оформлення замовлення</h1>
     </div>
@@ -318,9 +318,35 @@ let checkBtn = ref(true);
       <button v-if="checkBtn" @click="addOrders">Підтвердити замовлення</button>
     </div>
   </div>
+  <div class="custom-container">
+    <h1>Ваше замовлення принято. Дякуємо за замовлення!</h1>
+  </div>
 </template>
 
 <style scoped>
+/* Принятие после заказа */
+.custom-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #1a1a1a; /* Change the color to your preference */
+}
+
+@media screen and (max-width: 600px) {
+  .custom-container {
+    padding: 10px;
+  }
+}
 
 /* Общие стили */
 .container {

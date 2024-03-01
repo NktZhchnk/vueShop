@@ -336,7 +336,7 @@ watch(product, () => {
 }
 
 .swiper {
-  width: 330px;
+  width: 320px;
   height: 400px;
   z-index: 1;
 }
@@ -573,17 +573,18 @@ watch(product, () => {
     margin: 0 auto;
     margin-top: 30px;
   }
+}
 
-  .product-image {
-    width: 150px;
-    height: 150px;
+@media (max-width: 540px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
   }
-
 }
 
 @media (max-width: 600px) {
   .swiper {
-    width: calc(80% - 60px);
+    width: 280px;
     max-height: 350px;
   }
   .swiper-button-prev,
@@ -609,11 +610,11 @@ watch(product, () => {
 }
 
 @media (max-width: 500px) {
-  .swiper {
-    width: calc(90% - 30px);
-    max-height: 350px;
+  .product-details {
+    padding: 10px;
   }
-
+}
+@media (max-width: 450px) {
   .product-details {
     padding: 10px;
   }
@@ -621,12 +622,10 @@ watch(product, () => {
 
 @media (max-width: 400px) {
   .swiper {
-    width: calc(90% - 30px);
+    width: 240px;
     max-height: 300px;
   }
-
 }
-
 
 </style>
 
