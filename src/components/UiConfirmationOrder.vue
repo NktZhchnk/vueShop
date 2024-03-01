@@ -3,6 +3,9 @@ import {onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
+import {useRoute, useRouter} from "vue-router";
+
+const router = useRouter()
 
 const store = useMyStore()
 let telephone = ref('');
@@ -193,6 +196,7 @@ const addOrders = async () => {
         store.cartProducts = []
         setTimeout(()=>{
           window.location.reload();
+          router.push({name: '/'})
         },2000)
         sessionStorage.removeItem('cartProducts');
       } else {
@@ -236,9 +240,12 @@ const fnRedBorder = (item) => {
   inp.style.borderRadius = "10px";
 }
 let allPrice = sessionStorage.getItem('allPrice')
-store.allPriceProducts = allPrice
+store.allPriceProducts = allPrice;
 
-onMounted(loadCartProducts, store.getOrders());
+onMounted(() => {
+  loadCartProducts();
+  store.getOrders();
+});
 
 let checkBtn = ref(true);
 </script>
