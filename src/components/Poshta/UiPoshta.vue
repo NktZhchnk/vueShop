@@ -96,7 +96,7 @@ const getWarehouses = () => {
     })
         .then(response => {
           infoPoshta.value = response.data.data;
-          console.log('Адреса для введенного населенного пункта:', infoPoshta.value);
+          console.log('Адреса для введенного населенного пункта', infoPoshta.value);
         })
         .catch(error => {
           console.error('Ошибка при получении адресов:', error);
