@@ -195,7 +195,7 @@ const addOrders = async () => {
         }
         store.cartProducts = []
         setTimeout(() => {
-          router.push({name: '/'})
+          router.push({name: 'RenderProducts'})
           setTimeout(() => {
             window.location.reload();
           }, 500)
