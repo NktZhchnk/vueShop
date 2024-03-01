@@ -325,7 +325,7 @@ let checkBtn = ref(true);
       <button v-if="checkBtn" @click="addOrders">Підтвердити замовлення</button>
     </div>
   </div>
-  <div class="custom-container">
+  <div v-else class="custom-container">
     <h1>Ваше замовлення принято. Дякуємо за замовлення!</h1>
   </div>
 </template>
