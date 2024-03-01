@@ -622,10 +622,15 @@ watch(product, () => {
 
 @media (max-width: 400px) {
   .swiper {
+    width: 263px;
+    max-height: 330px;
+  }
+}
+@media (max-width: 330px) {
+  .swiper {
     width: 240px;
     max-height: 300px;
   }
 }
-
 </style>
 
