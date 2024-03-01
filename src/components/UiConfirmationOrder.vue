@@ -60,7 +60,6 @@ const addOrders = async () => {
           total_price: store.allPriceProducts,
           complete: true,
           payment_method: paymentMethod.value,
-          poshta_tnn: '0',
         };
 
         // Отправка данных на сервер
@@ -189,7 +188,7 @@ const addOrders = async () => {
           // Добавление товара в заказ
           const itemResponse = await axios.post('https://eseniabila.com.ua/addItemOrders', orderItem, {
             headers: {
-              'Content-Type': 'application/json',last_name
+              'Content-Type': 'application/json',
             },
           });
           console.log('Ответ сервера:', itemResponse.data);
@@ -254,7 +253,7 @@ let checkBtn = ref(true);
 </script>
 
 <template>
-  <div class="container" v-if="true">
+  <div class="container" v-if="checkBtn">
     <div class="header">
       <h1>Оформлення замовлення</h1>
     </div>
