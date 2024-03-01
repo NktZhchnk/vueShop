@@ -42,7 +42,7 @@ import axios from "axios";
 
 const orderDetails = ref([]);
 const searchQuery = ref('');
-const poshtaTnn = ref('')
+const poshtaTnn = ref({})
 
 onMounted(async () => {
   try {
