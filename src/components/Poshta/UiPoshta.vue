@@ -105,7 +105,7 @@ const getWarehouses = () => {
 };
 const searchWarehouses = () => {
   showListPoshta = true
-  searchQuery.value = searchQuery.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  searchQuery.value = searchQuery.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ0-9]/g, '');
   filteredWarehouses.value = infoPoshta.value.filter(warehouse =>
       warehouse.Description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       warehouse.DescriptionRu.toLowerCase().includes(searchQuery.value.toLowerCase())
