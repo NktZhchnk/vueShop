@@ -194,10 +194,12 @@ const addOrders = async () => {
           console.log('Ответ сервера:', itemResponse.data);
         }
         store.cartProducts = []
-        setTimeout(()=>{
-          window.location.reload();
+        setTimeout(() => {
           router.push({name: '/'})
-        },2000)
+          setTimeout(() => {
+            window.location.reload();
+          }, 500)
+        }, 2000)
         sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
@@ -213,7 +215,7 @@ const addOrders = async () => {
         if (surname.value === '') {
           fnRedBorder('.inp-surname');
         }
-        if (paymentMethod.value === null){
+        if (paymentMethod.value === null) {
           fnRedBorder('.payment-options')
         }
         if (store.selectPoshta.cities === '') {
@@ -311,7 +313,7 @@ let checkBtn = ref(true);
       </label>
 
       <label class="payment-option" style="margin-top: 10px;">
-        <input type="radio" name="paymentMethod" v-model="paymentMethod" value="creditCard" class="radio-input" />
+        <input type="radio" name="paymentMethod" v-model="paymentMethod" value="creditCard" class="radio-input"/>
         <span class="radio-custom"></span>
         <span>Повна передоплата на картку</span>
       </label>
@@ -549,7 +551,6 @@ input {
 .radio-input {
   width: 20px; /* Adjust the width as needed */
 }
-
 
 
 input[type="radio"]:checked + .radio-custom::after {
