@@ -329,10 +329,18 @@ watch(product, () => {
 }
 
 .div-swiper {
-  max-width: 600px;
-  max-height: 400px;
+  max-width: 100%; /* Измените значение по необходимости */
+  max-height: 100%; /* Измените значение по необходимости */
   padding: 20px;
   overflow: hidden;
+}
+.swiper-slide img {
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Или используйте 'cover' в зависимости от ваших предпочтений */
+  border-radius: 5px;
+  z-index: 1;
 }
 
 .swiper {
@@ -416,12 +424,7 @@ watch(product, () => {
   right: 20%;
 }
 
-.swiper-slide img {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  z-index: 1;
-}
+
 
 .swiper-slide {
   background-size: cover;
