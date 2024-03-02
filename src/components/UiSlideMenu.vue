@@ -15,7 +15,7 @@ const test = computed(() => {
 });
 const swapMenu = () =>{
   store.swapOpenMenu()
-  store.isOpenShowPage = false
+  store.isOpenShowPage = false;
 }
 </script>
 
