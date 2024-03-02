@@ -335,7 +335,7 @@ watch(product, () => {
   overflow: hidden;
 }
 .swiper-slide img {
-  background-color: #f8f8f8;
+  background-color: #f8f8f9;
   width: 100%;
   height: 100%;
   object-fit: contain; /* Или используйте 'cover' в зависимости от ваших предпочтений */
