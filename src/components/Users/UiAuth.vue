@@ -41,17 +41,10 @@ const loginUser = async () => {
       // Сохранение токена в localStorage после успешного входа
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('userLogin', data.login);
-      localStorage.setItem('phoneNumber', data.phone_number);
-      localStorage.setItem('firstName', data.first_name);
-      localStorage.setItem('lastName', data.last_name);
-      location.reload();
-      // Пример вывода токена в консоль (для проверки)
-      console.log('Токен сохранен в localStorage:', data.accessToken);
-      console.log('userLogin сохранен в localStorage:', data.login);
-      console.log('firstName сохранен в localStorage:', data.first_name);
-      console.log('lastName сохранен в localStorage:', data.last_name);
-
-      // Здесь вы можете выполнить другие действия после успешной аутентификации,
+      localStorage.setItem('phoneNumber', data.phoneNumber);
+      localStorage.setItem('firstName', data.firstName);
+      localStorage.setItem('lastName', data.lastName);
+      location.reload()
       // например, перенаправление пользователя на другую страницу
       console.log('Успешный вход', data);
     }else if (response.status === 401) {

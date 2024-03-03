@@ -18,6 +18,7 @@ const swapMenu = () => {
   store.swapOpenMenu()
   store.isOpenShowPage = false;
 }
+
 const logout = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('userLogin');
@@ -40,6 +41,7 @@ const logout = () => {
           <span @click="swapMenu" style="width: 100%; display: flex; justify-content: center">X</span>
         </div>
       </div>
+
       <div v-if="!userLogin"
            style="border-bottom: 1px solid gray; height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center; background-color: #2a2a2a; color: #fff;">
         <div style="padding: 50px; text-align: center;">
@@ -49,14 +51,19 @@ const logout = () => {
           <router-link to="/registration" style="color: #fff; text-decoration: none;">Реєстрація</router-link>
         </div>
       </div>
-      <div v-else style="display: flex; justify-content: space-between; align-items: center; padding-left: 15px; padding-right: 15px; border-bottom: 1px solid gray; background-color: #3b3b3b; color: #fff;">
+      <div v-else
+           style="display: flex; justify-content: space-between; align-items: center; padding-left: 15px; padding-right: 15px; border-bottom: 1px solid gray; background-color: #3b3b3b; color: #fff;">
         <div style="padding: 10px; text-align: center;">
-          <p style="margin: 0; font-size: 16px;">{{ firstName }} {{lastName}}</p>
+          <p  class="user-name">{{ firstName }} {{ lastName }}</p>
         </div>
         <div style="padding: 10px;">
-          <button @click="logout" style="background-color: #2c3e50; color: #fff; border: none; padding: 8px 15px; cursor: pointer; font-size: 14px; border-radius: 5px;">Вийти</button>
+          <button @click="logout"
+                  style="background-color: #2c3e50; color: #fff; border: none; padding: 8px 15px; cursor: pointer; font-size: 14px; border-radius: 5px;">
+            Вийти
+          </button>
         </div>
       </div>
+
       <!--      <div style="padding: 10px">-->
       <!--        <p>Для отримання технічної підтримки з питань, пов'язаних з функціональністю цього сайту,-->
       <!--          а також для висловлення пропозицій щодо його вдосконалення та надання ідей,-->
@@ -86,9 +93,9 @@ const logout = () => {
 
         </div>
         <ul class="nav-menu">
-<!--          <li>-->
-<!--            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>-->
-<!--          </li>-->
+          <!--          <li>-->
+          <!--            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>-->
+          <!--          </li>-->
         </ul>
       </div>
       <div class="div-footer">
@@ -107,7 +114,14 @@ const logout = () => {
   width: 100%;
   height: 100%;
 }
-
+.user-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  overflow: hidden;
+  /* Дополнительные стили, если необходимо */
+}
 .main-text-header {
   margin-left: 30px;
   margin-block-start: 0.50em;
