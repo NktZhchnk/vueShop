@@ -18,7 +18,8 @@
 
       <div class="form-group">
         <label for="phoneNumber">Телефон:</label>
-        <input type="text" v-model="phoneNumber" id="phoneNumber" class="input-field" placeholder="Телефон">
+        <input type="text" @input="checkNumber" v-model="phoneNumber" id="phoneNumber" class="input-field"
+               placeholder="Телефон">
       </div>
 
       <div class="form-group">
@@ -28,17 +29,20 @@
 
       <div class="form-group">
         <label for="confirmPassword">Повторіть пароль:</label>
-        <input type="password" v-model="confirmPassword" id="confirmPassword" class="input-field" placeholder="Повторіть пароль">
+        <input type="password" v-model="confirmPassword" id="confirmPassword" class="input-field"
+               placeholder="Повторіть пароль">
       </div>
 
       <button type="submit" class="submit-btn">Зареєструватися</button>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }} <br/><router-link  to="/login">войти</router-link></p>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }} <br/>
+        <router-link to="/login">войти</router-link>
+      </p>
     </form>
   </div>
 </template>
 
 <script>
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 
 export default {
   setup() {
@@ -49,7 +53,27 @@ export default {
     const lastname = ref('');
     const phoneNumber = ref('');
     let errorMessage = ref('');
+
+    const checkNumber = () => {
+      let maxLength = 10
+      phoneNumber.value = phoneNumber.value.replace(/\D/g, '');
+      if (phoneNumber.value.length > maxLength) {
+        phoneNumber.value = phoneNumber.value.slice(0, maxLength);
+      }
+    };
     const registerUser = async () => {
+      // Проверка на количество цифр в номере телефона
+      if (!/^\d{1,10}$/.test(phoneNumber.value)) {
+        errorMessage.value = 'Номер телефона должен содержать не более 10 цифр';
+        return;
+      }
+
+      // Проверка на минимальное количество символов в логине и пароле
+      if (username.value.length < 5 || password.value.length < 5) {
+        errorMessage.value = 'Логин и пароль должны содержать не менее 5 символов';
+        return;
+      }
+
       if (password.value !== confirmPassword.value) {
         // Обработка ошибки, если пароли не совпадают
         return;
@@ -97,11 +121,12 @@ export default {
       lastname,
       errorMessage,
       registerUser,
+      checkNumber,
     };
   }
 };
 </script>
-
+s
 <style scoped>
 /* Основной контейнер формы */
 .registration-form {

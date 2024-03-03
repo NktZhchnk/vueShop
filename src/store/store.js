@@ -60,6 +60,7 @@ export const useMyStore = defineStore({
         },
         swapOpenMenu() {
             this.isOpenMenu = !this.isOpenMenu;
+            document.body.style.overflow = 'hidden';
             this.updateCommonState()
             this.isOpenCart = false;
             this.checkCart = false;
