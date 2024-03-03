@@ -1,10 +1,11 @@
 <template>
   <form class="login-form" @submit.prevent="loginUser">
     <div class="form-group">
-      <label for="login">Логин:</label>
-      <input type="text" v-model="login" id="login" placeholder="Ваш логин">
+      <label for="login">Логин или номер телефона:</label>
+      <input type="text" v-model="login" id="login" placeholder="Ваш логин или номер телефона">
     </div>
 
+    <!-- Existing password input -->
     <div class="form-group">
       <label for="password">Пароль:</label>
       <input type="password" v-model="password" id="password" placeholder="Ваш пароль">
@@ -14,6 +15,7 @@
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </form>
 </template>
+
 <script setup>
 import { ref } from 'vue';
 
@@ -29,6 +31,7 @@ const loginUser = async () => {
       },
       body: JSON.stringify({
         login: login.value,
+        phone_number: login.value, // Assuming the phone number is entered in the login field
         password: password.value
       })
     });
@@ -38,10 +41,15 @@ const loginUser = async () => {
       // Сохранение токена в localStorage после успешного входа
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('userLogin', data.login);
+      localStorage.setItem('phoneNumber', data.phone_number);
+      localStorage.setItem('firstName', data.first_name);
+      localStorage.setItem('lastName', data.last_name);
       location.reload();
       // Пример вывода токена в консоль (для проверки)
       console.log('Токен сохранен в localStorage:', data.accessToken);
       console.log('userLogin сохранен в localStorage:', data.login);
+      console.log('firstName сохранен в localStorage:', data.first_name);
+      console.log('lastName сохранен в localStorage:', data.last_name);
 
       // Здесь вы можете выполнить другие действия после успешной аутентификации,
       // например, перенаправление пользователя на другую страницу

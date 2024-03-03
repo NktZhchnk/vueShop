@@ -13,6 +13,7 @@ import UiOrders from "@/components/AdminPanel/UiOrders.vue";
 import OrderDetails from "@/components/AdminPanel/OrderDetails.vue";
 import UiOrdersComplete from "@/components/AdminPanel/UiOrdersComplete.vue";
 import UiEditProducts from "@/components/AdminPanel/UiEditProducts.vue";
+import UiDetailsOrdersUsers from "@/components/Users/UiDetailsOrdersUsers.vue";
 
 
 const routes = [
@@ -64,6 +65,11 @@ const routes = [
         name: 'UiEditProducts',
         path: '/uiEditProducts',
         component: UiEditProducts,
+    },
+    {
+        name: 'UiDetailsOrdersUsers',
+        path: '/uiDetailsOrdersUsers',
+        component: UiDetailsOrdersUsers,
     },
     {
         path: '/product/:id',

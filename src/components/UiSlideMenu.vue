@@ -6,17 +6,24 @@ import {computed, ref} from 'vue'
 const store = useMyStore()
 
 const userLogin = ref(localStorage.getItem('userLogin'));
-
+const firstName = ref(localStorage.getItem('firstName'));
+const lastName = ref(localStorage.getItem('lastName'));
 const isAdmin = () => {
   return userLogin.value === 'admin';
 };
 const test = computed(() => {
   return store.orders.filter((item) => item.complete === 1).length
 });
-const swapMenu = () =>{
+const swapMenu = () => {
   store.swapOpenMenu()
   store.isOpenShowPage = false;
 }
+const logout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userLogin');
+  location.reload();
+}
+
 </script>
 
 <template>
@@ -29,25 +36,33 @@ const swapMenu = () =>{
             <h1 class="main-text-header">Esenia</h1>
           </router-link>
         </div>
-        <div class="div-exit-menu" >
+        <div class="div-exit-menu">
           <span @click="swapMenu" style="width: 100%; display: flex; justify-content: center">X</span>
         </div>
       </div>
-      <div
-          style="border-bottom: 1px solid gray; height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center;">
-        <div style="padding: 50px; pointer-events: none;">
-          <router-link style="pointer-events: auto" to="/authLogin">Увійти</router-link>
+      <div v-if="!userLogin"
+           style="border-bottom: 1px solid gray; height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center; background-color: #2a2a2a; color: #fff;">
+        <div style="padding: 50px; text-align: center;">
+          <router-link to="/authLogin" style="color: #fff; text-decoration: none;">Увійти</router-link>
         </div>
-        <div style="padding: 50px; pointer-events: none;">
-          <router-link  style="pointer-events: auto" to="/registration">Реєстрація</router-link>
+        <div style="padding: 50px; text-align: center;">
+          <router-link to="/registration" style="color: #fff; text-decoration: none;">Реєстрація</router-link>
         </div>
       </div>
-<!--      <div style="padding: 10px">-->
-<!--        <p>Для отримання технічної підтримки з питань, пов'язаних з функціональністю цього сайту,-->
-<!--          а також для висловлення пропозицій щодо його вдосконалення та надання ідей,-->
-<!--          просимо звертатися до нашого Telegram-каналу:</p>-->
-<!--        <a href="https://t.me/Nikita58766">Технічна підтримка в Telegram</a>-->
-<!--      </div>-->
+      <div v-else style="display: flex; justify-content: space-between; align-items: center; padding-left: 15px; padding-right: 15px; border-bottom: 1px solid gray; background-color: #3b3b3b; color: #fff;">
+        <div style="padding: 10px; text-align: center;">
+          <p style="margin: 0; font-size: 16px;">{{ firstName }} {{lastName}}</p>
+        </div>
+        <div style="padding: 10px;">
+          <button @click="logout" style="background-color: #2c3e50; color: #fff; border: none; padding: 8px 15px; cursor: pointer; font-size: 14px; border-radius: 5px;">Вийти</button>
+        </div>
+      </div>
+      <!--      <div style="padding: 10px">-->
+      <!--        <p>Для отримання технічної підтримки з питань, пов'язаних з функціональністю цього сайту,-->
+      <!--          а також для висловлення пропозицій щодо його вдосконалення та надання ідей,-->
+      <!--          просимо звертатися до нашого Telegram-каналу:</p>-->
+      <!--        <a href="https://t.me/Nikita58766">Технічна підтримка в Telegram</a>-->
+      <!--      </div>-->
 
       <div class="div-body">
         <div v-if="isAdmin()">
@@ -67,6 +82,14 @@ const swapMenu = () =>{
             </li>
           </ul>
         </div>
+        <div>
+
+        </div>
+        <ul class="nav-menu">
+<!--          <li>-->
+<!--            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>-->
+<!--          </li>-->
+        </ul>
       </div>
       <div class="div-footer">
         <!--        <br/>-->
@@ -97,6 +120,7 @@ const swapMenu = () =>{
   width: 90%;
   border-radius: 50%;
 }
+
 .div-body {
   height: 84%;
   background: white;

@@ -479,42 +479,62 @@ app.post('/addUsers', (req, res) => {
 
 
 app.post('/login', (req, res) => {
-    const {login, password} = req.body;
+    let { login, password } = req.body;
 
     if (!login || !password) {
-        return res.status(400).json({error: 'Отсутствует логин или пароль в запросе'});
+        return res.status(400).json({ error: 'Отсутствует логин или пароль в запросе' });
     }
 
-    const sqlQuery = 'SELECT * FROM users WHERE login = ?';
-    connection.query(sqlQuery, [login], (error, results) => {
+    let sqlQuery;
+    let sqlParams;
+
+    // Если введенное имя пользователя является числом, считаем это номером телефона
+    if (!isNaN(login)) {
+        sqlQuery = 'SELECT * FROM users WHERE phone_number = ?';
+        sqlParams = [login];
+    } else {
+        sqlQuery = 'SELECT * FROM users WHERE login = ?';
+        sqlParams = [login];
+    }
+
+    connection.query(sqlQuery, sqlParams, (error, results) => {
         if (error) {
             console.error('Ошибка при поиске пользователя:', error);
-            res.status(500).json({error: 'Ошибка при поиске пользователя'});
+            res.status(500).json({ error: 'Ошибка при поиске пользователя' });
         } else {
             if (results.length === 0) {
-                res.status(404).json({error: 'Пользователь не найден'});
+                res.status(404).json({ error: 'Пользователь не найден' });
             } else {
                 const hashedPassword = results[0].password;
 
                 bcrypt.compare(password, hashedPassword, (bcryptError, bcryptResult) => {
                     if (bcryptError) {
                         console.error('Ошибка сравнения паролей:', bcryptError);
-                        res.status(500).json({error: 'Ошибка сравнения паролей'});
+                        res.status(500).json({ error: 'Ошибка сравнения паролей' });
                     } else {
                         if (bcryptResult) {
                             // Пароль совпадает, генерируем токен
                             const user = {
                                 id: results[0].id,
                                 login: results[0].login,
+                                firstName: results[0].first_name,
+                                lastName: results[0].last_name,
+                                phoneNumber: results[0].phone_number,
                                 // Другие данные о пользователе, которые могут быть полезны
                             };
 
-                            const accessToken = jwt.sign(user, 'секретный_ключ', {expiresIn: '1h'});
+                            const accessToken = jwt.sign(user, 'секретный_ключ', { expiresIn: '1h' });
 
-                            res.status(200).json({accessToken, login: user.login});
+                            res.status(200).json({
+                                accessToken,
+                                login: user.login,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                phoneNumber: user.phoneNumber
+                            });
                         } else {
                             // Неправильный пароль
-                            res.status(401).json({error: 'Неправильный пароль'});
+                            res.status(401).json({ error: 'Неправильный пароль' });
                         }
                     }
                 });
@@ -522,6 +542,7 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
 
 
 app.post('/addProduct', (req, res) => {
