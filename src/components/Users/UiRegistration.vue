@@ -96,10 +96,8 @@ export default {
         });
 
         if (response.ok) {
-          router.push({name: '/Auth'})
-          setTimeout(()=>{
-            location.reload()
-          },100);
+          router.push({name: 'Auth'})
+          router.go(0);
           // Регистрация прошла успешно
         } else {
           // Обработка ошибки регистрации
@@ -112,10 +110,8 @@ export default {
           errorMessage.value = 'Пользователь с таким номером телефона или логином уже существует';
         } else {
           // Другие ошибки
-          router.push({name: '/Auth'})
-          setTimeout(()=>{
-            location.reload()
-          },100);
+          router.push({name: 'Auth'})
+          router.go(0);
           errorMessage.value = 'Произошла ошибка при регистрации пользователя';
         }
       }
