@@ -20,14 +20,21 @@ const fetchOrders = async () => {
   error.value = null;
 
   // Отправка запроса на сервер
+// Отправка запроса на сервер
   try {
-    const response = await axios.get(`/getOrdersPhone?phoneNumber=${phoneNumber.value}`);
+    const response = await axios.get('https://eseniabila.com.ua/getOrdersPhone', {
+      params: {
+        phoneNumber: phoneNumber.value
+      }
+    });
+    // Обработка успешного ответа от сервера
     ordersData.value = response.data;
   } catch (err) {
+    // Обработка ошибки при получении данных с сервера
     error.value = 'Ошибка при получении данных с сервера';
     console.error('Ошибка при получении данных с сервера:', err);
   }
-};
+
 
 
 onMounted(() => {
