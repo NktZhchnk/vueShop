@@ -41,7 +41,6 @@ const store = useMyStore();
       <ui-main-header class="main-header"></ui-main-header>
     </div >
     <div class="div-body">
-      {{store.usersCountOnline}}
       <!-- Отображаем содержимое страницы внутри router-view -->
       <router-view ></router-view>
     </div>
