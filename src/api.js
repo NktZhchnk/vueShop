@@ -256,19 +256,20 @@ app.get('/getOrders', (req, res) => {
 });
 
 app.get('/getOrdersPhone', (req, res) => {
-    const phone_number = req.query.phoneNumber;
+    const telephone = req.query.phoneNumber;
 
     // Проверка наличия номера телефона в запросе
-    if (!phone_number) {
-        return res.status(400).json({error: 'Номер телефона не указан'});
+    if (!telephone) {
+        return res.status(400).json({ error: 'Номер телефона не указан' });
     }
 
-    const sqlQuery = 'SELECT * FROM orders WHERE phone_number = ?';
+    // Ваш код для выполнения SQL-запроса с использованием phone_number
+    const sqlQuery = 'SELECT * FROM orders WHERE telephone = ?';
 
-    connection.query(sqlQuery, [phone_number], (error, results) => {
+    connection.query(sqlQuery, [telephone], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
-            res.status(500).json({error: 'Ошибка выполнения запроса'});
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
         } else {
             res.json(results);
         }
