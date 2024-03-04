@@ -35,7 +35,7 @@
 
       <button type="submit" class="submit-btn">Зареєструватися</button>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }} <br/>
-        <router-link to="/login">войти</router-link>
+        <router-link to="/login">Увійти</router-link>
       </p>
     </form>
   </div>
@@ -64,14 +64,14 @@ export default {
     };
     const registerUser = async () => {
       // Проверка на количество цифр в номере телефона
-      if (!/^\d{1,10}$/.test(phoneNumber.value)) {
-        errorMessage.value = 'Номер телефона должен содержать не более 10 цифр';
+      if (!/^\d{10}$/.test(phoneNumber.value)) {
+        errorMessage.value = 'Номер телефону повинен містити рівно 10 цифр';
         return;
       }
 
       // Проверка на минимальное количество символов в логине и пароле
       if (username.value.length < 5 || password.value.length < 5) {
-        errorMessage.value = 'Логин и пароль должны содержать не менее 5 символов';
+        errorMessage.value = 'Логін та пароль повинні містити не менше 5 символів';
         return;
       }
 
@@ -97,22 +97,26 @@ export default {
 
         if (response.ok) {
           router.push({name: 'Auth'})
-          router.go(0);
+          setTimeout(()=>{
+            location.reload()
+          },150)
           // Регистрация прошла успешно
         } else {
           // Обработка ошибки регистрации
-          errorMessage.value = 'Пользователь с таким номером телефона или логином уже существует';
+          errorMessage.value = 'Користувач із таким номером телефону чи логіном вже існує';
         }
       } catch (error) {
         if (error.response && error.response.status === 409) {
           // Конфликт: пользователь с таким номером телефона или логином уже существует
 
-          errorMessage.value = 'Пользователь с таким номером телефона или логином уже существует';
+          errorMessage.value = 'Користувач із таким номером телефону чи логіном вже існує';
         } else {
           // Другие ошибки
           router.push({name: 'Auth'})
-          router.go(0);
-          errorMessage.value = 'Произошла ошибка при регистрации пользователя';
+          setTimeout(()=>{
+            location.reload()
+          },150)
+          errorMessage.value = 'Сталася помилка під час реєстрації користувача';
         }
       }
     };
