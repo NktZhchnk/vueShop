@@ -256,10 +256,10 @@ app.get('/getOrders', (req, res) => {
 });
 
 app.get('/getOrdersPhone', (req, res) => {
-    const phoneNumber = req.query.phoneNumber;
+    const phone_number = req.query.phoneNumber;
     const sqlQuery = 'SELECT * FROM orders WHERE phone_number = ?';
 
-    connection.query(sqlQuery, [phoneNumber], (error, results) => {
+    connection.query(sqlQuery, [phone_number], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({error: 'Ошибка выполнения запроса'});
