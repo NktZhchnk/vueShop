@@ -42,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="center-container">
+  <div v-if="ordersData.length > 0" class="center-container">
     <div v-for="info in ordersData" class="main-detail" :key="info.id" :class="{ 'processing': info.complete === 0, 'completed': info.complete === 1 }">
     <div class="header">
         <p class="name">{{info.last_name}} {{info.first_name}} {{info.middle_name}}</p>
@@ -63,9 +63,25 @@ onMounted(() => {
       </div>
     </div>
   </div>
+  <div v-else class="custom-container">
+    <h1>У вас ще немає замовлень.</h1>
+  </div>
 </template>
 
 <style scoped>
+.custom-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
 .center-container {
   display: flex;
   flex-wrap: wrap;
