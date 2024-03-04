@@ -34,7 +34,7 @@ const fetchOrders = async () => {
     error.value = 'Ошибка при получении данных с сервера';
     console.error('Ошибка при получении данных с сервера:', err);
   }
-
+};
 
 
 onMounted(() => {
