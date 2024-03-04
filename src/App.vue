@@ -2,11 +2,33 @@
 import UiCartItems from "@/components/UiCartItems.vue";
 import UiMainHeader from "@/components/UiMainHeader.vue";
 import UiSlideMenu from "@/components/UiSlideMenu.vue";
-import {useMyStore} from "@/store/store.js";
+import { useMyStore } from "@/store/store.js";
 
+import io from 'socket.io-client';
+import {onMounted} from "vue";
 
-const store = useMyStore()
+const socket = io('http://localhost:3000');
 
+// Используйте `onMounted` вместо `created` в `<script setup>`
+onMounted(() => {
+  socket.on('connect', () => {
+    console.log('Подключено к серверу Socket.io');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Отключено от сервера Socket.io');
+  });
+
+  // Отслеживаем обновления онлайн-пользователей
+  socket.on('onlineUsers', (count) => {
+    store.usersCountOnline = count
+    console.log(`Количество онлайн-пользователей: ${count}`);
+    // Здесь вы можете обновлять ваше состояние Vue.js в соответствии с онлайн-пользователями
+  });
+});
+
+// Объявляем хранилище вне блока `<script setup>`
+const store = useMyStore();
 </script>
 
 <template>
@@ -19,6 +41,7 @@ const store = useMyStore()
       <ui-main-header class="main-header"></ui-main-header>
     </div>
     <div class="div-body">
+      {{store.usersCountOnline}}
       <!-- Отображаем содержимое страницы внутри router-view -->
       <router-view ></router-view>
     </div>

@@ -8,6 +8,7 @@ export const useMyStore = defineStore({
         allPriceProducts: null,
         cartProducts: [],
         products: [],
+        usersCountOnline: 0,
         showResults: false,
         searchQuery: '',
         checkInput: false,

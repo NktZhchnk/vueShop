@@ -7,6 +7,8 @@ import dotenv from 'dotenv';
 import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
+import http from 'http'; // добавим http для создания сервера для Socket.io
+import socketIO from 'socket.io';
 
 dotenv.config();
 
@@ -697,7 +699,23 @@ app.post('/addProductImg', (req, res) => {
     });
 });
 
+const server = http.createServer(app); // создаем сервер с помощью http
 
+const io = socketIO(server); // создаем экземпляр Socket.io и связываем его с сервером
+
+io.on('connection', (socket) => {
+    console.log('Новый пользователь подключился');
+
+    // Отправляем количество онлайн-пользователей всем клиентам при подключении нового пользователя
+    io.sockets.emit('onlineUsers', Object.keys(io.sockets.sockets).length);
+
+    socket.on('disconnect', () => {
+        console.log('Пользователь отключился');
+
+        // Отправляем обновленное количество онлайн-пользователей всем клиентам при отключении пользователя
+        io.sockets.emit('onlineUsers', Object.keys(io.sockets.sockets).length);
+    });
+});
 app.listen(3000, () => {
     console.log('Сервер запущен на порту 3000');
 });
