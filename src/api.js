@@ -697,7 +697,6 @@ app.post('/addProductImg', (req, res) => {
     });
 });
 
-
 app.listen(3000, () => {
     console.log('Сервер запущен на порту 3000');
 });
