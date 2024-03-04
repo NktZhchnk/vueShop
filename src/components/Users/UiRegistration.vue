@@ -43,6 +43,7 @@
 
 <script>
 import {computed, ref} from 'vue';
+import {useRouter} from "vue-router";
 
 export default {
   setup() {
@@ -53,7 +54,7 @@ export default {
     const lastname = ref('');
     const phoneNumber = ref('');
     let errorMessage = ref('');
-
+    const router = useRouter();
     const checkNumber = () => {
       let maxLength = 10
       phoneNumber.value = phoneNumber.value.replace(/\D/g, '');
@@ -95,6 +96,10 @@ export default {
         });
 
         if (response.ok) {
+          router.push({name: '/Auth'})
+          setTimeout(()=>{
+            location.reload()
+          },100);
           // Регистрация прошла успешно
         } else {
           // Обработка ошибки регистрации

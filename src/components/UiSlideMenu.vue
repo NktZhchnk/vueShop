@@ -92,11 +92,11 @@ const logout = () => {
         <div>
 
         </div>
-<!--        <ul class="nav-menu">-->
-<!--          <li>-->
-<!--            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>-->
-<!--          </li>-->
-<!--        </ul>-->
+        <ul class="nav-menu">
+          <li>
+            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>
+          </li>
+        </ul>
       </div>
       <div class="div-footer">
         <!--        <br/>-->

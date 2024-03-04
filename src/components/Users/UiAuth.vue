@@ -18,10 +18,12 @@
 
 <script setup>
 import { ref } from 'vue';
+import {useRouter} from "vue-router";
 
 let login = ref('');
 let password = ref('');
 let errorMessage = ref('');
+const router = useRouter();
 const loginUser = async () => {
   try {
     const response = await fetch('https://eseniabila.com.ua/login', {
@@ -44,7 +46,10 @@ const loginUser = async () => {
       localStorage.setItem('phoneNumber', data.phoneNumber);
       localStorage.setItem('firstName', data.firstName);
       localStorage.setItem('lastName', data.lastName);
-      location.reload()
+      router.push({name: 'RenderProducts'})
+      setTimeout(()=>{
+        location.reload()
+      },200);
       // например, перенаправление пользователя на другую страницу
       console.log('Успешный вход', data);
     }else if (response.status === 401) {

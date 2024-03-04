@@ -99,6 +99,7 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
       const index = orderDetails.value.findIndex(order => order.id === orderId);
       orderDetails.value[index] = updatedOrder;
       poshtaTnn.value = ''
+      commentForUser.value = ''
     } catch (error) {
       console.error('Ошибка при обновлении статуса заказа:', error);
     }
@@ -159,6 +160,7 @@ p {
   font-size: 16px;
   margin-bottom: 8px;
   color: #555;
+  overflow: hidden;
 }
 
 .link-order {
