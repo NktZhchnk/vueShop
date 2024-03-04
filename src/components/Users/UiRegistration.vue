@@ -19,7 +19,7 @@
       <div class="form-group">
         <label for="phoneNumber">Телефон:</label>
         <input type="text" @input="checkNumber" v-model="phoneNumber" id="phoneNumber" class="input-field"
-               placeholder="Телефон">
+               placeholder="0958263775">
       </div>
 
       <div class="form-group">
