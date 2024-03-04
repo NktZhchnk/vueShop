@@ -39,7 +39,7 @@ const store = useMyStore();
     <div class="div-header">
       <!-- Выводим хедер за пределами router-view -->
       <ui-main-header class="main-header"></ui-main-header>
-    </div>
+    </div >
     <div class="div-body">
       {{store.usersCountOnline}}
       <!-- Отображаем содержимое страницы внутри router-view -->
