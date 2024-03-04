@@ -19,6 +19,7 @@
 
 .main-detail {
   height: 200px;
+  width: 200px;
   background: red;
 }
 </style>

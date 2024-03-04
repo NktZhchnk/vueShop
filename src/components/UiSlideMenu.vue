@@ -54,7 +54,7 @@ const logout = () => {
       <div v-else
            style="display: flex; justify-content: space-between; align-items: center; padding-left: 15px; padding-right: 15px; border-bottom: 1px solid gray; background-color: #3b3b3b; color: #fff;">
         <div style="padding: 10px; text-align: center;">
-          <p  class="user-name">{{ firstName }} {{ lastName }}</p>
+          <p class="user-name">{{ firstName }} {{ lastName }}</p>
         </div>
         <div style="padding: 10px;">
           <button @click="logout"
@@ -92,11 +92,11 @@ const logout = () => {
         <div>
 
         </div>
-        <ul class="nav-menu">
-          <!--          <li>-->
-          <!--            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>-->
-          <!--          </li>-->
-        </ul>
+<!--        <ul class="nav-menu">-->
+<!--          <li>-->
+<!--            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>-->
+<!--          </li>-->
+<!--        </ul>-->
       </div>
       <div class="div-footer">
         <!--        <br/>-->
@@ -114,6 +114,7 @@ const logout = () => {
   width: 100%;
   height: 100%;
 }
+
 .user-name {
   margin: 0;
   font-size: 16px;
@@ -122,6 +123,7 @@ const logout = () => {
   overflow: hidden;
   /* Дополнительные стили, если необходимо */
 }
+
 .main-text-header {
   margin-left: 30px;
   margin-block-start: 0.50em;
