@@ -86,7 +86,9 @@ axios.post(apiUrl, {apiKey, modelName: 'Address', calledMethod: 'getCities', met
     });
 
 const getWarehouses = () => {
-  selectedCity.value = selectedCity.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
+  selectedCity.value = selectedCity.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ0-9\s]/g, '');
+  selectedCity.value = selectedCity.value.replace(/^\s+/, '');
+
   if (selectedCity.value) {
     axios.post(apiUrl, {
       apiKey,
@@ -105,7 +107,9 @@ const getWarehouses = () => {
 };
 const searchWarehouses = () => {
   showListPoshta = true
-  searchQuery.value = searchQuery.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ0-9]/g, '');
+  searchQuery.value = searchQuery.value.replace(/[^\sа-яА-ЯёЁіІїЇґҐєЄ0-9]/g, '');
+  searchQuery.value = searchQuery.value.replace(/^\s+/, '');
+
   filteredWarehouses.value = infoPoshta.value.filter(warehouse =>
       warehouse.Description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       warehouse.DescriptionRu.toLowerCase().includes(searchQuery.value.toLowerCase())

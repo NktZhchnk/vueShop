@@ -32,7 +32,7 @@ const validateText = () => {
   lastName.value = lastName.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
   firstname.value = firstname.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
   surname.value = surname.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
-  comment.value = comment.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ0-9]/g, '');
+  comment.value = comment.value.replace(/[^\sа-яА-ЯёЁіІїЇґҐєЄ0-9]/g, '');
 }
 
 const addOrders = async () => {

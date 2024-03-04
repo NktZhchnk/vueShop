@@ -354,10 +354,10 @@ app.put('/updateProductCount/:productId', (req, res) => {
 
 app.put('/updateOrder/:orderId', (req, res) => {
     const orderId = req.params.orderId;
-    const { complete, poshta_tnn } = req.body; // Добавлено поле poshta_tnn
+    const { complete, poshta_tnn, comment_for_user } = req.body; // Добавлено поле poshta_tnn
 
-    const sqlQuery = 'UPDATE orders SET complete = ?, poshta_tnn = ? WHERE id = ?'; // Обновлен SQL-запрос
-    connection.query(sqlQuery, [complete, poshta_tnn, orderId], (error, results) => {
+    const sqlQuery = 'UPDATE orders SET complete = ?, poshta_tnn = ?, comment_for_user = ? WHERE id = ?'; // Обновлен SQL-запрос
+    connection.query(sqlQuery, [complete, poshta_tnn, comment_for_user, orderId], (error, results) => {
         if (error) {
             console.error('Ошибка выполнения запроса:', error);
             res.status(500).json({ error: 'Ошибка выполнения запроса' });

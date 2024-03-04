@@ -19,14 +19,21 @@
             {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
           </button>
         </h2>
-        <p>Дата: {{ formattedDate(order.order_date) }}</p>
-        <p>Телефон: {{ order.telephone }}</p>
-        <p>Коментар: {{ order.comment }}</p>
-        <p>Місто: {{ order.city }}</p>
-        <p v-if="order.address">Нова пошта: {{ order.address }}</p>
-        <p v-if="order.postal_code">УкрПошта: {{ order.postal_code }}</p>
-        <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
-        <p v-if="order.payment_method === 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
+        <div style=" display: flex; justify-content: space-between">
+          <div style="width:80%;">
+            <p>Дата: {{ formattedDate(order.order_date) }}</p>
+            <p>Телефон: <span @click.prevent="copyToClipboard(order.telephone)" class="copy-text">{{ order.telephone }}</span></p>
+            <p>Коментар: {{ order.comment }}</p>
+            <p>Місто: <span @click.prevent="copyToClipboard(order.city)" class="copy-text">{{ order.city }}</span></p>
+            <p v-if="order.address">Нова пошта: <span @click.prevent="copyToClipboard(order.address)" class="copy-text">{{ order.address }}</span></p>
+            <p v-if="order.postal_code">УкрПошта: <span @click.prevent="copyToClipboard(order.postal_code)" class="copy-text">{{ order.postal_code }}</span></p>
+            <p v-if="order.payment_method === 'creditCard'">Спосiб оплати: Повна передоплата на картку</p>
+            <p v-if="order.payment_method === 'cashOnDelivery'">Спосiб оплати: Післяплата (оплата при отриманні)</p>
+          </div>
+          <div style="width: 20%">
+            <textarea v-model="commentForUser" placeholder="Коментар" @click.prevent style="width: 100%; padding: 5px; height: 90px" ></textarea>
+          </div>
+        </div>
         <p style="display: flex; justify-content: space-between;">Total price: {{ order.total_price }} ₴.
           <input v-model="poshtaTnn" style="padding: 5px; border-radius: 5px;" placeholder="ТТН" @click.prevent/>
         </p>
@@ -43,6 +50,7 @@ import axios from "axios";
 const orderDetails = ref([]);
 const searchQuery = ref('');
 const poshtaTnn = ref('')
+const commentForUser = ref('')
 
 onMounted(async () => {
   try {
@@ -82,7 +90,8 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
     try {
       const response = await axios.put(`https://eseniabila.com.ua/updateOrder/${orderId}`, {
         complete: !currentStatus,
-        poshta_tnn: poshtaTnn.value // Добавлено поле poshta_tnn в теле запроса
+        poshta_tnn: poshtaTnn.value, // Добавлено поле poshta_tnn в теле запроса
+        comment_for_user: commentForUser.value
       });
 
       // Обновление локальных данных после успешного обновления на сервере
@@ -97,11 +106,27 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
     alert('Ввiдiть ТТН')
   }
 };
+const copyToClipboard = (text) => {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+};
 </script>
 
 <!-- Ваши стили для карточек и ссылок -->
 <style scoped>
+.copy-text {
+  cursor: pointer;
+  color: #3498db;
+  transition: color 0.3s ease;
+}
 
+.copy-text:hover {
+  color: #21618c;
+}
 .search-input {
   padding: 10px;
   font-size: 16px;
@@ -110,7 +135,6 @@ const toggleOrderCompletion = async (orderId, currentStatus) => {
   margin-bottom: 15px;
   width: 98%; /* Измените ширину по вашему усмотрению */
 }
-
 .card {
   border: 1px solid #ddd;
   padding: 20px;
