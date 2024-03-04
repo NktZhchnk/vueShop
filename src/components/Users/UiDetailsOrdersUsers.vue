@@ -8,15 +8,27 @@ const firstName = ref(localStorage.getItem('firstName'));
 const lastName = ref(localStorage.getItem('lastName'));
 
 const ordersData = ref([]);
-
+const error = ref(null);
 const fetchOrders = async () => {
+  if (!phoneNumber.value) {
+    error.value = 'Введите номер телефона';
+    return;
+  }
+
+  // Очистка результатов и ошибок перед новым запросом
+  ordersData.value = [];
+  error.value = null;
+
+  // Отправка запроса на сервер
   try {
     const response = await axios.get(`/getOrdersPhone?phoneNumber=${phoneNumber.value}`);
-    ordersData.value = response.data
-  } catch (error) {
-    console.log('error Запроса:', error)
+    ordersData.value = response.data;
+  } catch (err) {
+    error.value = 'Ошибка при получении данных с сервера';
+    console.error('Ошибка при получении данных с сервера:', err);
   }
-}
+};
+
 
 onMounted(() => {
   fetchOrders()

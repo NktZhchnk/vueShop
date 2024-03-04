@@ -257,6 +257,12 @@ app.get('/getOrders', (req, res) => {
 
 app.get('/getOrdersPhone', (req, res) => {
     const phone_number = req.query.phoneNumber;
+
+    // Проверка наличия номера телефона в запросе
+    if (!phone_number) {
+        return res.status(400).json({error: 'Номер телефона не указан'});
+    }
+
     const sqlQuery = 'SELECT * FROM orders WHERE phone_number = ?';
 
     connection.query(sqlQuery, [phone_number], (error, results) => {
@@ -268,6 +274,7 @@ app.get('/getOrdersPhone', (req, res) => {
         }
     });
 });
+
 
 app.get('/getItemOrder/:orderId', (req, res) => {
     const orderId = req.params.orderId; // Исправлено с req.params.order_id
