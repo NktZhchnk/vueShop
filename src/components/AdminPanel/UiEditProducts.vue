@@ -152,6 +152,9 @@ const sortByQuantity = (order) => {
 
 .sort-buttons {
   display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
   margin-bottom: 15px;
 }
@@ -171,6 +174,7 @@ const sortByQuantity = (order) => {
 
 .search-input {
   width: 100%;
+  text-align: center;
   margin-top: 20px;
   margin-bottom: 15px;
   padding: 10px;
