@@ -492,6 +492,7 @@ h1 {
 
   .div-inp {
     margin: 0;
+    margin-left: 10px;
   }
 
   .search-text {
