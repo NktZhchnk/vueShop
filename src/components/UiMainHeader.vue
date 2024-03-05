@@ -487,7 +487,7 @@ h1 {
   }
 
   .img-header {
-    width: 90%;
+    width: 100%;
   }
 
   .div-inp {

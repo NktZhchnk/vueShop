@@ -125,6 +125,7 @@ p {
   font-size: 16px;
   margin-bottom: 8px;
   color: #555;
+  word-wrap: break-word;
 }
 
 .link-order {
