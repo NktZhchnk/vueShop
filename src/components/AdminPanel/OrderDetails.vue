@@ -184,13 +184,15 @@ h2 {
 }
 
 img {
+  min-height: 150px;
+  min-width: 150px;
+
   height: 150px;
   width: 150px;
 }
 
 .item-image, .variety-image {
   max-width: 100%;
-  height: auto;
   margin-top: 10px;
   border-radius: 5px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);

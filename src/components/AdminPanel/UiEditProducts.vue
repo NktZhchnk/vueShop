@@ -192,7 +192,7 @@ const sortByQuantity = (order) => {
   margin: 15px;
   width: 70%;
   overflow-wrap: break-word;
-  height: 95px;
+  height: 110px;
   overflow: hidden;
 }
 
