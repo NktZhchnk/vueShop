@@ -8,7 +8,6 @@ const store = useMyStore()
 
 onMounted(async () => {
   await store.fetchData();
-
 });
 
 let varietyQuantities = ref({});
@@ -86,6 +85,38 @@ const sortedProducts = computed(() => {
   return filtered;
 });
 
+const togglePopularityItem = async (productId) => {
+  try {
+    // Находим товар в массиве store.products по productId
+    const productIndex = store.products.findIndex(product => product.id === productId);
+
+    if (productIndex !== -1) {
+      // Получаем текущее значение popularity_item
+      const currentPopularity = store.products[productIndex].popularity_item;
+
+      // Определяем новое значение для popularity_item
+      const newPopularity = (currentPopularity === null) ? 1 : null;
+
+      // Локальное обновление значения popularity_item
+      store.products[productIndex].popularity_item = newPopularity;
+
+      // Обновление значения popularity_item на сервере
+      const updateResponse = await axios.put(
+          `https://eseniabila.com.ua/updateProduct/${productId}`,
+          { popularity_item: newPopularity },
+          { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      console.log('Ответ сервера обновления popularity_item:', updateResponse.data);
+
+      // Здесь вы можете выполнить дополнительные действия после успешного обновления, если это необходимо
+    }
+
+  } catch (error) {
+    // Обработка ошибок
+    console.error('Произошла ошибка:', error);
+  }
+};
 // Остальной код остается неизменным
 // ...
 const itemImages = (itemId) => {
@@ -136,6 +167,7 @@ const sortByQuantity = (order) => {
           </div>
           <button @click="saveQuanProduct(product.id, getProductVarieties(product.id))" class="save-button">Сохранить
           </button>
+          <button @click="togglePopularityItem(product.id)">pop</button>
         </div>
       </div>
     </div>

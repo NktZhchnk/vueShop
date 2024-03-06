@@ -323,6 +323,33 @@ app.put('/updateVarietyCount/:varietyId', (req, res) => {
         }
     });
 });
+app.put('/updateProduct/:productId', (req, res) => {
+    const productId = req.params.productId;
+    const { popularity_item } = req.body; // Предполагается, что вы отправляете объект с полем popularity_item в запросе
+
+    const sqlQuery = 'UPDATE product SET popularity_item = ? WHERE id = ?';
+    connection.query(sqlQuery, [popularity_item, productId], (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            if (results.affectedRows === 0) {
+                res.status(404).json({ message: 'Товар не найден' });
+            } else {
+                // Если обновление прошло успешно, отправляем обновленные данные товара в качестве ответа
+                const updatedProductQuery = 'SELECT * FROM product WHERE id = ?';
+                connection.query(updatedProductQuery, [productId], (error, updatedResults) => {
+                    if (error) {
+                        console.error('Ошибка выполнения запроса:', error);
+                        res.status(500).json({ error: 'Ошибка выполнения запроса' });
+                    } else {
+                        res.json(updatedResults[0]);
+                    }
+                });
+            }
+        }
+    });
+});
 
 app.put('/updateProductCount/:productId', (req, res) => {
     const productId = req.params.productId;
