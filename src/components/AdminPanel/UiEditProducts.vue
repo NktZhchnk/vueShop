@@ -167,7 +167,7 @@ const sortByQuantity = (order) => {
           </div>
           <button @click="saveQuanProduct(product.id, getProductVarieties(product.id))" class="save-button">Сохранить
           </button>
-          <button @click="togglePopularityItem(product.id)">pop</button>
+          <button style="margin-left: 15px" class="save-button" @click="togglePopularityItem(product.id)">{{ product.popularity_item === 1 ? 'Популярний' : 'Непопулярний' }}</button>
         </div>
       </div>
     </div>

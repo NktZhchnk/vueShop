@@ -69,6 +69,12 @@ const sortProductsByDate = () => {
 };
 
 const sortByDate = (a, b) => {
+  if (a.popularity_item !== b.popularity_item) {
+    // Если у a значение popularity_item равно 1, он идет первым
+    return b.popularity_item - a.popularity_item;
+  }
+
+  // Если значения popularity_item одинаковы, сравниваем по дате
   const dateA = new Date(a.date_item);
   const dateB = new Date(b.date_item);
 
