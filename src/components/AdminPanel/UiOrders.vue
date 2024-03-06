@@ -12,7 +12,7 @@
     >
       <!-- Ваш код для отображения карточек -->
       <div class="card">
-        <h2 style="display: flex; justify-content: space-between">{{ order.first_name }} {{ order.last_name }}
+        <h2 style="display: flex; justify-content: space-between"> {{ order.last_name }} {{ order.first_name }}
           {{ order.middle_name }}
           <button style="background: red; border-radius: 5px;"
                   @click.prevent="toggleOrderCompletion(order.id, order.complete)">
