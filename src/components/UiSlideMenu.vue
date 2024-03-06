@@ -96,6 +96,9 @@ const logout = () => {
           <li>
             <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>
           </li>
+          <li>
+            <router-link to="/uiInformationForUser">Служба підтримки та доставка</router-link>
+          </li>
         </ul>
       </div>
       <div class="div-footer">
