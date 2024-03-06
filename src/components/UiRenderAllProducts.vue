@@ -127,8 +127,9 @@ if(selectedSortOrder.value === ''){
               {{ item.name_item }}
             </div>
           </div>
+          <span v-if="item.popularity_item === 1" class="hit-badge">Хіт</span>
           <div class="product-price">
-            Ціна: {{ item.price_item }} ₴
+            <span>Ціна: {{ item.price_item }} ₴</span>
           </div>
         </router-link>
       </div>
@@ -140,6 +141,17 @@ if(selectedSortOrder.value === ''){
 .div-catalog-header {
   display: flex;
   align-items: center;
+}
+
+.hit-badge {
+  position: absolute;
+  top: 10px; /* Позиция от верхнего края */
+  left: 10px; /* Позиция от левого края */
+  background: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
 }
 
 .style-products {
@@ -200,9 +212,11 @@ if(selectedSortOrder.value === ''){
 
   .product-price {
     position: absolute;
+    display: flex;
+    justify-content: space-between;
     bottom: 15px;
     left: 30px;
-    width: 100%;
+    width: 95%;
     font-size: 1rem;
     color: #555;
   }
