@@ -35,7 +35,7 @@
 
       <button type="submit" class="submit-btn">Зареєструватися</button>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }} <br/>
-        <router-link to="/login">Увійти</router-link>
+        <router-link to="/authLogin">Увійти</router-link>
       </p>
     </form>
   </div>

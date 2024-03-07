@@ -12,7 +12,11 @@
     </div>
 
     <button type="submit">Войти</button>
+
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p style="margin-bottom: 0; text-align: center">
+      <router-link to="/registration">Зареєструватися</router-link>
+    </p>
   </form>
 </template>
 
