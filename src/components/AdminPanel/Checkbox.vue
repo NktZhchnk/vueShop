@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <label v-if="checkShow" class="label">Сколько вариантов вы хотите создать?</label>
+    <label v-if="checkShow" class="label">Скільки варіантів ви хочете створити?</label>
     <input v-if="checkShow" class="inpCheck" type="number" v-model="numRadios" min="0">
-    <button v-if="checkShow" type="button" @click="createRadios" class="btn">Создать варианты</button>
+    <button v-if="checkShow" type="button" @click="createRadios" class="btn">Створити варіанти</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
         <input type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
         <label :for="'radio-' + index" class="option-label">
-          {{ option.label }} - <span style="color: #f83434">Цена</span>: {{ option.price }} |||| <span style="color: greenyellow">Количество</span>: {{ option.quantity }}
+          {{ option.label }} - <span style="color: #f83434">Ціна</span>: {{ option.price }} |||| <span style="color: greenyellow">Кількість</span>: {{ option.quantity }}
         </label>
         <div>
-          <input type="text" v-model="option.label" placeholder="Введите название" class="input-field">
-          <input type="number" v-model.number="option.price" min="0" placeholder="Введите цену" class="input-field">
+          <input type="text" v-model="option.label" placeholder="Введіть назву" class="input-field">
+          <input type="number" v-model.number="option.price" min="0" placeholder="Введіть ціну" class="input-field">
           <input type="number" v-model.number="option.quantity" min="0" class="input-field">
         </div>
         <br>
