@@ -17,6 +17,7 @@ const test = computed(() => {
 const swapMenu = () => {
   store.swapOpenMenu()
   store.isOpenShowPage = false;
+  document.body.style.overflow = 'auto';
 }
 
 const logout = () => {
@@ -44,10 +45,10 @@ const logout = () => {
 
       <div v-if="!userLogin"
            style="border-bottom: 1px solid gray; height: 30px; width: 100%; display: flex; justify-content: space-between; align-items: center; background-color: #2a2a2a; color: #fff;">
-        <div style="padding: 50px; text-align: center;">
+        <div style="padding-left: 50px; text-align: center;">
           <router-link to="/authLogin" style="color: #fff; text-decoration: none;">Увійти</router-link>
         </div>
-        <div style="padding: 50px; text-align: center;">
+        <div style="padding-right: 50px; text-align: center;">
           <router-link to="/registration" style="color: #fff; text-decoration: none;">Реєстрація</router-link>
         </div>
       </div>
