@@ -5,9 +5,11 @@
     <button v-if="checkShow" type="button" @click="createRadios" class="btn">Створити варіанти</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
-        <input type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
-        <label :for="'radio-' + index" class="option-label">
-          {{ option.label }} - <span style="color: #f83434">Ціна</span>: {{ option.price }} |||| <span style="color: greenyellow">Кількість</span>: {{ option.quantity }}
+        <input v-show="false" type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
+        <label style="margin-bottom: 5px" :for="'radio-' + index" class="option-label">
+          <div class="div-label">{{ option.label }}</div>
+          <div class="div-label"><span style="color: #f83434;">Ціна</span>: {{ option.price }} ₴</div>
+          <div><span style="color: greenyellow;">Кількість</span>: {{ option.quantity }}</div>
         </label>
         <div>
           <input type="text" v-model="option.label" placeholder="Введіть назву" class="input-field">
@@ -17,7 +19,7 @@
         <br>
       </div>
     </div>
-    <p>Выбран вариант: {{ selectedOption }}</p>
+    <p v-show="false">Выбран вариант: {{ selectedOption }}</p>
   </div>
 </template>
 
@@ -78,7 +80,12 @@ export default {
   max-width: 400px;
   margin: 20px auto;
 }
-
+.div-label{
+  width: 120px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .label {
   display: block;
   margin-bottom: 10px;
@@ -113,7 +120,9 @@ export default {
 .option {
   margin-bottom: 15px;
 }
-
+.option-label{
+  display: flex;
+}
 .input-field {
   padding: 10px;
   margin-right: 10px;

@@ -119,7 +119,7 @@ const addProduct = () => {
       <label for="productPrice">Ціна:</label>
       <input v-model="newData.price_item" type="number" id="productPrice" required>
 
-      <label for="productQuantity">Кільскість:</label>
+      <label for="productQuantity">Загальна кількість:</label>
       <input v-model="newData.quan_item" type="number" id="productQuantity" required>
 
       <!-- Добавление поля для ввода количества изображений -->
