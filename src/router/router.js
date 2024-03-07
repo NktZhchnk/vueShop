@@ -15,6 +15,7 @@ import UiOrdersComplete from "@/components/AdminPanel/UiOrdersComplete.vue";
 import UiEditProducts from "@/components/AdminPanel/UiEditProducts.vue";
 import UiDetailsOrdersUsers from "@/components/Users/UiDetailsOrdersUsers.vue";
 import UiInformationForUser from "@/components/Users/UiInformationForUser.vue";
+import UiUserAgreement from "@/components/Users/UiUserAgreement.vue";
 
 
 const routes = [
@@ -47,10 +48,16 @@ const routes = [
         name: 'Auth',
         path: '/authLogin',
         component: UiAuth,
-    },  {
+    },
+    {
         name: 'Registration',
         path: '/registration',
         component: UiRegistration,
+    },
+    {
+        name: 'UiUserAgreement',
+        path: '/uiUserAgreement',
+        component: UiUserAgreement,
     },
     {
         name: 'UiOrders',

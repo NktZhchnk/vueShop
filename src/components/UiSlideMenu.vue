@@ -96,6 +96,8 @@ const logout = () => {
         </ul>
       </div>
       <div class="div-footer">
+        <router-link to="/uiUserAgreement">
+          Користувача угода</router-link>
         <!--        <br/>-->
         <!--        <AuthAdminPanel></AuthAdminPanel>-->
         <!--        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>-->
@@ -108,8 +110,16 @@ const logout = () => {
 @import url('https://fonts.cdnfonts.com/css/roboto');
 
 .div-menu {
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.div-footer {
+  margin-top: auto;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .user-name {
@@ -136,7 +146,7 @@ const logout = () => {
 }
 
 .div-body {
-  height: 84%;
+  height: 83%;
   background: white;
   padding: 10px;
 }
@@ -222,10 +232,6 @@ const logout = () => {
 @media screen and (max-height: 200px) {
   .div-header {
     height: 65px;
-  }
-
-  .div-footer {
-    height: 64px;
   }
 }
 </style>
