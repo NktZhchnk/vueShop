@@ -1,21 +1,23 @@
 <template>
-  <div>
-    <label v-if="checkShow">Сколько разновидностей вы хотите создать?</label>
+  <div class="container">
+    <label v-if="checkShow" class="label">Сколько вариантов вы хотите создать?</label>
     <input v-if="checkShow" class="inpCheck" type="number" v-model="numRadios" min="0">
-    <button v-if="checkShow" type="button" @click="createRadios">Создать разновидности</button>
+    <button v-if="checkShow" type="button" @click="createRadios" class="btn">Создать варианты</button>
     <div v-if="radioOptions.length" class="options-container">
       <div v-for="(option, index) in radioOptions" :key="index" class="option">
         <input type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
         <label :for="'radio-' + index" class="option-label">
-          {{ option.label }} - Цена: {{ option.price }} - Количество: {{ option.quantity }}
+          {{ option.label }} - <span style="color: #f83434">Цена</span>: {{ option.price }} |||| <span style="color: greenyellow">Количество</span>: {{ option.quantity }}
         </label>
-        <input type="text" v-model="option.label" placeholder="Введите название" class="input-field">
-        <input type="number" v-model.number="option.price" min="0" placeholder="Введите цену" class="input-field">
-        <input type="number" v-model.number="option.quantity" min="0" class="input-field">
+        <div>
+          <input type="text" v-model="option.label" placeholder="Введите название" class="input-field">
+          <input type="number" v-model.number="option.price" min="0" placeholder="Введите цену" class="input-field">
+          <input type="number" v-model.number="option.quantity" min="0" class="input-field">
+        </div>
         <br>
       </div>
     </div>
-    <p>Выбранная опция: {{ selectedOption }}</p>
+    <p>Выбран вариант: {{ selectedOption }}</p>
   </div>
 </template>
 
@@ -27,7 +29,7 @@ export default {
   setup() {
     const store = useMyStore();
     const numRadios = ref(0);
-    const radioOptions = store.radioOptions; // Используем ref для отслеживания изменений
+    const radioOptions = store.radioOptions;
     const selectedOption = ref('');
 
     let checkShow = ref(true);
@@ -48,11 +50,11 @@ export default {
           });
         }
       } else {
-        const inpCheck = document.querySelector('.inpCheck')
-        inpCheck.style.border = "3px solid red"
+        const inpCheck = document.querySelector('.inpCheck');
+        inpCheck.style.border = "3px solid red";
         setTimeout(() => {
-          inpCheck.style.border = "1px solid gray"
-        }, 2000)
+          inpCheck.style.border = "1px solid gray";
+        }, 2000);
       }
     };
 
@@ -68,29 +70,39 @@ export default {
 </script>
 
 <style scoped>
-label {
+.container {
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .inpCheck {
-  padding: 5px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  border: 2px solid #555;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  width: 93%;
 }
 
-button {
-  padding: 8px 16px;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: white;
+.btn {
+  padding: 12px;
+  background-color: #1b4c85;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
 }
 
-button:hover {
+.btn:hover {
   background-color: #0056b3;
 }
 
@@ -99,13 +111,16 @@ button:hover {
 }
 
 .option {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .input-field {
-  padding: 5px;
-  margin-right: 5px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  margin-right: 10px;
+  border: 2px solid #555;
   border-radius: 4px;
+  width: calc(33.33% - 10px);
+  box-sizing: border-box;
 }
+
 </style>

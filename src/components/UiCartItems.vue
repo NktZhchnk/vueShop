@@ -100,13 +100,15 @@ onMounted(loadCartProducts);
           </div>
           <div v-if="item.selectedVariety">
             <div>
-              <p style="margin-bottom: 0; overflow-wrap: break-word; height: 38px; overflow: hidden">Варіація: {{ item.selectedVariety.variety_name }}</p>
+              <p style="margin-bottom: 0; overflow-wrap: break-word; height: 38px; overflow: hidden">Варіація:
+                {{ item.selectedVariety.variety_name }}</p>
             </div>
             <div>
               <div>
 
                 <button @click="decrementQuanProduct(index)">-</button>
-                <span class="span-quan">Кiл: </span>{{ item.countProduct }}<button @click="sumQuanProduct(index)">+</button>
+                <span class="span-quan">Кiл: </span>{{ item.countProduct }}
+                <button @click="sumQuanProduct(index)">+</button>
               </div>
             </div>
           </div>
@@ -130,7 +132,7 @@ onMounted(loadCartProducts);
     </div>
     <div class="div-footer">
       <div class="cart-receipt">
-        <p >Загальна ціна: <span style="color: black">{{ allPriceCart }}</span> ₴</p>
+        <p>Загальна ціна: <span style="color: black">{{ allPriceCart }}</span> ₴</p>
         <router-link to="/uiConfirmationOrder">
           <button @click="store.swapShowPage()" class="button-green">Оформити</button>
         </router-link>
@@ -261,16 +263,18 @@ img {
   color: #555;
 }
 
-.btn-sum{
+.btn-sum {
   background-color: #343434;
   color: white;
   border-radius: 6px;
 }
-.btn-dec{
+
+.btn-dec {
   background-color: #343434;
   color: white;
   border-radius: 6px;
 }
+
 .button-green {
   background-color: #343434;
   border: none;
@@ -291,14 +295,17 @@ img {
     border-radius: 0;
     height: 100%;
   }
-  button{
+
+  button {
     background-color: #343434;
     color: white;
     border-radius: 6px;
   }
-  button:hover{
+
+  button:hover {
     background-color: #181818;
   }
+
   .div-header {
     border-radius: 0;
   }
@@ -345,14 +352,16 @@ img {
     width: 100%;
   }
 
-  button{
+  button {
     background-color: #343434;
     color: white;
     border-radius: 6px;
   }
-  button:hover{
+
+  button:hover {
     background-color: #181818;
   }
+
   .product-image {
     height: 100%;
   }

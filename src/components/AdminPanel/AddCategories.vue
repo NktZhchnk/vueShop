@@ -11,7 +11,7 @@ watch(localCategoryItem, (newValue) => {
 </script>
 
 <template>
-  <div>
+  <div >
     <input v-model="localCategoryItem" type="radio" id="option1" name="choice" value="box200-395">
     <label for="option1">Бокс 200-395</label><br>
     <input v-model="localCategoryItem" type="radio" id="option2" name="choice" value="box400-595">
@@ -36,26 +36,40 @@ watch(localCategoryItem, (newValue) => {
     <label for="option11">Космітичне приладдя</label><br>
   </div>
 </template>
-
 <style scoped>
-/* Стили для радио-кнопок */
-input[type="radio"] {
-  margin-right: 5px;
-  transform: scale(1.5); /* Увеличиваем размер радио-кнопок */
+/* Container styles for the radio buttons */
+div {
+  background-color: #333; /* Dark background color */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
 }
 
-/* Стили для меток радио-кнопок */
+/* Styles for the radio buttons */
+input[type="radio"] {
+  margin-right: 5px;
+  transform: scale(1.5);
+  opacity: 0; /* Hide the default radio button */
+}
+
+/* Styles for the custom-styled radio buttons */
 label {
   display: inline-block;
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 16px;
-  color: #333; /* Цвет текста */
+  color: #fff; /* Text color for unselected labels */
 }
 
-/* Стили для выбранной радио-кнопки */
+/* Styles for the checked radio button */
 input[type="radio"]:checked + label {
-  font-weight: bold; /* Жирный шрифт для выбранной метки */
-  color: #007bff; /* Цвет текста для выбранной метки */
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Media query for responsiveness */
+@media only screen and (max-width: 600px) {
+  label {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
 }
 </style>

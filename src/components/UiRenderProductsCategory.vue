@@ -58,7 +58,7 @@ const observeScroll = () => {
         <div class="image-container">
           <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
           <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
-            Товар закончился
+            Товар закінчився
           </div>
         </div>
         <div class="product-details">
@@ -66,7 +66,7 @@ const observeScroll = () => {
             {{ item.name_item }}
           </div>
           <div class="product-price">
-            Цена: {{ item.price_item }} ₴
+            Ціна: {{ item.price_item }} ₴
           </div>
         </div>
       </router-link>

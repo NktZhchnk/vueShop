@@ -2,7 +2,7 @@
   <div>
     <!-- Поле ввода для поиска -->
     <div class="card">
-      <input v-model="searchQuery" placeholder="Поиск по номеру телефона" class="search-input"/>
+      <input v-model="searchQuery" placeholder="Пошук за номером телефону" class="search-input"/>
     </div>
     <router-link
         class="link-order"
@@ -16,7 +16,7 @@
           {{ order.middle_name }}
           <button style="background: red; border-radius: 5px;"
                   @click.prevent="toggleOrderCompletion(order.id, order.complete)">
-            {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
+            {{ order.complete ? 'Не виконано' : 'Виконано' }}
           </button>
         </h2>
         <div style=" display: flex; justify-content: space-between">

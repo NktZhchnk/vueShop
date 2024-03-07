@@ -1,8 +1,8 @@
 <template>
   <form class="login-form" @submit.prevent="loginUser">
     <div class="form-group">
-      <label for="login">Логин или номер телефона:</label>
-      <input type="text" v-model="login" id="login" placeholder="Ваш логин или номер телефона">
+      <label for="login">Логін або номер телефону:</label>
+      <input type="text" v-model="login" id="login" placeholder="Ваш логін або номер телефону">
     </div>
 
     <!-- Existing password input -->
@@ -11,7 +11,7 @@
       <input type="password" v-model="password" id="password" placeholder="Ваш пароль">
     </div>
 
-    <button type="submit">Войти</button>
+    <button type="submit">Увійти</button>
 
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     <p style="margin-bottom: 0; text-align: center">
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import {useRouter} from "vue-router";
 
 let login = ref('');
@@ -51,22 +51,22 @@ const loginUser = async () => {
       localStorage.setItem('firstName', data.firstName);
       localStorage.setItem('lastName', data.lastName);
       router.push({name: 'RenderProducts'})
-      setTimeout(()=>{
+      setTimeout(() => {
         location.reload()
-      },200);
+      }, 200);
       // например, перенаправление пользователя на другую страницу
       console.log('Успешный вход', data);
-    }else if (response.status === 401) {
+    } else if (response.status === 401) {
       errorMessage.value = 'Неправильный логин или пароль'
-          console.error();
+      console.error();
       // Дополнительные действия при неправильном логине или пароле
     } else if (response.status === 404) {
       errorMessage.value = 'Пользователь не найден'
-          console.error();
+      console.error();
       // Дополнительные действия при отсутствии пользователя
     } else {
       errorMessage.value = 'Ошибка входа'
-          console.error();
+      console.error();
       // Дополнительные действия при других ошибках
     }
   } catch (error) {
@@ -101,10 +101,12 @@ input {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
 .error-message {
   color: red;
   margin-top: 10px;
 }
+
 /* Стили для кнопки */
 button {
   width: 100%;

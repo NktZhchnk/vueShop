@@ -174,9 +174,9 @@ store.getCartItems()
 const isDataLoaded = ref(false);
 
 watch(product, () => {
-  setTimeout(()=>{
+  setTimeout(() => {
     isDataLoaded.value = true;
-  },70)
+  }, 70)
 });
 </script>
 
@@ -334,6 +334,7 @@ watch(product, () => {
   padding: 20px;
   overflow: hidden;
 }
+
 .swiper-slide img {
   background-color: #f8f8f9;
   width: 100%;
@@ -379,7 +380,8 @@ watch(product, () => {
   border-radius: 10px;
   background: #dadada;
 }
-.placeholder-text-info{
+
+.placeholder-text-info {
   margin-top: 40px;
   height: 60px;
   width: 100%;
@@ -423,7 +425,6 @@ watch(product, () => {
 .swiper-button-prev {
   right: 20%;
 }
-
 
 
 .swiper-slide {
@@ -590,6 +591,7 @@ watch(product, () => {
     width: 280px;
     max-height: 350px;
   }
+
   .swiper-button-prev,
   .swiper-button-next {
     display: none;
@@ -617,6 +619,7 @@ watch(product, () => {
     padding: 10px;
   }
 }
+
 @media (max-width: 450px) {
   .product-details {
     padding: 10px;
@@ -629,6 +632,7 @@ watch(product, () => {
     max-height: 330px;
   }
 }
+
 @media (max-width: 330px) {
   .swiper {
     width: 240px;

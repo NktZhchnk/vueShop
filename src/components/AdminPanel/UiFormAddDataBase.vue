@@ -105,7 +105,6 @@ const addProduct = () => {
 };
 
 
-
 </script>
 
 <template>
@@ -124,12 +123,12 @@ const addProduct = () => {
       <input v-model="newData.quan_item" type="number" id="productQuantity" required>
 
       <!-- Добавление поля для ввода количества изображений -->
-      <label for="imageQuantity" v-if="showBtnImg" class="image-quantity-label">Количество изображений:</label>
+      <label for="imageQuantity" v-if="showBtnImg" class="image-quantity-label">Кількість зображень:</label>
       <input v-model="imageQuantity" v-if="showBtnImg" type="number" id="imageQuantity" required
              class="image-quantity-input">
 
       <!-- Кнопка для запуска процесса ввода ссылок на изображения -->
-      <button @click="inputImages" v-if="showBtnImg" class="inpImg">Добавить изображения</button>
+      <button @click="inputImages" v-if="showBtnImg" class="inpImg">Додати зображення</button>
 
 
       <!-- Поля для ввода ссылок на изображения -->
@@ -140,20 +139,25 @@ const addProduct = () => {
 
       <checkbox></checkbox>
 
-      <add-categories></add-categories>
+      <add-categories style="margin-bottom: 20px"></add-categories>
 
-      <textarea v-model="newData.text_info" class="text-info" @keydown="handleKeyDown" placeholder="Информация о продукте"></textarea>
-      <button type="submit" class="add-product-button">Добавить продукт</button>
+      <textarea v-model="newData.text_info" class="text-info" @keydown="handleKeyDown"
+                placeholder="Інформація про продукт"></textarea>
+      <button type="submit" class="add-product-button">
+        Додати продукт
+      </button>
     </form>
   </div>
 </template>
 
 <style scoped>
 
-
+/* Main container */
 form {
-  border: solid 2px black;
-  box-shadow: 1px 2px 10px black;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -161,86 +165,75 @@ form {
   margin: 0 auto;
 }
 
+/* Form elements styling */
 label {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: bold;
+  color: #333333;
 }
-.inpImg{
+
+.inpImg {
   height: 30px;
   border-radius: 5px;
-  background: rgba(255,30,30, 0.1);
-  border: 1px solid black;
+  color: white;
+  background-color: #1b4c85;
+  border: 1px solid #333333;
 }
-.inpImg:hover{
-  background: rgba(255,30,30, 0.3);
-  font-size: 18px;
+
+.inpImg:hover {
+  background-color: #112f52;
 }
+
 .text-info {
   height: 140px;
-  box-shadow: 1px 1px 2px black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  color: #333333;
 }
 
 input[type="text"],
-input[type="number"] {
-  padding: 8px;
+input[type="number"],
+input[type="password"] {
+  padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #666666;
   border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333333;
 }
 
-input[type="radio"] {
-  margin-right: 5px;
-}
-
+/* Button styling */
 button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #007bff;
+  padding: 12px 24px;
+  background-color: #1b4c85;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
-.product-form {
-  border: 2px solid black;
-  box-shadow: 1px 2px 10px black;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: 0 auto;
+
+/* Additional styles for specific elements */
+
+.image-input-container {
+  margin-bottom: 16px;
 }
 
-/* Стили для отдельных элементов формы */
-
-.test-button {
-  padding: 8px 16px;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.image-label {
+  color: #333333;
 }
 
-/* ... остальные стили для остальных элементов формы ... */
-
-.add-product-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+/* Media query for responsiveness */
+@media screen and (max-width: 600px) {
+  form {
+    max-width: 100%;
+  }
 }
 
-.add-product-button:hover {
-  background-color: #0056b3;
-}
 </style>

@@ -136,8 +136,8 @@ const sortByQuantity = (order) => {
 
     <!-- Кнопки для сортировки -->
     <div class="sort-buttons">
-      <button @click="sortByQuantity('asc')">По возрастанию</button>
-      <button @click="sortByQuantity('desc')">По убыванию</button>
+      <button @click="sortByQuantity('asc')">За зростанням</button>
+      <button @click="sortByQuantity('desc')">За зменшенням</button>
     </div>
 
     <div class="product-list">
@@ -151,13 +151,13 @@ const sortByQuantity = (order) => {
         </div>
         <div class="product-details">
           <div class="quantity-section">
-            <span class="label">Общее количество:  </span>
+            <span class="label">Загальна кількість:  </span>
             <span class="total-quantity">{{ getTotalQuantity(product.id) }}</span>
             <input v-if="getProductVarieties(product.id).length === 0" type="number" v-model="qunProduct"
                    class="quantity-input"/>
           </div>
           <div class="varieties-section">
-            <span class="label">Вариации:</span>
+            <span class="label">Варіації:</span>
             <ul class="varieties-list">
               <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
                 <span class="variety-info">{{ variety.variety_name }} - {{ variety.variety_quan }}</span>
@@ -165,7 +165,8 @@ const sortByQuantity = (order) => {
               </li>
             </ul>
           </div>
-          <button @click="saveQuanProduct(product.id, getProductVarieties(product.id))" class="save-button">Сохранить
+          <button @click="saveQuanProduct(product.id, getProductVarieties(product.id))" class="save-button">
+            Зберегти
           </button>
           <button style="margin-left: 15px" class="save-button" @click="togglePopularityItem(product.id)">{{ product.popularity_item === 1 ? 'Популярний' : 'Непопулярний' }}</button>
         </div>

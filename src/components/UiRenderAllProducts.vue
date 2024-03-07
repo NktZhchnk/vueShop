@@ -92,7 +92,7 @@ watch(() => store.products, () => {
 
 const selectedSortOrder = ref(sessionStorage.getItem('selectedSortOrder'));
 
-if(selectedSortOrder.value === ''){
+if (selectedSortOrder.value === '') {
   sortProductsByDate()
 }
 
