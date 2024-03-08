@@ -18,12 +18,13 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
     host: process.env.VUE_APP_DB_HOST,
     user: process.env.VUE_APP_DB_USER,
     password: process.env.VUE_APP_DB_PASSWORD,
     database: process.env.VUE_APP_DB_DATABASE,
 });
+
 
 
 const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
