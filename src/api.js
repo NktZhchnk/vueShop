@@ -1,4 +1,4 @@
-import mysql from 'mysql2';
+
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -18,6 +18,7 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
+import mysql from 'mysql2';
 
 console.log('VUE_APP_DB_HOST:', process.env.VUE_APP_DB_HOST);
 console.log('VUE_APP_DB_USER:', process.env.VUE_APP_DB_USER);
