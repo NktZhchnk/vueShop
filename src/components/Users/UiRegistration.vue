@@ -71,7 +71,7 @@ export default {
     const registerUser = async () => {
       // Проверка на количество цифр в номере телефона
       if (!/^\d{10}$/.test(phoneNumber.value)) {
-        errorMessage.value = 'Номер телефону повинен містити рівно 10 цифр';
+        errorMessage.value = 'Номер телефону повинен містити рівно 10 цифр ';
         return;
       }
       if(acceptTerms.value === false){
