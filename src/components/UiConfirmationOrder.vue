@@ -34,7 +34,19 @@ const validateText = () => {
   surname.value = surname.value.replace(/[^а-яА-ЯёЁіІїЇґҐєЄ]/g, '');
   comment.value = comment.value.replace(/[^\sа-яА-ЯёЁіІїЇґҐєЄ0-9.,]/g, '');
 }
+const messageToTelegram = () => {
+  async function sendMessageToTelegram(message) {
+    try {
+      const response = await axios.post('/api/send-message', { message });
+      console.log(response.data);
+    } catch (error) {
+      console.error('У вас нове замовлення 🥹', error);
+    }
+  }
 
+// Пример использования
+  sendMessageToTelegram('Привет, это сообщение из моего веб-сайта!');
+}
 const addOrders = async () => {
   try {
     if (store.cartProducts.length !== 0) {
@@ -195,6 +207,7 @@ const addOrders = async () => {
           console.log('Ответ сервера:', itemResponse.data);
         }
         store.cartProducts = []
+        messageToTelegram()
         setTimeout(() => {
           router.push({name: 'RenderProducts'})
           setTimeout(() => {

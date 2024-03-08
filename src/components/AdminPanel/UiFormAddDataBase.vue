@@ -104,20 +104,6 @@ const addProduct = () => {
       });
 };
 
-const test = () => {
-  async function sendMessageToTelegram(message) {
-    try {
-      const response = await axios.post('/api/send-message', { message });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Ошибка при отправке сообщения:', error);
-    }
-  }
-
-// Пример использования
-  sendMessageToTelegram('Привет, это сообщение из моего веб-сайта!');
-}
-
 </script>
 
 <template>
