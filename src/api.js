@@ -18,6 +18,12 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
+
+console.log('VUE_APP_DB_HOST:', process.env.VUE_APP_DB_HOST);
+console.log('VUE_APP_DB_USER:', process.env.VUE_APP_DB_USER);
+console.log('VUE_APP_DB_PASSWORD:', process.env.VUE_APP_DB_PASSWORD);
+console.log('VUE_APP_DB_DATABASE:', process.env.VUE_APP_DB_DATABASE);
+
 const connection = mysql.createPool({
     host: process.env.VUE_APP_DB_HOST,
     user: process.env.VUE_APP_DB_USER,
