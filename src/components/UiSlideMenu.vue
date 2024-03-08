@@ -88,13 +88,13 @@ const logout = () => {
         </div>
         <ul class="nav-menu">
           <li>
-            <router-link to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>
+            <router-link @click="swapMenu" to="/uiDetailsOrdersUsers">Інформація про замовлення</router-link>
           </li>
           <li>
-            <router-link to="/uiInformationForUser">Служба підтримки та доставка</router-link>
+            <router-link @click="swapMenu" to="/uiInformationForUser">Служба підтримки та доставка</router-link>
           </li>
           <li>
-            <router-link to="/uiUserAgreement">Польвозательська угода</router-link>
+            <router-link @click="swapMenu" to="/uiUserAgreement">Користувача угода</router-link>
           </li>
         </ul>
       </div>
