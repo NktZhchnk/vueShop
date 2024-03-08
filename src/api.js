@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
+import sendTelegramMessage from './sendTelegramMessage.js'
 
 dotenv.config();
 
@@ -97,6 +98,17 @@ app.get('/getUkrPoshtaData', async (req, res) => {
         console.error('Произошла ошибка:', error);
         res.status(500).json({error: 'Помилка при отриманні даних від сервера UkrPoshta'});
     }
+});
+app.post('/api/send-message', (req, res) => {
+    const { message } = req.body;
+
+    sendTelegramMessage(message)
+        .then((result) => {
+            res.json({ success: true, result });
+        })
+        .catch((error) => {
+            res.status(500).json({ success: false, error: error.message });
+        });
 });
 app.get('/getUkrPoshtaRegion', async (req, res) => {
     try {

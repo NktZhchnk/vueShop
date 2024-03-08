@@ -27,6 +27,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "mysql2": "^3.6.3",
+    "node-fetch": "^3.3.2",
     "pinia": "^2.1.7",
     "safe-buffer": "^5.2.1",
     "swiper": "^11.0.7",
