@@ -26,7 +26,7 @@ watch(localCategoryItem, (newValue) => {
     <label for="option6">Декоративна косметика</label><br>
     <input v-model="localCategoryItem" type="radio" id="option7" name="choice" value="everythingForHair">
     <label for="option7">Все для волосся</label><br>
-    <input v-model="localCategoryItem" type="radio" id="option8" name="choice" value="brandSets">
+    <input v-model="localCategoryItem" type="radio" id="option8" name="choice"  value="brandSets">
     <label for="option8">Фірмові набори</label><br>
     <input v-model="localCategoryItem" type="radio" id="option9" name="choice" value="accessories">
     <label for="option9">Аксесуари</label><br>
