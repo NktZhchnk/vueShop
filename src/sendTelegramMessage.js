@@ -3,7 +3,7 @@
 import fetch from 'node-fetch';
 
 const botToken = '6963095733:AAFvWDEDDP8zysXg4Qad4g9nGoBTX4nkXsk';
-const chatId = '669297666';
+const chatId = '-1001908554523';
 
 async function sendTelegramMessage(message) {
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
