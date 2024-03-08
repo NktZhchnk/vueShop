@@ -30,7 +30,7 @@ watch(localCategoryItem, (newValue) => {
     <label for="option8">Фірмові набори</label><br>
     <input v-model="localCategoryItem" type="radio" id="option9" name="choice" value="accessories">
     <label for="option9">Аксесуари</label><br>
-    <input v-model="localCategoryItem" type="radio"  id="option10" name="choice" value="shadowPalettes">
+    <input v-model="localCategoryItem" type="radio" id="option10" name="choice" value="shadowPalettes">
     <label for="option10">Палітри тіней</label><br>
     <input v-model="localCategoryItem" type="radio" id="option11" name="choice" value="cosmeticAccessories">
     <label for="option11">Космітичне приладдя</label><br>

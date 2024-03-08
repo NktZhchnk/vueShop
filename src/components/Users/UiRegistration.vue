@@ -33,20 +33,26 @@
                placeholder="Повторіть пароль">
       </div>
 
+      <div class="form-group">
+        <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
+        <label for="acceptTerms">Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Пользовательское соглашение</router-link>.</label>
+      </div>
+
       <button type="submit" class="submit-btn">Зареєструватися</button>
+
       <p v-if="errorMessage" class="error-message">{{ errorMessage }} <br/>
         <router-link to="/authLogin">Увійти</router-link>
       </p>
     </form>
   </div>
 </template>
-
 <script>
 import {computed, ref} from 'vue';
 import {useRouter} from "vue-router";
 
 export default {
   setup() {
+    const acceptTerms = ref(false);
     const username = ref('');
     const password = ref('');
     const confirmPassword = ref('');
@@ -68,7 +74,10 @@ export default {
         errorMessage.value = 'Номер телефону повинен містити рівно 10 цифр';
         return;
       }
-
+      if(acceptTerms.value === false){
+        errorMessage.value = 'Для реєстрації необхідно прийняти Пользовательську угоду.';
+        return;
+      }
       // Проверка на минимальное количество символов в логине и пароле
       if (username.value.length < 5 || password.value.length < 5) {
         errorMessage.value = 'Логін та пароль повинні містити не менше 5 символів';
@@ -131,6 +140,7 @@ export default {
       errorMessage,
       registerUser,
       checkNumber,
+      acceptTerms
     };
   }
 };

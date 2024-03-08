@@ -93,11 +93,13 @@ const logout = () => {
           <li>
             <router-link to="/uiInformationForUser">Служба підтримки та доставка</router-link>
           </li>
+          <li>
+            <router-link to="/uiUserAgreement">Польвозательська угода</router-link>
+          </li>
         </ul>
       </div>
       <div class="div-footer">
-        <router-link to="/uiUserAgreement">
-          Користувача угода</router-link>
+
         <!--        <br/>-->
         <!--        <AuthAdminPanel></AuthAdminPanel>-->
         <!--        <h4 class="text-footer" style="margin-left: 70px">реєстрація</h4>-->
@@ -110,7 +112,7 @@ const logout = () => {
 @import url('https://fonts.cdnfonts.com/css/roboto');
 
 .div-menu {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
 }
