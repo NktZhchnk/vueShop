@@ -21,6 +21,7 @@ const store = useMyStore()
     <div class="div-body">
       <!-- Отображаем содержимое страницы внутри router-view -->
       <router-view ></router-view>
+      <h1 style="width: 100%; text-align: center">технічні роботи</h1>
     </div>
   </div>
 </template>
