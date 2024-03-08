@@ -40,12 +40,12 @@ const messageToTelegram = () => {
       const response = await axios.post('/api/send-message', { message });
       console.log(response.data);
     } catch (error) {
-      console.error('У вас нове замовлення 🥹', error);
+      console.error('Ошибка при отправке сообщения:', error);
     }
   }
 
 // Пример использования
-  sendMessageToTelegram('Привет, это сообщение из моего веб-сайта!');
+  sendMessageToTelegram('У вас нове замовлення 🥹');
 }
 const addOrders = async () => {
   try {

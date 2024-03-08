@@ -110,7 +110,6 @@ const addProduct = () => {
   <div>
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
-    <button @click="test">test</button>
     <form @submit.prevent="addProduct" class="product-form">
 
       <label for="productName">Назва:</label>
