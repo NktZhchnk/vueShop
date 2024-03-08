@@ -8,9 +8,9 @@ import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
 import sendTelegramMessage from './sendTelegramMessage.js'
-
+console.log('j')
 dotenv.config();
-
+console.log('h')
 const app = express();
 
 app.use(express.json());
