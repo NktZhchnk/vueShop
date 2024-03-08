@@ -19,10 +19,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection({
-    host: process.env.VUE_APP_DB_HOST,
-    user: process.env.VUE_APP_DB_USER,
-    password: process.env.VUE_APP_DB_PASSWORD,
-    database: process.env.VUE_APP_DB_DATABASE,
+    host: '193.0.61.203',
+    user: 'admin',
+    password: 'ASJ$Hfbd$mnoj852$398hJSAjbf2$492jn$df',
+    database: 'products',
 });
 
 
