@@ -131,7 +131,7 @@ const test = () => {
       <input v-model="newData.name_item" type="text" id="productName" required>
 
       <label for="productPrice">Ціна:</label>
-      <input v-model="newData.price_item" type="number" id="productPrice" required>
+      <input v-model="newData.price_item" type="number"  id="productPrice" required>
 
       <label for="productQuantity">Загальна кількість:</label>
       <input v-model="newData.quan_item" type="number" id="productQuantity" required>
