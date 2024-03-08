@@ -1,17 +1,17 @@
 <script setup>
-import { ref, watch } from "vue";
-import { useMyStore } from "@/store/store.js";
+import {ref, watch} from "vue";
+import {useMyStore} from "@/store/store.js";
 
 const store = useMyStore();
 const localCategoryItem = ref(null);
 
 watch(localCategoryItem, (newValue) => {
   store.updateCategoryItem(newValue); // Предположим, что у вас есть метод обновления в хранилище
-}, { deep: true });
+}, {deep: true});
 </script>
 
 <template>
-  <div >
+  <div>
     <input v-model="localCategoryItem" type="radio" id="option1" name="choice" value="box200-395">
     <label for="option1">Бокс 200-395</label><br>
     <input v-model="localCategoryItem" type="radio" id="option2" name="choice" value="box400-595">
@@ -26,7 +26,7 @@ watch(localCategoryItem, (newValue) => {
     <label for="option6">Декоративна косметика</label><br>
     <input v-model="localCategoryItem" type="radio" id="option7" name="choice" value="everythingForHair">
     <label for="option7">Все для волосся</label><br>
-    <input v-model="localCategoryItem" type="radio" id="option8" name="choice"  value="brandSets">
+    <input v-model="localCategoryItem" type="radio" id="option8" name="choice" value="brandSets">
     <label for="option8">Фірмові набори</label><br>
     <input v-model="localCategoryItem" type="radio" id="option9" name="choice" value="accessories">
     <label for="option9">Аксесуари</label><br>
