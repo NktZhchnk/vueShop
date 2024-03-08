@@ -8,9 +8,9 @@ import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
 import sendTelegramMessage from './sendTelegramMessage.js'
-console.log('j')
+
 dotenv.config();
-console.log('h')
+
 const app = express();
 
 app.use(express.json());
@@ -18,19 +18,12 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
-
-console.log('VUE_APP_DB_HOST:', process.env.VUE_APP_DB_HOST);
-console.log('VUE_APP_DB_USER:', process.env.VUE_APP_DB_USER);
-console.log('VUE_APP_DB_PASSWORD:', process.env.VUE_APP_DB_PASSWORD);
-console.log('VUE_APP_DB_DATABASE:', process.env.VUE_APP_DB_DATABASE);
-
-const connection = mysql.createPool({
-    host: process.env.VUE_APP_DB_HOST,
-    user: process.env.VUE_APP_DB_USER,
-    password: process.env.VUE_APP_DB_PASSWORD,
-    database: process.env.VUE_APP_DB_DATABASE,
+const connection = mysql.createConnection({
+    host: '193.0.61.203',
+    user: 'admin',
+    password: 'FSAda@KNLNDAmf@((#$njp10-2DJ',
+    database: 'products',
 });
-
 
 
 const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
