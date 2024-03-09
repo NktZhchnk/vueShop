@@ -361,7 +361,7 @@ let checkBtn = ref(true);
       <button v-if="checkBtn" @click="addOrders">Підтвердити замовлення</button>
     </div>
   </div>
-  <div v-show="checkBtn !== false" class="custom-container">
+  <div v-show="checkBtn !== true" class="custom-container">
     <h1>Ваше замовлення принято. Дякуємо за замовлення!</h1>
   </div>
 </template>
