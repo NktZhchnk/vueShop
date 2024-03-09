@@ -57,7 +57,8 @@ const addOrders = async () => {
           paymentMethod.value !== null &&
           surname.value !== '' &&
           store.selectPoshta.cities !== '' &&
-          (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '')
+          (store.selectPoshta.searchQuery !== '' || store.selectPoshta.postIndex !== '') &&
+          acceptTerms.value !== false
       ) {
         // Если все поля заполнены, формируем заказ и отправляем данные
         let order = {
@@ -235,8 +236,18 @@ const addOrders = async () => {
         if (store.selectPoshta.cities === '') {
           alert('введіть місто')
         }
+        if(acceptTerms.value === false){
+          fnRedBorder('.form-group')
+        }
         if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
-          alert('введіть місце доставки')
+          if(store.selectPoshta.postIndex !== ''){
+            return
+          }else{
+            if(store.selectPoshta.searchQuery === ''){
+              alert('введіть місце доставки')
+            }
+          }
+
         }
         console.log('Не все поля заполнены');
       }
@@ -263,6 +274,7 @@ onMounted(() => {
   store.getOrders();
 });
 
+let acceptTerms = ref(false);
 let checkBtn = ref(true);
 </script>
 
@@ -333,6 +345,14 @@ let checkBtn = ref(true);
       </label>
     </div>
 
+    <div class="form-group">
+      <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
+      <label for="acceptTerms">
+        Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Користувача угода</router-link>.
+      </label>
+    </div>
+
+
     <div class="order-total">
       <h2>Разом</h2>
       <h4>{{ store.cartProducts.length }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
@@ -347,6 +367,7 @@ let checkBtn = ref(true);
 </template>
 
 <style scoped>
+
 /* Принятие после заказа */
 .custom-container {
   width: 100%;
@@ -570,6 +591,57 @@ input {
 input[type="radio"]:checked + .radio-custom::after {
   display: block;
 }
+
+
+
+.form-group {
+  margin-left: 5px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+.form-group input{
+  width: 13px;
+}
+.checkbox-field {
+  margin-right: 8px;
+}
+
+/* Общие стили для чекбокса и его лейбла */
+.checkbox-field,
+.form-group label {
+  padding-top: 3px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Стили для подсветки текста ссылки в лейбле */
+.form-group label a {
+  color: #007bff; /* Change the color to your preference */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form-group label a:hover {
+  color: #0056b3; /* Change the color to your preference */
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 600px) {
+  .form-group {
+    flex-direction: column;
+  }
+
+  .checkbox-field {
+    margin-right: 0;
+    margin-top: 5px; /* Adjust the margin as needed */
+  }
+
+  .form-group label {
+    margin-top: 5px;
+  }
+}
+
 
 /* Медиа-запросы для адаптивности */
 @media (max-width: 960px) {

@@ -35,7 +35,7 @@
 
       <div class="form-group">
         <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
-        <label for="acceptTerms">Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Пользовательское соглашение</router-link>.</label>
+        <label for="acceptTerms">Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Користувача угода</router-link>.</label>
       </div>
 
       <button type="submit" class="submit-btn">Зареєструватися</button>
