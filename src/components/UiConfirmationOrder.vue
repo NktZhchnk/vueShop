@@ -127,7 +127,6 @@ const addOrders = async () => {
             cartProduct.selectedVariety.variety_quan = newVarietyQuan;
             console.log('количество в корзине', cartProduct.selectedVariety.variety_quan = newVarietyQuan);
 
-            checkBtn.value = false;
             // Обновление количества вариации
             const varietyResponse = await axios.put(`https://eseniabila.com.ua/updateVarietyCount/${varietyId}`, {
               variety_quan: newVarietyQuan,
@@ -207,6 +206,7 @@ const addOrders = async () => {
           });
           console.log('Ответ сервера:', itemResponse.data);
         }
+        checkBtn.value = false;
         store.cartProducts = []
         messageToTelegram()
         setTimeout(() => {
