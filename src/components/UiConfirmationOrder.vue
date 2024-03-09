@@ -279,7 +279,7 @@ let checkBtn = ref(true);
 </script>
 
 <template>
-  <div class="container" v-if="checkBtn">
+  <div class="container" v-show="checkBtn === true">
     <div class="header">
       <h1>Оформлення замовлення</h1>
     </div>
@@ -361,7 +361,7 @@ let checkBtn = ref(true);
       <button v-if="checkBtn" @click="addOrders">Підтвердити замовлення</button>
     </div>
   </div>
-  <div v-else class="custom-container">
+  <div v-show="checkBtn !== false" class="custom-container">
     <h1>Ваше замовлення принято. Дякуємо за замовлення!</h1>
   </div>
 </template>
