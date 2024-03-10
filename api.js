@@ -39,9 +39,13 @@ function backupMySQL() {
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
-            console.error(`Ошибка при создании резервной копии: ${stderr}`);
+            const errorMessage = `Ошибка при создании резервной копии: ${stderr}`;
+            console.error(errorMessage);
+            sendTelegramMessage(errorMessage);
         } else {
-            console.log(`Резервная копия успешно создана: ${stdout}`);
+            const successMessage = `Резервная копия успешно создана: ${stdout}`;
+            console.log(successMessage);
+            sendTelegramMessage(successMessage);
         }
     });
 }
@@ -55,7 +59,7 @@ setInterval(() => {
     if (minutes % 1 === 0) {
         backupMySQL();
     }
-}, 1000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
+}, 10000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
 
 
 app.get('/getProducts', (req, res) => {
