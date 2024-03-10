@@ -12,7 +12,9 @@ export default defineConfig({
     host: '0.0.0.0', // Здесь устанавливаем host
     // другие настройки сервера
   },
-
+  build: {
+    cacheDir: `.vite/build-${new Date().getTime()}`,
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
