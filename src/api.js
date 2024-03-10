@@ -30,13 +30,11 @@ const connection = mysql.createConnection({
 const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
 app.use('/images', express.static('/var/www/vueShop/images'));
 
-function backupMongoDB() {
-    const host = 'your_mongo_host';
-    const port = 'your_mongo_port';
-    const dbName = 'your_database_name';
-    const backupPath = '/path/to/backup/directory';
+function backupMySQL() {
+    const dbName = 'products';
+    const backupPath = '/var/www/';
 
-    const command = `mongodump --host=${host} --port=${port} --db=${dbName} --out=${backupPath}`;
+    const command = `mysqldump -u ${connection.config.user} -p${connection.config.password} ${dbName} > ${backupPath}/${dbName}_backup.sql`;
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
@@ -47,17 +45,28 @@ function backupMongoDB() {
     });
 }
 
-// Выполнение резервной копии каждый день в 3:00 утра
-// (задайте нужное вам время в формате cron)
+// Выполнение резервной копии каждый день в 21:42
 setInterval(() => {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    if (hours === 21 && minutes === 42) {
-        backupMongoDB();
+    if (hours === 21 && minutes === 45) {
+        backupMySQL();
     }
 }, 60000); // Проверка каждую минуту
+
+app.get('/getProducts', (req, res) => {
+    const sqlQuery = 'SELECT * FROM product';
+    connection.query(sqlQuery, (error, results) => {
+        if (error) {
+            console.error('Ошибка выполнения запроса:', error);
+            res.status(500).json({ error: 'Ошибка выполнения запроса' });
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 app.get('/getProducts', (req, res) => {
     const sqlQuery = 'SELECT * FROM product';
