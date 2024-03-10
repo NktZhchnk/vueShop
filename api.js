@@ -6,7 +6,7 @@ import logger from 'morgan';
 import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
-import sendTelegramMessage from '@/sendTelegramMessage.js'
+import sendTelegramMessage from './sendTelegramMessage.js'
 import { exec } from 'child_process';
 import dotenv from 'dotenv';
 
