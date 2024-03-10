@@ -111,7 +111,7 @@ const addProduct = () => {
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct" class="product-form">
-
+      GEKPOPPPP
       <label for="productName">Назва:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
