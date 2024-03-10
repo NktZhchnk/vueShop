@@ -39,23 +39,28 @@ function backupMySQL() {
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
-            console.error(`Ошибка при создании резервной копии: ${stderr}`);
+            const errorMessage = `Ошибка при создании резервной копии: ${stderr}`;
+            console.error(errorMessage);
+            sendTelegramMessage(errorMessage);
         } else {
-            console.log(`Резервная копия успешно создана: ${stdout}`);
+            const successMessage = `Резервная копия успешно создана: ${stdout}`;
+            console.log(successMessage);
+            sendTelegramMessage(successMessage);
         }
     });
 }
 
-// Выполнение резервной копии каждый день в 21:42
+// Выполнение резервной копии каждые 30 минут
 setInterval(() => {
     const now = new Date();
-    const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    if (hours === 22 && minutes === 57) {
+    // Проверка, выполнилась ли минута деления на 30
+    if (minutes % 1 === 0) {
         backupMySQL();
     }
-}, 60000); // Проверка каждую минуту
+}, 1000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
+
 
 app.get('/getProducts', (req, res) => {
     const sqlQuery = 'SELECT * FROM product';
