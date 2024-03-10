@@ -72,6 +72,12 @@ const sumQuanProduct = (index) => {
   }
 
 };
+const placingOrder = () => {
+  store.swapShowPage()
+  setTimeout(()=>{
+    location.reload()
+  }, 400)
+}
 
 onMounted(loadCartProducts);
 </script>
@@ -134,7 +140,7 @@ onMounted(loadCartProducts);
       <div class="cart-receipt">
         <p>Загальна ціна: <span style="color: black">{{ allPriceCart }}</span> ₴</p>
         <router-link to="/uiConfirmationOrder">
-          <button @click="store.swapShowPage()" class="button-green">Оформити</button>
+          <button @click="placingOrder" class="button-green">Оформити</button>
         </router-link>
       </div>
     </div>
