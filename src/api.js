@@ -51,7 +51,7 @@ setInterval(() => {
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    if (hours === 21 && minutes === 45) {
+    if (hours === 21 && minutes === 51) {
         backupMySQL();
     }
 }, 60000); // Проверка каждую минуту
