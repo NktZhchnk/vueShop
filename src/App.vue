@@ -19,7 +19,7 @@ const store = useMyStore()
       <ui-main-header class="main-header"></ui-main-header>
     </div>
     <div class="div-body">
-      HEllo
+
       <!-- Отображаем содержимое страницы внутри router-view -->
       <router-view ></router-view>
 <!--      <h1 style="width: 100%; text-align: center">технічні роботи</h1>-->
