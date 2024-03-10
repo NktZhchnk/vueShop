@@ -8,6 +8,7 @@ import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
 import sendTelegramMessage from './sendTelegramMessage.js'
+import { exec } from 'child_process';
 
 dotenv.config();
 
@@ -28,6 +29,35 @@ const connection = mysql.createConnection({
 
 const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
 app.use('/images', express.static('/var/www/vueShop/images'));
+
+function backupMongoDB() {
+    const host = 'your_mongo_host';
+    const port = 'your_mongo_port';
+    const dbName = 'your_database_name';
+    const backupPath = '/path/to/backup/directory';
+
+    const command = `mongodump --host=${host} --port=${port} --db=${dbName} --out=${backupPath}`;
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Ошибка при создании резервной копии: ${stderr}`);
+        } else {
+            console.log(`Резервная копия успешно создана: ${stdout}`);
+        }
+    });
+}
+
+// Выполнение резервной копии каждый день в 3:00 утра
+// (задайте нужное вам время в формате cron)
+setInterval(() => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    if (hours === 21 && minutes === 42) {
+        backupMongoDB();
+    }
+}, 60000); // Проверка каждую минуту
 
 app.get('/getProducts', (req, res) => {
     const sqlQuery = 'SELECT * FROM product';
