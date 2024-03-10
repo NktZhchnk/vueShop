@@ -30,7 +30,7 @@ const store = useMyStore()
 <style>
 
 </style>
-
+'
 <style scoped>
 
 html {
