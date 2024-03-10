@@ -127,6 +127,7 @@ if (selectedSortOrder.value === '') {
               {{ item.name_item }}
             </div>
           </div>
+          <span v-if="item.popularity_item !== 1 && item.quan_item < 10" class="ended-badge">Закінчується</span>
           <span v-if="item.popularity_item === 1" class="hit-badge">Хіт</span>
           <div class="product-price">
             <span>Ціна: {{ item.price_item }} ₴</span>
@@ -151,7 +152,17 @@ if (selectedSortOrder.value === '') {
   color: white;
   padding: 5px;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 14px;
+}
+.ended-badge {
+  position: absolute;
+  top: 10px; /* Позиция от верхнего края */
+  left: 10px; /* Позиция от левого края */
+  background: red;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .style-products {
