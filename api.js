@@ -39,13 +39,9 @@ function backupMySQL() {
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
-            const errorMessage = `Ошибка при создании резервной копии: ${stderr}`;
             console.error(errorMessage);
-            sendTelegramMessage(errorMessage);
         } else {
-            const successMessage = `Резервная копия успешно создана: ${stdout}`;
             console.log(successMessage);
-            sendTelegramMessage(successMessage);
         }
     });
 }
@@ -56,10 +52,10 @@ setInterval(() => {
     const minutes = now.getMinutes();
 
     // Проверка, выполнилась ли минута деления на 30
-    if (minutes % 1 === 0) {
+    if (minutes % 30 === 0) {
         backupMySQL();
     }
-}, 60000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
+}, 1800000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
 
 
 app.get('/getProducts', (req, res) => {
