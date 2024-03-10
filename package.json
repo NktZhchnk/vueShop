@@ -35,13 +35,13 @@
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@vitejs/plugin-vue": "^5.0.4",
     "@vue/test-utils": "^2.4.1",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "jsdom": "^22.1.0",
     "nodemon": "^3.0.1",
-    "vite": "^4.4.11",
+    "vite": "^5.1.5",
     "vitest": "^0.34.6"
   }
 }
