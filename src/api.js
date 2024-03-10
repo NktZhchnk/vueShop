@@ -34,8 +34,7 @@ function backupMySQL() {
     const dbName = 'products';
     const backupPath = '/var/www/';
 
-    const command = `mysqldump -u root -p'sA%$@^!*$A4$@%AsdjlA6^AsdkAo@$' ${dbName} > ${backupPath}/${dbName}_backup.sql`;
-
+    const command = `mysqldump --defaults-extra-file=/root/my.cnf -h ${connection.config.host} -u ${connection.config.user} ${dbName} > ${backupPath}/${dbName}_backup.sql`;
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
@@ -52,7 +51,7 @@ setInterval(() => {
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    if (hours === 22 && minutes === 33) {
+    if (hours === 22 && minutes === 50) {
         backupMySQL();
     }
 }, 60000); // Проверка каждую минуту
