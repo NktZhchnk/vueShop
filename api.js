@@ -6,7 +6,7 @@ import logger from 'morgan';
 import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
-import sendTelegramMessage from '/src/sendTelegramMessage.js'
+import sendTelegramMessage from '@/sendTelegramMessage.js'
 import { exec } from 'child_process';
 import dotenv from 'dotenv';
 
@@ -39,13 +39,9 @@ function backupMySQL() {
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
-            const errorMessage = `Ошибка при создании резервной копии: ${stderr}`;
-            console.error(errorMessage);
-            sendTelegramMessage(errorMessage);
+            console.error(`Ошибка при создании резервной копии: ${stderr}`);
         } else {
-            const successMessage = `Резервная копия успешно создана: ${stdout}`;
-            console.log(successMessage);
-            sendTelegramMessage(successMessage);
+            console.log(`Резервная копия успешно создана: ${stdout}`);
         }
     });
 }
