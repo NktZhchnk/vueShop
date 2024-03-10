@@ -3,12 +3,12 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import dotenv from 'dotenv';
 import axios from "axios";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
-import sendTelegramMessage from './sendTelegramMessage.js'
+import sendTelegramMessage from '@/sendTelegramMessage.js'
 import { exec } from 'child_process';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -20,11 +20,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection({
-    host: '193.0.61.203',
-    user: 'admin',
-    password: 'ASJ$Hfbd$mnoj852$398hJSAjbf2$492jn$df',
-    database: 'products',
+    host: process.env.DB_HOST ,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD ,
+    database: process.env.DB_DATABASE ,
 });
+
 
 
 const bearerToken = '5b9e48ca-6301-3736-b527-1bcfce3e423c';
