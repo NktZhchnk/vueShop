@@ -31,7 +31,7 @@ export default {
       const options = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.52,
+        threshold: 0.99,
       };
 
       const observer = new IntersectionObserver(this.handleIntersection, options);
@@ -60,6 +60,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 300px;
   width: 100%;
   height: 100%;
   background-color: #f0f0f0; /* Цвет заглушки */

@@ -4,7 +4,8 @@ import App from './App.vue'
 import router from "@/router/router.js";
 import "swiper/css"
 import "swiper/css/bundle"
-
+import VueLazyload from 'vue-lazyload';
+import VueScrollTo from 'vue-scrollto';
 
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
@@ -34,6 +35,8 @@ if (import.meta.hot) {
 }
 
 app.use(createPinia())
+app.use(VueLazyload)
+app.use(VueScrollTo)
 
 library.add(faUserSecret)
 app.component('font-awesome-icon', FontAwesomeIcon)

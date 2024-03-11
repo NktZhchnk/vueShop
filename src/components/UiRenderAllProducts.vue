@@ -2,6 +2,8 @@
 import {ref, computed, onMounted, watch, onUnmounted} from "vue";
 import {useMyStore} from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
+import { throttle } from 'lodash';
+
 
 const store = useMyStore();
 const productsPerPage = 15;
@@ -27,24 +29,17 @@ onMounted(() => {
   store.fetchData()
 });
 
-
-const productImagesMap = computed(() => {
-  const map = {};
-  store.productImg.forEach((img) => {
-    if (!map[img.product_id]) {
-      map[img.product_id] = [];
-    }
-    map[img.product_id].push(img.img);
-  });
-  return map;
-});
-
 const itemImages = (itemId) => {
-  return productImagesMap.value[itemId] || [];
+  const images = store.productImg
+      .filter(img => img.product_id === itemId)
+      .map(img => img.img);
+
+  return images.length > 0 ? images : [];
 };
 
+
 const observeScroll = () => {
-  const handleScroll = () => {
+  const handleScroll = throttle(() => {
     requestAnimationFrame(() => {
       scrollPosition.value = window.scrollY;
       const scrollY = window.scrollY;
@@ -56,7 +51,7 @@ const observeScroll = () => {
         loadMoreProducts();
       }
     });
-  };
+  }, 1000);
 
   window.addEventListener("scroll", handleScroll);
   onUnmounted(() => {
@@ -127,7 +122,6 @@ if (selectedSortOrder.value === '') {
               {{ item.name_item }}
             </div>
           </div>
-          <span v-if="item.popularity_item !== 1 && item.quan_item < 10" class="ended-badge">Закінчується</span>
           <span v-if="item.popularity_item === 1" class="hit-badge">Хіт</span>
           <div class="product-price">
             <span>Ціна: {{ item.price_item }} ₴</span>
@@ -152,17 +146,7 @@ if (selectedSortOrder.value === '') {
   color: white;
   padding: 5px;
   border-radius: 5px;
-  font-size: 14px;
-}
-.ended-badge {
-  position: absolute;
-  top: 10px; /* Позиция от верхнего края */
-  left: 10px; /* Позиция от левого края */
-  background: red;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .style-products {
@@ -232,10 +216,10 @@ if (selectedSortOrder.value === '') {
     color: #555;
   }
 }
-
-
 .image-container {
-  height: 200px;
+  min-height: 250px;
+  max-height: 300px;
+  max-width: 300px;
   overflow: hidden;
   position: relative;
   border-radius: 10px; /* Добавлено скругление углов */
@@ -248,7 +232,6 @@ if (selectedSortOrder.value === '') {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Тень для объемности */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Анимация для тени */
   }
-
   .out-of-stock-overlay {
     position: absolute;
     top: 50%;
@@ -263,10 +246,6 @@ if (selectedSortOrder.value === '') {
     background: white;
     border-radius: 20px;
     color: #000000;
-  }
-
-  &:hover .img {
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Изменение тени при наведении */
   }
 }
 
