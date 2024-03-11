@@ -122,7 +122,9 @@ const observeScroll = () => {
 
 
 .image-container {
-  height: 200px;
+  min-height: 250px;
+  max-height: 300px;
+  max-width: 300px;
   overflow: hidden;
   position: relative;
   border-radius: 10px; /* Добавлено скругление углов */
