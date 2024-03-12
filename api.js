@@ -36,7 +36,7 @@ function backupMySQL() {
     const backupPath = '/var/www/';
 
     const command = `mysqldump --defaults-extra-file=/root/my.cnf ${dbName} > ${backupPath}/${dbName}_backup.sql`;
-
+    console.log('успешно создали копию')
     exec(command, (error, stdout, stderr) => {
         if (error) {
             console.error(errorMessage);
@@ -52,10 +52,10 @@ setInterval(() => {
     const minutes = now.getMinutes();
 
     // Проверка, выполнилась ли минута деления на 30
-    if (minutes % 30 === 0) {
+    if (minutes % 1 === 0) {
         backupMySQL();
     }
-}, 1800000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
+}, 60000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
 
 
 app.get('/getProducts', (req, res) => {
