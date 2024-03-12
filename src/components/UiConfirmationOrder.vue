@@ -346,8 +346,9 @@ let checkBtn = ref(true);
     </div>
 
     <div class="form-group">
-      <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
+
       <label for="acceptTerms">
+        <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
         Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Користувача угода</router-link>.
       </label>
     </div>
@@ -604,7 +605,7 @@ input[type="radio"]:checked + .radio-custom::after {
   width: 13px;
 }
 .checkbox-field {
-  margin-right: 8px;
+  margin-right: 2px;
 }
 
 /* Общие стили для чекбокса и его лейбла */
