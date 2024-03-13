@@ -54,7 +54,6 @@ const addProduct = () => {
         console.log('Продукт добавлен успешно:', productResponse.data);
 
         // Получаем айдишник добавленного продукта
-        const productId = productResponse.data.id;
 
         // Запрос на получение списка продуктов (обновленный список)
         axios.get('https://eseniabila.com.ua/getProducts')
@@ -65,7 +64,7 @@ const addProduct = () => {
               // Создаем данные для изображения
               const dataImg = {
                 img: imageLinks,
-                product_id: productId,
+                product_id: lastId,
               };
 
               // Запрос на добавление изображения продукта
@@ -80,7 +79,7 @@ const addProduct = () => {
                     // Проверяем наличие данных для addProductVarieties
                     if (store.radioName && store.radioQuan && store.radioPrice) {
                       const varietyData = {
-                        product_id: productId,
+                        product_id: lastId,
                         variety_name: store.radioName,
                         variety_quan: store.radioQuan,
                         variety_price: store.radioPrice,
