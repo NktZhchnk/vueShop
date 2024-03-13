@@ -55,7 +55,7 @@ const addProduct = () => {
       .then(response => {
         // Получаем данные о продуктах
         const products = response.data;
-
+        console.log('p',products)
         // Получаем последний идентификатор продукта
         const lastId = products.length > 0 ? products[products.length - 1].product_id : 0;
 
