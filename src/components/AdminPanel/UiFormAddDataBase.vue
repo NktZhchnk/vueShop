@@ -60,7 +60,7 @@ const addProduct = () => {
         const lastId = products.length > 0 ? products[products.length - 1].product_id : 0;
 
         // Создаем данные для нового продукта
-
+        console.log(lastId)
 
         const dataImg = {
           img: imageLinks,
