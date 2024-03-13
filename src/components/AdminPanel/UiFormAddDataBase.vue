@@ -48,8 +48,6 @@ const handleKeyDown = (event) => {
   }
 };
 const addProduct = () => {
-  store.getRadioPrice();
-
   // Выполняем запрос на получение всех продуктов
   axios.get('https://eseniabila.com.ua/getProducts')
       .then(response => {
@@ -57,8 +55,8 @@ const addProduct = () => {
         const products = response.data;
         console.log('p',products)
         // Получаем последний идентификатор продукта
-        const lastId = products.length > 0 ? products[products.length - 1].id : 0;
-
+        let lastId = products.length > 0 ? products[products.length - 1].id : 0;
+        lastId++
         // Создаем данные для нового продукта
         console.log(lastId)
 
@@ -67,11 +65,9 @@ const addProduct = () => {
           product_id: lastId,
         };
 
-        console.log('dataImg', dataImg)
         // Создаем массив обещаний только для запросов, у которых есть данные
         const promises = [
           axios.post('https://eseniabila.com.ua/addProduct', newData),
-            console.log('prd', dataImg.product_id),
           axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
             headers: {
               'Content-Type': 'application/json',
