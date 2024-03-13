@@ -48,74 +48,78 @@ const handleKeyDown = (event) => {
   }
 };
 const addProduct = () => {
-  // Выполняем запрос на получение всех продуктов
   axios.get('https://eseniabila.com.ua/getProducts')
       .then(response => {
-        // Получаем данные о продуктах
         const products = response.data;
-        console.log('p',products)
-        // Получаем последний идентификатор продукта
-        let lastId = products.length > 0 ? products[products.length - 1].id : 0;
-        lastId = lastId + 1
-        // Создаем данные для нового продукта
-        console.log(lastId)
+        const lastId = products.length > 0 ? products[products.length - 1].id + 1 : 1; // Увеличиваем последний ID на 1
+        const newData = { /* Данные нового продукта */ };
 
-        const dataImg = {
-          img: imageLinks,
-          product_id: lastId,
-        };
+        // Запрос на добавление нового продукта
+        axios.post('https://eseniabila.com.ua/addProduct', newData)
+            .then(productResponse => {
+              console.log('Продукт добавлен успешно:', productResponse.data);
 
-        // Создаем массив обещаний только для запросов, у которых есть данные
-        const promises = [
-          axios.post('https://eseniabila.com.ua/addProduct', newData),
-          axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }),
-        ];
+              // Создаем данные для изображения
+              const dataImg = {
+                img: imageLinks,
+                product_id: lastId,
+              };
 
-        // Проверяем наличие данных для addProductVarieties
-        if (store.radioName && store.radioQuan && store.radioPrice) {
-          const varietyData = {
-            product_id: lastId,
-            variety_name: store.radioName,
-            variety_quan: store.radioQuan,
-            variety_price: store.radioPrice,
-          };
-          promises.push(
-              axios.post('https://eseniabila.com.ua/addProductVarieties', varietyData, {
+              // Запрос на добавление изображения продукта
+              axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
                 headers: {
                   'Content-Type': 'application/json',
                 },
               })
-          );
-        }
+                  .then(imgResponse => {
+                    console.log('Изображение добавлено успешно:', imgResponse.data);
 
-        // Используем Promise.all для выполнения действия после завершения всех запросов
-        Promise.all(promises)
-            .then((responses) => {
-              console.log('Ответы сервера:', responses);
+                    // Проверяем наличие данных для addProductVarieties
+                    if (store.radioName && store.radioQuan && store.radioPrice) {
+                      const varietyData = {
+                        product_id: lastId,
+                        variety_name: store.radioName,
+                        variety_quan: store.radioQuan,
+                        variety_price: store.radioPrice,
+                      };
 
-              // Проверяем успешность ответов перед перезагрузкой
-              const allResponsesSuccessful = responses.every((response) => response.status === 200);
+                      // Запрос на добавление вариаций продукта
+                      axios.post('https://eseniabila.com.ua/addProductVarieties', varietyData, {
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                      })
+                          .then(varietyResponse => {
+                            console.log('Вариация добавлена успешно:', varietyResponse.data);
 
-              if (allResponsesSuccessful) {
-                setTimeout(() => {
-                  location.reload()
-                }, 2000);
-              }
+                            // Перезагрузка страницы через 2 секунды после успешного выполнения всех запросов
+                            setTimeout(() => {
+                              location.reload();
+                            }, 2000);
+                          })
+                          .catch(varietyError => {
+                            console.error('Ошибка при добавлении вариации:', varietyError);
+                          });
+                    } else {
+                      // Перезагрузка страницы через 2 секунды после успешного добавления продукта и изображения
+                      setTimeout(() => {
+                        location.reload();
+                      }, 2000);
+                    }
+                  })
+                  .catch(imgError => {
+                    console.error('Ошибка при добавлении изображения:', imgError);
+                  });
             })
-            .catch((errors) => {
-              console.error('Ошибка при отправке данных на сервер:', errors);
-              // Обработка ошибки
+            .catch(productError => {
+              console.error('Ошибка при добавлении продукта:', productError);
             });
       })
       .catch(error => {
         console.error('Ошибка при получении продуктов:', error);
-        // Обработка ошибки при получении продуктов
       });
 };
+
 
 
 </script>
