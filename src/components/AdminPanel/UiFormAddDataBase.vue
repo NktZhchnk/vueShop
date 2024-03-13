@@ -48,20 +48,24 @@ const handleKeyDown = (event) => {
   }
 };
 const addProduct = () => {
-  axios.get('https://eseniabila.com.ua/getProducts')
-      .then(response => {
-        const products = response.data;
-        const lastId = products.length > 0 ? products[products.length - 1].id + 1 : 1; // Увеличиваем последний ID на 1
+  // Выполняем запрос на получение всех продуктов
+  axios.post('https://eseniabila.com.ua/addProduct', newData)
+      .then(productResponse => {
+        console.log('Продукт добавлен успешно:', productResponse.data);
 
-        // Запрос на добавление нового продукта
-        axios.post('https://eseniabila.com.ua/addProduct', newData)
-            .then(productResponse => {
-              console.log('Продукт добавлен успешно:', productResponse.data);
+        // Получаем айдишник добавленного продукта
+        const productId = productResponse.data.id;
+
+        // Запрос на получение списка продуктов (обновленный список)
+        axios.get('https://eseniabila.com.ua/getProducts')
+            .then(productsResponse => {
+              const updatedProducts = productsResponse.data;
+              const lastId = updatedProducts.length > 0 ? updatedProducts[updatedProducts.length - 1].id : 0;
 
               // Создаем данные для изображения
               const dataImg = {
                 img: imageLinks,
-                product_id: lastId,
+                product_id: productId,
               };
 
               // Запрос на добавление изображения продукта
@@ -76,7 +80,7 @@ const addProduct = () => {
                     // Проверяем наличие данных для addProductVarieties
                     if (store.radioName && store.radioQuan && store.radioPrice) {
                       const varietyData = {
-                        product_id: lastId,
+                        product_id: productId,
                         variety_name: store.radioName,
                         variety_quan: store.radioQuan,
                         variety_price: store.radioPrice,
@@ -110,15 +114,14 @@ const addProduct = () => {
                     console.error('Ошибка при добавлении изображения:', imgError);
                   });
             })
-            .catch(productError => {
-              console.error('Ошибка при добавлении продукта:', productError);
+            .catch(productsError => {
+              console.error('Ошибка при получении списка продуктов:', productsError);
             });
       })
-      .catch(error => {
-        console.error('Ошибка при получении продуктов:', error);
+      .catch(productError => {
+        console.error('Ошибка при добавлении продукта:', productError);
       });
 };
-
 
 
 </script>
