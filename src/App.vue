@@ -28,9 +28,7 @@ const store = useMyStore()
 </template>
 
 <style>
-body {
-  overscroll-behavior: none;
-}
+
 </style>
 
 <style scoped>

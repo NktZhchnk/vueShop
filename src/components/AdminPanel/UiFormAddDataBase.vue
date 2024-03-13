@@ -94,7 +94,6 @@ const addProduct = () => {
         if (allResponsesSuccessful) {
           setTimeout(() => {
             store.fetchData();
-            location.reload(); // Перезагрузка страницы после успешного выполнения всех запросов
           }, 2000);
         }
       })
