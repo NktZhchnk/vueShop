@@ -56,7 +56,7 @@ const addProduct = () => {
         console.log('p',products)
         // Получаем последний идентификатор продукта
         let lastId = products.length > 0 ? products[products.length - 1].id : 0;
-        lastId++
+        lastId = lastId + 1
         // Создаем данные для нового продукта
         console.log(lastId)
 
