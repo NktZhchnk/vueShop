@@ -67,9 +67,11 @@ const addProduct = () => {
           product_id: lastId,
         };
 
+        console.log('dataImg', dataImg)
         // Создаем массив обещаний только для запросов, у которых есть данные
         const promises = [
           axios.post('https://eseniabila.com.ua/addProduct', newData),
+            console.log('prd', dataImg.product_id),
           axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
             headers: {
               'Content-Type': 'application/json',
