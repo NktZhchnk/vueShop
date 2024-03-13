@@ -52,7 +52,6 @@ const addProduct = () => {
       .then(response => {
         const products = response.data;
         const lastId = products.length > 0 ? products[products.length - 1].id + 1 : 1; // Увеличиваем последний ID на 1
-        const newData = { /* Данные нового продукта */ };
 
         // Запрос на добавление нового продукта
         axios.post('https://eseniabila.com.ua/addProduct', newData)
