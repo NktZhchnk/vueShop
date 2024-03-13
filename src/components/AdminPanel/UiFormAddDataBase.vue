@@ -48,6 +48,8 @@ const handleKeyDown = (event) => {
   }
 };
 const addProduct = () => {
+  store.getRadioPrice();
+
   // Выполняем запрос на получение всех продуктов
   axios.get('https://eseniabila.com.ua/getProducts')
       .then(response => {
@@ -58,12 +60,7 @@ const addProduct = () => {
         const lastId = products.length > 0 ? products[products.length - 1].product_id : 0;
 
         // Создаем данные для нового продукта
-        const data = {
-          product_id: lastId,
-          variety_name: store.radioName,
-          variety_quan: store.radioQuan,
-          variety_price: store.radioPrice,
-        };
+
 
         const dataImg = {
           img: imageLinks,
@@ -72,7 +69,7 @@ const addProduct = () => {
 
         // Создаем массив обещаний только для запросов, у которых есть данные
         const promises = [
-          axios.post('https://eseniabila.com.ua/addProduct', data),
+          axios.post('https://eseniabila.com.ua/addProduct', newData),
           axios.post('https://eseniabila.com.ua/addProductImg', dataImg, {
             headers: {
               'Content-Type': 'application/json',
@@ -81,9 +78,15 @@ const addProduct = () => {
         ];
 
         // Проверяем наличие данных для addProductVarieties
-        if (data.variety_name && data.variety_quan && data.variety_price) {
+        if (store.radioName && store.radioQuan && store.radioPrice) {
+          const varietyData = {
+            product_id: lastId,
+            variety_name: store.radioName,
+            variety_quan: store.radioQuan,
+            variety_price: store.radioPrice,
+          };
           promises.push(
-              axios.post('https://eseniabila.com.ua/addProductVarieties', data, {
+              axios.post('https://eseniabila.com.ua/addProductVarieties', varietyData, {
                 headers: {
                   'Content-Type': 'application/json',
                 },
@@ -102,7 +105,6 @@ const addProduct = () => {
               if (allResponsesSuccessful) {
                 setTimeout(() => {
                   location.reload()
-
                 }, 2000);
               }
             })
@@ -116,6 +118,7 @@ const addProduct = () => {
         // Обработка ошибки при получении продуктов
       });
 };
+
 
 </script>
 
