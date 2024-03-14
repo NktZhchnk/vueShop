@@ -77,12 +77,12 @@ const addProduct = () => {
                     console.log('Изображение добавлено успешно:', imgResponse.data);
 
                     // Проверяем наличие данных для addProductVarieties
-                    if (store.radioName && store.radioQuan && store.radioPrice) {
+                    if (store.radioOptions.label && store.radioOptions.price && store.radioOptions.quantity) {
                       const varietyData = {
                         product_id: lastId,
-                        variety_name: store.radioName,
-                        variety_quan: store.radioQuan,
-                        variety_price: store.radioPrice,
+                        variety_name: store.radioOptions.label,
+                        variety_quan: store.radioOptions.price,
+                        variety_price: store.radioOptions.quantity,
                       };
 
                       // Запрос на добавление вариаций продукта
@@ -122,6 +122,11 @@ const addProduct = () => {
       });
 };
 
+const test = ()=>{
+
+  console.log(store.radioOptions)
+}
+
 
 </script>
 
@@ -130,7 +135,7 @@ const addProduct = () => {
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct" class="product-form">
-
+      <button @click="test">test</button>
       <label for="productName">Назва:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
