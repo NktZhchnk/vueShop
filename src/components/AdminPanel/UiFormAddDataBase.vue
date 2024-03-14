@@ -77,12 +77,12 @@ const addProduct = () => {
                     console.log('Изображение добавлено успешно:', imgResponse.data);
 
                     // Проверяем наличие данных для addProductVarieties
-                    if (store.radioOptions) {
+                    if (store.radioName && store.radioQuan && store.radioPrice) {
                       const varietyData = {
                         product_id: lastId,
-                        variety_name: store.radioOptions.label,
-                        variety_quan: store.radioOptions.price,
-                        variety_price: store.radioOptions.quantity,
+                        variety_name: store.radioName,
+                        variety_quan: store.radioQuan,
+                        variety_price: store.radioPrice,
                       };
 
                       // Запрос на добавление вариаций продукта
@@ -95,9 +95,9 @@ const addProduct = () => {
                             console.log('Вариация добавлена успешно:', varietyResponse.data);
 
                             // Перезагрузка страницы через 2 секунды после успешного выполнения всех запросов
-                            // setTimeout(() => {
-                            //   location.reload();
-                            // }, 2000);
+                            setTimeout(() => {
+                              location.reload();
+                            }, 2000);
                           })
                           .catch(varietyError => {
                             console.error('Ошибка при добавлении вариации:', varietyError);
@@ -122,11 +122,6 @@ const addProduct = () => {
       });
 };
 
-const test = ()=>{
-
-  console.log(store.radioOptions)
-}
-
 
 </script>
 
@@ -135,7 +130,6 @@ const test = ()=>{
     <!-- Ваш текущий код отображения продуктов -->
     <!-- Форма для добавления нового продукта -->
     <form @submit.prevent="addProduct" class="product-form">
-      <button @click="test">test</button>
       <label for="productName">Назва:</label>
       <input v-model="newData.name_item" type="text" id="productName" required>
 
