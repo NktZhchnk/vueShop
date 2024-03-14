@@ -77,7 +77,7 @@ const addProduct = () => {
                     console.log('Изображение добавлено успешно:', imgResponse.data);
 
                     // Проверяем наличие данных для addProductVarieties
-                    if (store.radioOptions.label && store.radioOptions.price && store.radioOptions.quantity) {
+                    if (store.radioOptions) {
                       const varietyData = {
                         product_id: lastId,
                         variety_name: store.radioOptions.label,
@@ -95,9 +95,9 @@ const addProduct = () => {
                             console.log('Вариация добавлена успешно:', varietyResponse.data);
 
                             // Перезагрузка страницы через 2 секунды после успешного выполнения всех запросов
-                            setTimeout(() => {
-                              location.reload();
-                            }, 2000);
+                            // setTimeout(() => {
+                            //   location.reload();
+                            // }, 2000);
                           })
                           .catch(varietyError => {
                             console.error('Ошибка при добавлении вариации:', varietyError);
