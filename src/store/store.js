@@ -5,14 +5,39 @@ import {ref} from "vue";
 export const useMyStore = defineStore({
     id: 'myStore',
     state: () => ({
+        adminLogin: '',
+        adminPassword: '',
         allPriceProducts: null,
         cartProducts: [],
+        categoryItem: null,
+        checkCart: false,
+        checkInput: false,
+        checkShowVariety: false,
+        openVariety: false,
         products: [],
         usersCountOnline: 0,
         showResults: false,
         searchQuery: '',
-        checkInput: false,
         productVarieties: [],
+        orders: [],
+        radioPrice: [],
+        radioQuan: [],
+        radioName: [],
+        lastId: 1,
+        lastIdOrders: 1,
+        priceItem: null,
+        radioOptions: [],
+        productImg: [],
+        isOpenMenu: false,
+        isOpenCart: false,
+        isOpenShowPage: false,
+        addProductsInAdmin: {
+            poshtaInfo: '1',
+        },
+        showCheckAuth: {
+            showAuthA: false,
+            showAuthB: false,
+        },
         productById: {
             id: [],
             img: [],
@@ -23,29 +48,6 @@ export const useMyStore = defineStore({
             cities: '',
             searchQuery: '',
         },
-        orders: [],
-        radioPrice: [],
-        radioQuan: [],
-        radioName: [],
-        lastId: 1,
-        lastIdOrders: 1,
-        priceItem: null,
-        radioOptions: [],
-        categoryItem: null,
-        productImg: [],
-        adminLogin: '',
-        adminPassword: '',
-        isOpenMenu: false,
-        isOpenCart: false,
-        isOpenShowPage: false,
-        checkCart: false,
-        addProductsInAdmin: {
-            poshtaInfo: '1',
-        },
-        showCheckAuth: {
-            showAuthA: false,
-            showAuthB: false,
-        }
     }),
     mutations: {},
     actions: {
@@ -59,6 +61,12 @@ export const useMyStore = defineStore({
             this.searchQuery = '';
             this.checkInput = false;
         },
+        updateCommonStateAndCloseMenus() {
+            this.updateCommonState()
+            this.isOpenMenu = false;
+            this.isOpenCart = false;
+            this.checkCart = false;
+        },
         swapOpenMenu() {
             this.isOpenMenu = !this.isOpenMenu;
             document.body.style.overflow = 'hidden';
@@ -66,22 +74,27 @@ export const useMyStore = defineStore({
             this.isOpenCart = false;
             this.checkCart = false;
 
+            this.checkShowVariety = false;
+            this.openVariety = false;
             if (!this.isOpenShowPage) {
                 this.isOpenShowPage = !this.isOpenShowPage;
             }
         },
         swapOpenCart() {
-            this.checkCart = !this.checkCart;
             setTimeout(() => {
-                document.body.style.overflow = 'hidden';
-                this.updateCommonState()
-                this.isOpenCart = !this.isOpenCart;
-                this.isOpenMenu = false;
-
-                if (!this.isOpenShowPage) {
-                    this.isOpenShowPage = !this.isOpenShowPage;
-                }
-            }, 40);
+                this.checkCart = !this.checkCart;
+                setTimeout(() => {
+                    document.body.style.overflow = 'hidden';
+                    this.updateCommonState()
+                    this.isOpenMenu = false;
+                    this.openVariety = false;
+                    this.checkShowVariety = false;
+                    this.isOpenCart = !this.isOpenCart;
+                    if (!this.isOpenShowPage) {
+                        this.isOpenShowPage = !this.isOpenShowPage;
+                    }
+                }, 50);
+            }, 60)
         },
         swapOpenAuth() {
             this.showCheckAuth.showAuthB = !this.showCheckAuth.showAuthB;
@@ -89,12 +102,23 @@ export const useMyStore = defineStore({
         },
         swapShowPage() {
             document.body.style.overflow = 'auto';
-            this.isOpenMenu = false;
-            this.updateCommonState()
-            this.isOpenCart = false;
+            this.updateCommonStateAndCloseMenus()
+
             this.isOpenShowPage = false;
             this.showCheckAuth.showAuthB = false;
-            this.checkCart = false;
+            this.openVariety = false;
+            this.checkShowVariety = false;
+        },
+        swapShowVarietyProduct() {
+            this.checkShowVariety = !this.checkShowVariety;
+            setTimeout(() => {
+                this.openVariety = !this.openVariety;
+                document.body.style.overflow = 'hidden';
+                this.updateCommonStateAndCloseMenus()
+                if (!this.isOpenShowPage) {
+                    this.isOpenShowPage = !this.isOpenShowPage;
+                }
+            }, 40);
         },
         updateCategoryItem(newValue) {
             this.categoryItem = newValue

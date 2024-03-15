@@ -100,6 +100,9 @@ const addProduct = () => {
                             }, 2000);
                           })
                           .catch(varietyError => {
+                            setTimeout(() => {
+                              location.reload();
+                            }, 2000);
                             console.error('Ошибка при добавлении вариации:', varietyError);
                           });
                     } else {

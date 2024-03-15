@@ -135,6 +135,7 @@ const sumCountProduct = () => {
 }
 const resetCount = () => {
   countProduct.value = 1
+  store.swapShowPage()
 }
 
 const deleteProductInDataBase = async () => {
@@ -155,10 +156,10 @@ const toggleTextInfo = () => {
 };
 
 const truncatedTextInfo = computed(() => {
-  const maxLength = 100;
+  const maxLength = 200;
   return showFullText.value
       ? getProductById.value.text_info
-      : getProductById.value.text_info.slice(0, maxLength) + '  ... Показати більше';
+      : getProductById.value.text_info.slice(0, maxLength) + '  <span style="font-weight: bold; color: black;">... Показати більше</span>';
 });
 
 const formattedText = computed(() => {
@@ -178,6 +179,7 @@ watch(product, () => {
     isDataLoaded.value = true;
   }, 70)
 });
+
 </script>
 
 <template>
@@ -223,7 +225,6 @@ watch(product, () => {
       </Swiper>
     </div>
 
-
     <div class="div-name-product">
       <h1>{{ getProductById.name_item }}</h1>
     </div>
@@ -234,46 +235,53 @@ watch(product, () => {
       </p>
     </div>
 
+    <div>
+      <button style="margin-top: 0" v-if="getVarieties.length > 0" @click="store.swapShowVarietyProduct()">{{ selectedVariety ? 'Варіант: ' + selectedVariety.variety_name : 'Виберіть варіант' }}
+      </button>
+    </div>
 
-    <div v-if="getVarieties.length > 0">
-      <h3 style="display: flex; justify-content: center; margin-bottom: 0">Варіанти:</h3>
-      <div class="varieties-wrapper">
-        <template v-for="item in getVarieties">
-          <label v-if="item.variety_quan > 0" :key="item.id" class="rad-label">
-            <input
-                type="radio"
-                :value="item"
-                v-model="selectedVariety"
-                class="rad-input"
-                :name="'rad' + item.id"
-                @change="resetCount"
+    <div v-if="getVarieties.length > 0" class="popup">
+      <div v-if="store.checkShowVariety" class="popup-content" :class="{ 'scaled': store.openVariety }">
+        <h3 style="text-align: center; margin-bottom: 0px">Варіації:</h3>
+        <div class="varieties-wrapper">
+          <template v-for="item in getVarieties">
+            <label v-if="item.variety_quan > 0" :key="item.id" class="rad-label">
+              <input
+                  type="radio"
+                  :value="item"
+                  v-model="selectedVariety"
+                  class="rad-input"
+                  :name="'rad' + item.id"
+                  @change="resetCount"
 
-            />
-            <div class="rad-design"></div>
-            <div class="rad-text">{{ item.variety_name }} - <span style="color: #676767">{{
-                item.variety_price
-              }} ₴</span>
+              />
+              <div class="rad-design"></div>
+              <div class="rad-text">{{ item.variety_name }} - <span style="color: #676767">{{
+                  item.variety_price
+                }} ₴</span>
+              </div>
+              <p v-if="isAdmin()" style="margin: 0; margin-left: 10px">test: {{ item.variety_quan }}</p>
+            </label>
+            <div v-else :key="item.id" class="rad-label">
+              <input
+                  type="radio"
+                  :value="item"
+                  v-model="selectedVariety"
+                  class="rad-input"
+                  :name="'rad' + item.id"
+                  @change="resetCount"
+
+              />
+              <div class="rad-design"></div>
+              <div class="rad-text" style="text-decoration: line-through;">{{ item.variety_name }} - {{
+                  item.variety_price
+                }} ₴
+              </div>
+              <p style="margin: 0; margin-left: 10px">немає в наявності</p>
             </div>
-            <p v-if="isAdmin()" style="margin: 0; margin-left: 10px">test: {{ item.variety_quan }}</p>
-          </label>
-          <div v-else :key="item.id" class="rad-label">
-            <input
-                type="radio"
-                :value="item"
-                v-model="selectedVariety"
-                class="rad-input"
-                :name="'rad' + item.id"
-                @change="resetCount"
-
-            />
-            <div class="rad-design"></div>
-            <div class="rad-text" style="text-decoration: line-through;">{{ item.variety_name }} - {{
-                item.variety_price
-              }} ₴
-            </div>
-            <p style="margin: 0; margin-left: 10px">немає в наявності</p>
-          </div>
-        </template>
+          </template>
+        </div>
+        <button style="margin-top: 0" @click="store.swapShowPage()">Закрыть</button>
       </div>
     </div>
 
@@ -326,6 +334,26 @@ watch(product, () => {
 .read-more {
   color: Black;
   cursor: pointer;
+}
+
+.popup-content{
+  z-index: 5;
+  border-radius: 10px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  width: auto;
+  min-width: 600px;
+  height: auto;
+  overflow-y: auto;
+  background: #f5f5f5; /* Soft gray background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 0, 0, 0.7); /* Lighter shadow with spread */
+}
+
+.popup-content.scaled {
+  transform: translate(-50%, -50%) scale(1); /* Увеличиваем масштаб до 1 при наличии класса .scaled */
 }
 
 .div-swiper {
@@ -406,7 +434,7 @@ watch(product, () => {
 
 .div-name-product {
   overflow-wrap: break-word;
-  height: 90px;
+  max-height: 90px;
   overflow: hidden;
   margin-top: 20px;
   padding: 10px;
@@ -591,7 +619,9 @@ watch(product, () => {
     width: 280px;
     max-height: 350px;
   }
-
+  .popup-content{
+    min-width: 100%;
+  }
   .swiper-button-prev,
   .swiper-button-next {
     display: none;
@@ -630,6 +660,10 @@ watch(product, () => {
   .swiper {
     width: 263px;
     max-height: 330px;
+  }
+  .popup-content{
+    max-height: 100%;
+    border-radius: 0;
   }
 }
 

@@ -231,7 +231,7 @@ const sortByDate = (order) => {
       </svg>
       <div v-if="store.cartProducts.length !== 0"
            style="position: relative; bottom: 10px; right: 10px; width:20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #bbbbbb; color:  #000000">
-        <h3>{{ store.cartProducts.length }}</h3>
+        <h3 style="user-select: none">{{ store.cartProducts.length }}</h3>
       </div>
     </div>
 
