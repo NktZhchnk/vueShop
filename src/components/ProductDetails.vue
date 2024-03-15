@@ -135,7 +135,10 @@ const sumCountProduct = () => {
 }
 const resetCount = () => {
   countProduct.value = 1
-  store.swapShowPage()
+
+  setTimeout(() => {
+    store.swapShowPage()
+  }, 250)
 }
 
 const deleteProductInDataBase = async () => {
@@ -156,7 +159,7 @@ const toggleTextInfo = () => {
 };
 
 const truncatedTextInfo = computed(() => {
-  const maxLength = 200;
+  const maxLength = 240;
   return showFullText.value
       ? getProductById.value.text_info
       : getProductById.value.text_info.slice(0, maxLength) + '  <span style="font-weight: bold; color: black;">... Показати більше</span>';
@@ -228,6 +231,7 @@ watch(product, () => {
     <div class="div-name-product">
       <h1>{{ getProductById.name_item }}</h1>
     </div>
+
     <div class="text-info-product">
       <p class="truncated-text" @click="toggleTextInfo">
         <span v-html="formattedText"></span>
@@ -236,7 +240,8 @@ watch(product, () => {
     </div>
 
     <div>
-      <button style="margin-top: 0" v-if="getVarieties.length > 0" @click="store.swapShowVarietyProduct()">{{ selectedVariety ? 'Варіант: ' + selectedVariety.variety_name : 'Виберіть варіант' }}
+      <button style="margin-top: 15px" v-if="getVarieties.length > 0" @click="store.swapShowVarietyProduct()">
+        {{ selectedVariety ? 'Варіант: ' +  selectedVariety.variety_name  : 'Виберіть варіант' }}
       </button>
     </div>
 
@@ -281,7 +286,7 @@ watch(product, () => {
             </div>
           </template>
         </div>
-        <button style="margin-top: 0" @click="store.swapShowPage()">Закрыть</button>
+        <button style="margin-bottom: 0px;" @click="store.swapShowPage()">Закрыть</button>
       </div>
     </div>
 
@@ -323,20 +328,30 @@ watch(product, () => {
 
 <style scoped>
 /* Общие стили */
+.text-info-product {
+  background-color: #f2f2f2; /* Измените на желаемый цвет фона */
+  border-radius: 5px; /* Закругленные края */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+}
+
 .truncated-text {
   font-family: 'Roboto Light', sans-serif;
   margin-top: 0;
   padding: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: max-height 0.5s ease; /* Плавное изменение высоты */
 }
 
+.show-full-text {
+  max-height: 500px; /* Измените на достаточную высоту для отображения полного текста */
+}
 .read-more {
   color: Black;
   cursor: pointer;
 }
 
-.popup-content{
+.popup-content {
   z-index: 5;
   border-radius: 10px;
   position: fixed;
@@ -558,7 +573,7 @@ watch(product, () => {
   width: 22px;
   height: 22px;
   border-radius: 100px;
-  background: linear-gradient(to right bottom, hsl(0, 0%, 100%), hsl(0, 11%, 7%));
+  background: linear-gradient(to right bottom, hsl(126, 96%, 81%), hsl(125, 96%, 10%));
   position: relative;
 }
 
@@ -619,9 +634,11 @@ watch(product, () => {
     width: 280px;
     max-height: 350px;
   }
-  .popup-content{
+
+  .popup-content {
     min-width: 100%;
   }
+
   .swiper-button-prev,
   .swiper-button-next {
     display: none;
@@ -661,7 +678,8 @@ watch(product, () => {
     width: 263px;
     max-height: 330px;
   }
-  .popup-content{
+
+  .popup-content {
     max-height: 100%;
     border-radius: 0;
   }
