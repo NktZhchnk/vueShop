@@ -39,23 +39,23 @@ function backupMySQL() {
     console.log('успешно создали копию')
     exec(command, (error, stdout, stderr) => {
         if (error) {
+            const errorMessage = 'Произошла ошибка при создании резервной копии';
             console.error(errorMessage);
         } else {
+            const successMessage = 'Резервная копия успешно создана';
             console.log(successMessage);
         }
     });
 }
 
-// Выполнение резервной копии каждые 30 минут
 setInterval(() => {
     const now = new Date();
     const minutes = now.getMinutes();
 
-    // Проверка, выполнилась ли минута деления на 30
     if (minutes % 10 === 0) {
         backupMySQL();
     }
-}, 600000); // Проверка каждые 30 минут (30 * 60 * 1000 миллисекунд)
+}, 600000);
 
 
 app.get('/getProducts', (req, res) => {

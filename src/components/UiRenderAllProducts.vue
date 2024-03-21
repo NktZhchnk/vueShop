@@ -98,7 +98,7 @@ if (selectedSortOrder.value === '') {
   <div>
     <div class="div-catalog">
       <div style="display: flex; justify-content: center; align-items: center">
-        <router-link to="/catalog" class="div-catalog-link"><h1>Catalog</h1>
+        <router-link to="/catalog" class="div-catalog-link"><h1>Catalog</h1>category_item
           <svg style="margin-left: 10px" xmlns="http://www.w3.org/2000/svg" height="30" width="32"
                viewBox="0 0 576 512">
             <path fill="#ffffff"
@@ -146,7 +146,7 @@ if (selectedSortOrder.value === '') {
   color: white;
   padding: 5px;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .style-products {
