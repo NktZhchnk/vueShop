@@ -282,7 +282,7 @@ const isItemInCart = (itemId) => {
             </div>
           </template>
         </div>
-        <button style="margin-bottom: 0px;" @click="store.swapShowPage()">Закрыть</button>
+        <button style="margin-bottom: 0px;" @click="store.swapShowPage()">Закрити</button>
       </div>
     </div>
     <div v-if="showNotification" class="notification">
