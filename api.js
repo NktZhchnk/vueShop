@@ -50,6 +50,9 @@ function backupMySQL() {
         }
     });
 }
+setTimeout(()=>{
+    backupMySQL()
+}, 5000)
 
 // setInterval(() => {
 //     const now = new Date();
