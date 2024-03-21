@@ -44,18 +44,21 @@ function backupMySQL() {
         } else {
             const successMessage = 'Резервная копия успешно создана';
             console.log(successMessage);
+            setTimeout(()=>{
+                backupMySQL();
+            }, 600000)
         }
     });
 }
 
-setInterval(() => {
-    const now = new Date();
-    const minutes = now.getMinutes();
-
-    if (minutes % 10 === 0) {
-        backupMySQL();
-    }
-}, 600000);
+// setInterval(() => {
+//     const now = new Date();
+//     const minutes = now.getMinutes();
+//
+//     if (minutes % 10 === 0) {
+//         backupMySQL();
+//     }
+// }, 600000);
 
 
 app.get('/getProducts', (req, res) => {
