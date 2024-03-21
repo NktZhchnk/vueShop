@@ -379,6 +379,7 @@ const isItemInCart = (itemId) => {
 
 .style-product {
   position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 300px;
   margin: 20px;
   padding: 15px;
@@ -471,7 +472,7 @@ const isItemInCart = (itemId) => {
   .product-name {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
   }
 }
 
