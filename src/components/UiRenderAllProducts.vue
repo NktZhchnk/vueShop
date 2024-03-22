@@ -21,7 +21,7 @@ const INITIAL_PRODUCTS_PER_PAGE = 15;
 const sessionStorageKey = 'initiallyLoadedProducts';
 let showVariationModal = ref(false)
 const showNotification = ref(false);
-const resetState = () =>{
+const resetState = () => {
   product.value = null
   images.value = []
   selectedVariety.value = null
@@ -30,12 +30,12 @@ const resetState = () =>{
 }
 const selectedVarietyItem = async () => {
   await addToCart(product.value.id);
-  setTimeout(()=>{
+  setTimeout(() => {
     store.swapShowPage(); // Перемещение обратно на основную страницу после добавления в корзину
     resetState(); // Сброс состояния
   }, 130)
-
 }
+
 const initiallyLoadedProducts = ref(sessionStorage.getItem(sessionStorageKey) || INITIAL_PRODUCTS_PER_PAGE);
 
 const loadMoreProducts = () => {
@@ -232,13 +232,12 @@ const isItemInCart = (itemId) => {
           <span v-if="item.popularity_item === 1" class="hit-badge">Хіт</span>
           <div class="product-price">
             <span>Ціна: {{ item.price_item }} ₴</span>
-            <button v-if="isItemInCart(item.id)"  @click.prevent="addToCart(item.id)">
+            <button v-if="isItemInCart(item.id)" @click.prevent="addToCart(item.id)">
               <span style="padding: 0; color: #a6f6a6;">Додати ще в кошик</span>
             </button>
             <button v-else @click.prevent="addToCart(item.id)">
               Додати у кошик
             </button>
-
           </div>
         </router-link>
       </div>
@@ -328,6 +327,7 @@ const isItemInCart = (itemId) => {
     opacity: 0;
   }
 }
+
 /* закончил */
 .div-catalog-header {
   display: flex;
@@ -374,7 +374,6 @@ const isItemInCart = (itemId) => {
     display: block;
   }
 }
-
 
 
 .style-product {
@@ -548,14 +547,6 @@ const isItemInCart = (itemId) => {
 
 .rad-input:checked ~ .rad-text {
   color: hsl(0, 0%, 40%);
-}
-
-.btn-add-cart-pc {
-  display: none;
-}
-
-.btn-add-cart-tel {
-  display: block;
 }
 
 .popup-content {
