@@ -21,6 +21,7 @@ const INITIAL_PRODUCTS_PER_PAGE = 15;
 const sessionStorageKey = 'initiallyLoadedProducts';
 let showVariationModal = ref(false)
 const showNotification = ref(false);
+
 const resetState = () => {
   product.value = null
   images.value = []
@@ -28,6 +29,7 @@ const resetState = () => {
   varieties.value = []
   showVariationModal.value = false
 }
+
 const selectedVarietyItem = async () => {
   await addToCart(product.value.id);
   setTimeout(() => {
@@ -489,11 +491,9 @@ const isItemInCart = (itemId) => {
 .rad-label {
   display: flex;
   align-items: center;
-
   border-radius: 100px;
   padding: 14px 16px;
   margin: 5px 0;
-
   cursor: pointer;
   transition: .3s;
 }
@@ -510,7 +510,6 @@ const isItemInCart = (itemId) => {
   height: 1px;
   opacity: 0;
   z-index: -1;
-
 }
 
 .rad-design {
