@@ -110,7 +110,7 @@ onMounted(loadCartProducts);
           </div>
           <div v-if="item.selectedVariety">
             <div>
-              <p style="margin-bottom: 0; overflow-wrap: break-word; height: 38px; overflow: hidden">Варіація:
+              <p style="margin-bottom: 15px; overflow-wrap: break-word; height: 38px; overflow: hidden">Варіація:
                 {{ item.selectedVariety.variety_name }}</p>
             </div>
             <div>
