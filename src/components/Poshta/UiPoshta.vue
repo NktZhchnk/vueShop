@@ -79,7 +79,6 @@ const checkInfoPoshta = (item) => {
 axios.post(apiUrl, {apiKey, modelName: 'Address', calledMethod: 'getCities', methodProperties: {}})
     .then(response => {
       cities.value = response.data.data;
-      console.log('Список городов:', cities.value); // Убедитесь, что данные приходят в нужном формате
     })
     .catch(error => {
       console.error('Ошибка при получении списка городов:', error);

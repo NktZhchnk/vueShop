@@ -136,7 +136,6 @@ export const useMyStore = defineStore({
                     this.products = response.data;
                     const lastItem = this.products.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
                     this.lastId = lastItem.id + 1
-                    console.log('в сторе вывожу лст айди:', this.lastId)
                     this.priceItem = this.products[0].price_item;
                 })
                 .catch(error => {
@@ -146,7 +145,6 @@ export const useMyStore = defineStore({
             axios.get('https://eseniabila.com.ua/getProductVarieties')
                 .then(response => {
                     this.productVarieties = response.data
-                    console.log('product', this.productVarieties)
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
@@ -154,7 +152,6 @@ export const useMyStore = defineStore({
             axios.get('https://eseniabila.com.ua/getProductImg')
                 .then(response => {
                     this.productImg = response.data
-                    console.log('Img:', this.productImg)
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
@@ -178,7 +175,6 @@ export const useMyStore = defineStore({
             const savedCartProducts = sessionStorage.getItem('cartProducts');
             if (savedCartProducts) {
                 this.cartProducts = JSON.parse(savedCartProducts);
-                console.log('Загружена корзина товаров:', this.cartProducts);
             }
         },
 

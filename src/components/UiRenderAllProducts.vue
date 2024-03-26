@@ -137,7 +137,6 @@ const itemImages = (itemId) => {
   const images = store.productImg
       .filter(img => img.product_id === itemId)
       .map(img => img.img);
-
   return images.length > 0 ? images : [];
 };
 

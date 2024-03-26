@@ -1,6 +1,6 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
-import {ref, watch} from "vue";
+import {ref, watch, onMounted, onUnmounted} from "vue";
 
 const store = useMyStore()
 
@@ -98,9 +98,20 @@ if (!selectedSortOrder.value) {
 
 const toggleFilterMenu = () => {
   showFilterMenu.value = !showFilterMenu.value;
-  console.log(showFilterMenu.value);
 };
+const handleClickOutside = (event) => {
+  const filterMenu = document.querySelector('.filter-button');
+  if (filterMenu && !filterMenu.contains(event.target)) {
+    showFilterMenu.value = false;
+  }
+};
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
 
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 const sortByPrice = (order) => {
   selectedSortOrder.value = order;
   showFilterMenu.value = false;

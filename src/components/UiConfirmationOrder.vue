@@ -18,7 +18,6 @@ const loadCartProducts = () => {
   const savedCartProducts = sessionStorage.getItem('cartProducts');
   if (savedCartProducts) {
     store.cartProducts = JSON.parse(savedCartProducts);
-    console.log('Загружена корзина товаров в офор:', store.cartProducts);
   }
 };
 const validateTelephone = () => {
@@ -91,9 +90,7 @@ const addOrders = async () => {
             // Обработка данных и сохранение их в состоянии магазина
             const lastItem = response.data.reduce((acc, curr) => (curr.id > acc.id ? curr : acc), response.data[0]);
             console.log(lastItem.id)
-            console.log('lastId', lastItem)
             idOrder.value = lastItem.id;
-            console.log('в сторе вывожу лст айди:', idOrder.value);
             // Предполагается, что lastIdOrders - это свойство в данных ответа
             return lastItem.lastIdOrders;
           } catch (error) {
@@ -106,7 +103,6 @@ const addOrders = async () => {
         // Используйте await или .then для получения данных из асинхронной функции
         const lastIdOrders = await getIdOrder();
         console.log('Ответ сервера:', lastIdOrders);
-        console.log('АЙДИИИИИИИИИИИИИИ', idOrder.value);
 
         for (const cartProduct of store.cartProducts) {
           let orderItem = {
