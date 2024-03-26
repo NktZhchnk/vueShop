@@ -253,6 +253,9 @@ img {
 .product-details {
   padding: 10px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Добавляем прокрутку, если содержимое превышает размер контейнера */
 }
 
 .show-menu {
