@@ -112,20 +112,20 @@ onMounted(loadCartProducts);
             <div>
               <div>
 
-                <button @click="decrementQuanProduct(index)">-</button>
+                <button class="btn-dec" @click="decrementQuanProduct(index)">-</button>
                 <span class="span-quan">Кiл: </span>{{ item.countProduct }}
-                <button @click="sumQuanProduct(index)">+</button>
+                <button class="btn-sum" @click="sumQuanProduct(index)">+</button>
               </div>
             </div>
           </div>
 
 
           <div
-              style="display: flex; height: 20px;align-items: center;"
+              style="display: flex; height: 20px;margin-top: 15px; align-items: center;"
               v-if="item.selectedVariety === null"
           >
             <button class="btn-dec" @click="decrementQuanProduct(index)">-</button>
-            <p>Кiл: {{ item.countProduct }}</p>
+            <p style="margin: 0">Кiл: {{ item.countProduct }}</p>
             <button class="btn-sum" @click="sumQuanProduct(index)">+</button>
           </div>
 
@@ -180,12 +180,13 @@ onMounted(loadCartProducts);
 }
 
 .div-text-name {
-  font-size: 16px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden; /* Добавляем свойство overflow для скрытия содержимого, которое выходит за пределы контейнера */
 }
+
 
 .text-name {
   height: 40px;
@@ -194,12 +195,12 @@ onMounted(loadCartProducts);
   word-wrap: break-word;
   font-size: 18px;
   font-weight: bold;
-  width: 100%;
+  width: 90%;
 }
 
 .icon-trash {
   height: 24px;
-  width: 28px;
+  width: 24px;
   fill: #777;
 }
 
@@ -273,11 +274,17 @@ img {
   background-color: #343434;
   color: white;
   border-radius: 6px;
+  margin-left: 10px;
+  width: 25px;
+  height: 25px;
 }
 
 .btn-dec {
   background-color: #343434;
   color: white;
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
   border-radius: 6px;
 }
 
@@ -306,6 +313,7 @@ img {
     background-color: #343434;
     color: white;
     border-radius: 6px;
+
   }
 
   button:hover {
@@ -346,7 +354,7 @@ img {
 
   img {
     margin-left: 5px;
-    border-radius: 0 2px 2px 0;
+    border-radius: 5px;
     height: 120px;
     width: 115px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -362,6 +370,7 @@ img {
     background-color: #343434;
     color: white;
     border-radius: 6px;
+
   }
 
   button:hover {

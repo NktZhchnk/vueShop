@@ -13,20 +13,41 @@ onMounted(async () => {
 let varietyQuantities = ref({});
 let qunProduct = ref(0)
 const getProductVarieties = (productId) => {
-  return store.productVarieties.filter(variety => variety.product_id === productId)
+  const varieties = store.productVarieties.filter(variety => variety.product_id === productId);
+  // Перебираем каждую вариацию и устанавливаем ее значение variety_quan в varietyQuantities
+  varieties.forEach(variety => {
+    // Если variety_quan для данной вариации уже установлено, то используем его значение
+    // В противном случае устанавливаем значение по умолчанию, например, 0
+    varietyQuantities.value[variety.id] = typeof varietyQuantities.value[variety.id] !== 'undefined' ? varietyQuantities.value[variety.id] : variety.variety_quan;
+  });
+
+  // Возвращаем массив вариаций с установленными значениями variety_quan
+  return varieties;
 }
+
+
+
 const getTotalQuantity = (productId) => {
   const product = store.products.find(item => item.id === productId);
   if (product) {
     return getProductVarieties(productId).reduce((total, variety) => total, product.quan_item);
   }
 }
-const saveQuanProduct = async (productId, varietyId) => {
-
+const saveQuanProduct = async (productId, varieties) => {
   try {
-    if (varietyId.length !== 0) {
-      const values = Object.values(varietyQuantities.value);
-      const productQuantity = values.reduce((total, quantity) => total + quantity, 0);
+    if (varieties.length !== 0) {
+      const productQuantity = varieties.reduce((total, variety) => {
+        // Проверяем, есть ли значение variety_quan для данной вариации в varietyQuantities
+        if (varietyQuantities.value[variety.id] !== undefined) {
+          // Если есть, добавляем его к общему количеству
+          return total + varietyQuantities.value[variety.id];
+        } else {
+          // Если значения нет, возвращаем общее количество без изменений
+          return total;
+        }
+      }, 0);
+
+      console.log('Общее количество вариаций:', productQuantity);
 
       // Запрос на обновление количества продукта
       const varietyResponse2 = await axios.put(
@@ -35,22 +56,25 @@ const saveQuanProduct = async (productId, varietyId) => {
           {headers: {'Content-Type': 'application/json'}}
       );
 
-      console.log('Ответ сервера количество вариации:', varietyResponse2.data);
+      console.log('Ответ сервера количество продукта:', varietyResponse2.data);
 
       // Запросы на обновление количества для каждой вариации
-      await Promise.all(varietyId.map(async (variety) => {
-        const varietyResponse = await axios.put(
-            `https://eseniabila.com.ua/updateVarietyCount/${variety.id}`,
-            {variety_quan: varietyQuantities.value[variety.id]},
-            {headers: {'Content-Type': 'application/json'}}
-        );
+      await Promise.all(varieties.map(async (variety) => {
+        // Проверяем, есть ли значение variety_quan для данной вариации в varietyQuantities
+        if (varietyQuantities.value[variety.id] !== undefined) {
+          // Если есть, отправляем запрос на обновление
+          const varietyResponse = await axios.put(
+              `https://eseniabila.com.ua/updateVarietyCount/${variety.id}`,
+              {variety_quan: varietyQuantities.value[variety.id]},
+              {headers: {'Content-Type': 'application/json'}}
+          );
 
-        console.log('Ответ сервера количество вариации:', varietyResponse.data);
-        console.log("Variety ID:", variety.id);
-        console.log("Variety Quantity:", variety.variety_quan);
+          console.log('Ответ сервера количество вариации:', varietyResponse.data);
+        }
       }));
     } else {
-      console.log('h', qunProduct.value);
+      // Если вариации отсутствуют, используем значение из qunProduct
+      console.log('Общее количество продукта без вариаций:', qunProduct.value);
 
       // Запрос на обновление количества продукта в отсутствие вариаций
       const varietyResponse2 = await axios.put(
@@ -59,7 +83,7 @@ const saveQuanProduct = async (productId, varietyId) => {
           {headers: {'Content-Type': 'application/json'}}
       );
 
-      console.log('Ответ сервера количество вариации:', varietyResponse2.data);
+      console.log('Ответ сервера количество продукта:', varietyResponse2.data);
     }
   } catch (error) {
     // Обработка ошибок
@@ -69,6 +93,7 @@ const saveQuanProduct = async (productId, varietyId) => {
     window.location.reload();
   }
 };
+
 const searchQuery = ref('');
 const sortBy = ref(null);
 
@@ -103,8 +128,8 @@ const togglePopularityItem = async (productId) => {
       // Обновление значения popularity_item на сервере
       const updateResponse = await axios.put(
           `https://eseniabila.com.ua/updateProduct/${productId}`,
-          { popularity_item: newPopularity },
-          { headers: { 'Content-Type': 'application/json' } }
+          {popularity_item: newPopularity},
+          {headers: {'Content-Type': 'application/json'}}
       );
 
       console.log('Ответ сервера обновления popularity_item:', updateResponse.data);
@@ -132,7 +157,7 @@ const sortByQuantity = (order) => {
 
 <template>
   <div>
-    <input v-model="searchQuery" placeholder="Поиск по названию" class="search-input"/>
+    <input v-model="searchQuery" placeholder="Пошук за назвою" class="search-input"/>
 
     <!-- Кнопки для сортировки -->
     <div class="sort-buttons">
@@ -161,14 +186,19 @@ const sortByQuantity = (order) => {
             <ul class="varieties-list">
               <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
                 <span class="variety-info">{{ variety.variety_name }} - {{ variety.variety_quan }}</span>
-                <input type="number" v-model="varietyQuantities[variety.id]" class="quantity-input"/>
+                <input type="number" v-model="varietyQuantities[variety.id]"  class="quantity-input"/>
               </li>
             </ul>
           </div>
           <button @click="saveQuanProduct(product.id, getProductVarieties(product.id))" class="save-button">
             Зберегти
           </button>
-          <button style="margin-left: 15px" class="save-button" @click="togglePopularityItem(product.id)">{{ product.popularity_item === 1 ? 'Популярний' : 'Непопулярний' }}</button>
+          <button style="margin-left: 15px; background: #fffc9e; color: black;" v-show="product.popularity_item === 1"
+                  class="save-button" @click="togglePopularityItem(product.id)">Популярний
+          </button>
+          <button style="margin-left: 15px; background: #0282d9" v-show="product.popularity_item !== 1"
+                  class="save-button" @click="togglePopularityItem(product.id)">Непопулярний
+          </button>
         </div>
       </div>
     </div>
@@ -176,6 +206,23 @@ const sortByQuantity = (order) => {
 </template>
 
 <style scoped>
+button {
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.3s;
+  /* Тень */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* При наведении добавляется более яркая тень */
+button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
 .product-list {
   display: flex;
   flex-wrap: wrap;
@@ -261,7 +308,8 @@ const sortByQuantity = (order) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  border-bottom: 1px solid #e0e0e0;
+
 }
 
 .variety-info {
@@ -269,7 +317,7 @@ const sortByQuantity = (order) => {
   justify-content: center;
   align-items: center;
   word-wrap: break-word;
-  height: 60px;
+  height: 40px;
   overflow: hidden;;
 }
 

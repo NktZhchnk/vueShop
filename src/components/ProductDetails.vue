@@ -27,6 +27,7 @@ const varieties = ref([]);
 const selectedVariety = ref(null);
 const hasVarieties = computed(() => varieties.value.length > 0);
 let countProduct = ref(1)
+const showNotification = ref(false)
 
 // Функция для получения информации о продукте и изображений
 const getProductDetails = async () => {
@@ -79,11 +80,19 @@ const getVarieties = computed(() => {
   return varieties.value;
 });
 
+const updateCartProductCount = (index) => {
+  const savedCartProducts = JSON.parse(sessionStorage.getItem('cartProducts'));
+  // Обновляем количество товара в сохраненном массиве корзины
+  savedCartProducts[index].countProduct = store.cartProducts[index].countProduct;
+
+  // Обновляем корзину в sessionStorage
+  sessionStorage.setItem('cartProducts', JSON.stringify(savedCartProducts));
+};
 
 // Функция для добавления товара в корзину
 const addToCart = () => {
   if ((hasVarieties.value && selectedVariety.value !== null) || !hasVarieties.value) {
-    const duplicateProduct = store.cartProducts.find(item => {
+    const duplicateProductIndex = store.cartProducts.findIndex(item => {
       if (hasVarieties.value) {
         return item.selectedVariety && item.selectedVariety.id === selectedVariety.value.id;
       } else {
@@ -91,7 +100,12 @@ const addToCart = () => {
       }
     });
 
-    if (!duplicateProduct) {
+    if (duplicateProductIndex !== -1) {
+      // Если товар уже есть в корзине, увеличиваем количество товара
+      store.cartProducts[duplicateProductIndex].countProduct += countProduct.value;
+      updateCartProductCount(duplicateProductIndex);
+    } else {
+      // Если товара нет в корзине, добавляем новый элемент
       const newCartProduct = {
         selectedVariety: selectedVariety.value,
         product: product.value,
@@ -102,13 +116,15 @@ const addToCart = () => {
       store.cartProducts.push(newCartProduct);
       // Сохранение обновленной корзины в sessionStorage
       sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
-      console.log('Товар добавлен в корзину3:', newCartProduct);
-    } else {
-      alert('Цей товар вже доданий до кошика.');
+      console.log('Товар добавлен в корзину:', newCartProduct);
     }
+    showNotification.value = true;
+    setTimeout(() => {
+      showNotification.value = false;
+    }, 1000);
     countProduct.value = 1;
   } else {
-    alert('Будь ласка, оберіть варіант товару перед додаванням до кошика.');
+    store.swapShowVarietyProduct()
   }
 };
 
@@ -182,7 +198,11 @@ watch(product, () => {
     isDataLoaded.value = true;
   }, 70)
 });
-
+const isItemInCart = () => {
+  return store.cartProducts.some(item => {
+    return item.product.id === product.value.id;
+  });
+};
 </script>
 
 <template>
@@ -240,8 +260,9 @@ watch(product, () => {
     </div>
 
     <div>
-      <button style="margin-top: 15px" v-if="getVarieties.length > 0" @click="store.swapShowVarietyProduct()">
-        {{ selectedVariety ? 'Варіант: ' +  selectedVariety.variety_name  : 'Виберіть варіант' }}
+      <button :class="{ 'pulse-button': selectedVariety === null}" :style="{ color: selectedVariety !== null ? '#7baeff' : '' }"
+              style="margin-top: 15px;" v-if="getVarieties.length > 0" @click="store.swapShowVarietyProduct()">
+        {{ selectedVariety ? 'Варіант: ' + selectedVariety.variety_name : 'Виберіть варіант' }}
       </button>
     </div>
 
@@ -303,8 +324,14 @@ watch(product, () => {
         </div>
       </div>
       <div>
-        <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик
+        <button class="btn-add-cart-tel" v-if="isItemInCart()" @click.prevent="addToCart()">
+          <span style="padding: 0; color: #a6f6a6;">Додати ще в кошик</span>
         </button>
+        <button :class="{ 'pulse-button': selectedVariety !== null}" class="btn-add-cart-tel" v-else @click.prevent="addToCart()">
+          Додати у кошик
+        </button>
+        <!--        <button class="btn-add-cart-tel" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик-->
+        <!--        </button>-->
       </div>
       <div class="price-product" v-if="selectedVariety === null">
         Ціна: {{ getProductById.price_item * countProduct }} ₴
@@ -313,7 +340,16 @@ watch(product, () => {
         Ціна: {{ selectedVariety.variety_price * countProduct }} ₴
       </div>
     </div>
-    <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>
+<!--    <button class="btn-add-cart-pc" style="box-shadow: 2px 2px 5px gray;" @click="addToCart">Додати в кошик</button>-->
+    <button class="btn-add-cart-pc" v-if="isItemInCart()" @click.prevent="addToCart()">
+      <span style="padding: 0; color: #a6f6a6;">Додати ще в кошик</span>
+    </button>
+    <button :class="{ 'pulse-button': selectedVariety !== null}" class="btn-add-cart-pc" v-else @click.prevent="addToCart()">
+      Додати у кошик
+    </button>
+    <div v-if="showNotification" class="notification">
+      Товар добавлен в корзину
+    </div>
   </div>
   <div v-else style="width: 100%; height: auto;  display: grid; place-items: center;">
     <div class="placeholder-details">
@@ -327,6 +363,59 @@ watch(product, () => {
 </template>
 
 <style scoped>
+/*пульсация кнопки*/
+.pulse-button {
+  animation: pulse-animation 1s infinite alternate;
+  color: white;
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.03);
+  }
+}
+
+/* выпад меню */
+.notification {
+  position: fixed;
+  top: 50px; /* Регулируйте отступ сверху по вашему желанию */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; /* Зеленый цвет для уведомления об успешном действии */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 999; /* Убедитесь, что уведомление находится выше других элементов */
+  animation: slideInDown 0.5s ease-out, slideOutUp 0.5s ease-in 3s forwards; /* Анимация появления и исчезновения */
+}
+
+@keyframes slideInDown {
+  0% {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutUp {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* закончил */
 /* Общие стили */
 .text-info-product {
   background-color: #f2f2f2; /* Измените на желаемый цвет фона */
@@ -346,6 +435,7 @@ watch(product, () => {
 .show-full-text {
   max-height: 500px; /* Измените на достаточную высоту для отображения полного текста */
 }
+
 .read-more {
   color: Black;
   cursor: pointer;

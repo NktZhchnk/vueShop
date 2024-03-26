@@ -54,7 +54,7 @@ const logout = () => {
       </div>
       <div v-else
            style="display: flex; justify-content: space-between; align-items: center; padding-left: 15px; padding-right: 15px; border-bottom: 1px solid gray; background-color: #3b3b3b; color: #fff;">
-        <div style="padding: 10px; text-align: center;">
+        <div style="padding: 15px; text-align: center;">
           <p class="user-name">{{ firstName }} {{ lastName }}</p>
         </div>
         <div style="padding: 10px;">
