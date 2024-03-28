@@ -3,7 +3,7 @@ import {computed, onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
-import {useRoute, useRouter} from "vue-router";
+import { useRouter} from "vue-router";
 
 const router = useRouter()
 
