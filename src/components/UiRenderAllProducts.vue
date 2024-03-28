@@ -286,7 +286,7 @@ const isItemInCart = (itemId) => {
       </div>
     </div>
     <div v-if="showNotification" class="notification">
-      Товар добавлен в корзину
+      Товар доданий до кошика
     </div>
   </div>
 </template>

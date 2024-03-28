@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
@@ -36,7 +36,7 @@ const validateText = () => {
 const messageToTelegram = () => {
   async function sendMessageToTelegram(message) {
     try {
-      const response = await axios.post('/api/send-message', { message });
+      const response = await axios.post('/api/send-message', {message});
       console.log(response.data);
     } catch (error) {
       console.error('Ошибка при отправке сообщения:', error);
@@ -232,14 +232,14 @@ const addOrders = async () => {
         if (store.selectPoshta.cities === '') {
           alert('введіть місто')
         }
-        if(acceptTerms.value === false){
+        if (acceptTerms.value === false) {
           fnRedBorder('.form-group')
         }
         if (store.selectPoshta.postIndex === '' || store.selectPoshta.searchQuery === '') {
-          if(store.selectPoshta.postIndex !== ''){
+          if (store.selectPoshta.postIndex !== '') {
             return
-          }else{
-            if(store.selectPoshta.searchQuery === ''){
+          } else {
+            if (store.selectPoshta.searchQuery === '') {
               alert('введіть місце доставки')
             }
           }
@@ -267,7 +267,14 @@ store.allPriceProducts = allPrice;
 
 onMounted(() => {
   loadCartProducts();
+  window.scrollTo(0, 0);
   store.getOrders();
+});
+
+const allCount = computed(() => {
+  return store.cartProducts.reduce((acc, item) => {
+    return acc + item.countProduct;
+  }, 0);
 });
 
 let acceptTerms = ref(false);
@@ -315,8 +322,10 @@ let checkBtn = ref(true);
              :key="item.id">
           <img style="border-radius: 5px" :src="item.images.img"/>
           <div class="product-details">
-            <span style=" word-break: break-word; height: 58px;  overflow: hidden">{{ item.product.name_item }}</span>
-            <span>Кількість: {{ item.countProduct }}</span>
+            <span style=" word-break: break-word; height: auto; max-height: 55px;  overflow: hidden">{{
+                item.product.name_item
+              }}</span>
+            <span style="margin-top: 10px">Кількість: {{ item.countProduct }}</span>
             <span style="margin-top: 10px">Ціна {{ item.product.price_item * item.countProduct }} ₴</span>
           </div>
         </div>
@@ -345,14 +354,16 @@ let checkBtn = ref(true);
 
       <label for="acceptTerms">
         <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
-        Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Користувача угода</router-link>.
+        Я прочитав(-ла) і приймаю
+        <router-link to="/uiUserAgreement">Користувача угода</router-link>
+        .
       </label>
     </div>
 
 
     <div class="order-total">
       <h2>Разом</h2>
-      <h4>{{ store.cartProducts.length }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
+      <h4>{{ allCount }} Товару на суму: {{ store.allPriceProducts }} ₴</h4>
       <h4>Вартість доставки згідно з тарифами перевізника</h4>
       <h2></h2>
       <button v-if="checkBtn" @click="addOrders">Підтвердити замовлення</button>
@@ -590,16 +601,17 @@ input[type="radio"]:checked + .radio-custom::after {
 }
 
 
-
 .form-group {
   margin-left: 5px;
   margin-top: 15px;
   display: flex;
   align-items: center;
 }
-.form-group input{
+
+.form-group input {
   width: 13px;
 }
+
 .checkbox-field {
   margin-right: 2px;
 }

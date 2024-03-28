@@ -348,7 +348,7 @@ const isItemInCart = () => {
       Додати у кошик
     </button>
     <div v-if="showNotification" class="notification">
-      Товар добавлен в корзину
+      Товар доданий до кошика
     </div>
   </div>
   <div v-else style="width: 100%; height: auto;  display: grid; place-items: center;">
