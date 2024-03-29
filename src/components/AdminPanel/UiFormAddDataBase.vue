@@ -24,6 +24,7 @@ let imageInputs = ref([]); // Массив для хранения полей в
 let imageLinks = []; // Массив для хранения ссылок на изображения
 let imageQuantity = ref(0); // Количество изображений, которые пользователь хочет добавить
 let showBtnImg = true;
+const showNotification = ref(false);
 // Функция для добавления полей ввода ссылок на изображения
 const inputImages = () => {
   if (imageQuantity.value >= 1) {
@@ -93,13 +94,20 @@ const addProduct = () => {
                       })
                           .then(varietyResponse => {
                             console.log('Вариация добавлена успешно:', varietyResponse.data);
-
+                            showNotification.value = true;
+                            setTimeout(() => {
+                              showNotification.value = false;
+                            }, 1750);
                             // Перезагрузка страницы через 2 секунды после успешного выполнения всех запросов
                             setTimeout(() => {
                               location.reload();
                             }, 2000);
                           })
                           .catch(varietyError => {
+                            showNotification.value = true;
+                            setTimeout(() => {
+                              showNotification.value = false;
+                            }, 1750);
                             setTimeout(() => {
                               location.reload();
                             }, 2000);
@@ -107,6 +115,10 @@ const addProduct = () => {
                           });
                     } else {
                       // Перезагрузка страницы через 2 секунды после успешного добавления продукта и изображения
+                      showNotification.value = true;
+                      setTimeout(() => {
+                        showNotification.value = false;
+                      }, 1750);
                       setTimeout(() => {
                         location.reload();
                       }, 2000);
@@ -163,15 +175,56 @@ const addProduct = () => {
 
       <textarea v-model="newData.text_info" class="text-info" @keydown="handleKeyDown"
                 placeholder="Інформація про продукт"></textarea>
-      <button type="submit" class="add-product-button">
+      <button v-if="!showNotification" type="submit" class="add-product-button">
         Додати продукт
       </button>
     </form>
+    <div v-if="showNotification" class="notification" style="display: flex; justify-content: center; align-items: center">
+      <span style="color: black; font-size: 16px">Товар доданий, зачекайте</span>
+      <img style="min-width: 200px; max-height: 180px" src="https://a127fb2c-de1c-4ae0-af0d-3808559ec217.selcdn.net/stickers/4ce/580/4ce58078-ce94-370f-8abb-836a56b5fa0b/192/2.webp">
+    </div>
   </div>
 </template>
 
 <style scoped>
+/* выпад меню */
+.notification {
+  position: fixed;
+  top: 50px; /* Регулируйте отступ сверху по вашему желанию */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; /* Зеленый цвет для уведомления об успешном действии */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 999; /* Убедитесь, что уведомление находится выше других элементов */
+  animation: slideInDown 0.5s ease-out, slideOutUp 0.5s ease-in 3s forwards; /* Анимация появления и исчезновения */
+}
 
+@keyframes slideInDown {
+  0% {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutUp {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* закончил */
 /* Main container */
 form {
   background-color: #ffffff;
