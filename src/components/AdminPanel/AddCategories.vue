@@ -39,8 +39,9 @@ watch(localCategoryItem, (newValue) => {
 <style scoped>
 /* Container styles for the radio buttons */
 div {
-  background-color: #333; /* Dark background color */
+  background-color: #ececec;
   padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* более красивая тень */
   border-radius: 10px; /* Rounded corners */
 }
 
@@ -57,7 +58,7 @@ label {
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 16px;
-  color: #fff; /* Text color for unselected labels */
+  color: #000000; /* Text color for unselected labels */
 }
 
 /* Styles for the checked radio button */

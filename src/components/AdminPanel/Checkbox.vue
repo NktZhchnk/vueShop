@@ -8,8 +8,8 @@
         <input v-show="false" type="radio" :id="'radio-' + index" :value="option.label" v-model="selectedOption">
         <label style="margin-bottom: 5px" :for="'radio-' + index" class="option-label">
           <div class="div-label">{{ option.label }}</div>
-          <div class="div-label"><span style="color: #f83434;">Ціна</span>: {{ option.price }} ₴</div>
-          <div><span style="color: greenyellow;">Кількість</span>: {{ option.quantity }}</div>
+          <div class="div-label"><span style="color: #281010;">Ціна</span>: {{ option.price }} ₴</div>
+          <div><span style="color: #383807;">Кількість</span>: {{ option.quantity }}</div>
         </label>
         <div>
           <input type="text" v-model="option.label" placeholder="Введіть назву" class="input-field" @input="handleLabelChange(index, $event.target.value)">
@@ -96,12 +96,14 @@ export default {
 <style scoped>
 .container {
   padding: 20px;
-  background-color: #333;
-  color: #fff;
+  background-color: #ececec;
+  color: #000000;
   border-radius: 8px;
   max-width: 400px;
   margin: 20px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* более красивая тень */
 }
+
 .div-label{
   width: 120px;
   overflow: hidden;
@@ -123,7 +125,7 @@ export default {
 
 .btn {
   padding: 12px;
-  background-color: #1b4c85;
+  background-color: #313131;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -132,7 +134,7 @@ export default {
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: #232323;
 }
 
 .options-container {
@@ -148,9 +150,17 @@ export default {
 .input-field {
   padding: 10px;
   margin-right: 10px;
-  border: 2px solid #555;
+  border: 2px solid #d2d2d2;
   border-radius: 4px;
   width: calc(33.33% - 10px);
   box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s; /* добавляем плавный переход */
 }
+
+/* добавляем стиль при фокусировке */
+.input-field:focus {
+  border-color: #494949; /* изменяем цвет рамки */
+  box-shadow: 0 0 0 2px rgba(38, 38, 38, 0.25); /* добавляем мягкую тень */
+}
+
 </style>

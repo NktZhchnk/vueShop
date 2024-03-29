@@ -249,12 +249,12 @@ label {
   height: 30px;
   border-radius: 5px;
   color: white;
-  background-color: #1b4c85;
+  background-color: #313131;
   border: 1px solid #333333;
 }
 
 .inpImg:hover {
-  background-color: #112f52;
+  background-color: #232323;
 }
 
 .text-info {
@@ -280,7 +280,7 @@ input[type="password"] {
 /* Button styling */
 button[type="submit"] {
   padding: 12px 24px;
-  background-color: #1b4c85;
+  background-color: #313131;
   color: white;
   border: none;
   border-radius: 4px;
@@ -289,7 +289,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #232323;
 }
 
 /* Additional styles for specific elements */

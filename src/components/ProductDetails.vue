@@ -478,8 +478,8 @@ const isItemInCart = () => {
 }
 
 .swiper {
-  width: 320px;
-  height: 400px;
+  width: 400px;
+  height: 500px;
   z-index: 1;
 }
 
