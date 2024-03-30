@@ -81,6 +81,9 @@ const logout = () => {
             <li>
               <router-link to="/uiEditProducts">Редагувати товари</router-link>
             </li>
+            <li>
+              <router-link @click="swapMenu" to="/uiZmeika">Змійка</router-link>
+            </li>
           </ul>
         </div>
         <div>
@@ -96,6 +99,7 @@ const logout = () => {
           <li>
             <router-link @click="swapMenu" to="/uiUserAgreement">Користувача угода</router-link>
           </li>
+
         </ul>
       </div>
       <div class="div-footer">
