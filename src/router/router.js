@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router';
-
 import UiMainHeader from "@/components/UiMainHeader.vue";
 import AdminMenu from "@/components/AdminPanel/AdminMenu.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
@@ -16,7 +15,6 @@ import UiEditProducts from "@/components/AdminPanel/UiEditProducts.vue";
 import UiDetailsOrdersUsers from "@/components/Users/UiDetailsOrdersUsers.vue";
 import UiInformationForUser from "@/components/Users/UiInformationForUser.vue";
 import UiUserAgreement from "@/components/Users/UiUserAgreement.vue";
-import UiZmeika from "@/components/Users/UiZmeika.vue";
 
 
 const routes = [
@@ -44,11 +42,6 @@ const routes = [
         name: 'Header',
         path: '/header',
         component: UiMainHeader,
-    },
-    {
-        name: 'UiZmeika',
-        path: '/uiZmeika',
-        component: UiZmeika,
     },
     {
         name: 'Auth',
