@@ -15,7 +15,7 @@ import UiEditProducts from "@/components/AdminPanel/UiEditProducts.vue";
 import UiDetailsOrdersUsers from "@/components/Users/UiDetailsOrdersUsers.vue";
 import UiInformationForUser from "@/components/Users/UiInformationForUser.vue";
 import UiUserAgreement from "@/components/Users/UiUserAgreement.vue";
-import UiNeZahodit from "@/components/Users/UiNeZahodit.vue";
+
 
 const routes = [
     {
@@ -62,10 +62,6 @@ const routes = [
         name: 'UiOrders',
         path: '/uiOrders',
         component: UiOrders,
-    },    {
-        name: 'UiNeZahodit',
-        path: '/uiNeZahodit',
-        component: UiNeZahodit,
     },
     {
         name: 'UiOrdersComplete',
