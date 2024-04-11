@@ -196,6 +196,10 @@ onMounted(loadCartProducts);
 }
 .div-icon-trash{
   width: 18%;
+  display: flex;
+  position: relative;
+  bottom: 3px;
+  justify-content: right;
 }
 .text-name {
   height: 40px;
@@ -207,6 +211,7 @@ onMounted(loadCartProducts);
 }
 
 .icon-trash {
+
   height: 24px;
   width: 24px;
   fill: #777;
@@ -222,12 +227,13 @@ onMounted(loadCartProducts);
   flex-wrap: wrap;
   overflow: auto;
   gap: 20px;
-  height: 100%;
+  height: 72%;
 }
 
 .product-item {
   margin-bottom: 20px;
   width: 100%;
+  max-width: 720px;
   display: flex;
   background: #fff;
   border-radius: 10px;
@@ -310,7 +316,7 @@ img {
 }
 
 .button-green:hover {
-  background-color: #181818;
+  background:  #181818;
 }
 
 @media (max-width: 800px) {
@@ -319,7 +325,9 @@ img {
     border-radius: 0;
     height: 100%;
   }
-
+  .div-body{
+    height: 80.4%;
+  }
   button {
     background-color: #343434;
     color: white;
