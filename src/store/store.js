@@ -14,6 +14,8 @@ export const useMyStore = defineStore({
         checkInput: false,
         checkShowVariety: false,
         openVariety: false,
+        showVariationModal: false,
+        varieties: [],
         products: [],
         usersCountOnline: 0,
         showResults: false,
@@ -103,7 +105,8 @@ export const useMyStore = defineStore({
         swapShowPage() {
             document.body.style.overflow = 'auto';
             this.updateCommonStateAndCloseMenus()
-
+            this.showVariationModal = false;
+            this.varieties = [];
             this.isOpenShowPage = false;
             this.showCheckAuth.showAuthB = false;
             this.openVariety = false;

@@ -16,18 +16,18 @@ const countProduct = ref(1);
 const product = ref(null); // Создаем реактивную переменную для информации о продукте
 const images = ref([]); // Создаем реактивную переменную для изображений
 const varieties = ref([]);
-const hasVarieties = computed(() => varieties.value.length > 0);
+const hasVarieties = computed(() => store.varieties.length > 0);
 const INITIAL_PRODUCTS_PER_PAGE = 15;
 const sessionStorageKey = 'initiallyLoadedProducts';
-let showVariationModal = ref(false)
+// const showVariationModal = ref(false)
 const showNotification = ref(false);
 
 const resetState = () => {
   product.value = null
   images.value = []
   selectedVariety.value = null
-  varieties.value = []
-  showVariationModal.value = false
+  store.varieties = []
+  store.showVariationModal = false
 }
 
 const selectedVarietyItem = async () => {
@@ -66,7 +66,7 @@ const getProductDetails = async (itemId) => {
   try {
     const response = await axios.get(`https://eseniabila.com.ua/getVarietiesById/${itemId}`);
     if (response.data) {
-      varieties.value = response.data;
+      store.varieties = response.data;
     }
   } catch (error) {
     return;
@@ -84,8 +84,7 @@ const updateCartProductCount = (index) => {
 const addToCart = async (itemId) => {
   await getProductDetails(itemId);
   if ((hasVarieties.value && selectedVariety.value !== null) || !hasVarieties.value) {
-    // Проверяем, есть ли уже такой товар в корзине
-    console.log(selectedVariety.value)
+    // Проверяем, есть ли вариации и выбрана ли вариация, либо товар без вариаций
     const duplicateProductIndex = store.cartProducts.findIndex(item => {
       if (hasVarieties.value) {
         return item.selectedVariety && item.selectedVariety.id === selectedVariety.value.id;
@@ -117,12 +116,42 @@ const addToCart = async (itemId) => {
       showNotification.value = false;
     }, 1000);
   } else {
-    openVariationModal();
+    // Проверяем, есть ли у товара вариации
+    if (!hasVarieties.value) {
+      // Если у товара нет вариаций, добавляем его в корзину без открытия модального окна
+      const newCartProduct = {
+        product: product.value,
+        images: images.value[0],
+        countProduct: countProduct.value,
+      };
+      // Добавление нового товара в массив корзины
+      store.cartProducts.push(newCartProduct);
+      // Сохранение обновленной корзины в sessionStorage
+      sessionStorage.setItem('cartProducts', JSON.stringify(store.cartProducts));
+      console.log('Товар добавлен в корзину:', newCartProduct);
+      showNotification.value = true;
+      setTimeout(() => {
+        showNotification.value = false;
+      }, 1000);
+    } else {
+      if(store.showVariationModal === true){
+        resetState();
+        getProductDetails(itemId)
+      }{
+        if(store.varieties.length >= 1){
+          openVariationModal();
+        }else{
+          resetState()
+        }
+
+      }
+    }
   }
 };
+
 const openVariationModal = () => {
   store.swapShowVarietyProduct()
-  showVariationModal.value = true;
+  store.showVariationModal = true;
 };
 
 
@@ -244,11 +273,11 @@ const isItemInCart = (itemId) => {
       </div>
     </div>
 
-    <div v-if="showVariationModal" class="popup">
+    <div v-if="store.showVariationModal" class="popup">
       <div v-if="store.checkShowVariety" class="popup-content" :class="{ 'scaled': store.openVariety }">
         <h3 style="text-align: center; margin-bottom: 0px">Варіації:</h3>
         <div class="varieties-wrapper">
-          <template v-for="item in varieties">
+          <template v-for="item in store.varieties">
 
             <label v-if="item.variety_quan > 0" :key="item.id" class="rad-label">
               <input
@@ -339,11 +368,27 @@ const isItemInCart = (itemId) => {
   position: absolute;
   top: 10px; /* Позиция от верхнего края */
   left: 10px; /* Позиция от левого края */
-  background: black;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1));
   color: white;
   padding: 5px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px;
+  animation-name: pulse; /* Name of the keyframes animation */
+  animation-duration: 2s; /* Duration of each pulse cycle */
+  animation-timing-function: ease-in-out; /* Timing function for smooth animation */
+  animation-iteration-count: infinite; /* Make the animation repeat infinitely */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .style-products {
@@ -351,6 +396,7 @@ const isItemInCart = (itemId) => {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 
 .div-catalog {
   color: white;
@@ -369,6 +415,7 @@ const isItemInCart = (itemId) => {
   text-decoration: none; /* Убирает подчеркивание ссылки */
   color: white; /* Задайте цвет текста, который вы хотите использовать */
 }
+
 
 @media (max-width: 700px) {
   .div-catalog {
@@ -419,7 +466,7 @@ const isItemInCart = (itemId) => {
     button {
       padding: 10px;
       font-size: 14px;
-      background-color: #343434;
+      background: linear-gradient(to right, rgb(38, 38, 38), rgba(54, 54, 54, 0.9));
       color: #ffffff;
       border: none;
       border-radius: 5px;
@@ -427,6 +474,10 @@ const isItemInCart = (itemId) => {
       transition: background-color 0.3s;
       box-shadow: 0 2px 4px rgba(21, 21, 21, 0.1);
 
+    }
+    button:hover {
+      background: linear-gradient(to right, rgb(38, 38, 38), rgba(54, 54, 54, 0.8)); /* Новые цветовые остановки */
+      box-shadow: 0 4px 8px rgba(21, 21, 21, 0.2);
     }
   }
 }

@@ -398,11 +398,9 @@ const isItemInCart = (itemId) => {
 .rad-label {
   display: flex;
   align-items: center;
-
   border-radius: 100px;
   padding: 14px 16px;
   margin: 5px 0;
-
   cursor: pointer;
   transition: .3s;
 }
@@ -419,7 +417,6 @@ const isItemInCart = (itemId) => {
   height: 1px;
   opacity: 0;
   z-index: -1;
-
 }
 
 .rad-design {
@@ -436,7 +433,6 @@ const isItemInCart = (itemId) => {
   width: inherit;
   height: inherit;
   border-radius: inherit;
-
   background: hsl(0, 0%, 90%);
   transform: scale(1.1);
   transition: .3s;
