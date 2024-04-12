@@ -15,11 +15,9 @@ const selectedVariety = ref(null);
 const countProduct = ref(1);
 const product = ref(null); // Создаем реактивную переменную для информации о продукте
 const images = ref([]); // Создаем реактивную переменную для изображений
-const varieties = ref([]);
 const hasVarieties = computed(() => store.varieties.length > 0);
 const INITIAL_PRODUCTS_PER_PAGE = 15;
 const sessionStorageKey = 'initiallyLoadedProducts';
-// const showVariationModal = ref(false)
 const showNotification = ref(false);
 
 const resetState = () => {
@@ -143,7 +141,6 @@ const addToCart = async (itemId) => {
         }else{
           resetState()
         }
-
       }
     }
   }
@@ -315,7 +312,8 @@ const isItemInCart = (itemId) => {
       </div>
     </div>
     <div v-if="showNotification" class="notification">
-      Товар доданий до кошика
+      <span>Товар доданий до кошика</span>
+      <img style="margin-left: 10px; width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/128/2018/2018269.png"/>
     </div>
   </div>
 </template>
@@ -324,6 +322,9 @@ const isItemInCart = (itemId) => {
 /* выпад меню */
 .notification {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 50px; /* Регулируйте отступ сверху по вашему желанию */
   left: 50%;
   transform: translateX(-50%);

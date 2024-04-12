@@ -52,14 +52,12 @@ const logout = () => {
           <router-link to="/registration" style="color: #fff; text-decoration: none;">Реєстрація</router-link>
         </div>
       </div>
-      <div v-else
-           style="display: flex; justify-content: space-between; align-items: center; padding-left: 15px; padding-right: 15px; border-bottom: 1px solid gray; background-color: #3b3b3b; color: #fff;">
+      <div v-else class="container-user-name">
         <div style="padding: 15px; text-align: center;">
           <p class="user-name">{{ firstName }} {{ lastName }}</p>
         </div>
         <div style="padding: 10px;">
-          <button @click="logout"
-                  style="background-color: #2c3e50; color: #fff; border: none; padding: 8px 15px; cursor: pointer; font-size: 14px; border-radius: 5px;">
+          <button @click="logout">
             Вийти
           </button>
         </div>
@@ -123,6 +121,27 @@ const logout = () => {
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
+}
+
+.container-user-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-bottom: 1px solid gray;
+  background: linear-gradient(to right, rgba(37, 37, 37, 1), rgba(37, 37, 37, 0.9));
+  color: #fff;
+
+  button {
+    background: linear-gradient(to right, rgba(44, 62, 80, 1), rgba(64, 82, 100, 1));
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+  }
 }
 
 .user-name {

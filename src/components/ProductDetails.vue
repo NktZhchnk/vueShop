@@ -348,7 +348,8 @@ const isItemInCart = () => {
       Додати у кошик
     </button>
     <div v-if="showNotification" class="notification">
-      Товар доданий до кошика
+      <span>Товар доданий до кошика</span>
+      <img style="margin-left: 10px; width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/128/2018/2018269.png"/>
     </div>
   </div>
   <div v-else style="width: 100%; height: auto;  display: grid; place-items: center;">
@@ -380,6 +381,9 @@ const isItemInCart = () => {
 
 /* выпад меню */
 .notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 50px; /* Регулируйте отступ сверху по вашему желанию */
   left: 50%;

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import {ref, onMounted, computed, onUnmounted, watch} from "vue";
 import { useRoute } from 'vue-router';
 import { useMyStore } from "@/store/store.js";
 import LazyLoadImage from "@/LazyLoadImage.vue";
@@ -55,16 +55,14 @@ const countProduct = ref(1);
 const selectedVariety = ref(null);
 const product = ref(null); // Создаем реактивную переменную для информации о продукте
 const images = ref([]); // Создаем реактивную переменную для изображений
-const varieties = ref([]);
-const hasVarieties = computed(() => varieties.value.length > 0);
-let showVariationModal = ref(false)
+const hasVarieties = computed(() => store.varieties.length > 0);
 const showNotification = ref(false);
 const resetState = () => {
   product.value = null
   images.value = []
   selectedVariety.value = null
-  varieties.value = []
-  showVariationModal.value = false
+  store.varieties = []
+  store.showVariationModal = false
 }
 const selectedVarietyItem = async () => {
   await addToCart(product.value.id);
@@ -96,7 +94,7 @@ const getProductDetails = async (itemId) => {
   try {
     const response = await axios.get(`https://eseniabila.com.ua/getVarietiesById/${itemId}`);
     if (response.data) {
-      varieties.value = response.data;
+      store.varieties = response.data;
     }
   } catch (error) {
     return;
@@ -147,12 +145,21 @@ const addToCart = async (itemId) => {
       showNotification.value = false;
     }, 1000);
   } else {
-    openVariationModal();
+    if(store.showVariationModal === true){
+      resetState();
+      getProductDetails(itemId)
+    }{
+      if(store.varieties.length >= 1){
+        openVariationModal();
+      }else{
+        resetState()
+      }
+    }
   }
 };
 const openVariationModal = () => {
   store.swapShowVarietyProduct()
-  showVariationModal.value = true;
+  store.showVariationModal = true;
 };
 
 const isItemInCart = (itemId) => {
@@ -160,6 +167,38 @@ const isItemInCart = (itemId) => {
     return item.product.id === itemId;
   });
 };
+
+const sortProductsByDate = () => {
+  store.products.sort(sortByDate);
+};
+
+const sortByDate = (a, b) => {
+  if (a.popularity_item !== b.popularity_item) {
+    // Если у a значение popularity_item равно 1, он идет первым
+    return b.popularity_item - a.popularity_item;
+  }
+
+  // Если значения popularity_item одинаковы, сравниваем по дате
+  const dateA = new Date(a.date_item);
+  const dateB = new Date(b.date_item);
+
+  if (a.quan_item !== b.quan_item) {
+    return b.quan_item - a.quan_item;
+  }
+
+  return dateB - dateA;
+};
+
+// Используйте watch для слежения за изменениями в store.products
+watch(() => store.products, () => {
+  sortProductsByDate();
+});
+
+const selectedSortOrder = ref(sessionStorage.getItem('selectedSortOrder'));
+
+if (selectedSortOrder.value === '') {
+  sortProductsByDate()
+}
 </script>
 
 <template>
@@ -172,6 +211,7 @@ const isItemInCart = (itemId) => {
             Товар закінчився
           </div>
         </div>
+        <span v-if="item.popularity_item === 1" class="hit-badge">Хіт</span>
         <div class="product-details">
           <div class="product-name">
             {{ item.name_item }}
@@ -189,11 +229,11 @@ const isItemInCart = (itemId) => {
       </router-link>
     </div>
 
-    <div v-if="showVariationModal" class="popup">
+    <div v-if="store.showVariationModal" class="popup">
       <div v-if="store.checkShowVariety" class="popup-content" :class="{ 'scaled': store.openVariety }">
         <h3 style="text-align: center; margin-bottom: 0px">Варіації:</h3>
         <div class="varieties-wrapper">
-          <template v-for="item in varieties">
+          <template v-for="item in store.varieties">
 
             <label v-if="item.variety_quan > 0" :key="item.id" class="rad-label">
               <input
@@ -231,17 +271,45 @@ const isItemInCart = (itemId) => {
       </div>
     </div>
     <div v-if="showNotification" class="notification">
-      Товар добавлен в корзину
+      <span>Товар доданий до кошика</span>
+      <img style="margin-left: 10px; width: 40px; height: 40px" src="https://cdn-icons-png.flaticon.com/128/2018/2018269.png"/>
     </div>
-
   </div>
 </template>
 
 
 <style scoped>
+.hit-badge {
+  position: absolute;
+  top: 10px; /* Позиция от верхнего края */
+  left: 10px; /* Позиция от левого края */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1));
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  animation-name: pulse; /* Name of the keyframes animation */
+  animation-duration: 2s; /* Duration of each pulse cycle */
+  animation-timing-function: ease-in-out; /* Timing function for smooth animation */
+  animation-iteration-count: infinite; /* Make the animation repeat infinitely */
+}
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 /* выпад меню */
 .notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 50px; /* Регулируйте отступ сверху по вашему желанию */
   left: 50%;
@@ -327,7 +395,7 @@ const isItemInCart = (itemId) => {
     button {
       padding: 10px;
       font-size: 14px;
-      background-color: #343434;
+      background: linear-gradient(to right, rgb(38, 38, 38), rgba(54, 54, 54, 0.9));
       color: #ffffff;
       border: none;
       border-radius: 5px;
@@ -335,6 +403,10 @@ const isItemInCart = (itemId) => {
       transition: background-color 0.3s;
       box-shadow: 0 2px 4px rgba(21, 21, 21, 0.1);
 
+    }
+    button:hover {
+      background: linear-gradient(to right, rgb(38, 38, 38), rgba(54, 54, 54, 0.8)); /* Новые цветовые остановки */
+      box-shadow: 0 4px 8px rgba(21, 21, 21, 0.2);
     }
   }
 }
