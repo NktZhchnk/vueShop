@@ -1,6 +1,7 @@
 <script setup>
 
 import {useMyStore} from "@/store/store.js";
+import {onMounted} from "vue";
 
 const store = useMyStore()
 
@@ -19,7 +20,9 @@ const images = [
 ]
 
 store.getCartItems()
-
+onMounted(() => {
+  store.fetchData()
+})
 </script>
 
 <template>

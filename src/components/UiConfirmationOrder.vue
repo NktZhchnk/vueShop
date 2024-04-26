@@ -266,6 +266,7 @@ let allPrice = sessionStorage.getItem('allPrice')
 store.allPriceProducts = allPrice;
 
 onMounted(() => {
+  store.fetchData()
   loadCartProducts();
   window.scrollTo(0, 0);
   store.getOrders();
