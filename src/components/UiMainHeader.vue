@@ -69,6 +69,7 @@ const selectResult = () => {
   store.showResults = false;
   // Очистить поле ввода
   store.searchQuery = "";
+  location.reload()
 };
 const showPage = () => {
   if (store.isOpenShowPage === true) {
