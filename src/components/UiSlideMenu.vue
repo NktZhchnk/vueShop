@@ -162,8 +162,8 @@ const logout = () => {
 
 .img-header {
   margin-left: 15px;
-  height: 90%;
-  width: 90%;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
 }
 
