@@ -126,6 +126,22 @@ export const useMyStore = defineStore({
         updateCategoryItem(newValue) {
             this.categoryItem = newValue
         },
+        sortByDate (a, b) {
+            if (a.popularity_item !== b.popularity_item) {
+                // Если у a значение popularity_item равно 1, он идет первым
+                return b.popularity_item - a.popularity_item;
+            }
+
+            // Если значения popularity_item одинаковы, сравниваем по дате
+            const dateA = new Date(a.date_item);
+            const dateB = new Date(b.date_item);
+
+            if (a.quan_item !== b.quan_item) {
+                return b.quan_item - a.quan_item;
+            }
+
+            return dateB - dateA;
+        },
         fetchData() {
             // Проверяем, не загружены ли товары уже
             if (this.products.length > 0) {
@@ -137,6 +153,7 @@ export const useMyStore = defineStore({
                 .then(response => {
                     // Обработка данных и сохранение их в состоянии магазина
                     this.products = response.data;
+                    this.products.sort(this.sortByDate);
                     const lastItem = this.products.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
                     this.lastId = lastItem.id + 1
                     this.priceItem = this.products[0].price_item;
