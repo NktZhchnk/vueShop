@@ -350,7 +350,7 @@ img {
   }
 
   img {
-    height: 200px;
+    height: 180px;
     width: 180px;
     border-radius: 10px 2px 2px 10px;
   }
