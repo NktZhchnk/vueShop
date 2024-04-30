@@ -28,7 +28,6 @@ const store = useMyStore()
 </template>
 
 <style>
-
 </style>
 
 <style scoped>
