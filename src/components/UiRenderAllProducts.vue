@@ -180,7 +180,7 @@ const observeScroll = () => {
         loadMoreProducts();
       }
     });
-  }, 1000);
+  }, 200);
 
   window.addEventListener("scroll", handleScroll);
   onUnmounted(() => {
