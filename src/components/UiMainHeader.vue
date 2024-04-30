@@ -1,6 +1,7 @@
 <script setup>
 import {useMyStore} from "@/store/store.js";
 import {ref, watch, onMounted, onUnmounted} from "vue";
+import PriceRangeSlider from "@/components/PriceRangeSlider.vue";
 
 const store = useMyStore()
 
@@ -93,6 +94,10 @@ const showPage = () => {
 const showFilterMenu = ref(false);
 const selectedSortOrder = ref(null);
 
+const resetSort = () =>{
+  sessionStorage.removeItem('selectedSortOrder');
+  location.reload()
+}
 if (!selectedSortOrder.value) {
   selectedSortOrder.value = sessionStorage.getItem('selectedSortOrder') || null;
 }
@@ -233,6 +238,8 @@ const sortByDate = (order) => {
         <button @click="sortByPrice('desc')">Від дорогих ₴</button>
         <button @click="sortByDate('new')">Нові</button>
         <button @click="sortByDate('old')">Старі</button>
+        <PriceRangeSlider></PriceRangeSlider>
+        <button @click="resetSort" style="padding: 5px; font-size: 16px; background: black">скинути</button>
       </div>
     </div>
 
@@ -284,6 +291,8 @@ const sortByDate = (order) => {
 
 .filter-menu {
   position: absolute;
+  right: 80px;
+  min-width: 220px;
   background: rgba(0, 0, 0, 0.9);
   box-shadow: 2px 3px 10px gray;
   border-radius: 5px;

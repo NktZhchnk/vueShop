@@ -110,12 +110,11 @@ onMounted(loadCartProducts);
           </div>
           <div v-if="item.selectedVariety">
             <div>
-              <p style="margin-bottom: 15px; overflow-wrap: break-word; height: 38px; overflow: hidden">Варіація:
+              <p style="margin-bottom: 0; overflow-wrap: break-word; height: 38px; overflow: hidden">Варіація:
                 {{ item.selectedVariety.variety_name }}</p>
             </div>
             <div>
               <div>
-
                 <button class="btn-dec" @click="decrementQuanProduct(index)">-</button>
                 <span class="span-quan">Кiл: </span>{{ item.countProduct }}
                 <button class="btn-sum" @click="sumQuanProduct(index)">+</button>
@@ -234,7 +233,9 @@ onMounted(loadCartProducts);
   margin-bottom: 20px;
   width: 100%;
   max-width: 720px;
+  min-height: 203px;
   display: flex;
+  padding: 10px 10px 0 10px;
   background: #fff;
   border-radius: 10px;
   border: 1px solid #cecece;
@@ -243,7 +244,7 @@ onMounted(loadCartProducts);
 
 .product-image {
   width: 250px;
-  height: 200px;
+  height: 190px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,9 +252,9 @@ onMounted(loadCartProducts);
 }
 
 img {
-  width: 200px;
-  height: 200px;
-  border-radius: 10px 2px 2px 10px;
+  width: 190px;
+  height: 190px;
+  border-radius: 10px;
 }
 
 .product-details {
