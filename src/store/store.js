@@ -142,42 +142,40 @@ export const useMyStore = defineStore({
 
             return dateB - dateA;
         },
-        fetchData() {
+        async fetchData() {
             // Проверяем, не загружены ли товары уже
             if (this.products.length > 0) {
                 console.log('Товары уже загружены. Пропускаем запрос.');
                 return;
             }
-            // Здесь вы можете использовать Axios, Fetch API или другую библиотеку для получения данных с сервера
-            axios.get('https://eseniabila.com.ua/getProducts')
-                .then(response => {
-                    // Обработка данных и сохранение их в состоянии магазина
-                    this.products = response.data;
-                    this.products.sort(this.sortByDate);
-                    const lastItem = this.products.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
-                    this.lastId = lastItem.id + 1
-                    this.priceItem = this.products[0].price_item;
-                })
-                .catch(error => {
-                    console.error('Произошла ошибка:', error);
-                });
-            this.getOrders();
-            axios.get('https://eseniabila.com.ua/getProductVarieties')
-                .then(response => {
-                    this.productVarieties = response.data
-                })
-                .catch(error => {
-                    console.error('Произошла ошибка:', error);
-                });
-            axios.get('https://eseniabila.com.ua/getProductImg')
-                .then(response => {
-                    this.productImg = response.data
-                })
-                .catch(error => {
-                    console.error('Произошла ошибка:', error);
-                });
-            this.getCartItems()
+
+            try {
+                // Асинхронный запрос на получение данных о товарах
+                const productsResponse = await axios.get('https://eseniabila.com.ua/getProducts');
+                this.products = productsResponse.data;
+                this.products.sort(this.sortByDate);
+                const lastItem = this.products.reduce((acc, curr) => curr.id > acc.id ? curr : acc);
+                this.lastId = lastItem.id + 1
+                this.priceItem = this.products[0].price_item;
+
+                // Асинхронные запросы на получение других данных
+                const [ordersResponse, productVarietiesResponse, productImgResponse] = await Promise.all([
+                    axios.get('https://eseniabila.com.ua/getOrders'),
+                    axios.get('https://eseniabila.com.ua/getProductVarieties'),
+                    axios.get('https://eseniabila.com.ua/getProductImg')
+                ]);
+
+                this.orders = ordersResponse.data;
+                this.productVarieties = productVarietiesResponse.data;
+                this.productImg = productImgResponse.data;
+
+                // Другие действия, которые нужно выполнить после получения всех данных
+                this.getCartItems();
+            } catch (error) {
+                console.error('Произошла ошибка:', error);
+            }
         },
+
         getOrders() {
             axios.get('https://eseniabila.com.ua/getOrders')
                 .then(response => {
