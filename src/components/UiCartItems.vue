@@ -231,7 +231,7 @@ onMounted(loadCartProducts);
 
 .product-item {
   margin-bottom: 20px;
-  width: 100%;
+  width: 92%;
   max-width: 720px;
   min-height: 203px;
   display: flex;
