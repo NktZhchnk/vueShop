@@ -159,12 +159,13 @@ onMounted(() => {
   store.fetchData()
 });
 
-const itemImages = (itemId) => {
-  const images = store.productImg
-      .filter(img => img.product_id === itemId)
-      .map(img => img.img);
-  return images.length > 0 ? images : [];
-};
+const itemImages = computed(() => {
+  return (itemId) => {
+    return store.productImg
+        .filter(img => img.product_id === itemId)
+        .map(img => img.img);
+  };
+});
 
 
 const observeScroll = () => {
@@ -180,7 +181,7 @@ const observeScroll = () => {
         loadMoreProducts();
       }
     });
-  }, 5);
+  }, 500);
 
   window.addEventListener("scroll", handleScroll);
   onUnmounted(() => {
@@ -188,11 +189,14 @@ const observeScroll = () => {
 
   });
 };
-const isItemInCart = (itemId) => {
-  return store.cartProducts.some(item => {
-    return item.product.id === itemId;
-  });
-};
+const isItemInCart = computed(() => {
+  return (itemId) => {
+    return store.cartProducts.some(item => {
+      return item.product.id === itemId;
+    });
+  };
+});
+
 
 </script>
 
