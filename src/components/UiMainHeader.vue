@@ -398,8 +398,8 @@ svg:hover {
 
 .img-header {
   border-radius: 50%;
-  width: 80%;
-  height: 80%;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -466,9 +466,7 @@ h1 {
 }
 
 @media screen and (min-width: 650px) {
-  .img-header {
-    width: 65%;
-  }
+
 
   .search-text {
     font-size: 24px;
@@ -476,10 +474,6 @@ h1 {
 }
 
 @media screen and (min-width: 900px) {
-
-  .img-header {
-    width: 55%;
-  }
 
   .inp-search {
     width: 90%;
@@ -499,9 +493,7 @@ h1 {
     display: none;
   }
 
-  .img-header {
-    width: 70%;
-  }
+
 
   .div-inp {
     margin-left: 30px;
@@ -513,18 +505,12 @@ h1 {
     display: none;
   }
 
-  .img-header {
-    width: 70%;
-  }
+
 }
 
 @media screen and (max-width: 500px) {
   .div-catalog {
     display: none;
-  }
-
-  .img-header {
-    width: 100%;
   }
 
   .div-inp {
@@ -540,9 +526,6 @@ h1 {
 
 @media screen and (min-width: 1200px) {
 
-  .img-header {
-    width: 50%;
-  }
 
   .div-inp {
     width: 80%;
@@ -560,10 +543,6 @@ h1 {
   }
 
   .inp-search {
-    width: 90%;
-  }
-
-  .img-header {
     width: 90%;
   }
 
