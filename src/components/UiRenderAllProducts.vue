@@ -215,7 +215,8 @@ const isItemInCart = (itemId) => {
            :class="{ 'out-of-stock': item.quan_item <= 0 }">
         <router-link class="custom-link" :to="'/product/' + item.id">
           <div class="image-container">
-            <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>
+            <img loading="lazy" class="img" :src="itemImages(item.id)[0]"/>
+<!--            <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>-->
             <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
               Товар закінчився
             </div>
