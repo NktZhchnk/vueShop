@@ -220,7 +220,7 @@ const isItemInCart = computed(() => {
         <router-link class="custom-link" :to="'/product/' + item.id">
           <div class="image-container">
 <!--            <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>-->
-            <img class="img" v-lazy="itemImages(item.id)[0]" alt="Lazy Loaded Image" loading="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTd2ejM0MGlta3Bxdm1qNDV1eTdkMDZ0MTdkeWQyaDk4ZjhwczhndyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SvP3FgHsFVm7zwMdH6/200.webp"/>
+            <img rel="preload" class="img" v-lazy="itemImages(item.id)[0]" alt="Lazy Loaded Image" loading="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTd2ejM0MGlta3Bxdm1qNDV1eTdkMDZ0MTdkeWQyaDk4ZjhwczhndyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SvP3FgHsFVm7zwMdH6/200.webp"/>
             <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
               Товар закінчився
             </div>
@@ -466,8 +466,8 @@ const isItemInCart = computed(() => {
   border-radius: 10px; /* Добавлено скругление углов */
 
   .img {
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    height: 50%;
     object-fit: cover;
     border-radius: 10px; /* Здесь также добавлено скругление углов, чтобы соответствовать контейнеру */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Тень для объемности */
