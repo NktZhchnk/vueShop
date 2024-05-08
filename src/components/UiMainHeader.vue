@@ -94,8 +94,10 @@ const showPage = () => {
 const showFilterMenu = ref(false);
 const selectedSortOrder = ref(null);
 
-const resetSort = () =>{
+const resetSort = () => {
   sessionStorage.removeItem('selectedSortOrder');
+  sessionStorage.removeItem('minPrice');
+  sessionStorage.removeItem('maxPrice');
   location.reload()
 }
 if (!selectedSortOrder.value) {
@@ -147,7 +149,6 @@ const sortByDate = (order) => {
   // Сохраняем выбранный фильтр в состояние
   sessionStorage.setItem('selectedSortOrder', order);
 };
-
 </script>
 
 <template>
@@ -239,7 +240,7 @@ const sortByDate = (order) => {
         <button @click="sortByDate('new')">Нові</button>
         <button @click="sortByDate('old')">Старі</button>
         <PriceRangeSlider></PriceRangeSlider>
-        <button @click="resetSort" style="padding: 5px; font-size: 16px; background: black">скинути</button>
+        <button @click="resetSort" class="btn-reset-filter">скинути</button>
       </div>
     </div>
 
@@ -303,14 +304,35 @@ const sortByDate = (order) => {
 
 .filter-menu button {
   color: white;
+  background-color: transparent;
   border: none;
-  background: none;
   padding: 10px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Плавные переходы цвета при наведении */
 }
 
 .filter-menu button:hover {
-  background: #555;
+  background-color: #555;
+  color: #fff; /* Белый цвет текста при наведении */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для кнопки при наведении */
+}
+
+
+
+.btn-reset-filter {
+  padding: 8px 16px; /* Увеличиваем отступы для более удобного восприятия */
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.5); /* Прозрачный черный цвет для фона */
+  color: white; /* Цвет текста белый */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Полупрозрачная белая рамка */
+  border-radius: 5px; /* Закругляем углы */
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s; /* Плавный переход цвета при наведении */
+}
+
+.btn-reset-filter:hover {
+  background: rgba(255, 255, 255, 0.3); /* Чуть более светлый фон при наведении */
+  border-color: rgba(255, 255, 255, 0.7); /* Более яркая рамка при наведении */
 }
 
 .search-results {
@@ -492,7 +514,6 @@ h1 {
   .div-text {
     display: none;
   }
-
 
 
   .div-inp {

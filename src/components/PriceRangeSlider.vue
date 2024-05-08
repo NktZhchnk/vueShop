@@ -2,70 +2,77 @@
   <div class="price-range-slider" style="margin-bottom: 10px">
     <div class="slider" ref="slider"></div>
     <div class="price-range">
-      <span style="color: white">Від: {{ selectedMinPrice }}₴</span>
+      <span style="color: white">От: {{ selectedMinPrice }}₴</span>
       <span style="margin-left: 10px;color: white">До: {{ selectedMaxPrice }}₴</span>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
-import { ref, onMounted, defineComponent, watch } from 'vue';
-import { useMyStore } from "@/store/store.js";
+import {useMyStore} from "@/store/store.js";
 
-export default defineComponent({
-  name: 'PriceRangeSlider',
-  props: {
-    minPrice: {
-      type: Number,
-      default: 0,
-    },
-    maxPrice: {
-      type: Number,
-      default: 2000,
-    },
-  },
-  setup(props) {
-    const store = useMyStore(); // Получаем экземпляр хранилища из Pinia
-    const slider = ref(null);
-    const selectedMinPrice = ref(props.minPrice);
-    const selectedMaxPrice = ref(props.maxPrice);// Отфильтрованный массив товаров
+const store = useMyStore()
+const slider = ref(null);
+const selectedMinPrice = ref(sessionStorage.getItem('minPrice') || 0);
+const selectedMaxPrice = ref(sessionStorage.getItem('maxPrice') || 2000);
 
-    const getFilteredProducts = () => {
-      store.products = store.products.filter(product => {
-        const price = product.price_item; // Предполагается, что в объекте продукта есть поле price_item
-        return price >= selectedMinPrice.value && price <= selectedMaxPrice.value;
-      });
-    };
-
-    onMounted(() => {
-      const sliderElement = slider.value;
-      noUiSlider.create(sliderElement, {
-        start: [props.minPrice, props.maxPrice],
-        connect: true,
-        range: {
-          min: props.minPrice,
-          max: props.maxPrice,
-        },
-      });
-
-      sliderElement.noUiSlider.on('update', (values) => {
-        selectedMinPrice.value = parseFloat(values[0]);
-        selectedMaxPrice.value = parseFloat(values[1]);
-      });
-
-      getFilteredProducts();
-    });
-
-    watch([selectedMinPrice, selectedMaxPrice], () => {
-      getFilteredProducts();
-    });
-
-    return { slider, selectedMinPrice, selectedMaxPrice };
-  },
+const getFilteredProducts = () => {
+  store.products = store.products.filter(product => {
+    const price = product.price_item; // Предполагается, что в объекте продукта есть поле price_item
+    return price >= selectedMinPrice.value && price <= selectedMaxPrice.value;
+  });
+};
+onMounted(() => {
+  initializeSlider();
+  getFilteredProducts();
 });
+
+onBeforeUnmount(() => {
+  sessionStorage.setItem('minPrice', selectedMinPrice.value);
+  sessionStorage.setItem('maxPrice', selectedMaxPrice.value);
+});
+
+watch([selectedMinPrice, selectedMaxPrice], () => {
+  getFilteredProducts();
+});
+
+function initializeSlider() {
+  const sliderElement = slider.value;
+  if (!sliderElement) return;
+
+  noUiSlider.create(sliderElement, {
+    start: [selectedMinPrice.value, selectedMaxPrice.value],
+    connect: true,
+    range: {
+      min: 0,
+      max: 2000,
+    },
+  });
+
+  sliderElement.noUiSlider.on('update', (values) => {
+    const minPrice = parseFloat(values[0]);
+    const maxPrice = parseFloat(values[1]);
+
+    // Проверка на минимальное значение не меньше 500
+    if (minPrice < selectedMinPrice.value) {
+      sliderElement.noUiSlider.set([selectedMinPrice.value , maxPrice]);
+      return;
+    }
+    if (maxPrice > selectedMaxPrice.value) {
+      sliderElement.noUiSlider.set([minPrice , selectedMaxPrice.value]);
+      return;
+    }
+
+    selectedMinPrice.value = minPrice;
+    selectedMaxPrice.value = maxPrice;
+  });
+}
+
 </script>
+
 
 
 <style scoped>
@@ -74,8 +81,8 @@ export default defineComponent({
 }
 
 .slider {
-  width: 100%; /* Ширина ползунков */
-  height: 16px; /* Высота ползунков */
+  width: 100%;
+  height: 16px;
 }
 
 .price-range {
@@ -84,16 +91,15 @@ export default defineComponent({
   margin-top: 10px;
 }
 
-/* Добавляем стили для ползунков */
 .noUi-connect {
-  background-color: #4CAF50; /* Цвет ползунков */
+  background-color: #f3f3f3;
 }
 
 .noUi-horizontal .noUi-handle {
-  width: 16px; /* Ширина ползунков */
-  height: 16px; /* Высота ползунков */
-  background-color: #4CAF50; /* Цвет ползунков */
-  border: 1px solid #4CAF50; /* Обводка ползунков */
+  width: 16px;
+  height: 16px;
+  background-color: #ff0040;
+  border: 1px solid #ff0042;
   cursor: pointer;
 }
 </style>

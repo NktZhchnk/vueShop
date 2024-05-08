@@ -9,6 +9,8 @@ export const useMyStore = defineStore({
         adminPassword: '',
         allPriceProducts: null,
         cartProducts: [],
+        minPrice: 0,
+        maxPrice: 2000,
         categoryItem: null,
         checkCart: false,
         checkInput: false,
@@ -53,6 +55,7 @@ export const useMyStore = defineStore({
     }),
     mutations: {},
     actions: {
+
         updatePoshtaInfo(item) {
             console.log(this.addProductsInAdmin.poshtaInfo);
             this.addProductsInAdmin.poshtaInfo = item;
