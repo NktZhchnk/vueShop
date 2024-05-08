@@ -466,8 +466,8 @@ const isItemInCart = computed(() => {
   border-radius: 10px; /* Добавлено скругление углов */
 
   .img {
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 10px; /* Здесь также добавлено скругление углов, чтобы соответствовать контейнеру */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Тень для объемности */
