@@ -3,7 +3,7 @@ import {computed, onMounted, ref} from 'vue'
 import UiPoshta from "@/components/Poshta/UiPoshta.vue";
 import {useMyStore} from "@/store/store.js";
 import axios from "axios";
-import { useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 
 const router = useRouter()
 
@@ -214,7 +214,7 @@ const addOrders = async () => {
         sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
-        if (telephone.value === '' && telephone.value.length === 10) {
+        if (telephone.value.length < 10) {
           fnRedBorder('.inp-telephone');
         }
         if (firstname.value === '') {
@@ -319,7 +319,8 @@ let checkBtn = ref(true);
     <div class="order-summary">
       <h2>Замовлення</h2>
       <div class="product-list">
-        <div style="width: 100%; box-shadow: 2px 2px 5px gray" class="product-item" v-for="item in store.cartProducts"
+        <div style="width: 100%; box-shadow: 2px 2px 10px #bdbdbd" class="product-item"
+             v-for="item in store.cartProducts"
              :key="item.id">
           <img style="border-radius: 5px" :src="item.images.img"/>
           <div class="product-details">
@@ -332,7 +333,7 @@ let checkBtn = ref(true);
         </div>
       </div>
       <div class="edit-cart-button">
-        <button @click="store.swapOpenCart()">Редагувати товари</button>
+        <button  @click="store.swapOpenCart()">Редагувати товари</button>
       </div>
     </div>
 
@@ -352,12 +353,10 @@ let checkBtn = ref(true);
     </div>
 
     <div class="form-group">
-
       <label for="acceptTerms">
         <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
         Я прочитав(-ла) і приймаю
         <router-link to="/uiUserAgreement">Користувача угода</router-link>
-        .
       </label>
     </div>
 
@@ -432,6 +431,12 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+.contact-info {
+  input {
+    box-shadow: 2px 2px 5px #d7d7d7;
+  }
 }
 
 .contact-info,
@@ -521,6 +526,8 @@ input {
   padding: 20px;
   background-color: #f5f5f5;
   margin-top: 20px;
+  box-shadow: 2px 2px 5px #d7d7d7;
+  box-shadow: inset 0 0 10px rgba(121, 121, 121, 0.5);
 }
 
 .order-summary h2 {
@@ -549,6 +556,7 @@ input {
 .order-total {
   border: 1px solid #ddd;
   border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(121, 121, 121, 0.5);
   padding: 20px;
   background-color: #f5f5f5;
   margin-top: 20px;

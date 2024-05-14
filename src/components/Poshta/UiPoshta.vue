@@ -2,7 +2,7 @@
   <div class="div-container">
     <div>
       <label for="cityInput">Введіть населений пункт:</label>
-      <input :style="{border: selectedCity === '' ? '1px solid red': '1px solid gray'}" id="cityInput" type="text" v-model="selectedCity" @input="getWarehouses" list="cities">
+      <input :style="{border: selectedCity === '' ? '1px solid red': '1px solid #d7d7d7'}" id="cityInput" type="text" v-model="selectedCity" @input="getWarehouses" list="cities">
       <datalist id="cities">
         <option v-for="(city, index) in cities" :value="city.Description" :key="index">
           {{ city.Description }} ({{ city.DescriptionRu }})
@@ -19,7 +19,7 @@
 
     <div v-if="selectedPostType === 'newPost'">
       <label for="searchQuery">Введіть адресу або номер відділення:</label>
-      <input :style="{border: searchQuery === '' ? '1px solid red': '1px solid gray'}" type="text" placeholder="Введіть адресу або номер відділення" v-model="searchQuery"
+      <input :style="{border: searchQuery === '' ? '1px solid red': '1px solid #d7d7d7'}" type="text" placeholder="Введіть адресу або номер відділення" v-model="searchQuery"
              @input="searchWarehouses"/>
       <ul v-if="showListPoshta" class="warehouse-list">
         <li @click="checkInfoPoshta(place.Description)" v-for="(place, index) in displayedWarehouses" :key="index"
@@ -153,7 +153,7 @@ input[type="text"], input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
-
+  box-shadow: 2px 2px 5px #d7d7d7;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
