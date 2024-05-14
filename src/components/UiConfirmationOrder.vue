@@ -214,7 +214,7 @@ const addOrders = async () => {
         sessionStorage.removeItem('cartProducts');
       } else {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
-        if (telephone.value === '') {
+        if (telephone.value === '' && telephone.value.length === 10) {
           fnRedBorder('.inp-telephone');
         }
         if (firstname.value === '') {
@@ -347,7 +347,7 @@ let checkBtn = ref(true);
       <label class="payment-option" style="margin-top: 10px;">
         <input type="radio" name="paymentMethod" v-model="paymentMethod" value="creditCard" class="radio-input"/>
         <span class="radio-custom"></span>
-        <span>Повна передоплата на картку</span>
+        <span>Повна передоплата на картку (зв'яжемося за вказаним номером для оплати)</span>
       </label>
     </div>
 
@@ -593,7 +593,8 @@ input {
 }
 
 .radio-input {
-  width: 20px; /* Adjust the width as needed */
+  min-width: 20px; /* Adjust the width as needed */
+  max-width: 20px
 }
 
 
