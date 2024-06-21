@@ -26,7 +26,6 @@ const getProductVarieties = (productId) => {
 }
 
 
-
 const getTotalQuantity = (productId) => {
   const product = store.products.find(item => item.id === productId);
   if (product) {
@@ -170,7 +169,7 @@ const sortByQuantity = (order) => {
         <div style="display: flex;  justify-content: space-between; padding: 5px">
           <h2 class="product-name">{{ product.name_item }} </h2>
           <LazyLoadImage
-              class="img" style=" flex-shrink: 0; right:10px ; width: 120px; height: 120px"
+              class="img"
               :src="itemImages(product.id)[0]"
               :alt="product.name_item"></LazyLoadImage>
         </div>
@@ -186,7 +185,7 @@ const sortByQuantity = (order) => {
             <ul class="varieties-list">
               <li v-for="variety in getProductVarieties(product.id)" :key="variety.id" class="variety-item">
                 <span class="variety-info">{{ variety.variety_name }} - {{ variety.variety_quan }}</span>
-                <input type="number" v-model="varietyQuantities[variety.id]"  class="quantity-input"/>
+                <input type="number" v-model="varietyQuantities[variety.id]" class="quantity-input"/>
               </li>
             </ul>
           </div>
@@ -221,6 +220,15 @@ button {
 /* При наведении добавляется более яркая тень */
 button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.img {
+  flex-shrink: 0;
+  right: 10px;
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px gray;
 }
 
 .product-list {

@@ -331,6 +331,7 @@ app.get('/getOrdersPhone', (req, res) => {
             res.status(500).json({ error: 'Ошибка выполнения запроса' });
         } else {
             res.json(results);
+            console.log(results)
         }
     });
 });

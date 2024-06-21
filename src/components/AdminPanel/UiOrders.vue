@@ -83,7 +83,7 @@ const copyToClipboard = (text) => {
   <div>
     <!-- Поле ввода для поиска -->
     <div class="card">
-      <input v-model="searchQuery" placeholder="Поиск по номеру телефона" class="search-input"/>
+      <input v-model="searchQuery" placeholder="Пошук за номером телефону" class="search-input"/>
     </div>
     <router-link
         class="link-order"
@@ -97,7 +97,7 @@ const copyToClipboard = (text) => {
           {{ order.middle_name }}
           <button class="completion-button"
                   @click.prevent="toggleOrderCompletion(order.id, order.complete)">
-            {{ order.complete ? 'Не выполнено' : 'Выполнено' }}
+            {{ order.complete ? 'Не виконано' : 'Виконано' }}
           </button>
         </h2>
         <div class="card-details">
@@ -105,17 +105,17 @@ const copyToClipboard = (text) => {
           <div class="order-details">
             <p>Дата: {{ formattedDate(order.order_date) }}</p>
             <p>Телефон: <span @click.prevent="copyToClipboard(order.telephone)" class="copy-text">{{ order.telephone }}</span></p>
-            <p>Комментарий: {{ order.comment }}</p>
-            <p>Город: <span @click.prevent="copyToClipboard(order.city)" class="copy-text">{{ order.city }}</span></p>
-            <p v-if="order.address">Новая почта: <span @click.prevent="copyToClipboard(order.address)" class="copy-text">{{ order.address }}</span></p>
-            <p v-if="order.postal_code">УкрПочта: <span @click.prevent="copyToClipboard(order.postal_code)" class="copy-text">{{ order.postal_code }}</span></p>
-            <p v-if="order.payment_method === 'creditCard'">Способ оплаты: Полная предоплата на карту</p>
-            <p v-if="order.payment_method === 'cashOnDelivery'">Способ оплаты: Постоплата (оплата при получении)</p>
-            <p>Общая цена: {{ order.total_price }} ₴.</p>
+            <p>Коментар: {{ order.comment }}</p>
+            <p>Місто: <span @click.prevent="copyToClipboard(order.city)" class="copy-text">{{ order.city }}</span></p>
+            <p v-if="order.address">Нова Пошта: <span @click.prevent="copyToClipboard(order.address)" class="copy-text">{{ order.address }}</span></p>
+            <p v-if="order.postal_code">УкрПошта: <span @click.prevent="copyToClipboard(order.postal_code)" class="copy-text">{{ order.postal_code }}</span></p>
+            <p v-if="order.payment_method === 'creditCard'">Спосіб оплати: Повна передплата на картку</p>
+            <p v-if="order.payment_method === 'cashOnDelivery'">Спосіб оплати: Постоплата (оплата при отриманні)</p>
+            <p>Загальна ціна: {{ order.total_price }} ₴.</p>
           </div>
 
           <div  class="additional-info">
-            <textarea v-model="commentForUser" placeholder="Комментарий" @click.prevent></textarea>
+            <textarea v-model="commentForUser" placeholder="Коментар" @click.prevent></textarea>
             <input v-model="poshtaTnn" placeholder="ТТН" @click.prevent/>
           </div>
 

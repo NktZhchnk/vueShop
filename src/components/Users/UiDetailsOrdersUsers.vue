@@ -9,6 +9,7 @@ const phoneNumber = ref(localStorage.getItem('phoneNumber'));
 const ordersData = ref([]);
 const error = ref(null);
 const fetchOrders = async () => {
+
   if (!phoneNumber.value) {
     error.value = 'Введите номер телефона';
     return;
@@ -35,131 +36,156 @@ const fetchOrders = async () => {
   }
 };
 
-
 onMounted(() => {
   fetchOrders()
 })
 </script>
 
 <template>
-  <div v-if="ordersData.length > 0" class="center-container">
-    <div v-for="info in ordersData" class="main-detail" :key="info.id" :class="{ 'processing': info.complete === 0, 'completed': info.complete === 1 }">
-    <div class="header">
-        <p class="name">{{info.last_name}} {{info.first_name}} {{info.middle_name}}</p>
-        <p class="status">{{ info.city}}</p>
-      </div>
-      <div class="content">
-        <h3 v-if="info.complete === 0" style="text-align: center;padding-bottom: 5px; margin: 0;">Замовлення відправлено</h3>
-        <h3 v-if="info.complete === 1" style="text-align: center;padding-bottom: 5px; margin: 0;">Збір замовлення</h3>
-        <p  v-if="info.address !=='' " class="address">{{info.address}}</p>
-        <p  v-if="info.postal_code !== '' " class="address">Поштовий індекс: {{info.postal_code}}</p>
-        <p class="phone">Телефон: {{info.telephone}}</p>
-        <p v-if="info.poshta_tnn !== null">TTN: {{info.poshta_tnn }}</p>
-        <div v-if="info.comment_for_user !== null" class="comment-container">
-          <p class="comment-title">Коментар:</p>
-          <p class="comment">{{info.comment_for_user}}</p>
+  <div class="orders-container">
+    <div v-if="ordersData.length > 0">
+      <div v-for="info in ordersData" :key="info.id" class="order-card" :class="{ 'processing': info.complete === 0, 'completed': info.complete === 1 }">
+        <span class="customer-name">{{ info.last_name }} {{ info.first_name }} {{ info.middle_name }}</span>
+        <div class="order-header">
+          <p style="text-align: center; width: 100%" class="order-status">{{ info.complete === 0 ? 'Замовлення відправлено' : 'Збір замовлення' }}</p>
         </div>
-        <p class="total">Ціна: {{info.total_price}}</p>
+        <div class="order-details">
+          <div class="detail-item">
+            <span class="detail-label">Місто:</span>
+            <span class="detail-value">{{ info.city }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Поштовий індекс:</span>
+            <span class="detail-value">{{ info.postal_code }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Телефон:</span>
+            <span class="detail-value">{{info.telephone}}</span>
+          </div>
+          <div class="detail-item" v-if="info.poshta_tnn !== null">
+            <span class="detail-label">TTN:</span>
+            <span class="detail-value">{{ info.poshta_tnn }}</span>
+          </div>
+          <div v-if="info.comment_for_user !== null" class="comment-container">
+            <p class="comment-title">Коментар:</p>
+            <p class="comment">{{ info.comment_for_user }}</p>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Ціна:</span>
+            <span class="detail-value">{{ info.total_price }}</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div v-else class="custom-container">
-    <h1>У вас ще немає замовлень.</h1>
+    <div v-else class="no-orders">
+      <h1>У вас ще немає замовлень.</h1>
+    </div>
   </div>
 </template>
-
 <style scoped>
-.custom-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: #fff;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+.orders-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  margin: 15px;
+  justify-items: center;
 }
 
-.center-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+@media (max-width: 768px) {
+  .orders-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
 
-.main-detail {
-  width: 300px;
-  background: #fff;
+@media (max-width: 480px) {
+  .orders-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-card {
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  margin-top: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  padding: 20px;
 }
 
-.processing .header {
-   /* Цвет для состояния "в обработке" */
-  background: #2ecc71;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
+.order-card:hover {
+  transform: translateY(-5px);
 }
 
-.completed .header {
-  /* Цвет для состояния "выполняется" */
-  background: #3498db;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-}
-.header p.name {
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
+.processing {
+  border-color: #27ae60;
 }
 
-.header p.status {
-  margin: 0;
+.completed {
+  border-color: #f39c12;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.customer-name {
   font-size: 18px;
-}
-
-.content {
-  padding: 10px;
-}
-.content p {
-  font-size: 16px;
-  margin: 5px;
-}
-
-.address,
-.comment,
-.phone,
-.total {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-.comment-container {
-  margin-top: 8px;
-}
-
-.comment-title {
-  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 4px;
   color: #333;
 }
 
-.comment {
+.order-status {
   font-size: 14px;
   color: #555;
 }
 
-/* Адаптивность для мобильных устройств */
-@media screen and (max-width: 768px) {
-  .main-detail {
-    width: 90%;
-  }
+.order-details {
+  color: #555;
+}
+
+.detail-item {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.detail-label {
+  font-weight: bold;
+  width: 140px;
+}
+
+.detail-value {
+  flex: 1;
+}
+
+.comment-container {
+  margin-top: 10px;
+
+}
+
+.comment-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment {
+  font-size: 14px;
+  color: #777;
+  max-width: 290px;
+  word-wrap: break-word;
+}
+
+.no-orders {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.no-orders h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
 }
 </style>
-

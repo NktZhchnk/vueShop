@@ -33,7 +33,7 @@
                placeholder="Повторіть пароль">
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="margin-bottom: 15px">
         <input type="checkbox" v-model="acceptTerms" id="acceptTerms" class="checkbox-field">
         <label for="acceptTerms">Я прочитав(-ла) і приймаю <router-link to="/uiUserAgreement">Користувача угода</router-link>.</label>
       </div>
