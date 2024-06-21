@@ -50,7 +50,7 @@ const addOrders = async () => {
   try {
     if (store.cartProducts.length !== 0) {
       if (
-          telephone.value !== '' &&
+          telephone.value.length === 10 &&
           lastName.value !== '' &&
           firstname.value !== '' &&
           paymentMethod.value !== null &&
@@ -216,6 +216,7 @@ const addOrders = async () => {
         // Если какое-то поле не заполнено, добавляем класс error для подсветки
         if (telephone.value.length < 10) {
           fnRedBorder('.inp-telephone');
+          alert('невірний номер телефону')
         }
         if (firstname.value === '') {
           fnRedBorder('.inp-firstName');
