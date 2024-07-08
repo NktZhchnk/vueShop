@@ -220,7 +220,7 @@ const isItemInCart = computed(() => {
         <router-link class="custom-link" :to="'/product/' + item.id">
           <div class="image-container">
 <!--            <LazyLoadImage class="img" :src="itemImages(item.id)[0]" :alt="item.name_item"></LazyLoadImage>-->
-            <img rel="preload" class="img" v-lazy="itemImages(item.id)[0]" alt="Lazy Loaded Image" loading="https://static.vecteezy.com/system/resources/thumbnails/008/034/405/small_2x/loading-bar-doodle-element-hand-drawn-vector.jpg"/>
+            <img rel="preload" class="img" v-lazy="itemImages(item.id)[0]" alt="Lazy Loaded Image"/>
             <div v-if="item.quan_item <= 0" class="out-of-stock-overlay">
               Товар закінчився
             </div>

@@ -244,7 +244,6 @@ const addOrders = async () => {
               alert('введіть місце доставки')
             }
           }
-
         }
         console.log('Не все поля заполнены');
       }

@@ -110,7 +110,7 @@ const copyToClipboard = (text) => {
             <p v-if="order.address">Нова Пошта: <span @click.prevent="copyToClipboard(order.address)" class="copy-text">{{ order.address }}</span></p>
             <p v-if="order.postal_code">УкрПошта: <span @click.prevent="copyToClipboard(order.postal_code)" class="copy-text">{{ order.postal_code }}</span></p>
             <p v-if="order.payment_method === 'creditCard'">Спосіб оплати: Повна передплата на картку</p>
-            <p v-if="order.payment_method === 'cashOnDelivery'">Спосіб оплати: Постоплата (оплата при отриманні)</p>
+            <p v-if="order.payment_method === 'cashOnDelivery'">Спосіб оплати: Післяплата (оплата при отриманні)</p>
             <p>Загальна ціна: {{ order.total_price }} ₴.</p>
           </div>
 

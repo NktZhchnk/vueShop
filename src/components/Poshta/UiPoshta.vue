@@ -31,7 +31,16 @@
 
     <div v-if="selectedPostType === 'ukrPost'">
       <label for="postIndex">Введіть поштовий індекс:</label>
-      <input :style="{border: postIndex === null ? '1px solid red': '1px solid gray'}" placeholder="11111" id="postIndex" type="number" v-model="postIndex">
+      <input
+          maxlength="5"
+          minlength="5"
+          :style="{border: postIndex.length === 5 ? '1px solid gray' : '1px solid red'}"
+          placeholder="11111"
+          id="postIndex"
+          type="text"
+          v-model="postIndex"
+      />
+      <p v-if="postIndex.length !== 5" style="color: red; margin: 10px; margin-bottom: 0;">Перевірте правильність індексу</p>
     </div>
   </div>
 
@@ -61,6 +70,11 @@ watch([postIndex, searchQuery, selectedCity], ([newPostIndex, newSearchQuery, ne
   store.selectPoshta.cities = newSelectedCity
   store.selectPoshta.searchQuery = newSearchQuery
   store.selectPoshta.postIndex = newPostIndex
+
+  if (newPostIndex.length > 5) {
+    postIndex.value = newPostIndex.slice(0, 5);
+  }
+
   if (selectedPostType.value === 'newPost') {
     postIndex.value = ''
   } else if (selectedPostType.value === 'ukrPost') {
